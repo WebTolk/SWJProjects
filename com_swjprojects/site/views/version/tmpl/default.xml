@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SWJPROJECTS_VIEW_VERSION" option="COM_SWJPROJECTS_VIEW_VERSION_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_SWJPROJECTS_VIEW_VERSION_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldpath="/administrator/components/com_swjprojects/models/fields">
+		<fieldset name="request">
+			<field name="id" type="versions"
+				   label="COM_SWJPROJECTS_VERSION"
+				   required="true">
+				<option value="">COM_SWJPROJECTS_VERSION_SELECT</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>

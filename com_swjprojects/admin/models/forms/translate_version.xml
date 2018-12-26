@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field name="changelog" type="subform" label="COM_SWJPROJECTS_VERSION_CHANGELOG" multiple="true">
+			<form>
+				<field name="title" type="text" label="JGLOBAL_TITLE" class="input-xxlarge"/>
+				<field name="description" type="textarea" label="JGLOBAL_DESCRIPTION" class="input-xxlarge" rows="3"/>
+			</form>
+		</field>
+	</fieldset>
+</form>

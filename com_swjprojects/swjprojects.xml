@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.9" type="component" method="upgrade">
+	<name>COM_SWJPROJECTS</name>
+	<author>Septdir Workshop</author>
+	<creationDate>December 2018</creationDate>
+	<copyright>Copyright (c) 2018 - 2018 Septdir Workshop. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>development@septdir.com</authorEmail>
+	<authorUrl>https://www.septdir.com/</authorUrl>
+	<version>1.0.0</version>
+	<description>COM_SWJPROJECTS_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<files folder="site">
+		<folder>helpers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+		<filename>controller.php</filename>
+		<filename>router.php</filename>
+		<filename>swjprojects.php</filename>
+	</files>
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.sys.ini</language>
+	</languages>
+	<administration>
+		<menu>COM_SWJPROJECTS</menu>
+		<submenu>
+			<menu option="com_swjprojects" view="versions">COM_SWJPROJECTS_VERSIONS</menu>
+			<menu option="com_swjprojects" view="projects">COM_SWJPROJECTS_PROJECTS</menu>
+			<menu option="com_swjprojects" view="categories">COM_SWJPROJECTS_CATEGORIES</menu>
+		</submenu>
+		<files folder="admin">
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>swjprojects.php</filename>
+		</files>
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.sys.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.ini</language>
+			<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.sys.ini</language>
+		</languages>
+	</administration>
+	<media destination="com_swjprojects" folder="media">
+		<folder>css</folder>
+		<folder>js</folder>
+	</media>
+	<layouts destination="components/swjprojects" folder="layouts"/>
+</extension>

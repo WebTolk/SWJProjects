@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<config>
+	<fieldset name="global" label="JGLOBAL_FIELDSET_OPTIONS">
+		<field name="sef_advanced" type="hidden" default="1"/>
+		<field name="files_folder" type="text"
+			   label="COM_SWJPROJECTS_PARAMS_FILES_FOLDER"
+			   description="COM_SWJPROJECTS_PARAMS_FILES_FOLDER_DESC"
+			   class="input-xxlarge"/>
+		<field name="projects_limit" type="list"
+			   label="COM_SWJPROJECTS_PARAMS_PROJECTS_LIMIT"
+			   default="10">
+			<option value="5">J5</option>
+			<option value="10">J10</option>
+			<option value="15">J15</option>
+			<option value="20">J20</option>
+			<option value="25">J25</option>
+			<option value="30">J30</option>
+			<option value="50">J50</option>
+			<option value="100">J100</option>
+			<option value="0">JALL</option>
+		</field>
+		<field name="projects_layout" type="componentlayout"
+			   label="COM_SWJPROJECTS_PARAMS_PROJECTS_LAYOUT"
+			   extension="com_swjprojects"
+			   view="projects"/>
+		<field name="project_layout" type="componentlayout"
+			   label="COM_SWJPROJECTS_PARAMS_PROJECT_LAYOUT"
+			   extension="com_swjprojects"
+			   view="project"/>
+		<field name="versions_limit" type="list"
+			   label="COM_SWJPROJECTS_PARAMS_VERSIONS_LIMIT"
+			   default="10">
+			<option value="5">J5</option>
+			<option value="10">J10</option>
+			<option value="15">J15</option>
+			<option value="20">J20</option>
+			<option value="25">J25</option>
+			<option value="30">J30</option>
+			<option value="50">J50</option>
+			<option value="100">J100</option>
+			<option value="0">JALL</option>
+		</field>
+		<field name="versions_layout" type="componentlayout"
+			   label="COM_SWJPROJECTS_PARAMS_VERSIONS_LAYOUT"
+			   extension="com_swjprojects"
+			   view="versions"/>
+		<field name="version_layout" type="componentlayout"
+			   label="COM_SWJPROJECTS_PARAMS_VERSION_LAYOUT"
+			   extension="com_swjprojects"
+			   view="version"/>
+		<field name="jupdate_cachetimeout" type="integer"
+			   label="COM_SWJPROJECTS_PARAMS_JUPDATE_CACHETIMEOUT"
+			   description="COM_SWJPROJECTS_PARAMS_JUPDATE_CACHETIMEOUT_DESC"
+			   first="0"
+			   last="24"
+			   step="1"
+			   default="0"/>
+	</fieldset>
+	<fieldset name="permissions"
+			  label="JCONFIG_PERMISSIONS_LABEL"
+			  description="JCONFIG_PERMISSIONS_DESC">
+		<field name="rules" type="rules"
+			   label="JCONFIG_PERMISSIONS_LABEL"
+			   class="inputbox"
+			   validate="rules"
+			   filter="rules"
+			   component="com_swjprojects"
+			   section="component"/>
+	</fieldset>
+</config>

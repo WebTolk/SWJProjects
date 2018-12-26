@@ -1,0 +1,24 @@
+/*
+ * @package    SW JProjects Component
+ * @version    1.0.0
+ * @author     Septdir Workshop - www.septdir.com
+ * @copyright  Copyright (c) 2018 - 2018 Septdir Workshop. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @link       https://www.septdir.com/
+ */
+
+#SWJProjects.projects .category.info h1,
+#SWJProjects.project .project.info h1,
+#SWJProjects.versions .project.info h1 {
+	margin: 0 0 5px;
+}
+
+#SWJProjects.versions .project.info {
+}
+
+#SWJProjects.projects .projectsList .meta li:first-child,
+#SWJProjects.project .project.info .meta ul li:first-child,
+#SWJProjects.versions .project.info .meta ul li:first-child,
+#SWJProjects.version .version.info .meta ul li:first-child {
+	padding-left: 0;
+}

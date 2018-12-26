@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="version">
+		<field name="project_id" type="projects"
+			   label="COM_SWJPROJECTS_PROJECT"
+			   required="true"
+			   onchange="projectHasChanged(this)">
+			<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
+		</field>
+		<field name="major" type="text"
+			   label="COM_SWJPROJECTS_VERSION_MAJOR"
+			   required="true"
+			   class="input-mini"
+			   pattern="^[0-9]+$"/>
+		<field name="minor" type="text"
+			   label="COM_SWJPROJECTS_VERSION_MINOR"
+			   required="true"
+			   class="input-mini"
+			   pattern="^[0-9]+$"/>
+		<field name="micro" type="text"
+			   label="COM_SWJPROJECTS_VERSION_MICRO"
+			   required="true"
+			   class="input-mini"
+			   pattern="^[0-9]+$"/>
+		<field name="tag" type="list"
+			   label="COM_SWJPROJECTS_VERSION_TAG"
+			   default="stable"
+			   required="true"
+			   class="input-medium"
+			   pattern="^[0-9]+$">
+			<option value="dev">COM_SWJPROJECTS_VERSION_TAG_DEV</option>
+			<option value="alpha">COM_SWJPROJECTS_VERSION_TAG_ALPHA</option>
+			<option value="beta">COM_SWJPROJECTS_VERSION_TAG_BETA</option>
+			<option value="rc">COM_SWJPROJECTS_VERSION_TAG_RC</option>
+			<option value="stable">COM_SWJPROJECTS_VERSION_TAG_STABLE</option>
+		</field>
+		<field name="stage" type="text"
+			   label="COM_SWJPROJECTS_VERSION_STAGE"
+			   class="input-mini"
+			   showon="tag:alpha[OR]tag:beta[OR]tag:rc"
+			   pattern="^[0-9]+$"/>
+	</fieldset>
+	<fieldset name="file">
+		<field name="file_upload" type="file"
+			   label="COM_SWJPROJECTS_FILE_UPLOAD"
+			   class="span12"/>
+		<field name="file_delete" type="checkbox"
+			   label="COM_SWJPROJECTS_FILE_DELETE"
+			   value="1"/>
+	</fieldset>
+	<fieldset name="global">
+		<field name="id" type="text"
+			   label="JGLOBAL_FIELD_ID_LABEL"
+			   description="JGLOBAL_FIELD_ID_DESC"
+			   class="readonly span12"
+			   size="10"
+			   default="0"
+			   readonly="true"/>
+		<field name="joomla_version" type="jversion"
+			   label="COM_SWJPROJECTS_JOOMLA_VERSION"
+			   class="chzn-custom-value">
+			<option value="">COM_SWJPROJECTS_JOOMLA_VERSION_SELECT</option>
+		</field>
+		<field name="date" type="calendar"
+			   label="JDATE"
+			   translateformat="true"
+			   showtime="true"
+			   size="22"
+			   filter="user_utc"
+			   class="input-medium"/>
+		<field name="state" type="list"
+			   label="JSTATUS"
+			   description="JFIELD_PUBLISHED_DESC"
+			   class="chzn-color-state span12"
+			   filter="intval"
+			   size="1"
+			   default="1">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+		<fields name="attribs">
+			<field name="version_layout" type="componentlayout"
+				   label="JFIELD_ALT_LAYOUT_LABEL"
+				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
+				   useglobal="true"
+				   extension="com_swjprojects"
+				   view="version"
+				   class="span12"/>
+		</fields>
+	</fieldset>
+	<fieldset name="statistics" label="COM_SWJPROJECTS_STATISTICS">
+		<field name="downloads" type="text"
+			   label="COM_SWJPROJECTS_STATISTICS_DOWNLOADS"
+			   class="readonly"
+			   default="0"
+			   readonly="true"/>
+	</fieldset>
+</form>

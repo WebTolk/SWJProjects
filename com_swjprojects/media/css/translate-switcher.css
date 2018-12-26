@@ -1,0 +1,24 @@
+/*
+ * @package    SW JProjects Component
+ * @version    1.0.0
+ * @author     Septdir Workshop - www.septdir.com
+ * @copyright  Copyright (c) 2018 - 2018 Septdir Workshop. All rights reserved.
+ * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ * @link       https://www.septdir.com/
+ */
+
+#toolbar #toolbar-translate-switcher {
+	float: right;
+}
+
+#toolbar #toolbar-translate-switcher .btn {
+	margin-right: 0;
+	min-width: unset;
+}
+
+#toolbar #toolbar-translate-switcher .btn.active {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: #fff;
+	background-color: #2384d3;
+	cursor: unset;
+}

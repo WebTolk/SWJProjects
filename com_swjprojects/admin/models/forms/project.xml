@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field name="element" type="text"
+			   label="COM_SWJPROJECTS_ELEMENT"
+			   description="COM_SWJPROJECTS_ELEMENT_DESCRIPTION"
+			   hint="COM_SWJPROJECTS_ELEMENT_HINT"
+			   size="40"
+			   required="true"/>
+		<field name="alias" type="text"
+			   label="JFIELD_ALIAS_LABEL"
+			   description="JFIELD_ALIAS_DESC"
+			   hint="JFIELD_ALIAS_PLACEHOLDER"
+			   size="40"/>
+	</fieldset>
+	<fieldset name="global">
+		<field name="id" type="text"
+			   label="JGLOBAL_FIELD_ID_LABEL"
+			   description="JGLOBAL_FIELD_ID_DESC"
+			   class="readonly span12"
+			   size="10"
+			   default="0"
+			   readonly="true"/>
+		<field name="catid" type="categories"
+			   label="COM_SWJPROJECTS_CATEGORY"
+			   required="true">
+			<option value="">COM_SWJPROJECTS_CATEGORY_SELECT</option>
+		</field>
+		<field name="state" type="list"
+			   label="JSTATUS"
+			   description="JFIELD_PUBLISHED_DESC"
+			   class="chzn-color-state span12"
+			   filter="intval"
+			   size="1"
+			   default="1">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+		<fields name="attribs">
+			<field name="project_layout" type="componentlayout"
+				   label="JFIELD_ALT_LAYOUT_LABEL"
+				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
+				   useglobal="true"
+				   extension="com_swjprojects"
+				   view="project"
+				   class="span12"/>
+		</fields>
+		<field name="ordering" type="hidden" filter="unset"/>
+	</fieldset>
+	<fieldset name="statistics" label="COM_SWJPROJECTS_STATISTICS">
+		<field name="downloads" type="text"
+			   label="COM_SWJPROJECTS_STATISTICS_DOWNLOADS"
+			   class="readonly"
+			   default="0"
+			   readonly="true"/>
+	</fieldset>
+	<fieldset name="joomla" label="COM_SWJPROJECTS_JOOMLA">
+		<fields name="joomla">
+			<field name="type" type="list"
+				   label="COM_SWJPROJECTS_JOOMLA_TYPE"
+				   default="">
+				<option value="">COM_SWJPROJECTS_JOOMLA_TYPE_SELECT</option>
+				<option value="component">COM_SWJPROJECTS_JOOMLA_TYPE_COMPONENT</option>
+				<option value="file">COM_SWJPROJECTS_JOOMLA_TYPE_FILE</option>
+				<option value="language">COM_SWJPROJECTS_JOOMLA_TYPE_LANGUAGE</option>
+				<option value="library">COM_SWJPROJECTS_JOOMLA_TYPE_LIBRARY</option>
+				<option value="module">COM_SWJPROJECTS_JOOMLA_TYPE_MODULE</option>
+				<option value="package">COM_SWJPROJECTS_JOOMLA_TYPE_PACKAGE</option>
+				<option value="plugin">COM_SWJPROJECTS_JOOMLA_TYPE_PLUGIN</option>
+			</field>
+			<field name="element" type="text"
+				   label="COM_SWJPROJECTS_JOOMLA_ELEMENT"
+				   hint="com_test"
+				   showon="type!:"/>
+			<field name="folder" type="text"
+				   label="COM_SWJPROJECTS_JOOMLA_FOLDER"
+				   showon="type:plugin"
+				   hint="system"/>
+			<field name="client_id" type="list"
+				   label="COM_SWJPROJECTS_JOOMLA_LOCATION"
+				   showon="type:module[OR]type:template">
+				<option value="0">COM_SWJPROJECTS_JOOMLA_LOCATION_SITE</option>
+				<option value="1">COM_SWJPROJECTS_JOOMLA_LOCATION_ADMINISTRATOR</option>
+			</field>
+			<field name="update_server" type="radio"
+				   label="COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER"
+				   class="btn-group btn-group-yesno"
+				   default="0"
+				   showon="type!:">
+				<option value="1">COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_ENABLE</option>
+				<option value="0">COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_DISABLE</option>
+			</field>
+		</fields>
+	</fieldset>
+	<fieldset name="urls" label="COM_SWJPROJECTS_URLS">
+		<fields name="urls">
+			<field name="support" type="text" label="COM_SWJPROJECTS_URLS_SUPPORT" class="input-xxlarge"/>
+			<field name="github" type="text" label="COM_SWJPROJECTS_URLS_GITHUB" class="input-xxlarge"/>
+			<field name="jed" type="text" label="COM_SWJPROJECTS_URLS_JED" class="input-xxlarge"/>
+		</fields>
+	</fieldset>
+</form>
