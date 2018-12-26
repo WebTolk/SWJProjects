@@ -105,13 +105,13 @@ class SWJProjectsViewCategories extends HtmlView
 		SWJProjectsHelper::addSubmenu('categories');
 		$this->sidebar = JHtmlSidebar::render();
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);
 		}
 
-		// Preprocess the list of items to find ordering divisions.
+		// Preprocess the list of items to find ordering divisions
 		if (!empty($this->items))
 		{
 			foreach ($this->items as &$item)

@@ -157,11 +157,11 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	{
 		$app = Factory::getApplication('site');
 
-		// Set request states.
+		// Set request states
 		$this->setState('project.id', $app->input->getInt('project_id', 0));
 		$this->setState('project.element', $app->input->get('element', ''));
 
-		// Load the parameters. Merge Global and Menu Item params into new object
+		// Merge Global and Menu Item params into new object
 		$params     = $app->getParams();
 		$menuParams = new Registry();
 		$menu       = $app->getMenu()->getActive();
@@ -417,7 +417,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 				$query->select(array('c.id as category_id', 'c.alias as category_alias'))
 					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
-				// Join over current translates.
+				// Join over current translates
 				$current = $this->translates['current'];
 				$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
@@ -593,7 +593,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
 					->where($db->quoteName('p.joomla') . ' LIKE' . $db->quote('%"update_server":"1"%'));
 
-				// Join over current translates.
+				// Join over current translates
 				$current = $this->translates['current'];
 				$query->select(array('t_p.title as title'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')

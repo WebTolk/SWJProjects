@@ -83,7 +83,7 @@ class SWJProjectsViewVersion extends HtmlView
 		$this->item           = $this->get('Item');
 		$this->project        = $this->getModel()->getProject($this->form->getValue('project_id', '', 0));
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);
@@ -106,7 +106,7 @@ class SWJProjectsViewVersion extends HtmlView
 			element.form.submit();
 		}");
 
-		// Add title and toolbar.
+		// Add title and toolbar
 		$this->addToolbar();
 
 		return parent::display($tpl);

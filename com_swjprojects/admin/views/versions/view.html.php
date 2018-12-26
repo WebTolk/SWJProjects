@@ -96,7 +96,7 @@ class SWJProjectsViewVersions extends HtmlView
 		SWJProjectsHelper::addSubmenu('versions');
 		$this->sidebar = JHtmlSidebar::render();
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);

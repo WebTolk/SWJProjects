@@ -100,13 +100,13 @@ class SWJProjectsViewProjects extends HtmlView
 		$this->category   = $this->get('Item');
 		$this->menu       = Factory::getApplication()->getMenu()->getActive();
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);
 		}
 
-		// Create a shortcut for item.
+		// Create a shortcut for item
 		$category = $this->category;
 
 		// Check to see which parameters should take priority

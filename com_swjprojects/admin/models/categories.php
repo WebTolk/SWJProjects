@@ -36,7 +36,7 @@ class SWJProjectsModelCategories extends ListModel
 		// Set translate
 		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
 
-		// Add the ordering filtering fields whitelist.
+		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
@@ -68,7 +68,7 @@ class SWJProjectsModelCategories extends ListModel
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		// List state information.
+		// List state information
 		$ordering  = empty($ordering) ? 'c.lft' : $ordering;
 		$direction = empty($direction) ? 'asc' : $direction;
 

@@ -37,7 +37,7 @@ class SWJProjectsViewJUpdate extends HtmlView
 	{
 		$this->xml = $this->get('XML');
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);

@@ -108,10 +108,10 @@ class SWJProjectsModelProjects extends ListModel
 	{
 		$app = Factory::getApplication('site');
 
-		// Set request states.
+		// Set request states
 		$this->setState('category.id', $app->input->getInt('id', 1));
 
-		// Load the parameters. Merge Global and Menu Item params into new object
+		// Merge Global and Menu Item params into new object
 		$params     = $app->getParams();
 		$menuParams = new Registry();
 		$menu       = $app->getMenu()->getActive();
@@ -186,7 +186,7 @@ class SWJProjectsModelProjects extends ListModel
 		$query->select(array('c.id as category_id', 'c.alias as category_alias'))
 			->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
-		// Join over current translates.
+		// Join over current translates
 		$current = $this->translates['current'];
 		$query->select(array('t_p.*', 'p.id as id'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
@@ -357,7 +357,7 @@ class SWJProjectsModelProjects extends ListModel
 					->from($db->quoteName('#__swjprojects_categories', 'c'))
 					->where('c.id = ' . (int) $pk);
 
-				// Join over current translates.
+				// Join over current translates
 				$current = $this->translates['current'];
 				$query->select(array('t_c.*', 'c.id as id'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
@@ -464,7 +464,7 @@ class SWJProjectsModelProjects extends ListModel
 					->innerJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = child.parent_id')
 					->where('child.id = ' . (int) $pk);
 
-				// Join over current translates.
+				// Join over current translates
 				$current = $this->translates['current'];
 				$query->select(array('t_c.title as title'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')

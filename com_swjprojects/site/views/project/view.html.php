@@ -91,13 +91,13 @@ class SWJProjectsViewProject extends HtmlView
 		$this->category = $this->project->category;
 		$this->menu     = Factory::getApplication()->getMenu()->getActive();
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);
 		}
 
-		// Create a shortcut for item.
+		// Create a shortcut for item
 		$project = $this->project;
 
 		// Check to see which parameters should take priority
@@ -132,7 +132,7 @@ class SWJProjectsViewProject extends HtmlView
 		}
 		$this->params = $project->params;
 
-		// Process the content plugins.
+		// Process the content plugins
 		PluginHelper::importPlugin('content');
 		$app           = Factory::getApplication();
 		$offset        = $app->input->getUInt('limitstart');

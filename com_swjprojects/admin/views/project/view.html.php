@@ -73,13 +73,13 @@ class SWJProjectsViewProject extends HtmlView
 		$this->translateForms = $this->get('TranslateForms');
 		$this->item           = $this->get('Item');
 
-		// Check for errors.
+		// Check for errors
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);
 		}
 
-		// Add title and toolbar.
+		// Add title and toolbar
 		$this->addToolbar();
 
 		return parent::display($tpl);
