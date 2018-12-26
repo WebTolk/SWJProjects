@@ -136,19 +136,19 @@ class SWJProjectsModelProjects extends ListModel
 			$this->setState('filter.published', 1);
 		}
 
-		// List state information.
+		// List state information
 		$ordering  = empty($ordering) ? 'p.ordering' : $ordering;
 		$direction = empty($direction) ? 'asc' : $direction;
 
 		parent::populateState($ordering, $direction);
 
-		// Set ordering for query.
+		// Set ordering for query
 		$this->setState('list.ordering', $ordering);
 		$this->setState('list.direction', $direction);
 
-		// Set limit & limitstart for query.
+		// Set limit & start for query
 		$this->setState('list.limit', $params->get('projects_limit', 10, 'uint'));
-		$this->setState('list.start', $app->input->get('limitstart', 0, 'uint'));
+		$this->setState('list.start', $app->input->get('start', 0, 'uint'));
 	}
 
 	/**
