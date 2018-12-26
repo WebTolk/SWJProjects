@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
@@ -226,6 +227,23 @@ class com_swjprojectsInstallerScript
 		if (Folder::exists($dest))
 		{
 			Folder::delete($dest);
+		}
+	}
+
+	/**
+	 * This method is called when extension is updated.
+	 *
+	 * @param  InstallerAdapter $parent Parent object calling object.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	function update($parent)
+	{
+		// Remove forgot js file
+		$file = JPATH_ROOT . '/media/com_swjprojects/js/translate-switcher.min.min.js';
+		if (File::exists($file))
+		{
+			File::delete($file);
 		}
 	}
 }
