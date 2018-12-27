@@ -83,7 +83,7 @@ class SWJProjectsController extends BaseController
 
 			if ($current !== $canonical)
 			{
-				Factory::getDocument()->addHeadLink($root . $canonical, 'canonical');
+				Factory::getDocument()->addCustomTag('<link href="' . $root . $canonical . '" rel="canonical"/>');
 
 				$redirect = Uri::getInstance(Route::_($link));
 				if (!empty($uri->getVar('start')))
