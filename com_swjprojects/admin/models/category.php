@@ -330,6 +330,7 @@ class SWJProjectsModelCategory extends AdminModel
 		{
 			$alias = OutputFilter::stringURLSafe($alias);
 		}
+		if (empty(($alias))) $alias = Factory::getDate()->toUnix();
 
 		// Check alias is already exist
 		$checkAlias = $this->getTable();

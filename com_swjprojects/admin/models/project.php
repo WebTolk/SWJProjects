@@ -214,7 +214,7 @@ class SWJProjectsModelProject extends AdminModel
 	 */
 	public function getTranslateForms($loadData = true, $clear = false)
 	{
-		$languages = LanguageHelper::getLanguages('lang_code');
+		$languages  = LanguageHelper::getLanguages('lang_code');
 		$translates = new Registry();
 
 		// Get data
@@ -377,6 +377,7 @@ class SWJProjectsModelProject extends AdminModel
 		{
 			$alias = OutputFilter::stringURLSafe($alias);
 		}
+		if (empty(($alias))) $alias = Factory::getDate()->toUnix();
 
 		// Check alias is already exist
 		$checkAlias = $this->getTable();
