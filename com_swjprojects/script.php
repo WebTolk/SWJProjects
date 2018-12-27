@@ -130,6 +130,7 @@ class com_swjprojectsInstallerScript
 			$root->path      = '';
 			$root->alias     = 'root';
 			$root->state     = 1;
+			$root->params    = '';
 
 			$db->insertObject($table, $root);
 		}
