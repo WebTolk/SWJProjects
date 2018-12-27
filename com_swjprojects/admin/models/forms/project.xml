@@ -37,7 +37,7 @@
 			<option value="0">JUNPUBLISHED</option>
 			<option value="-2">JTRASHED</option>
 		</field>
-		<fields name="attribs">
+		<fields name="params">
 			<field name="project_layout" type="componentlayout"
 				   label="JFIELD_ALT_LAYOUT_LABEL"
 				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
