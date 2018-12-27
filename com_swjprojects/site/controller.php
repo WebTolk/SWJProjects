@@ -42,73 +42,62 @@ class SWJProjectsController extends BaseController
 	public function display($cachable = false, $urlparams = array())
 	{
 		$view       = $this->input->get('view', $this->default_view);
-		$id         = $this->input->get('id', 0);
-		$catid      = $this->input->get('catid', 1);
-		$project_id = $this->input->get('project_id', 0);
-
-		$uri       = Uri::getInstance();
-		$canonical = false;
-		$params    = array();
-		if (!empty($uri->getVar('start')))
-		{
-			$params['start'] = $uri->getVar('start');
-		}
-		if (!empty($uri->getVar('debug')))
-		{
-			$params['debug'] = $uri->getVar('debug');
-		}
+		$id         = $this->input->get('id', 0, 'raw');
+		$catid      = $this->input->get('catid', 1, 'raw');
+		$project_id = $this->input->get('project_id', 0, 'raw');
+		$element    = $this->input->get('element', '', 'raw');
+		$link       = false;
 
 		if ($view == 'version')
 		{
-			$canonical = SWJProjectsHelperRoute::getVersionRoute($id, $project_id, $catid);
+			$link = SWJProjectsHelperRoute::getVersionRoute($id, $project_id, $catid);
 		}
 
 		if ($view == 'versions')
 		{
-			$canonical = SWJProjectsHelperRoute::getVersionsRoute($id, $catid);
+			$link = SWJProjectsHelperRoute::getVersionsRoute($id, $catid);
 		}
 
 		if ($view == 'project')
 		{
-			$canonical = SWJProjectsHelperRoute::getProjectRoute($id, $catid);
+
+			$link = SWJProjectsHelperRoute::getProjectRoute($id, $catid);
 		}
 
 		if ($view == 'projects')
 		{
-			$canonical = SWJProjectsHelperRoute::getProjectsRoute($id);
+			$link = SWJProjectsHelperRoute::getProjectsRoute($id);
 		}
 
 		if ($view == 'jupdate')
 		{
-			$canonical = SWJProjectsHelperRoute::getJUpdateRoute($id);
-			if (!empty($uri->getVar('project_id')))
-			{
-				$params['project_id'] = $uri->getVar('project_id');
-			}
-			if (!empty($uri->getVar('element')))
-			{
-				$params['element'] = $uri->getVar('element');
-			}
+			$link = SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element);
 		}
 
-		if ($canonical)
+		if ($link)
 		{
-			$url       = urldecode($uri->toString());
-			$canonical = rtrim(URI::root(), '/') . Route::_($canonical);
+			$uri       = Uri::getInstance();
+			$root      = $uri->toString(array('scheme', 'host', 'port'));
+			$canonical = Uri::getInstance(Route::_($link))->toString();
+			$current   = $uri->toString(array('path', 'query', 'fragment'));
 
-			if ($url !== $canonical)
+			if ($current !== $canonical)
 			{
-				Factory::getDocument()->addHeadLink($canonical, 'canonical');
+				Factory::getDocument()->addHeadLink($root . $canonical, 'canonical');
 
-				$redirect = $canonical;
-				if (!empty($params))
+				$redirect = Uri::getInstance(Route::_($link));
+				if (!empty($uri->getVar('start')))
 				{
-					$redirect .= '?' . urldecode(http_build_query($params));
+					$redirect->setVar('start', $uri->getVar('start'));
+				}
+				if (!empty($uri->getVar('debug')))
+				{
+					$redirect->setVar('debug', $uri->getVar('debug'));
 				}
 
-				if ($url != $redirect)
+				if ($current != $redirect)
 				{
-					Factory::getApplication()->redirect($redirect, true);
+					Factory::getApplication()->redirect($redirect, 301);
 				}
 			}
 		}
