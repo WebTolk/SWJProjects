@@ -41,63 +41,67 @@ class SWJProjectsController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
-		$view       = $this->input->get('view', $this->default_view);
-		$id         = $this->input->get('id', 0, 'raw');
-		$catid      = $this->input->get('catid', 1, 'raw');
-		$project_id = $this->input->get('project_id', 0, 'raw');
-		$element    = $this->input->get('element', '', 'raw');
-		$link       = false;
-
-		if ($view == 'version')
+		// Duplicates protection
+		if (Factory::getApplication()->getParams()->get('duplicates_protection', 1))
 		{
-			$link = SWJProjectsHelperRoute::getVersionRoute($id, $project_id, $catid);
-		}
+			$view       = $this->input->get('view', $this->default_view);
+			$id         = $this->input->get('id', 0, 'raw');
+			$catid      = $this->input->get('catid', 1, 'raw');
+			$project_id = $this->input->get('project_id', 0, 'raw');
+			$element    = $this->input->get('element', '', 'raw');
+			$link       = false;
 
-		if ($view == 'versions')
-		{
-			$link = SWJProjectsHelperRoute::getVersionsRoute($id, $catid);
-		}
-
-		if ($view == 'project')
-		{
-
-			$link = SWJProjectsHelperRoute::getProjectRoute($id, $catid);
-		}
-
-		if ($view == 'projects')
-		{
-			$link = SWJProjectsHelperRoute::getProjectsRoute($id);
-		}
-
-		if ($view == 'jupdate')
-		{
-			$link = SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element);
-		}
-
-		if ($link)
-		{
-			$uri       = Uri::getInstance();
-			$root      = $uri->toString(array('scheme', 'host', 'port'));
-			$canonical = Uri::getInstance(Route::_($link))->toString();
-			$current   = $uri->toString(array('path', 'query', 'fragment'));
-
-			if ($current !== $canonical)
+			if ($view == 'version')
 			{
-				Factory::getDocument()->addCustomTag('<link href="' . $root . $canonical . '" rel="canonical"/>');
+				$link = SWJProjectsHelperRoute::getVersionRoute($id, $project_id, $catid);
+			}
 
-				$redirect = Uri::getInstance(Route::_($link));
-				if (!empty($uri->getVar('start')))
-				{
-					$redirect->setVar('start', $uri->getVar('start'));
-				}
-				if (!empty($uri->getVar('debug')))
-				{
-					$redirect->setVar('debug', $uri->getVar('debug'));
-				}
+			if ($view == 'versions')
+			{
+				$link = SWJProjectsHelperRoute::getVersionsRoute($id, $catid);
+			}
 
-				if ($current != $redirect)
+			if ($view == 'project')
+			{
+
+				$link = SWJProjectsHelperRoute::getProjectRoute($id, $catid);
+			}
+
+			if ($view == 'projects')
+			{
+				$link = SWJProjectsHelperRoute::getProjectsRoute($id);
+			}
+
+			if ($view == 'jupdate')
+			{
+				$link = SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element);
+			}
+
+			if ($link)
+			{
+				$uri       = Uri::getInstance();
+				$root      = $uri->toString(array('scheme', 'host', 'port'));
+				$canonical = Uri::getInstance(Route::_($link))->toString();
+				$current   = $uri->toString(array('path', 'query', 'fragment'));
+
+				if ($current !== $canonical)
 				{
-					Factory::getApplication()->redirect($redirect, 301);
+					Factory::getDocument()->addCustomTag('<link href="' . $root . $canonical . '" rel="canonical"/>');
+
+					$redirect = Uri::getInstance(Route::_($link));
+					if (!empty($uri->getVar('start')))
+					{
+						$redirect->setVar('start', $uri->getVar('start'));
+					}
+					if (!empty($uri->getVar('debug')))
+					{
+						$redirect->setVar('debug', $uri->getVar('debug'));
+					}
+
+					if ($current != $redirect)
+					{
+						Factory::getApplication()->redirect($redirect, 301);
+					}
 				}
 			}
 		}

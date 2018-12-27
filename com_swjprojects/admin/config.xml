@@ -55,6 +55,13 @@
 			   last="24"
 			   step="1"
 			   default="0"/>
+		<field name="duplicates_protection" type="radio"
+			   label="COM_SWJPROJECTS_PARAMS_DUPLICATES_PROTECTION"
+			   default="1"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 	</fieldset>
 	<fieldset name="permissions"
 			  label="JCONFIG_PERMISSIONS_LABEL"
