@@ -8,23 +8,27 @@
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-	let buttons = document.querySelectorAll('[data-translate-switcher] [data-translate]');
+	let translate = document.querySelector('[data-translate-switcher]').getAttribute('data-default'),
+		storage = window.location.href.toString().split(window.location.host)[1].replace(/&return=[a-zA-Z0-9%]+/, "")
+			.split('#')[0] + '_translate',
+		buttons = document.querySelectorAll('[data-translate-switcher] [data-translate]');
+
+	// Set translate after DOM loaded
+	if (sessionStorage.getItem(storage)) {
+		translate = sessionStorage.getItem(storage);
+	}
+	switchTranslate(translate);
+
+	// Change translate after click button
 	buttons.forEach(function (button) {
 		button.addEventListener('click', function () {
-			for (let i = 0; i < buttons.length; i++) {
-				buttons[i].classList.remove('active');
-			}
 			button.classList.add('active');
-			switchTranslate();
+			switchTranslate(button.getAttribute('data-translate'));
 		});
 	});
-	switchTranslate();
 
 	// Switch translate
-	function switchTranslate() {
-		let active = document.querySelector('[data-translate-switcher] .active')
-			.getAttribute('data-translate');
-
+	function switchTranslate(active) {
 		// Toggle translate fields
 		document.querySelectorAll('[data-translate-input]').forEach(function (input) {
 			if (input.getAttribute('data-translate') === active) {
@@ -42,5 +46,17 @@ document.addEventListener("DOMContentLoaded", function () {
 				input.style.display = 'none';
 			}
 		});
+
+		// Set active class to button
+		buttons.forEach(function (button) {
+			if (button.getAttribute('data-translate') === active) {
+				button.classList.add('active');
+			} else {
+				button.classList.remove('active');
+			}
+		});
+
+		// Save translate
+		sessionStorage.setItem(storage, active);
 	}
 });

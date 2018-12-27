@@ -19,10 +19,10 @@ HTMLHelper::script('media/com_swjprojects/js/translate-switcher.min.js', array('
 
 $default = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
 ?>
-<div data-translate-switcher class="btn-group">
+<div data-translate-switcher class="btn-group" data-default="<?php echo $default; ?>">
 	<?php foreach (LanguageHelper::getLanguages('lang_code') as $code => $language) : ?>
 		<a href="javascript:void(0);" title="<?php echo $language->title; ?>" data-translate="<?php echo $code; ?>"
-		   class="btn hasTooltip<?php echo ($code == $default) ? ' active' : '' ?>">
+		   class="btn hasTooltip">
 			<?php echo HTMLHelper::_('image', 'mod_languages/' . $language->image . '.gif', '', null, true); ?>
 		</a>
 	<?php endforeach; ?>
