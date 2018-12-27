@@ -52,7 +52,7 @@
 		<field name="id" type="text"
 			   label="JGLOBAL_FIELD_ID_LABEL"
 			   description="JGLOBAL_FIELD_ID_DESC"
-			   class="readonly span12"
+			   class="readonly"
 			   size="10"
 			   default="0"
 			   readonly="true"/>
@@ -71,7 +71,7 @@
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"
-			   class="chzn-color-state span12"
+			   class="chzn-color-state"
 			   filter="intval"
 			   size="1"
 			   default="1">
@@ -85,8 +85,7 @@
 				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
 				   useglobal="true"
 				   extension="com_swjprojects"
-				   view="version"
-				   class="span12"/>
+				   view="version"/>
 		</fields>
 	</fieldset>
 	<fieldset name="statistics" label="COM_SWJPROJECTS_STATISTICS">
