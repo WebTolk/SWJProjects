@@ -236,7 +236,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @param  InstallerAdapter $parent Parent object calling object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.0.1
 	 */
 	function update($parent)
 	{
