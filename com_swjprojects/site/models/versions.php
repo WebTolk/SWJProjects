@@ -327,6 +327,10 @@ class SWJProjectsModelVersions extends ListModel
 				// Set changelog
 				$registry        = new Registry($item->changelog);
 				$item->changelog = $registry->toArray();
+				foreach ($item->changelog as &$changelog)
+				{
+					$changelog['description'] = nl2br($changelog['description']);
+				}
 
 				// Set project
 				$item->project            = new stdClass();
