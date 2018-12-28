@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    1.0.1
+ * @version    1.0.2
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2018 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
