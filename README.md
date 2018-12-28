@@ -1,22 +1,28 @@
 [![SW JProjects](https://septdir.com/images/projects/1/cover.jpg)](https://www.septdir.com/joomla/components/swjprojects)
+[![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/joomla/components/swjprojects)
+[![Documentation](https://img.shields.io/badge/documentation--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/joomla/components/swjprojects)
+[![Support](https://img.shields.io/badge/support--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](mailto:support@septdir.com)
+[![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/projects)
+[![Download](https://img.shields.io/github/release/SeptdirWorkshop/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://www.septdir.com/projects?task=download&project_id=1)
 
+## Features
+### Digital Projects Catalog
+Component provides the creation and operation of digital projects catalog (programs, files, scripts, extensions, modules, etc.) and allows you to manage their description, characteristics and provides the ability of downloads.
 
-[![Info](https://img.shields.io/badge/-infomation-%230071bc.svg?style=for-the-badge)](https://www.septdir.com/joomla/components/swjprojects)
-[![Demo](https://img.shields.io/badge/-demo-green.svg?style=for-the-badge)](https://www.septdir.com/projects)
-[![Download](https://img.shields.io/badge/-download-red.svg?style=for-the-badge)](https://www.septdir.com/projects?task=download&project_id=1)
-![Joomla](https://img.shields.io/badge/joomla-%5E3.9.0-blue.svg?style=for-the-badge)
-![Php](https://img.shields.io/badge/php-%5E7.0-blue.svg?style=for-the-badge)
-[![Release](https://img.shields.io/github/release/SeptdirWorkshop/SWJProjects.svg?style=for-the-badge)](https://www.septdir.com/projects?task=download&project_id=1)
+### Versioning
+Component provides versioning of digital projects with the ability to specify the stability (Development, Alpha, Beta, Release Candidate, Stable) and changelog management.
 
-## [Features](https://www.septdir.com/joomla/components/swjprojects)
-* Catalog of digital projects.
-* List of versions for each project.
-* Create versions with different stability.
-* Download statistics for each version separately and for the project as a whole.
+### Statistical functionality
+Component includes statistical functionality with ability to track the count of downloads for each specific version.
+
+### File storage
+File storage structure allows you to store files outside the root directory, which provides a high degree of protection and excludes downloading by direct link to the file, bypassing the component.
+
+### For Joomla! developers
+Developers who create extensions for Joomla! CMS are provided with additional functionality for creating and running their own update server, as part of the component.
+
+## Differences
 * Convenient multilingual.
-* Joomla support! 3.9 and higher.
-* Protection against duplicate pages.
+* Duplicate pages protection
 * OpenGraph and Twitter meta.
-* Creating your own Joomla! CMS ™.
-* Caching the Joomla! Update Server Manifest CMS ™.
-* Ability to store files outside the root directory of a site.
+* Caching Joomla! Extensions Server Update Manifest.
