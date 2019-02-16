@@ -64,7 +64,7 @@ class SWJProjectsViewProjects extends HtmlView
 	public $activeFilters;
 
 	/**
-	 * View sidebar
+	 * View sidebar.
 	 *
 	 * @var  string
 	 *

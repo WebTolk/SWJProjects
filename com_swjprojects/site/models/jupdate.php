@@ -33,7 +33,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	protected $_xml = null;
 
 	/**
-	 * Update server xml xmlCache.
+	 * Update server xml cache.
 	 *
 	 * @var  string
 	 *
@@ -105,7 +105,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	protected $filesPath = null;
 
 	/**
-	 * Cache tine im hours.
+	 * Cache time im hours.
 	 *
 	 * @var  int
 	 *
@@ -161,7 +161,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 		$this->setState('project.id', $app->input->getInt('project_id', 0));
 		$this->setState('project.element', $app->input->get('element', ''));
 
-		// Merge Global and Menu Item params into new object
+		// Merge global and menu item params into new object
 		$params     = $app->getParams();
 		$menuParams = new Registry();
 		$menu       = $app->getMenu()->getActive();

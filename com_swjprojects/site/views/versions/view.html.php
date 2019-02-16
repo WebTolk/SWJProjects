@@ -151,7 +151,7 @@ class SWJProjectsViewVersions extends HtmlView
 		}
 		$this->params = $project->params;
 
-		// Escape strings for HTML output
+		// Escape strings for html output
 		$this->pageclass_sfx = htmlspecialchars($this->params->get('pageclass_sfx'));
 
 		// Prepare the document

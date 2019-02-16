@@ -13,12 +13,10 @@
 	color: inherit;
 }
 
-
 #item-form .span3 .well.form-horizontal {
 	box-sizing: border-box;
 	max-width: 100%;
 }
-
 
 #item-form .span3 .well.form-horizontal .controls input[type="text"],
 #item-form .span3 .well.form-horizontal .controls input[type="number"],

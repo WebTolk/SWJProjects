@@ -139,7 +139,7 @@ class SWJProjectsViewProject extends HtmlView
 		$project->text = &$project->fulltext;
 		$app->triggerEvent('onContentPrepare', array('com_swjprojects.project', &$project, &$project->params, $offset));
 
-		// Escape strings for HTML output
+		// Escape strings for html output
 		$this->pageclass_sfx = htmlspecialchars($this->params->get('pageclass_sfx'));
 
 		// Prepare the document
@@ -213,7 +213,7 @@ class SWJProjectsViewProject extends HtmlView
 			$this->document->setDescription(JHtmlString::truncate($project->introtext, 150, false, false));
 		}
 
-		// Set Meta Keywords
+		// Set meta keywords
 		if ($current && $this->params->get('menu-meta_keywords'))
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));

@@ -101,7 +101,7 @@ class SWJProjectsModelVersion extends ItemModel
 		$this->setState('project.id', $app->input->getInt('project_id', 0));
 		$this->setState('category.id', $app->input->getInt('catid', 1));
 
-		// Merge Global and Menu Item params into new object
+		// Merge global and menu item params into new object
 		$params     = $app->getParams();
 		$menuParams = new Registry();
 		$menu       = $app->getMenu()->getActive();
@@ -329,7 +329,7 @@ class SWJProjectsModelVersion extends ItemModel
 	/**
 	 * Method to get category parent data.
 	 *
-	 * @param  integer $pk The id of the version.
+	 * @param  integer $pk The id of the category.
 	 *
 	 * @throws  Exception
 	 *

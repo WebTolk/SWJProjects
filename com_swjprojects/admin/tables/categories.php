@@ -15,7 +15,7 @@ use Joomla\CMS\Table\Nested;
 class SWJProjectsTableCategories extends Nested
 {
 	/**
-	 * Cache for the root ID.
+	 * Cache for the root id.
 	 *
 	 * @var  integer
 	 *

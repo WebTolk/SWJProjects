@@ -35,7 +35,7 @@ class SWJProjectsViewVersions extends HtmlView
 	protected $items;
 
 	/**
-	 * Pagination object..
+	 * Pagination object.
 	 *
 	 * @var  \Joomla\CMS\Pagination\Pagination
 	 *

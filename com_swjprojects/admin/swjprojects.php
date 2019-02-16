@@ -14,7 +14,6 @@ JLoader::register('SWJProjectsHelper', __DIR__ . '/helpers/swjprojects.php');
 
 use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 

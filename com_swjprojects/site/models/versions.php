@@ -112,7 +112,7 @@ class SWJProjectsModelVersions extends ListModel
 		$this->setState('project.id', $app->input->getInt('id', 0));
 		$this->setState('category.id', $app->input->getInt('catid', 1));
 
-		// Merge Global and Menu Item params into new object
+		// Merge global and menu item params into new object
 		$params     = $app->getParams();
 		$menuParams = new Registry();
 		$menu       = $app->getMenu()->getActive();
@@ -171,7 +171,7 @@ class SWJProjectsModelVersions extends ListModel
 	}
 
 	/**
-	 * Build an SQL query to load versions list.
+	 * Build an sql query to load versions list.
 	 *
 	 * @return  JDatabaseQuery  Database query to load versions list.
 	 *
@@ -359,7 +359,7 @@ class SWJProjectsModelVersions extends ListModel
 	/**
 	 * Method to get project data.
 	 *
-	 * @param  integer $pk The id of the version.
+	 * @param  integer $pk The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -519,7 +519,7 @@ class SWJProjectsModelVersions extends ListModel
 	/**
 	 * Method to get category parent data.
 	 *
-	 * @param  integer $pk The id of the version.
+	 * @param  integer $pk The id of the category.
 	 *
 	 * @throws  Exception
 	 *

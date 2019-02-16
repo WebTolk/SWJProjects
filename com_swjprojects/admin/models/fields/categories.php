@@ -25,7 +25,7 @@ class JFormFieldCategories extends JFormFieldList
 	 *
 	 * @since  1.0.0
 	 */
-	protected $item = 'categories';
+	protected $type = 'categories';
 
 	/**
 	 * Field options array.

@@ -239,7 +239,7 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for projects.
 	 *
-	 * @param  string $segment Segment to retrieve the ID.
+	 * @param  string $segment Segment to retrieve the id.
 	 * @param  array  $query   The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
@@ -272,7 +272,7 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for project.
 	 *
-	 * @param  string $segment Segment to retrieve the ID.
+	 * @param  string $segment Segment to retrieve the id.
 	 * @param  array  $query   The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
@@ -306,7 +306,7 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for versions.
 	 *
-	 * @param  string $segment Segment to retrieve the ID.
+	 * @param  string $segment Segment to retrieve the id.
 	 * @param  array  $query   The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
@@ -326,7 +326,7 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for version.
 	 *
-	 * @param  string $segment Segment to retrieve the ID.
+	 * @param  string $segment Segment to retrieve the id.
 	 * @param  array  $query   The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
@@ -360,7 +360,7 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for jupdate.
 	 *
-	 * @param  string $segment Segment to retrieve the ID.
+	 * @param  string $segment Segment to retrieve the id.
 	 * @param  array  $query   The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
@@ -376,11 +376,11 @@ class SWJProjectsRouter extends RouterView
 /**
  * SWJProjects router functions.
  *
- * @param  array &$query An array of URL arguments.
+ * @param  array &$query An array of url arguments.
  *
  * @throws  Exception
  *
- * @return  array  The URL arguments to use to assemble the subsequent URL.
+ * @return  array  The url arguments to use to assemble the subsequent URL.
  *
  * @since  1.0.0
  */
@@ -393,13 +393,13 @@ function SWJProjectsBuildRoute(&$query)
 }
 
 /**
- * Parse the segments of a URL.
+ * Parse the segments of a url.
  *
  * @param  array $segments The segments of the URL to parse.
  *
  * @throws  Exception
  *
- * @return  array  The URL attributes to be used by the application.
+ * @return  array  The url attributes to be used by the application.
  *
  * @since  1.0.0
  */

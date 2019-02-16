@@ -108,7 +108,7 @@ class SWJProjectsModelVersions extends ListModel
 	}
 
 	/**
-	 * Build an SQL query to load versions list.
+	 * Build an sql query to load versions list.
 	 *
 	 * @return  JDatabaseQuery  Database query to load versions list.
 	 *

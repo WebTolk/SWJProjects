@@ -76,7 +76,7 @@ $columns = 5;
 				</tfoot>
 				<tbody>
 				<?php foreach ($this->items as $i => $item) :
-					$orderkey = array_search($item->id, $this->ordering[$item->parent_id]);
+					$orderKey = array_search($item->id, $this->ordering[$item->parent_id]);
 					$canEdit = $user->authorise('core.edit', 'com_swjprojects.category.' . $item->id);
 					$canChange = $user->authorise('core.edit.state', 'com_swjprojects.category.' . $item->id);
 
@@ -125,7 +125,7 @@ $columns = 5;
 							<span class="sortable-handler<?php echo $iconClass ?>"><span
 										class="icon-menu"></span></span>
 							<?php if ($canChange && $saveOrder) : ?>
-								<input type="text" name="order[]" size="5" value="<?php echo $orderkey + 1; ?>"
+								<input type="text" name="order[]" size="5" value="<?php echo $orderKey + 1; ?>"
 									   style="display:none"/>
 							<?php endif; ?>
 						</td>

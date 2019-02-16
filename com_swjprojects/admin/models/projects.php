@@ -97,7 +97,7 @@ class SWJProjectsModelProjects extends ListModel
 	}
 
 	/**
-	 * Build an SQL query to load projects list.
+	 * Build an sql query to load projects list.
 	 *
 	 * @return  JDatabaseQuery  Database query to load projects list.
 	 *

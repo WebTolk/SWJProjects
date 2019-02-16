@@ -162,7 +162,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	}
 
 	/**
-	 * Fetches Projects route.
+	 * Fetches projects route.
 	 *
 	 * @param  int $id The id of the category.
 	 *

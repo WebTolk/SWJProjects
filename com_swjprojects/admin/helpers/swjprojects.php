@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 class SWJProjectsHelper extends ContentHelper
 {
 	/**
-	 * Configure the Linkbar.
+	 * Configure the linkbar.
 	 *
 	 * @param  string $vName The name of the active view.
 	 *

@@ -52,7 +52,6 @@ class SWJProjectsModelCategories extends ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 *
 	 * @param  string $ordering  An optional ordering field.
 	 * @param  string $direction An optional direction (asc|desc).
 	 *
@@ -93,7 +92,7 @@ class SWJProjectsModelCategories extends ListModel
 	}
 
 	/**
-	 * Build an SQL query to load categories list.
+	 * Build an sql query to load categories list.
 	 *
 	 * @return  JDatabaseQuery  Database query to load categories list.
 	 *

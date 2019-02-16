@@ -181,9 +181,9 @@ class SWJProjectsViewCategories extends HtmlView
 	protected function getSortFields()
 	{
 		return [
-			't.state' => Text::_('JSTATUS'),
-			't.id'    => Text::_('JGRID_HEADING_ID'),
-			't.title' => Text::_('JGLOBAL_TITLE')
+			'с.state' => Text::_('JSTATUS'),
+			'с.id'    => Text::_('JGRID_HEADING_ID'),
+			'с.title' => Text::_('JGLOBAL_TITLE')
 		];
 	}
 }

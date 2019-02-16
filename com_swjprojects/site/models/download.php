@@ -162,7 +162,6 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 						->where('c.state IN (' . $published . ')');
 				}
 
-
 				$data = $db->setQuery($query)->loadObject();
 
 				if (empty($data))
@@ -270,7 +269,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	}
 
 	/**
-	 * Method to get project id from element
+	 * Method to get project id from element.
 	 *
 	 * @param  string $pk The id of the project.
 	 *
@@ -375,7 +374,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	}
 
 	/**
-	 * Method to update download counter
+	 * Method to update download counter.
 	 *
 	 * @throws  Exception
 	 *

@@ -65,8 +65,7 @@ $columns = 9;
 							$listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('searchtools.sort', 'JDATE', 'v.date',
-							$listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('searchtools.sort', 'JDATE', 'v.date', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone center">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_STATISTICS_DOWNLOADS', 'v.downloads',
