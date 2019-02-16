@@ -3,11 +3,11 @@
 	<name>COM_SWJPROJECTS</name>
 	<author>Septdir Workshop</author>
 	<creationDate>December 2018</creationDate>
-	<copyright>Copyright (c) 2018 - 2018 Septdir Workshop. All rights reserved.</copyright>
+	<copyright>Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.0.2</version>
+	<version>1.0.2-dev</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<install>
