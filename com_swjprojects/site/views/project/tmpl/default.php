@@ -68,5 +68,43 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 	<?php echo HTMLHelper::_('bootstrap.addTab', 'projectTab', 'description', Text::_('JGLOBAL_DESCRIPTION')); ?>
 	<?php if (!empty($this->project->fulltext)) echo $this->project->fulltext; ?>
 	<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+
+	<?php if ($this->project->joomla):
+		$type = $this->project->joomla->get('type'); ?>
+		<?php echo HTMLHelper::_('bootstrap.addTab', 'projectTab', 'joomla', Text::_('COM_SWJPROJECTS_JOOMLA')); ?>
+		<ul class="unstyled">
+			<li>
+				<strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_TYPE'); ?>: </strong>
+				<?php echo Text::_('COM_SWJPROJECTS_JOOMLA_TYPE_' . $type); ?>
+			</li>
+			<?php if ($type === 'plugin'): ?>
+				<li>
+					<strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_FOLDER'); ?>: </strong>
+					<?php echo utf8_ucfirst($this->project->joomla->get('folder')); ?>
+				</li>
+			<?php endif; ?>
+			<?php if ($type === 'template' || $type === 'module'): ?>
+				<li>
+					<strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_LOCATION'); ?>: </strong>
+					<?php echo ($this->project->joomla->get('client_id')) ?
+						Text::_('COM_SWJPROJECTS_JOOMLA_LOCATION_ADMINISTRATOR')
+						: Text::_('COM_SWJPROJECTS_JOOMLA_LOCATION_SITE') ?>
+				</li>
+			<?php endif; ?>
+			<?php if ($type === 'package' && !empty($this->project->joomla->get('package_composition'))): ?>
+				<li>
+					<strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_PACKAGE_COMPOSITION'); ?>: </strong>
+					<?php
+					$compositions = array();
+					foreach ($this->project->joomla->get('package_composition') as $composition)
+					{
+						$compositions[] = Text::_('COM_SWJPROJECTS_JOOMLA_TYPE_' . $composition);
+					}
+					echo implode(', ', $compositions); ?>
+				</li>
+			<?php endif; ?>
+		</ul>
+		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+	<?php endif; ?>
 	<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 </div>

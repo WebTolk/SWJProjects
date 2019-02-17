@@ -296,6 +296,10 @@ class SWJProjectsModelProjects extends ListModel
 
 				// Set joomla
 				$item->joomla = new Registry($item->joomla);
+				if (!$item->joomla->get('type'))
+				{
+					$item->joomla = false;
+				}
 
 				// Set urls
 				$item->urls = new Registry($item->urls);

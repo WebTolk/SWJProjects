@@ -195,7 +195,7 @@ class SWJProjectsModelProject extends ItemModel
 					->setLimit(1);
 				$query->select('(' . $subQuery->__toString() . ') as last_version');
 
-				// Select downloads counter
+				// Join over versions for download counter
 				$query->select(array('SUM(dc.downloads) as downloads'))
 					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
 
@@ -239,6 +239,10 @@ class SWJProjectsModelProject extends ItemModel
 
 				// Set joomla
 				$data->joomla = new Registry($data->joomla);
+				if (!$data->joomla->get('type'))
+				{
+					$data->joomla = false;
+				}
 
 				// Set urls
 				$data->urls = new Registry($data->urls);

@@ -83,6 +83,19 @@
 				<option value="0">COM_SWJPROJECTS_JOOMLA_LOCATION_SITE</option>
 				<option value="1">COM_SWJPROJECTS_JOOMLA_LOCATION_ADMINISTRATOR</option>
 			</field>
+			<field name="package_composition" type="list"
+				   label="COM_SWJPROJECTS_JOOMLA_PACKAGE_COMPOSITION"
+				   multiple="true"
+				   showon="type:package">
+				<option value="component">COM_SWJPROJECTS_JOOMLA_TYPE_COMPONENT</option>
+				<option value="file">COM_SWJPROJECTS_JOOMLA_TYPE_FILE</option>
+				<option value="language">COM_SWJPROJECTS_JOOMLA_TYPE_LANGUAGE</option>
+				<option value="library">COM_SWJPROJECTS_JOOMLA_TYPE_LIBRARY</option>
+				<option value="module">COM_SWJPROJECTS_JOOMLA_TYPE_MODULE</option>
+				<option value="package">COM_SWJPROJECTS_JOOMLA_TYPE_PACKAGE</option>
+				<option value="plugin">COM_SWJPROJECTS_JOOMLA_TYPE_PLUGIN</option>
+				<option value="template">COM_SWJPROJECTS_JOOMLA_TYPE_TEMPLATE</option>
+			</field>
 			<field name="update_server" type="radio"
 				   label="COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER"
 				   class="btn-group btn-group-yesno"
