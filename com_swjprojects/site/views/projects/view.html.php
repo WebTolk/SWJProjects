@@ -169,7 +169,7 @@ class SWJProjectsViewProjects extends HtmlView
 		// Add category pathway item if no current menu
 		if ($menu && !$current)
 		{
-			$paths[] = array('title' => $category->title, 'link' => '');
+			$paths = array(array('title' => $category->title, 'link' => ''));
 
 			// Add parent categories pathway item if no current menu
 			$parent = $this->getModel()->getCategoryParent($category->id);
