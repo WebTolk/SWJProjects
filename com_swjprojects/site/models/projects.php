@@ -209,7 +209,7 @@ class SWJProjectsModelProjects extends ListModel
 					. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
 		}
 
-		// Select last version
+		// Join over versions for last version
 		$subQuery = $db->getQuery(true)
 			->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
 			->from($db->quoteName('#__swjprojects_versions', 'lv'))
@@ -220,6 +220,10 @@ class SWJProjectsModelProjects extends ListModel
 			->order($db->escape('lv.micro') . ' ' . $db->escape('desc'))
 			->setLimit(1);
 		$query->select('(' . $subQuery->__toString() . ') as last_version');
+
+		// Join over versions for download counter
+		$query->select(array('SUM(dc.downloads) as downloads'))
+			->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
 
 		// Filter by published state
 		$published = $this->getState('filter.published');

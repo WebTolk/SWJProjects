@@ -608,7 +608,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 				}
 
-				// Select last version
+				// Join over versions for last version
 				$subQuery = $db->getQuery(true)
 					->select(array('CONCAT(lv.major, ".", lv.minor, ".", lv.micro)'))
 					->from($db->quoteName('#__swjprojects_versions', 'lv'))

@@ -114,10 +114,6 @@ class SWJProjectsModelProjects extends ListModel
 		$query->select(array('c.id as category_id', 'c.alias as category_alias'))
 			->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
-		// Join over the versions
-		$query->select(array('SUM(downloads) as downloads'))
-			->leftJoin($db->quoteName('#__swjprojects_versions', 'v') . ' ON v.project_id = p.id');
-
 		// Join over translates
 		$translate = $this->translate;
 		$query->select(array('t_p.title as title'))
@@ -127,6 +123,10 @@ class SWJProjectsModelProjects extends ListModel
 		$query->select(array('t_c.title as category_title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 				. ' ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($translate));
+
+		// Select downloads counter
+		$query->select(array('SUM(vd.downloads) as downloads'))
+			->leftJoin($db->quoteName('#__swjprojects_versions', 'vd') . ' ON vd.project_id = p.id');
 
 		// Filter by published state
 		$published = $this->getState('filter.published');

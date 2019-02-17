@@ -56,6 +56,12 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 									</a>
 								</li>
 							<?php endif; ?>
+							<?php if ($item->downloads): ?>
+								<li>
+									<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>: </strong>
+									<?php echo $item->downloads; ?>
+								</li>
+							<?php endif; ?>
 						</ul>
 						<?php if (!empty($item->introtext)): ?>
 							<div class="intro">
