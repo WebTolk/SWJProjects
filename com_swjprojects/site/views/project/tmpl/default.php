@@ -103,6 +103,12 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 					echo implode(', ', $compositions); ?>
 				</li>
 			<?php endif; ?>
+			<?php if ($this->project->joomla->get('version')): ?>
+				<li>
+					<strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_VERSION'); ?>: </strong>
+					<?php echo implode(', ', $this->project->joomla->get('version')); ?>
+				</li>
+			<?php endif; ?>
 		</ul>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>

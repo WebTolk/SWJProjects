@@ -199,6 +199,13 @@ class SWJProjectsModelProject extends ItemModel
 				$query->select(array('SUM(dc.downloads) as downloads'))
 					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
 
+				// Join over versions for joomla versions
+				$subQuery = $db->getQuery(true)
+					->select(array('GROUP_CONCAT(joomla_version SEPARATOR ",")'))
+					->from($db->quoteName('#__swjprojects_versions', 'jv'))
+					->where('jv.project_id = p.id');
+				$query->select('(' . $subQuery->__toString() . ') as joomla_versions');
+
 				// Filter by published state
 				$published = $this->getState('filter.published');
 				if (is_numeric($published))
@@ -243,6 +250,11 @@ class SWJProjectsModelProject extends ItemModel
 				{
 					$data->joomla = false;
 				}
+				else
+				{
+					$data->joomla->set('version', array_unique(explode(',', $data->joomla_versions)));
+				}
+
 
 				// Set urls
 				$data->urls = new Registry($data->urls);
