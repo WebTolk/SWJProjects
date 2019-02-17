@@ -67,6 +67,7 @@
 				<option value="module">COM_SWJPROJECTS_JOOMLA_TYPE_MODULE</option>
 				<option value="package">COM_SWJPROJECTS_JOOMLA_TYPE_PACKAGE</option>
 				<option value="plugin">COM_SWJPROJECTS_JOOMLA_TYPE_PLUGIN</option>
+				<option value="template">COM_SWJPROJECTS_JOOMLA_TYPE_TEMPLATE</option>
 			</field>
 			<field name="element" type="text"
 				   label="COM_SWJPROJECTS_JOOMLA_ELEMENT"
