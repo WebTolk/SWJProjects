@@ -124,7 +124,7 @@ class SWJProjectsModelProjects extends ListModel
 			->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 				. ' ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($translate));
 
-		// Select downloads counter
+		// Join over versions for download counter
 		$query->select(array('SUM(vd.downloads) as downloads'))
 			->leftJoin($db->quoteName('#__swjprojects_versions', 'vd') . ' ON vd.project_id = p.id');
 
