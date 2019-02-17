@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_versions`
 	KEY `idx_alias` (`alias`(191)),
 	KEY `idx_state` (`state`),
 	KEY `idx_project_id` (`project_id`),
-	KEY `date` (`date`)
+	KEY `idx_date` (`date`)
 )
 	ENGINE = InnoDB
 	DEFAULT CHARSET = utf8mb4
