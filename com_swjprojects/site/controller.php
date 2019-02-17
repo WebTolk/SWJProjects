@@ -97,6 +97,7 @@ class SWJProjectsController extends BaseController
 					{
 						$redirect->setVar('debug', $uri->getVar('debug'));
 					}
+					$redirect = $redirect->toString(array('path', 'query', 'fragment'));
 
 					if ($current != $redirect)
 					{
