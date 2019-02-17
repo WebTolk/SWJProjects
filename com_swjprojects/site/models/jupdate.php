@@ -488,7 +488,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$item->name    = $item->project_title . ' ' . $item->version;
 					if ($item->tag !== 'stable')
 					{
-						$item->version .= ' ' . $item->tag;
+						$item->version .= '-' . $item->tag;
 						$item->name    .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $item->tag);
 
 						if ($item->tag !== 'dev' && !empty($item->stage))

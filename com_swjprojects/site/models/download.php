@@ -172,7 +172,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 				$data->filename = $data->element . '_' . $data->major . '.' . $data->minor . '.' . $data->micro;
 				if ($data->tag !== 'stable')
 				{
-					$data->filename .= '_' . $data->tag;
+					$data->filename .= '-' . $data->tag;
 
 					if ($data->tag !== 'dev' && !empty($data->stage))
 					{
