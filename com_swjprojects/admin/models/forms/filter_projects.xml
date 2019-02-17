@@ -29,6 +29,8 @@
 			<option value="p.state DESC">JSTATUS_DESC</option>
 			<option value="downloads ASC">COM_SWJPROJECTS_STATISTICS_DOWNLOADS_ASC</option>
 			<option value="downloads DESC">COM_SWJPROJECTS_STATISTICS_DOWNLOADS_DESC</option>
+			<option value="p.hits ASC">COM_SWJPROJECTS_STATISTICS_HITS_ASC</option>
+			<option value="p.hits DESC">COM_SWJPROJECTS_STATISTICS_HITS_DESC</option>
 		</field>
 		<field name="limit" type="limitbox"
 			   class="inputbox input-mini"

@@ -43,7 +43,9 @@ class SWJProjectsModelProjects extends ListModel
 				'id', 'p.id',
 				'title', 'p.title',
 				'published', 'state', 'p.state',
-				'category', 'category_id', 'c.id', 'e.catid', 'catid', 'category_title', 'cl.title'
+				'category', 'category_id', 'c.id', 'e.catid', 'catid', 'category_title', 'cl.title',
+				'downloads', 'p.downloads',
+				'hits', 'p.hits',
 			);
 		}
 		parent::__construct($config);

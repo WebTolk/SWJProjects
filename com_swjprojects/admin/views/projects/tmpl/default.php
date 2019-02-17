@@ -34,7 +34,7 @@ if ($saveOrder)
 	HTMLHelper::_('sortablelist.sortable', 'projectsList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
-$columns = 7;
+$columns = 8;
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=projects'); ?>" method="post"
 	  name="adminForm" id="adminForm">
@@ -70,6 +70,10 @@ $columns = 7;
 					</th>
 					<th width="10%" class="nowrap hidden-phone center">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_STATISTICS_DOWNLOADS', 'downloads',
+							$listDirn, $listOrder); ?>
+					</th>
+					<th width="10%" class="nowrap hidden-phone center">
+						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_STATISTICS_HITS', 'p.hits',
 							$listDirn, $listOrder); ?>
 					</th>
 					<th width="1%" class="nowrap hidden-phone center">
@@ -135,6 +139,11 @@ $columns = 7;
 						<td class="hidden-phone center">
 							<span class="badge badge-info">
 								<?php echo (int) $item->downloads; ?>
+							</span>
+						</td>
+						<td class="hidden-phone center">
+							<span class="badge badge-info">
+								<?php echo (int) $item->hits; ?>
 							</span>
 						</td>
 						<td class="hidden-phone center">

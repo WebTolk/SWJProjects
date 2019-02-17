@@ -145,6 +145,9 @@ class SWJProjectsViewProject extends HtmlView
 		// Prepare the document
 		$this->_prepareDocument();
 
+		// Update hist counter
+		$this->getModel()->hit();
+
 		return parent::display($tpl);
 	}
 

@@ -45,6 +45,13 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 						<?php echo $this->project->downloads; ?>
 					</li>
 				<?php endif; ?>
+
+				<?php if ($this->project->hits): ?>
+					<li>
+						<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_HITS'); ?>: </strong>
+						<?php echo $this->project->hits; ?>
+					</li>
+				<?php endif; ?>
 			</ul>
 			<div class="buttons">
 				<a href="<?php echo $this->project->download; ?>" class="btn btn-success" target="_blank">

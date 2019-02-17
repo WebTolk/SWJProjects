@@ -170,7 +170,8 @@ class SWJProjectsViewProjects extends HtmlView
 			'p.id'           => Text::_('JGRID_HEADING_ID'),
 			'p.title'        => Text::_('JGLOBAL_TITLE'),
 			'category_title' => Text::_('COM_SWJPROJECTS_CATEGORY'),
-			'downloads'      => Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS')
+			'downloads'      => Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'),
+			'p.hits'      => Text::_('COM_SWJPROJECTS_STATISTICS_HITS')
 		];
 	}
 }

@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -407,5 +408,26 @@ class SWJProjectsModelProject extends ItemModel
 		}
 
 		return $this->_categoryParent[$pk];
+	}
+
+	/**
+	 * Increment the hit counter for the project.
+	 *
+	 * @param   integer $pk Optional primary key of the article to increment.
+	 *
+	 * @throws Exception
+	 *
+	 * @return  boolean  True if successful; false otherwise and internal error set.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function hit($pk = 0)
+	{
+		$pk    = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+		$table = Table::getInstance('Projects', 'SWJProjectsTable');
+		$table->load($pk);
+		$table->hit($pk);
+
+		return true;
 	}
 }

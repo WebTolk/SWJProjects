@@ -53,6 +53,11 @@
 			   class="readonly"
 			   default="0"
 			   readonly="true"/>
+		<field name="hits" type="text"
+			   label="COM_SWJPROJECTS_STATISTICS_HITS"
+			   class="readonly"
+			   default="0"
+			   readonly="true"/>
 	</fieldset>
 	<fieldset name="joomla" label="COM_SWJPROJECTS_JOOMLA">
 		<fields name="joomla">
