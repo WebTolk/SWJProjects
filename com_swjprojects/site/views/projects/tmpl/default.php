@@ -34,46 +34,55 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 		<div class="projectsList">
 			<div class="items">
 				<?php foreach ($this->items as $item) : ?>
-					<div class="item-<?php echo $item->id; ?>">
+					<div class="item-<?php echo $item->id; ?> ">
 						<h2 class="title">
 							<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
-							<a href="<?php echo $item->download; ?>" class="btn btn-success pull-right" target="_blank">
+							<a href="<?php echo $item->download; ?>" class="btn btn-success pull-right"
+							   target="_blank">
 								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
 							</a>
 						</h2>
-						<ul class="meta inline">
-							<li>
-								<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
-								<a href="<?php echo $item->category->link; ?>">
-									<?php echo $item->category->title; ?>
-								</a>
-							</li>
-							<?php if ($item->version): ?>
-								<li>
-									<strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
-									<a href="<?php echo $item->version->link; ?>">
-										<?php echo $item->version->version; ?>
-									</a>
-								</li>
+						<div class="clearfix">
+							<?php if ($icon = $item->images->get('icon')): ?>
+								<div class="pull-right"><?php echo HTMLHelper::image($icon, $item->title); ?></div>
 							<?php endif; ?>
-							<?php if ($item->downloads): ?>
-								<li>
-									<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>: </strong>
-									<?php echo $item->downloads; ?>
-								</li>
-							<?php endif; ?>
-							<?php if ($item->hits): ?>
-								<li>
-									<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_HITS'); ?>: </strong>
-									<?php echo $item->hits; ?>
-								</li>
-							<?php endif; ?>
-						</ul>
-						<?php if (!empty($item->introtext)): ?>
-							<div class="intro">
-								<?php echo $item->introtext; ?>
+							<div>
+								<ul class="meta inline">
+									<li>
+										<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
+										<a href="<?php echo $item->category->link; ?>">
+											<?php echo $item->category->title; ?>
+										</a>
+									</li>
+									<?php if ($item->version): ?>
+										<li>
+											<strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
+											<a href="<?php echo $item->version->link; ?>">
+												<?php echo $item->version->version; ?>
+											</a>
+										</li>
+									<?php endif; ?>
+									<?php if ($item->downloads): ?>
+										<li>
+											<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>
+												: </strong>
+											<?php echo $item->downloads; ?>
+										</li>
+									<?php endif; ?>
+									<?php if ($item->hits): ?>
+										<li>
+											<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_HITS'); ?>: </strong>
+											<?php echo $item->hits; ?>
+										</li>
+									<?php endif; ?>
+								</ul>
+								<?php if (!empty($item->introtext)): ?>
+									<div class="intro">
+										<?php echo $item->introtext; ?>
+									</div>
+								<?php endif; ?>
 							</div>
-						<?php endif; ?>
+						</div>
 					</div>
 					<hr>
 				<?php endforeach; ?>

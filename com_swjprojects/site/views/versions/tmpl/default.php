@@ -17,58 +17,66 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 ?>
 <div id="SWJProjects" class="versions">
 	<div class="project info well">
-		<h1>
-			<a href="<?php echo $this->project->link; ?>"><?php echo $this->project->title; ?></a>
-		</h1>
-		<?php if (!empty($this->project->introtext)): ?>
-			<p class="description">
-				<?php echo $this->project->introtext; ?>
-			</p>
+		<?php if ($cover = $this->project->images->get('cover')): ?>
+			<p><?php echo HTMLHelper::image($cover, $this->project->title); ?></p>
 		<?php endif; ?>
-		<div class="meta">
-			<ul class="inline">
-				<li>
-					<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
-					<a href="<?php echo $this->category->link; ?>">
-						<?php echo $this->category->title; ?>
+		<div class="clearfix">
+			<?php if ($icon = $this->project->images->get('icon')): ?>
+				<div class="pull-right"><?php echo HTMLHelper::image($icon, $this->project->title); ?></div>
+			<?php endif; ?>
+			<h1>
+				<a href="<?php echo $this->project->link; ?>"><?php echo $this->project->title; ?></a>
+			</h1>
+			<?php if (!empty($this->project->introtext)): ?>
+				<p class="description">
+					<?php echo $this->project->introtext; ?>
+				</p>
+			<?php endif; ?>
+			<div class="meta">
+				<ul class="inline">
+					<li>
+						<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
+						<a href="<?php echo $this->category->link; ?>">
+							<?php echo $this->category->title; ?>
+						</a>
+					</li>
+					<?php if ($this->project->version): ?>
+						<li>
+							<strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
+							<a href="<?php echo $this->project->version->link; ?>">
+								<?php echo $this->project->version->version; ?>
+							</a>
+						</li>
+					<?php endif; ?>
+					<?php if ($this->project->downloads): ?>
+						<li>
+							<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>: </strong>
+							<?php echo $this->project->downloads; ?>
+						</li>
+					<?php endif; ?>
+					<?php if ($this->project->hits): ?>
+						<li>
+							<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_HITS'); ?>: </strong>
+							<?php echo $this->project->hits; ?>
+						</li>
+					<?php endif; ?>
+				</ul>
+				<div class="buttons">
+					<a href="<?php echo $this->project->download; ?>" class="btn btn-success" target="_blank">
+						<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
 					</a>
-				</li>
-				<?php if ($this->project->version): ?>
-					<li>
-						<strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
-						<a href="<?php echo $this->project->version->link; ?>">
-							<?php echo $this->project->version->version; ?>
-						</a>
-					</li>
-				<?php endif; ?>
-				<?php if ($this->project->downloads): ?>
-					<li>
-						<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>: </strong>
-						<?php echo $this->project->downloads; ?>
-					</li>
-				<?php endif; ?>
-				<?php if ($this->project->hits): ?>
-					<li>
-						<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_HITS'); ?>: </strong>
-						<?php echo $this->project->hits; ?>
-					</li>
-				<?php endif; ?>
-			</ul>
-			<div class="buttons">
-				<a href="<?php echo $this->project->download; ?>" class="btn btn-success" target="_blank">
-					<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
-				</a>
-				<a href="<?php echo $this->project->versions; ?>" class="btn">
-					<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
-				</a>
-				<?php if ($urls = $this->project->urls->toArray()): ?>
-					<?php foreach ($urls as $txt => $url):
-						if (empty($url)) continue; ?>
-						<a href="<?php echo $url; ?>" target="_blank" class="btn">
-							<?php echo Text::_('COM_SWJPROJECTS_URLS_' . $txt); ?>
-						</a>
-					<?php endforeach; ?>
-				<?php endif; ?>
+					<a href="<?php echo $this->project->versions; ?>" class="btn">
+						<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
+					</a>
+					<?php if ($urls = $this->project->urls->toArray()): ?>
+						<?php foreach ($urls as $txt => $url):
+							if (empty($url)) continue; ?>
+							<a href="<?php echo $url; ?>" target="_blank" class="btn">
+								<?php echo Text::_('COM_SWJPROJECTS_URLS_' . $txt); ?>
+							</a>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
 			</div>
 		</div>
 	</div>

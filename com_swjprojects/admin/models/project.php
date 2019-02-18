@@ -91,6 +91,13 @@ class SWJProjectsModelProject extends AdminModel
 				$db->setQuery($query);
 				$item->translates = $db->loadObjectList('language');
 
+				foreach ($item->translates as &$translate)
+				{
+					// Convert the images field value to array
+					$registry          = new Registry($translate->images);
+					$translate->images = $registry->toArray();
+				}
+
 				// Set downloads
 				$query = $db->getQuery(true)
 					->select('SUM(downloads)')
@@ -447,6 +454,10 @@ class SWJProjectsModelProject extends AdminModel
 
 				// Prepare language field data
 				$translate['language'] = $code;
+
+				// Prepare images field data
+				$registry            = new Registry($translate['images']);
+				$translate['images'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 
 				$translate = (object) $translate;
 

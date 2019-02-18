@@ -256,9 +256,11 @@ class SWJProjectsModelProject extends ItemModel
 					$data->joomla->set('version', array_unique(explode(',', $data->joomla_versions)));
 				}
 
-
 				// Set urls
 				$data->urls = new Registry($data->urls);
+
+				// Set images
+				$data->images = new Registry($data->images);
 
 				// Set link
 				$data->slug     = $data->id . ':' . $data->alias;

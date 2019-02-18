@@ -16,44 +16,51 @@ use Joomla\CMS\Language\Text;
 HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version' => 'auto'));
 ?>
 <div id="SWJProjects" class="version">
-
 	<div class="version info well">
-		<h1>
-			<?php echo $this->version->title; ?>
-		</h1>
-		<div class="meta">
-			<ul class="inline">
-				<li>
-					<strong><?php echo Text::_('COM_SWJPROJECTS_PROJECT'); ?>: </strong>
-					<a href="<?php echo $this->project->link; ?>">
-						<?php echo $this->project->title; ?>
-					</a>
-				</li>
-				<li>
-					<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
-					<a href="<?php echo $this->category->link; ?>">
-						<?php echo $this->category->title; ?>
-					</a>
-				</li>
-				<?php if ($this->version->downloads): ?>
+		<?php if ($cover = $this->project->images->get('cover')): ?>
+			<p><?php echo HTMLHelper::image($cover, $this->project->title); ?></p>
+		<?php endif; ?>
+		<div class="clearfix">
+			<?php if ($icon = $this->project->images->get('icon')): ?>
+				<div class="pull-right"><?php echo HTMLHelper::image($icon, $this->project->title); ?></div>
+			<?php endif; ?>
+			<h1>
+				<?php echo $this->version->title; ?>
+			</h1>
+			<div class="meta">
+				<ul class="inline">
 					<li>
-						<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>: </strong>
-						<?php echo $this->version->downloads; ?>
-					</li>
-				<?php endif; ?>
-			</ul>
-			<div class="buttons">
-				<a href="<?php echo $this->version->download; ?>" class="btn btn-success" target="_blank">
-					<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
-				</a>
-				<?php if ($urls = $this->project->urls->toArray()): ?>
-					<?php foreach ($urls as $txt => $url):
-						if (empty($url)) continue; ?>
-						<a href="<?php echo $url; ?>" target="_blank" class="btn">
-							<?php echo Text::_('COM_SWJPROJECTS_URLS_' . $txt); ?>
+						<strong><?php echo Text::_('COM_SWJPROJECTS_PROJECT'); ?>: </strong>
+						<a href="<?php echo $this->project->link; ?>">
+							<?php echo $this->project->title; ?>
 						</a>
-					<?php endforeach; ?>
-				<?php endif; ?>
+					</li>
+					<li>
+						<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
+						<a href="<?php echo $this->category->link; ?>">
+							<?php echo $this->category->title; ?>
+						</a>
+					</li>
+					<?php if ($this->version->downloads): ?>
+						<li>
+							<strong><?php echo Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'); ?>: </strong>
+							<?php echo $this->version->downloads; ?>
+						</li>
+					<?php endif; ?>
+				</ul>
+				<div class="buttons">
+					<a href="<?php echo $this->version->download; ?>" class="btn btn-success" target="_blank">
+						<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+					</a>
+					<?php if ($urls = $this->project->urls->toArray()): ?>
+						<?php foreach ($urls as $txt => $url):
+							if (empty($url)) continue; ?>
+							<a href="<?php echo $url; ?>" target="_blank" class="btn">
+								<?php echo Text::_('COM_SWJPROJECTS_URLS_' . $txt); ?>
+							</a>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
 			</div>
 		</div>
 	</div>

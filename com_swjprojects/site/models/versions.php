@@ -392,7 +392,7 @@ class SWJProjectsModelVersions extends ListModel
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 'p.id as id'))
+				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.images as images', 'p.id as id'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -469,6 +469,9 @@ class SWJProjectsModelVersions extends ListModel
 
 				// Set urls
 				$data->urls = new Registry($data->urls);
+
+				// Set images
+				$data->images = new Registry($data->images);
 
 				// Set link
 				$data->slug     = $data->id . ':' . $data->alias;

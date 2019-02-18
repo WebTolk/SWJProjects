@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_projects`
 	`title`     VARCHAR(255) NOT NULL DEFAULT '',
 	`introtext` TEXT         NOT NULL,
 	`fulltext`  MEDIUMTEXT   NOT NULL,
+	`images`    MEDIUMTEXT   NOT NULL,
 	PRIMARY KEY (`id`, `language`)
 )
 	ENGINE = InnoDB

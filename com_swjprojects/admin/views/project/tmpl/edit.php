@@ -77,6 +77,13 @@ Factory::getDocument()->addScriptDeclaration('
 				<?php echo $this->form->renderFieldset('urls'); ?>
 			</fieldset>
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'images', Text::_('COM_SWJPROJECTS_IMAGES')); ?>
+			<fieldset class="form-horizontal">
+				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+					'forms' => $this->translateForms, 'name' => 'images')); ?>
+			</fieldset>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 			<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 		</div>
 		<div class="span3">
