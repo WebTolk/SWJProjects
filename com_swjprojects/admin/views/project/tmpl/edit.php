@@ -78,6 +78,12 @@ Factory::getDocument()->addScriptDeclaration('
 			</fieldset>
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'relations', Text::_('COM_SWJPROJECTS_RELATIONS')); ?>
+			<fieldset class="form-horizontal">
+				<?php echo $this->form->getInput('relations'); ?>
+			</fieldset>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'images', Text::_('COM_SWJPROJECTS_IMAGES')); ?>
 			<fieldset class="form-horizontal">
 				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(

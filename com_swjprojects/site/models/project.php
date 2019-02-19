@@ -40,6 +40,15 @@ class SWJProjectsModelProject extends ItemModel
 	protected $_categoryParent = null;
 
 	/**
+	 * Project relations array.
+	 *
+	 * @var  array
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $_relations = null;
+
+	/**
 	 * Translates languages.
 	 *
 	 * @var  array
@@ -431,5 +440,169 @@ class SWJProjectsModelProject extends ItemModel
 		$table->hit($pk);
 
 		return true;
+	}
+
+	/**
+	 * Method to get project relations data.
+	 *
+	 * @param  integer $pk The ids of the project.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  array|boolean|Exception  Relations array on success, false or exception on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getRelations($pk = null)
+	{
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+
+		if (empty($pk)) return false;
+
+		if ($this->_relations === null)
+		{
+			$this->_relations = array();
+		}
+
+		if (!isset($this->_relations[$pk]))
+		{
+			try
+			{
+				$db        = $this->getDbo();
+				$relations = array();
+
+				if (isset($this->_item[$pk]))
+				{
+					$data = $this->_item[$pk]->relations;
+				}
+				else
+				{
+					$query = $db->getQuery('true')
+						->select(array('p.relations'))
+						->from($db->quoteName('#__swjprojects_projects', 'p'))
+						->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
+						->where('p.id = ' . (int) $pk);
+
+					// Filter by published state
+					$published = $this->getState('filter.published');
+					if (is_numeric($published))
+					{
+						$query->where('p.state = ' . (int) $published)
+							->where('c.state = ' . (int) $published);
+					}
+					elseif (is_array($published))
+					{
+						$published = ArrayHelper::toInteger($published);
+						$published = implode(',', $published);
+
+						$query->where('p.state IN (' . $published . ')')
+							->where('c.state IN (' . $published . ')');
+					}
+
+					$data = $db->setQuery($query)->loadResult();
+				}
+
+				// Prepare relations array
+				if (!empty($data))
+				{
+					$registry = new Registry($data);
+					$inners   = array();
+					foreach ($registry->toArray() as $relation)
+					{
+						if ($relation['project'] > 0)
+						{
+							$inners[] = $relation['project'];
+						}
+						else
+						{
+							$relations[] = $relation;
+						}
+					}
+
+					// Get inners relations
+					if (!empty($inners))
+					{
+						$inners = ArrayHelper::toInteger($inners);
+						$inners = implode(',', $inners);
+
+						$query = $db->getQuery(true)
+							->select(array('p.id', 'p.alias'))
+							->from($db->quoteName('#__swjprojects_projects', 'p'))
+							->where('p.id IN (' . $inners . ')');
+
+						// Join over the categories
+						$query->select(array('c.id as category_id', 'c.alias as category_alias'))
+							->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
+
+						// Join over current translates
+						$current = $this->translates['current'];
+						$query->select(array('t_p.title', 't_p.images'))
+							->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
+								. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
+
+						// Join over default translates
+						$default = $this->translates['default'];
+						if ($current != $default)
+						{
+							$query->select(array('td_p.title as default_title'))
+								->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
+									. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
+						}
+
+						// Filter by published state
+						$published = $this->getState('filter.published');
+						if (is_numeric($published))
+						{
+							$query->where('p.state = ' . (int) $published)
+								->where('c.state = ' . (int) $published);
+						}
+						elseif (is_array($published))
+						{
+							$published = ArrayHelper::toInteger($published);
+							$published = implode(',', $published);
+
+							$query->where('p.state IN (' . $published . ')')
+								->where('c.state IN (' . $published . ')');
+						}
+
+						$items = $db->setQuery($query)->loadObjectList();
+						foreach ($items as $item)
+						{
+							// Set default translates data
+							if ($this->translates['current'] != $this->translates['default'])
+							{
+								$item->title = (empty($item->title)) ? $item->default_title : $item->title;
+							}
+
+							// Set images
+							$item->images = new Registry($item->images);
+
+							// Set link
+							$item->slug  = $item->id . ':' . $item->alias;
+							$item->cslug = $item->category_id . ':' . $item->category_alias;
+							$item->link  = Route::_(SWJProjectsHelperRoute::getProjectRoute($item->slug, $item->cslug));
+
+							// Add to relations
+							$relations[] = array(
+								'project' => $item->id,
+								'title'   => $item->title,
+								'link'    => $item->link,
+								'icon'    => $item->images->get('icon')
+							);
+
+						}
+					}
+				}
+
+				$this->_relations[$pk] = $relations;
+			}
+			catch (Exception $e)
+			{
+				$this->setError($e);
+				$this->_relations[$pk] = false;
+			}
+		}
+
+		return $this->_relations[$pk];
 	}
 }

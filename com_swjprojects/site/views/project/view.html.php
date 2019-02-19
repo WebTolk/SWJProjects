@@ -55,6 +55,15 @@ class SWJProjectsViewProject extends HtmlView
 	protected $category;
 
 	/**
+	 * Relations array.
+	 *
+	 * @var  array|false
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $relations;
+
+	/**
 	 * Active menu item.
 	 *
 	 * @var  \Joomla\CMS\Menu\MenuItem
@@ -85,11 +94,12 @@ class SWJProjectsViewProject extends HtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state    = $this->get('State');
-		$this->params   = $this->state->get('params');
-		$this->project  = $this->get('Item');
-		$this->category = $this->project->category;
-		$this->menu     = Factory::getApplication()->getMenu()->getActive();
+		$this->state     = $this->get('State');
+		$this->params    = $this->state->get('params');
+		$this->project   = $this->get('Item');
+		$this->category  = $this->project->category;
+		$this->relations = $this->get('Relations');
+		$this->menu      = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors
 		if (count($errors = $this->get('Errors')))

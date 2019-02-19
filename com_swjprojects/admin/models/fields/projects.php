@@ -39,6 +39,8 @@ class JFormFieldProjects extends JFormFieldList
 	/**
 	 * Method to get the field options.
 	 *
+	 * @throws  Exception
+	 *
 	 * @return  array  The field option objects.
 	 *
 	 * @since  1.0.0
@@ -66,13 +68,21 @@ class JFormFieldProjects extends JFormFieldList
 
 			$items = $db->setQuery($query)->loadObjectList('id');
 
+			// Check admin type view
+			$app       = Factory::getApplication();
+			$component = $app->input->get('option', 'com_swjprojects');
+			$view      = $app->input->get('view', 'project');
+			$id        = $app->input->getInt('id', 0);
+			$sameView  = ($app->isClient('administrator') && $component == 'com_swjprojects' && $view == 'project');
+
 			// Prepare options
 			$options = parent::getOptions();
 			foreach ($items as $i => $item)
 			{
-				$option        = new stdClass();
-				$option->value = $item->id;
-				$option->text  = (!empty($item->title)) ? $item->title : $item->element;
+				$option          = new stdClass();
+				$option->value   = $item->id;
+				$option->text    = (!empty($item->title)) ? $item->title : $item->element;
+				$option->disable = ($sameView && $item->id == $id);
 
 				$options[] = $option;
 			}

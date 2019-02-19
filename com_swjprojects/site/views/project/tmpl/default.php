@@ -144,5 +144,24 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 		<?php endforeach; ?>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>
+
+	<?php if (!empty($this->relations)): ?>
+		<?php echo HTMLHelper::_('bootstrap.addTab', 'projectTab', 'relations', Text::_('COM_SWJPROJECTS_RELATIONS')); ?>
+		<?php foreach ($this->relations as $relation):
+			if (empty($relation['link']) && empty($relation['title'])) continue; ?>
+			<p>
+				<a href="<?php echo $relation['link']; ?>" target="_blank">
+					<?php if (!empty($relation['icon'])): ?>
+						<?php echo HTMLHelper::image($relation['icon'], $relation['title']); ?>
+						<br>
+					<?php endif; ?>
+					<?php echo $relation['title']; ?>
+				</a>
+			</p>
+		<?php endforeach; ?>
+		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+	<?php endif; ?>
+
+
 	<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 </div>

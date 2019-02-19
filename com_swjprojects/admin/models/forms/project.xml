@@ -119,4 +119,28 @@
 			<field name="jed" type="text" label="COM_SWJPROJECTS_URLS_JED" class="input-xxlarge"/>
 		</fields>
 	</fieldset>
+	<fieldset name="relations" label="COM_SWJPROJECTS_RELATIONS">
+		<field name="relations" type="subform"
+			   label="COM_SWJPROJECTS_RELATIONS"
+			   multiple="true">
+			<form>
+				<field name="project" type="projects"
+					   label="COM_SWJPROJECTS_RELATIONS_PROJECT"
+					   default="-1">
+					<option value="-1">COM_SWJPROJECTS_RELATIONS_EXTERNAL</option>
+				</field>
+				<field name="title" type="text"
+					   label="COM_SWJPROJECTS_RELATIONS_TITLE"
+					   class="input-xxlarge input-large-text"
+					   showon="project:-1"/>
+				<field name="link" type="text"
+					   label="COM_SWJPROJECTS_RELATIONS_LINK"
+					   class="input-xxlarge"
+					   showon="project:-1"/>
+				<field name="icon" type="media"
+					   label="COM_SWJPROJECTS_RELATIONS_ICON"
+					   showon="project:-1"/>
+			</form>
+		</field>
+	</fieldset>
 </form>

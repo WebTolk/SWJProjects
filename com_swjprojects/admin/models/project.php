@@ -70,6 +70,10 @@ class SWJProjectsModelProject extends AdminModel
 			$registry   = new Registry($item->urls);
 			$item->urls = $registry->toArray();
 
+			// Convert the relations field value to array
+			$registry        = new Registry($item->relations);
+			$item->relations = $registry->toArray();
+
 			// Convert the params field value to array
 			$registry     = new Registry($item->params);
 			$item->params = $registry->toArray();
@@ -427,6 +431,21 @@ class SWJProjectsModelProject extends AdminModel
 			});
 			$registry     = new Registry($data['urls']);
 			$data['urls'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+		}
+
+		// Prepare relations field data
+		if (isset($data['relations']))
+		{
+			foreach ($data['relations'] as $key => $relation)
+			{
+				if ($relation['project'] < 0 && empty($relation['title']) && empty($relation['link']))
+				{
+					unset($data['relations'][$key]);
+				}
+			}
+
+			$registry          = new Registry($data['relations']);
+			$data['relations'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 		}
 
 		// Prepare params field data
