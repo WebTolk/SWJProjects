@@ -589,7 +589,6 @@ class SWJProjectsModelProject extends ItemModel
 								'link'    => $item->link,
 								'icon'    => $item->images->get('icon')
 							);
-
 						}
 					}
 				}

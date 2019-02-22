@@ -161,7 +161,5 @@ HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version'
 		<?php endforeach; ?>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>
-
-
 	<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 </div>
