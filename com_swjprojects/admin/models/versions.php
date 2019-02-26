@@ -226,7 +226,7 @@ class SWJProjectsModelVersions extends ListModel
 			foreach ($items as &$item)
 			{
 				// Set project title
-				$item->project_title = (empty($item->project_title)) ? $item->project_elememt : $item->project_title;
+				$item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
 
 				// Set version & title
 				$item->version = $item->major . '.' . $item->minor . '.' . $item->micro;

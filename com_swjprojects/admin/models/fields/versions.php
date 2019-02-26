@@ -76,7 +76,7 @@ class JFormFieldVersions extends JFormFieldList
 			foreach ($items as $i => $item)
 			{
 				// Set project title
-				$item->project_title = (empty($item->project_title)) ? $item->project_elememt : $item->project_title;
+				$item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
 
 				// Set version & name
 				$item->title = $item->project_title . ' ' . $item->major;
