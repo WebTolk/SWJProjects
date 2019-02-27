@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -44,7 +44,7 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $_relations = null;
 
@@ -430,7 +430,7 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function hit($pk = 0)
 	{
@@ -451,7 +451,7 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @return  array|boolean|Exception  Relations array on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function getRelations($pk = null)
 	{

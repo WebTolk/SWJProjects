@@ -2,12 +2,12 @@
 <extension version="3.9" type="plugin" group="jlsitemap" method="upgrade">
 	<name>PLG_JLSITEMAP_SWJPROJECTS</name>
 	<author>Septdir Workshop</author>
-	<creationDate>December 2018</creationDate>
+	<creationDate>February 2019</creationDate>
 	<copyright>Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.0.2-dev</version>
+	<version>1.1.0</version>
 	<description>PLG_JLSITEMAP_SWJPROJECTS_DESCRIPTION</description>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.plg_jlsitemap_swjprojects.ini</language>

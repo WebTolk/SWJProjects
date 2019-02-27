@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    JLSitemap - SW JProjects Plugin
- * @version    __DEPLOY_VERSION__
+ * @version    1.1.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -24,7 +24,7 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	 *
 	 * @var boolean
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $autoloadLanguage = true;
 
@@ -33,7 +33,7 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	protected $translates = null;
 
@@ -43,7 +43,7 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	 * @param  object  &$subject The object to observe
 	 * @param  array    $config  An optional associative array of configuration settings.
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.1.0
 	 */
 	public function __construct(object $subject, array $config = array())
 	{
@@ -65,7 +65,7 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	 *
 	 * @return  array  Urls array with attributes.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.1.0
 	 */
 	public function onGetUrls(&$urls, $config)
 	{
