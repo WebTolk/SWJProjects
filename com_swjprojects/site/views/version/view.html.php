@@ -160,6 +160,7 @@ class SWJProjectsViewVersion extends HtmlView
 	protected function _prepareDocument()
 	{
 		$app     = Factory::getApplication();
+		$root    = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
 		$version = $this->version;
 		$menu    = $this->menu;
 		$current = ($menu && $menu->query['option'] === 'com_swjprojects'
@@ -232,6 +233,20 @@ class SWJProjectsViewVersion extends HtmlView
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
 
+		// Set meta image
+		if ($current && $this->params->get('menu-meta_image'))
+		{
+			$this->document->setDescription($this->params->get('menu-meta_image'));
+		}
+		elseif (!empty($this->project->images->get('cover')))
+		{
+			$this->document->setMetadata('image', $root . '/' . $this->project->images->get('cover'));
+		}
+		elseif (!empty($this->project->images->get('icon')))
+		{
+			$this->document->setMetadata('image', $root . '/' . $this->project->images->get('icon'));
+		}
+
 		// Set meta robots
 		$inWork = $this->state->get('debug', 0);
 		if ($inWork)
@@ -244,7 +259,7 @@ class SWJProjectsViewVersion extends HtmlView
 		}
 
 		// Set meta url
-		$url = rtrim(URI::root(), '/') . $version->link;
+		$url = $root . $version->link;
 		$this->document->setMetaData('url', $url);
 
 		// Set meta twitter

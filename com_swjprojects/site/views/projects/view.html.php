@@ -160,6 +160,7 @@ class SWJProjectsViewProjects extends HtmlView
 	protected function _prepareDocument()
 	{
 		$app      = Factory::getApplication();
+		$root     = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
 		$category = $this->category;
 		$menu     = $this->menu;
 		$current  = ($menu && $menu->query['option'] === 'com_swjprojects'
@@ -231,7 +232,7 @@ class SWJProjectsViewProjects extends HtmlView
 		}
 
 		// Set meta url
-		$url = rtrim(URI::root(), '/') . $category->link;
+		$url = $root . $category->link;
 		$this->document->setMetaData('url', $url);
 
 		// Set meta twitter
