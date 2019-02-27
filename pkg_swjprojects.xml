@@ -17,6 +17,7 @@
 	</languages>
 	<files>
 		<folder type="component" id="com_swjprojects">com_swjprojects</folder>
+		<folder type="plugin" group="swjprojects" id="tags">plg_jlsitemap_swjprojects</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="SW JProjects">
