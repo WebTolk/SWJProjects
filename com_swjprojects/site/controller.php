@@ -99,7 +99,7 @@ class SWJProjectsController extends BaseController
 					}
 					$redirect = $redirect->toString(array('path', 'query', 'fragment'));
 
-					if ($current != $redirect)
+					if (urldecode($current) != urldecode($redirect))
 					{
 						Factory::getApplication()->redirect($redirect, 301);
 					}
