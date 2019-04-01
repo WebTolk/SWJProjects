@@ -10,12 +10,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Menu\AbstractMenu;
 
 class SWJProjectsRouter extends RouterView
 {
@@ -40,8 +42,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Router constructor.
 	 *
-	 * @param  \Joomla\CMS\Application\CMSApplication $app  The application object.
-	 * @param  \Joomla\CMS\Menu\AbstractMenu          $menu The menu object to work with.
+	 * @param   CMSApplication  $app   The application object.
+	 * @param   AbstractMenu           $menu  The menu object to work with.
 	 *
 	 * @since  1.0.0
 	 */
@@ -82,8 +84,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the segment(s) for projects.
 	 *
-	 * @param  string $id    ID of the item to retrieve the segments.
-	 * @param  array  $query The request that is built right now.
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
 	 *
 	 * @return  array  The segments of this item.
 	 *
@@ -130,8 +132,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the segment(s) for project.
 	 *
-	 * @param  string $id    ID of the item to retrieve the segments.
-	 * @param  array  $query The request that is built right now.
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
 	 *
 	 * @return  array  The segments of this item.
 	 *
@@ -165,8 +167,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the segment(s) for versions.
 	 *
-	 * @param  string $id    ID of the item to retrieve the segments.
-	 * @param  array  $query The request that is built right now.
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
 	 *
 	 * @return  array  The segments of this item.
 	 *
@@ -185,8 +187,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the segment(s) for version.
 	 *
-	 * @param  string $id    ID of the item to retrieve the segments.
-	 * @param  array  $query The request that is built right now.
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
 	 *
 	 * @return  array|boolean  The segments of this item.
 	 *
@@ -224,8 +226,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the segment(s) for jupdate.
 	 *
-	 * @param  string $id    ID of the item to retrieve the segments.
-	 * @param  array  $query The request that is built right now.
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
 	 *
 	 * @return  array|string  The segments of this item.
 	 *
@@ -239,8 +241,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for projects.
 	 *
-	 * @param  string $segment Segment to retrieve the id.
-	 * @param  array  $query   The request that is parsed right now.
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
@@ -272,8 +274,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for project.
 	 *
-	 * @param  string $segment Segment to retrieve the id.
-	 * @param  array  $query   The request that is parsed right now.
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
@@ -306,8 +308,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for versions.
 	 *
-	 * @param  string $segment Segment to retrieve the id.
-	 * @param  array  $query   The request that is parsed right now.
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
@@ -326,8 +328,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for version.
 	 *
-	 * @param  string $segment Segment to retrieve the id.
-	 * @param  array  $query   The request that is parsed right now.
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
@@ -360,8 +362,8 @@ class SWJProjectsRouter extends RouterView
 	/**
 	 * Method to get the id for jupdate.
 	 *
-	 * @param  string $segment Segment to retrieve the id.
-	 * @param  array  $query   The request that is parsed right now.
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
@@ -376,7 +378,7 @@ class SWJProjectsRouter extends RouterView
 /**
  * SWJProjects router functions.
  *
- * @param  array &$query An array of url arguments.
+ * @param   array &$query  An array of url arguments.
  *
  * @throws  Exception
  *
@@ -395,7 +397,7 @@ function SWJProjectsBuildRoute(&$query)
 /**
  * Parse the segments of a url.
  *
- * @param  array $segments The segments of the URL to parse.
+ * @param   array  $segments  The segments of the URL to parse.
  *
  * @throws  Exception
  *

@@ -19,6 +19,7 @@ use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Nested;
 use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
@@ -38,7 +39,7 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @since  1.0.0
 	 */
@@ -53,7 +54,7 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to get category data.
 	 *
-	 * @param  integer $pk The id of the category.
+	 * @param   integer  $pk  The id of the category.
 	 *
 	 * @return  mixed  Category object on success, false on failure.
 	 *
@@ -86,11 +87,11 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Returns a Table object, always creating it.
 	 *
-	 * @param  string $type   The table type to instantiate
-	 * @param  string $prefix A prefix for the table class name.
-	 * @param  array  $config Configuration array for model.
+	 * @param   string  $type    The table type to instantiate
+	 * @param   string  $prefix  A prefix for the table class name.
+	 * @param   array   $config  Configuration array for model.
 	 *
-	 * @return   Table|\Joomla\CMS\Table\Nested   A database object.
+	 * @return  Table|Nested   A database object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -102,8 +103,8 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Abstract method for getting the form from the model.
 	 *
-	 * @param  array   $data     Data for the form.
-	 * @param  boolean $loadData True if the form is to load its own data (default case), false if not.
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
 	 * @throws  Exception
 	 *
@@ -135,9 +136,9 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
-	 * @return  mixed  The data for the form.
-	 *
 	 * @throws  Exception
+	 *
+	 * @return  mixed  The data for the form.
 	 *
 	 * @since  1.0.0
 	 */
@@ -156,8 +157,8 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method for getting the translate forms from the model.
 	 *
-	 * @param  boolean $loadData True if the form is to load its own data (default case), false if not.
-	 * @param  boolean $clear    Optional argument to force load a new forms.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   boolean  $clear     Optional argument to force load a new forms.
 	 *
 	 * @throws  Exception
 	 *
@@ -246,9 +247,9 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param  Form   $form  The form to validate against.
-	 * @param  array  $data  The data to validate.
-	 * @param  string $group The name of the field group to validate.
+	 * @param   Form    $form   The form to validate against.
+	 * @param   array   $data   The data to validate.
+	 * @param   string  $group  The name of the field group to validate.
 	 *
 	 * @throws  Exception
 	 *
@@ -288,7 +289,7 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param  array $data The form data.
+	 * @param   array  $data  The form data.
 	 *
 	 * @throws  Exception
 	 *
@@ -434,7 +435,7 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to generate new alias if alias already exist.
 	 *
-	 * @param  string $alias The alias.
+	 * @param   string  $alias  The alias.
 	 *
 	 * @throws  Exception
 	 *
@@ -456,8 +457,8 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to save the reordered nested set tree.
 	 *
-	 * @param  array   $idArray   An array of primary key ids.
-	 * @param  integer $lft_array The lft value
+	 * @param   array    $idArray    An array of primary key ids.
+	 * @param   integer  $lft_array  The lft value
 	 *
 	 * @throws  Exception
 	 *
@@ -505,7 +506,7 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to delete one or more records.
 	 *
-	 * @param  array &$pks An array of record primary keys.
+	 * @param   array &$pks  An array of record primary keys.
 	 *
 	 * @throws  Exception
 	 *

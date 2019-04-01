@@ -27,10 +27,10 @@ abstract class SWJProjectsHelperAssociation
 	/**
 	 * Method to get the associations for a given item.
 	 *
-	 * @param  integer $id         Id of the item.
-	 * @param  string  $view       Name of the view.
-	 * @param  integer $catid      Id of the category.
-	 * @param  integer $project_id Id of the project.
+	 * @param   integer  $id          Id of the item.
+	 * @param   string   $view        Name of the view.
+	 * @param   integer  $catid       Id of the category.
+	 * @param   integer  $project_id  Id of the project.
 	 *
 	 * @throws  Exception
 	 *

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 class SWJProjectsControllerVersions extends AdminController
 {
@@ -26,11 +27,11 @@ class SWJProjectsControllerVersions extends AdminController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param  string $name   The model name.
-	 * @param  string $prefix The class prefix.
-	 * @param  array  $config The array of possible config values.
+	 * @param   string  $name    The model name.
+	 * @param   string  $prefix  The class prefix.
+	 * @param   array   $config  The array of possible config values.
 	 *
-	 * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  A model object.
+	 * @return  BaseDatabaseModel|SWJProjectsModelVersion  A model object.
 	 *
 	 * @since  1.0.0
 	 */

@@ -37,7 +37,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @since  1.0.0
 	 */
@@ -52,7 +52,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to get project data.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @return  mixed  Project object on success, false on failure.
 	 *
@@ -118,9 +118,9 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Returns a Table object, always creating it.
 	 *
-	 * @param  string $type   The table type to instantiate
-	 * @param  string $prefix A prefix for the table class name.
-	 * @param  array  $config Configuration array for model.
+	 * @param   string  $type    The table type to instantiate
+	 * @param   string  $prefix  A prefix for the table class name.
+	 * @param   array   $config  Configuration array for model.
 	 *
 	 * @return  Table  A database object.
 	 *
@@ -134,7 +134,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
-	 * @param  Table $table The Table object.
+	 * @param   Table  $table  The Table object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -160,8 +160,8 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Abstract method for getting the form from the model.
 	 *
-	 * @param  array   $data     Data for the form.
-	 * @param  boolean $loadData True if the form is to load its own data (default case), false if not.
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
 	 * @throws  Exception
 	 *
@@ -193,9 +193,9 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
-	 * @return  mixed  The data for the form.
-	 *
 	 * @throws  Exception
+	 *
+	 * @return  mixed  The data for the form.
 	 *
 	 * @since  1.0.0
 	 */
@@ -214,8 +214,8 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method for getting the translate forms from the model.
 	 *
-	 * @param  boolean $loadData True if the form is to load its own data (default case), false if not.
-	 * @param  boolean $clear    Optional argument to force load a new forms.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   boolean  $clear     Optional argument to force load a new forms.
 	 *
 	 * @throws  Exception
 	 *
@@ -304,9 +304,9 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param  Form   $form  The form to validate against.
-	 * @param  array  $data  The data to validate.
-	 * @param  string $group The name of the field group to validate.
+	 * @param   Form    $form   The form to validate against.
+	 * @param   array   $data   The data to validate.
+	 * @param   string  $group  The name of the field group to validate.
 	 *
 	 * @throws  Exception
 	 *
@@ -346,7 +346,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param  array $data The form data.
+	 * @param   array  $data  The form data.
 	 *
 	 * @throws  Exception
 	 *
@@ -492,7 +492,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to generate new element if element already exist.
 	 *
-	 * @param  string $element The element.
+	 * @param   string  $element  The element.
 	 *
 	 * @throws  Exception
 	 *
@@ -514,7 +514,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to generate new alias if alias already exist.
 	 *
-	 * @param  string $alias The alias.
+	 * @param   string  $alias  The alias.
 	 *
 	 * @throws  Exception
 	 *
@@ -536,7 +536,7 @@ class SWJProjectsModelProject extends AdminModel
 	/**
 	 * Method to delete one or more records.
 	 *
-	 * @param  array &$pks An array of record primary keys.
+	 * @param   array &$pks  An array of record primary keys.
 	 *
 	 * @throws  Exception
 	 *

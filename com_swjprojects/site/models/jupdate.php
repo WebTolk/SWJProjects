@@ -116,7 +116,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws  Exception
 	 *
@@ -190,7 +190,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	/**
 	 * Method to get joomla update server xml.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -236,7 +236,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	/**
 	 * Method to get joomla update server xml cache.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -290,7 +290,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	/**
 	 * Method to get extension xml.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -371,7 +371,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	/**
 	 * Method to get extension xml.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -703,7 +703,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	/**
 	 * Method to get project id from element.
 	 *
-	 * @param  string $pk The id of the project.
+	 * @param   string  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *

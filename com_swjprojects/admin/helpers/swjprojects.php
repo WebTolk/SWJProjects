@@ -18,7 +18,7 @@ class SWJProjectsHelper extends ContentHelper
 	/**
 	 * Configure the linkbar.
 	 *
-	 * @param  string $vName The name of the active view.
+	 * @param   string  $vName  The name of the active view.
 	 *
 	 * @since  1.0.0
 	 */

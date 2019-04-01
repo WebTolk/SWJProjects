@@ -29,8 +29,8 @@ class SWJProjectsControllerVersion extends FormController
 	/**
 	 * Method to reload a record.
 	 *
-	 * @param  string $key    The name of the primary key of the URL variable.
-	 * @param  string $urlVar The name of the URL variable if different from the primary key.
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key.
 	 *
 	 * @throws  Exception
 	 *
@@ -115,8 +115,8 @@ class SWJProjectsControllerVersion extends FormController
 	/**
 	 * Method to save a record.
 	 *
-	 * @param  string $key    The name of the primary key of the URL variable.
-	 * @param  string $urlVar The name of the URL variable if different from the primary key.
+	 * @param   string  $key     The name of the primary key of the URL variable.
+	 * @param   string  $urlVar  The name of the URL variable if different from the primary key.
 	 *
 	 * @return  boolean  True if successful, false otherwise.
 	 *

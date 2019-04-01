@@ -69,7 +69,7 @@ class SWJProjectsModelProject extends ItemModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws  Exception
 	 *
@@ -139,7 +139,7 @@ class SWJProjectsModelProject extends ItemModel
 	/**
 	 * Method to get project data.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -324,7 +324,7 @@ class SWJProjectsModelProject extends ItemModel
 	/**
 	 * Method to get category parent data.
 	 *
-	 * @param  integer $pk The id of the category.
+	 * @param   integer  $pk  The id of the category.
 	 *
 	 * @throws  Exception
 	 *
@@ -424,7 +424,7 @@ class SWJProjectsModelProject extends ItemModel
 	/**
 	 * Increment the hit counter for the project.
 	 *
-	 * @param   integer $pk Optional primary key of the article to increment.
+	 * @param   integer  $pk  Optional primary key of the article to increment.
 	 *
 	 * @throws Exception
 	 *
@@ -445,7 +445,7 @@ class SWJProjectsModelProject extends ItemModel
 	/**
 	 * Method to get project relations data.
 	 *
-	 * @param  integer $pk The ids of the project.
+	 * @param   integer  $pk  The ids of the project.
 	 *
 	 * @throws  Exception
 	 *

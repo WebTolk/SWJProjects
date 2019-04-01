@@ -12,8 +12,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 
 class SWJProjectsViewVersions extends HtmlView
 {
@@ -29,7 +32,7 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Application params.
 	 *
-	 * @var  \Joomla\Registry\Registry;
+	 * @var  Registry;
 	 *
 	 * @since  1.0.0
 	 */
@@ -47,7 +50,7 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Pagination object.
 	 *
-	 * @var  \Joomla\CMS\Pagination\Pagination
+	 * @var  Pagination
 	 *
 	 * @since  1.0.0
 	 */
@@ -74,7 +77,7 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Active menu item.
 	 *
-	 * @var  \Joomla\CMS\Menu\MenuItem
+	 * @var  MenuItem
 	 *
 	 * @since  1.0.0
 	 */
@@ -92,7 +95,7 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Display the view.
 	 *
-	 * @param  string $tpl The name of the template file to parse.
+	 * @param   string  $tpl  The name of the template file to parse.
 	 *
 	 * @throws  Exception
 	 *

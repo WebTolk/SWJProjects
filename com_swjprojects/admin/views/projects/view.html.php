@@ -10,9 +10,11 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
@@ -39,7 +41,7 @@ class SWJProjectsViewProjects extends HtmlView
 	/**
 	 * Pagination object.
 	 *
-	 * @var  \Joomla\CMS\Pagination\Pagination
+	 * @var  Pagination
 	 *
 	 * @since  1.0.0
 	 */
@@ -48,7 +50,7 @@ class SWJProjectsViewProjects extends HtmlView
 	/**
 	 * Form object for search filters.
 	 *
-	 * @var  \Joomla\CMS\Form\Form
+	 * @var  Form
 	 *
 	 * @since  1.0.0
 	 */
@@ -75,11 +77,11 @@ class SWJProjectsViewProjects extends HtmlView
 	/**
 	 * Display the view.
 	 *
-	 * @param  string $tpl The name of the template file to parse.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+	 * @param   string  $tpl  The name of the template file to parse.
 	 *
 	 * @throws  Exception
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -171,7 +173,7 @@ class SWJProjectsViewProjects extends HtmlView
 			'p.title'        => Text::_('JGLOBAL_TITLE'),
 			'category_title' => Text::_('COM_SWJPROJECTS_CATEGORY'),
 			'downloads'      => Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'),
-			'p.hits'      => Text::_('COM_SWJPROJECTS_STATISTICS_HITS')
+			'p.hits'         => Text::_('COM_SWJPROJECTS_STATISTICS_HITS')
 		];
 	}
 }

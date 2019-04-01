@@ -59,7 +59,7 @@ class SWJProjectsModelVersion extends ItemModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws  Exception
 	 *
@@ -130,7 +130,7 @@ class SWJProjectsModelVersion extends ItemModel
 	/**
 	 * Method to get version data.
 	 *
-	 * @param  integer $pk The id of the version.
+	 * @param   integer  $pk  The id of the version.
 	 *
 	 * @throws  Exception
 	 *
@@ -331,7 +331,7 @@ class SWJProjectsModelVersion extends ItemModel
 	/**
 	 * Method to get category parent data.
 	 *
-	 * @param  integer $pk The id of the category.
+	 * @param   integer  $pk  The id of the category.
 	 *
 	 * @throws  Exception
 	 *

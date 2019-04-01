@@ -10,8 +10,10 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 class SWJProjectsViewVersions extends HtmlView
@@ -37,7 +39,7 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Pagination object.
 	 *
-	 * @var  \Joomla\CMS\Pagination\Pagination
+	 * @var  Pagination
 	 *
 	 * @since  1.0.0
 	 */
@@ -46,7 +48,7 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Form object for search filters.
 	 *
-	 * @var  \Joomla\CMS\Form\Form
+	 * @var  Form
 	 *
 	 * @since  1.0.0
 	 */
@@ -73,11 +75,11 @@ class SWJProjectsViewVersions extends HtmlView
 	/**
 	 * Display the view.
 	 *
-	 * @param  string $tpl The name of the template file to parse.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+	 * @param   string  $tpl  The name of the template file to parse.
 	 *
 	 * @throws  Exception
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
 	 * @since  1.0.0
 	 */

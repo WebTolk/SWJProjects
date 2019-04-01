@@ -45,7 +45,7 @@ class pkg_SWJPROJECTSInstallerScript
 	 */
 	function preflight()
 	{
-		// Check old Joomla
+		// Check old joomla
 		if (!class_exists('Joomla\CMS\Version'))
 		{
 			JFactory::getApplication()->enqueueMessage(JText::sprintf('PKG_SWJPROJECTS_ERROR_COMPATIBLE_JOOMLA',
@@ -57,7 +57,7 @@ class pkg_SWJPROJECTSInstallerScript
 		$app      = Factory::getApplication();
 		$jversion = new Version();
 
-		// Check PHP
+		// Check php
 		if (!(version_compare(PHP_VERSION, $this->minimumPhp) >= 0))
 		{
 			$app->enqueueMessage(Text::sprintf('PKG_SWJPROJECTS_ERROR_COMPATIBLE_PHP', $this->minimumPhp),

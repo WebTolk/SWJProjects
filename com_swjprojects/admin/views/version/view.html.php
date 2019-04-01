@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\View\HtmlView;
@@ -31,7 +32,7 @@ class SWJProjectsViewVersion extends HtmlView
 	/**
 	 * Form object.
 	 *
-	 * @var  \Joomla\CMS\Form\Form
+	 * @var  Form
 	 *
 	 * @since  1.0.0
 	 */
@@ -58,7 +59,7 @@ class SWJProjectsViewVersion extends HtmlView
 	/**
 	 * Project object.
 	 *
-	 * @var \Joomla\CMS\Object\CMSObject
+	 * @var  object
 	 *
 	 * @since  1.0.0
 	 */
@@ -67,11 +68,11 @@ class SWJProjectsViewVersion extends HtmlView
 	/**
 	 * Execute and display a template script.
 	 *
-	 * @param  string $tpl The name of the template file to parse.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+	 * @param   string  $tpl  The name of the template file to parse.
 	 *
 	 * @throws  Exception
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
 	 * @since  1.0.0
 	 */

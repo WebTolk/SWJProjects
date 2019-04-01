@@ -40,8 +40,8 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	/**
 	 * Constructor.
 	 *
-	 * @param  object  &$subject The object to observe
-	 * @param  array    $config  An optional associative array of configuration settings.
+	 * @param  object  &$subject  The object to observe
+	 * @param  array    $config   An optional associative array of configuration settings.
 	 *
 	 * @since   1.1.0
 	 */
@@ -60,8 +60,8 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	/**
 	 * Method to get urls array.
 	 *
-	 * @param  array    $urls   Urls array.
-	 * @param  Registry $config Component config.
+	 * @param  array     $urls    Urls array.
+	 * @param  Registry  $config  Component config.
 	 *
 	 * @return  array  Urls array with attributes.
 	 *

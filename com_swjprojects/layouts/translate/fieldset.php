@@ -17,8 +17,10 @@ extract($displayData);
 /**
  * Layout variables
  * -----------------
+ *
  * @var  array  $forms Translates forms array.
  * @var  string $name  Name of the fieldset for which to get the values.
+ *
  */
 
 $form = current($forms);

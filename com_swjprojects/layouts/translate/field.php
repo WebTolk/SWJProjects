@@ -19,6 +19,7 @@ extract($displayData);
 /**
  * Layout variables
  * -----------------
+ *
  * @var  array  $forms Translates forms array.
  * @var  string $name  Name of the field for which to get the value.
  * @var  string $group Optional dot-separated form group path on which to get the value.

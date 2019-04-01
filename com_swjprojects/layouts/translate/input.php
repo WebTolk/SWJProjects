@@ -17,9 +17,11 @@ extract($displayData);
 /**
  * Layout variables
  * -----------------
+ *
  * @var  array  $forms Translates forms array.
  * @var  string $name  Name of the field for which to get the value.
  * @var  string $group Optional dot-separated form group path on which to get the value.
+ *
  */
 
 $group        = (isset($group)) ? $group : '';
@@ -30,11 +32,11 @@ $languages    = LanguageHelper::getLanguages('lang_code');
 	$language = (!empty($languages[$code])) ? $languages[$code] : false;
 	?>
 	<?php if ($field && $language): ?>
-		<div data-translate-input style="display: none"
-			 data-translate="<?php echo $code; ?>"
-			 data-id="<?php echo $field->id; ?>"
-			 data-name="<?php echo $field->name; ?>">
-			<?php echo $field->input; ?>
-		</div>
-	<?php endif; ?>
+	<div data-translate-input style="display: none"
+		 data-translate="<?php echo $code; ?>"
+		 data-id="<?php echo $field->id; ?>"
+		 data-name="<?php echo $field->name; ?>">
+		<?php echo $field->input; ?>
+	</div>
+<?php endif; ?>
 <?php endforeach; ?>

@@ -59,7 +59,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @throws  Exception
 	 *
@@ -110,7 +110,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	/**
 	 * Method to get version data.
 	 *
-	 * @param  integer $pk The id of the version.
+	 * @param   integer  $pk  The id of the version.
 	 *
 	 * @throws  Exception
 	 *
@@ -194,7 +194,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	/**
 	 * Method to get version id from project.
 	 *
-	 * @param  integer $pk The id of the project.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
@@ -271,7 +271,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	/**
 	 * Method to get project id from element.
 	 *
-	 * @param  string $pk The id of the project.
+	 * @param   string  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *

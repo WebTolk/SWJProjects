@@ -28,7 +28,7 @@ class SWJProjectsModelVersions extends ListModel
 	/**
 	 * Constructor.
 	 *
-	 * @param  array $config An optional associative array of configuration settings.
+	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
 	 * @since  1.0.0
 	 */
@@ -58,8 +58,8 @@ class SWJProjectsModelVersions extends ListModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param  string $ordering  An optional ordering field.
-	 * @param  string $direction An optional direction (asc|desc).
+	 * @param   string  $ordering   An optional ordering field.
+	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
 	 * @since  1.0.0
 	 */
@@ -91,7 +91,7 @@ class SWJProjectsModelVersions extends ListModel
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *
-	 * @param  string $id A prefix for the store id.
+	 * @param   string  $id  A prefix for the store id.
 	 *
 	 * @return  string  A store id.
 	 *

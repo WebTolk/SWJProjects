@@ -17,8 +17,8 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches jupdate route.
 	 *
-	 * @param  int    $project_id The id of the project.
-	 * @param  string $element    The element of the project.
+	 * @param   int     $project_id  The id of the project.
+	 * @param   string  $element     The element of the project.
 	 *
 	 * @return  string  Joomla update server view link.
 	 *
@@ -44,9 +44,9 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches download route.
 	 *
-	 * @param  int    $version_id The id of the version.
-	 * @param  int    $project_id The id of the project.
-	 * @param  string $element    The element of the project.
+	 * @param   int     $version_id  The id of the version.
+	 * @param   int     $project_id  The id of the project.
+	 * @param   string  $element     The element of the project.
 	 *
 	 * @return  string  Download link.
 	 *
@@ -77,9 +77,9 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches version route.
 	 *
-	 * @param  int $id         The id of the version.
-	 * @param  int $project_id The id of the project.
-	 * @param  int $catid      The id of the category.
+	 * @param   int  $id          The id of the version.
+	 * @param   int  $project_id  The id of the project.
+	 * @param   int  $catid       The id of the category.
 	 *
 	 * @return  string  Version view link.
 	 *
@@ -110,8 +110,8 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches versions route.
 	 *
-	 * @param  int $id    The id of the project.
-	 * @param  int $catid The id of the category.
+	 * @param   int  $id     The id of the project.
+	 * @param   int  $catid  The id of the category.
 	 *
 	 * @return  string  Versions view link.
 	 *
@@ -137,8 +137,8 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches project route.
 	 *
-	 * @param  int $id    The id of the project.
-	 * @param  int $catid The id of the category.
+	 * @param   int  $id     The id of the project.
+	 * @param   int  $catid  The id of the category.
 	 *
 	 * @return  string  Project view link.
 	 *
@@ -164,7 +164,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches projects route.
 	 *
-	 * @param  int $id The id of the category.
+	 * @param   int  $id  The id of the category.
 	 *
 	 * @return  string  Projects view link.
 	 *

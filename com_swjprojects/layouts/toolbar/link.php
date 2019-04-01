@@ -18,10 +18,12 @@ extract($displayData);
 /**
  * Layout variables
  * -----------------
+ *
  * @var  string  $link Button link
  * @var  string  $text Button text
  * @var  string  $icon Button icon
  * @var  boolean $new  Button target
+ *
  */
 
 $new = (isset($new)) ? $new : true;

@@ -23,8 +23,8 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Runs right after any installation action.
 	 *
-	 * @param  string           $type   Type of PostFlight action.
-	 * @param  InstallerAdapter $parent Parent object calling object.
+	 * @param   string            $type    Type of PostFlight action.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -46,7 +46,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to install/update extension layouts.
 	 *
-	 * @param  InstallerAdapter $parent Parent object calling object.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -103,7 +103,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to create root category if don't exist.
 	 *
-	 * @param  string $table Table name.
+	 * @param   string  $table  Table name.
 	 *
 	 * @since  1.0.0
 	 */
@@ -139,7 +139,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to create database tables in not exist.
 	 *
-	 * @param  InstallerAdapter $parent Parent object calling object.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -197,7 +197,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * This method is called after extension is uninstalled.
 	 *
-	 * @param  InstallerAdapter $parent Parent object calling object.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -210,7 +210,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to uninstall extension layouts.
 	 *
-	 * @param  InstallerAdapter $parent Parent object calling object.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -234,7 +234,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * This method is called when extension is updated.
 	 *
-	 * @param  InstallerAdapter $parent Parent object calling object.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
 	 * @since  1.0.1
 	 */
