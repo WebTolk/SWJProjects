@@ -70,9 +70,9 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	public function onGetUrls(&$urls, $config)
 	{
 		if (!$this->params->get('projects_enable')
-			|| !$this->params->get('project_enable')
-			|| !$this->params->get('versions_enable')
-			|| !$this->params->get('version_enable'))
+			&& !$this->params->get('project_enable')
+			&& !$this->params->get('versions_enable')
+			&& !$this->params->get('version_enable'))
 		{
 			return $urls;
 		}
