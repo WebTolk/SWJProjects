@@ -1,7 +1,7 @@
 [![SW JProjects](https://www.septdir.com/images/marketplace/pkg_swjprojects/en-GB/cover.jpg)](https://www.septdir.com/marketplace/joomla/components/swjprojects)
 [![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/marketplace/joomla/components/swjprojects)
 [![Documentation](https://img.shields.io/badge/documentation--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/marketplace/joomla/components/swjprojects)
-[![Support](https://img.shields.io/badge/support--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](mailto:support@septdir.com)
+[![Support](https://img.shields.io/badge/support--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://github.com/SeptdirWorkshop/SWJProjects/issues)
 [![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/marketplace)
 [![Download](https://img.shields.io/github/release/SeptdirWorkshop/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://www.septdir.com/marketplace?task=download&project_id=1)
 
