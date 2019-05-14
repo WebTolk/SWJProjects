@@ -185,7 +185,8 @@ class SWJProjectsViewCategories extends HtmlView
 		return [
 			'с.state' => Text::_('JSTATUS'),
 			'с.id'    => Text::_('JGRID_HEADING_ID'),
-			'с.title' => Text::_('JGLOBAL_TITLE')
+			'с.title' => Text::_('JGLOBAL_TITLE'),
+			'c.lft'   => Text::_('JGRID_HEADING_ORDERING')
 		];
 	}
 }

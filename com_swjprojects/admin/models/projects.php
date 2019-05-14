@@ -46,6 +46,7 @@ class SWJProjectsModelProjects extends ListModel
 				'category', 'category_id', 'c.id', 'e.catid', 'catid', 'category_title', 'cl.title',
 				'downloads', 'p.downloads',
 				'hits', 'p.hits',
+				'ordering', 'p.ordering',
 			);
 		}
 		parent::__construct($config);

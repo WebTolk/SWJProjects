@@ -43,6 +43,7 @@ class SWJProjectsModelCategories extends ListModel
 				'id', 'c.id',
 				'title', 'c.title',
 				'published', 'state', 'c.state',
+				'ordering', 'lft', 'c.lft',
 			);
 		}
 

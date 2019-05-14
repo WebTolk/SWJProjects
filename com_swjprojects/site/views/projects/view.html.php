@@ -224,8 +224,7 @@ class SWJProjectsViewProjects extends HtmlView
 		}
 
 		// Set meta robots
-		$inWork = $this->state->get('debug', 0);
-		if ($inWork)
+		if ($this->state->get('debug', 0))
 		{
 			$this->document->setMetadata('robots', 'noindex');
 		}

@@ -77,7 +77,7 @@ $columns = 8;
 							$listDirn, $listOrder); ?>
 					</th>
 					<th width="1%" class="nowrap hidden-phone center">
-						<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'p.id', $listDirn, $listOrder); ?>
 					</th>
 				</tr>
 				</thead>
