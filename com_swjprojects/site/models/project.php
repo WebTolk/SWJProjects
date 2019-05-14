@@ -276,7 +276,7 @@ class SWJProjectsModelProject extends ItemModel
 				$data->cslug    = $data->category_id . ':' . $data->category_alias;
 				$data->link     = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
 				$data->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
-				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->id));
+				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $data->element));
 
 				// Set category
 				$data->category        = new stdClass();

@@ -43,7 +43,7 @@ class SWJProjectsRouter extends RouterView
 	 * Router constructor.
 	 *
 	 * @param   CMSApplication  $app   The application object.
-	 * @param   AbstractMenu           $menu  The menu object to work with.
+	 * @param   AbstractMenu    $menu  The menu object to work with.
 	 *
 	 * @since  1.0.0
 	 */
@@ -73,6 +73,11 @@ class SWJProjectsRouter extends RouterView
 		$jupdate = new RouterViewConfiguration('jupdate');
 		$jupdate->setKey('key');
 		$this->registerView($jupdate);
+
+		// Download route
+		$download = new RouterViewConfiguration('download');
+		$download->setKey('key');
+		$this->registerView($download);
 
 		parent::__construct($app, $menu);
 
@@ -239,6 +244,21 @@ class SWJProjectsRouter extends RouterView
 	}
 
 	/**
+	 * Method to get the segment(s) for download.
+	 *
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
+	 *
+	 * @return  array|string  The segments of this item.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getDownloadSegment($id, $query)
+	{
+		return array(1 => 1);
+	}
+
+	/**
 	 * Method to get the id for projects.
 	 *
 	 * @param   string  $segment  Segment to retrieve the id.
@@ -370,6 +390,21 @@ class SWJProjectsRouter extends RouterView
 	 * @since  1.0.0
 	 */
 	public function getJUpdateId($segment, $query)
+	{
+		return 1;
+	}
+
+	/**
+	 * Method to get the id for download.
+	 *
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
+	 *
+	 * @return  integer|false  The id of this item or false.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getDownloadId($segment, $query)
 	{
 		return 1;
 	}

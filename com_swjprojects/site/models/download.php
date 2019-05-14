@@ -369,6 +369,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 		$file       = new stdClass();
 		$file->name = $version->filename . '.' . File::getExt($files[0]);
 		$file->path = $files[0];
+		$file->type = mime_content_type($file->path);
 
 		return $file;
 	}

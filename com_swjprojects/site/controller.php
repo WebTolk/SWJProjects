@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -111,38 +110,17 @@ class SWJProjectsController extends BaseController
 	}
 
 	/**
-	 * Method to download version file.
+	 * Redirect to download view.
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function download()
 	{
-		$app   = Factory::getApplication();
-		$model = $this->getModel('Download');
-
-		// Get file data
-		if (!$download = $model->getFile())
-		{
-			throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_FILE_NOT_FOUND'), 404);
-		}
-
-		// Set headers
-		ob_end_clean();
-		$app->clearHeaders();
-		$app->setHeader('Content-Type', 'application/octet-stream', true);
-		$app->setHeader('Content-Disposition', 'attachment; filename=' . $download->name . ';', true);
-		$app->sendHeaders();
-
-		// Read file
-		if ($context = @file_get_contents($download->path))
-		{
-			echo $context;
-			$model->setDownload();
-		}
-
-		// Close application
-		$app->close();
+		Factory::getApplication()->redirect(SWJProjectsHelperRoute::getDownloadRoute(
+			$this->input->get('version_id', null, 'int'),
+			$this->input->get('project_id', null, 'int'),
+			$this->input->get('element', null, 'raw')));
 	}
 }

@@ -54,7 +54,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	 */
 	public static function getDownloadRoute($version_id = null, $project_id = null, $element = null)
 	{
-		$link = 'index.php?option=com_swjprojects&task=download';
+		$link = 'index.php?option=com_swjprojects&view=download&key=1';
 
 		if (!empty($version_id))
 		{

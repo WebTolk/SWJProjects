@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SWJPROJECTS_VIEW_DOWNLOAD" option="COM_SWJPROJECTS_VIEW_DOWNLOAD_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_SWJPROJECTS_VIEW_DOWNLOAD_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldpath="/administrator/components/com_swjprojects/models/fields">
+		<fieldset name="request">
+			<fieldset name="request">
+				<field name="key" type="hidden" default="1"/>
+			</fieldset>
+		</fieldset>
+	</fields>
+</metadata>

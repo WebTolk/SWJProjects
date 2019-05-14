@@ -312,7 +312,7 @@ class SWJProjectsModelProjects extends ListModel
 				$item->cslug    = $item->category_id . ':' . $item->category_alias;
 				$item->link     = Route::_(SWJProjectsHelperRoute::getProjectRoute($item->slug, $item->cslug));
 				$item->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($item->slug, $item->cslug));
-				$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $item->id));
+				$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $item->element));
 
 				// Set category
 				$item->category        = new stdClass();
