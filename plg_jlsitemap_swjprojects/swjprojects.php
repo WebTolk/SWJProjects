@@ -40,8 +40,8 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	/**
 	 * Constructor.
 	 *
-	 * @param  object  &$subject  The object to observe
-	 * @param  array    $config   An optional associative array of configuration settings.
+	 * @param   object  &$subject  The object to observe
+	 * @param   array    $config   An optional associative array of configuration settings.
 	 *
 	 * @since   1.1.0
 	 */
@@ -60,8 +60,8 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	/**
 	 * Method to get urls array.
 	 *
-	 * @param  array     $urls    Urls array.
-	 * @param  Registry  $config  Component config.
+	 * @param   array     $urls    Urls array.
+	 * @param   Registry  $config  Component config.
 	 *
 	 * @return  array  Urls array with attributes.
 	 *
@@ -69,6 +69,53 @@ class plgJLSitemapSWJProjects extends CMSPlugin
 	 */
 	public function onGetUrls(&$urls, $config)
 	{
+		// Exclude judate & download views
+		$jupdate             = new stdClass();
+		$jupdate->type       = Text::_('PLG_JLSITEMAP_SWJPROJECTS_TYPES_JUPDATE');
+		$jupdate->title      = Text::_('PLG_JLSITEMAP_SWJPROJECTS_TYPES_JUPDATE');
+		$jupdate->loc        = 'index.php?option=com_swjprojects&view=jupdate&key=1';
+		$jupdate->changefreq = 0;
+		$jupdate->priority   = 0;
+		$jupdate->exclude    = array(
+			array(
+				'type' => Text::_('PLG_JLSITEMAP_SWJPROJECTS_EXCLUDE_JUPDATE'),
+				'msg'  => Text::_('PLG_JLSITEMAP_SWJPROJECTS_EXCLUDE_JUPDATE_MSG'),
+			)
+		);
+
+		$download             = new stdClass();
+		$download->type       = Text::_('PLG_JLSITEMAP_SWJPROJECTS_TYPES_DOWNLOAD');
+		$download->title      = Text::_('PLG_JLSITEMAP_SWJPROJECTS_TYPES_DOWNLOAD');
+		$download->loc        = 'index.php?option=com_swjprojects&view=download&key=1';
+		$download->changefreq = 0;
+		$download->priority   = 0;
+		$download->exclude    = array(
+			array(
+				'type' => Text::_('PLG_JLSITEMAP_SWJPROJECTS_EXCLUDE_DOWNLOAD'),
+				'msg'  => Text::_('PLG_JLSITEMAP_SWJPROJECTS_EXCLUDE_DOWNLOAD_MSG'),
+			)
+		);
+
+		if ($config->get('multilanguage'))
+		{
+			foreach ($this->translates['all'] as $translate)
+			{
+				$url      = $jupdate;
+				$url->loc = $url->loc . '&lang=' . $translate;
+				$urls[]   = $url;
+
+				$url      = $download;
+				$url->loc = $url->loc . '&lang=' . $translate;
+				$urls[]   = $url;
+			}
+		}
+		else
+		{
+			$urls[] = $jupdate;
+			$urls[] = $download;
+		}
+
+		// Add urls
 		if (!$this->params->get('projects_enable')
 			&& !$this->params->get('project_enable')
 			&& !$this->params->get('versions_enable')
