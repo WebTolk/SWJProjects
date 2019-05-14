@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
 
@@ -35,15 +36,41 @@ class pkg_SWJPROJECTSInstallerScript
 	protected $minimumJoomla = '3.9.0';
 
 	/**
+	 * Runs right before any installation action.
+	 *
+	 * @param   string            $type    Type of PostFlight action.
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  boolean True on success, false on failure.
+	 *
+	 * @since  1.0.0
+	 */
+	function preflight($type, $parent)
+	{
+		// Check compatible
+		if (!$this->checkCompatible()) return false;
+
+		// Check update server
+		if ($type == 'update')
+		{
+			$this->checkUpdateServer();
+		}
+
+		return true;
+	}
+
+	/**
 	 * Method to check compatible.
 	 *
 	 * @throws  Exception
 	 *
-	 * @return  boolean  Compatible current version or not.
+	 * @return  boolean True on success, false on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
-	function preflight()
+	protected function checkCompatible()
 	{
 		// Check old joomla
 		if (!class_exists('Joomla\CMS\Version'))
@@ -76,5 +103,29 @@ class pkg_SWJPROJECTSInstallerScript
 		}
 
 		return true;
+	}
+
+	/**
+	 * Method to check update server and change if need.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function checkUpdateServer()
+	{
+		$old = 'https://www.septdir.com/jupdate?element=pkg_swjprojects';
+		$new = 'https://www.septdir.com/marketplace/joomla/update?element=pkg_swjprojects';
+
+		$db      = Factory::getDbo();
+		$query   = $db->getQuery(true)
+			->select(array('update_site_id', 'location'))
+			->from($db->quoteName('#__update_sites'))
+			->where($db->quoteName('name') . ' = ' . $db->quote('SW JProjects'));
+		$current = $db->setQuery($query)->loadObject();
+
+		if ($current->location == $old)
+		{
+			$current->location = $new;
+			$db->updateObject('#__update_sites', $current, array('update_site_id'));
+		}
 	}
 }
