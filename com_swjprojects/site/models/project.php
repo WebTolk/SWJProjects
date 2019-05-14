@@ -234,7 +234,7 @@ class SWJProjectsModelProject extends ItemModel
 
 				$data = $db->setQuery($query)->loadObject();
 
-				if (empty($data))
+				if (!$data->id)
 				{
 					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}

@@ -447,9 +447,9 @@ class SWJProjectsModelVersions extends ListModel
 
 				$data = $db->setQuery($query)->loadObject();
 
-				if (empty($data))
+				if (!$data->id)
 				{
-					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
+					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
