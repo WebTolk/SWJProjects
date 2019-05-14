@@ -500,7 +500,7 @@ class SWJProjectsModelVersions extends ListModel
 				}
 
 				// Set params
-				$params       = $data->params;
+				$params       = new Registry($data->params);
 				$data->params = clone $this->getState('params');
 				$data->params->merge($params);
 

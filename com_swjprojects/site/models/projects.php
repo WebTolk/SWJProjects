@@ -421,7 +421,7 @@ class SWJProjectsModelProjects extends ListModel
 				$data->link = Route::_(SWJProjectsHelperRoute::getProjectsRoute($data->slug));
 
 				// Set params
-				$params       = $data->params;
+				$params       = new Registry($data->params);
 				$data->params = clone $this->getState('params');
 				$data->params->merge($params);
 

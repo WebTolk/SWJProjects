@@ -305,7 +305,7 @@ class SWJProjectsModelVersion extends ItemModel
 				$data->category->link  = Route::_(SWJProjectsHelperRoute::getProjectsRoute($data->cslug));
 
 				// Set params
-				$params       = $data->params;
+				$params       = new Registry($data->params);
 				$data->params = clone $this->getState('params');
 				$data->params->merge($params);
 

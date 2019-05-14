@@ -298,7 +298,7 @@ class SWJProjectsModelProject extends ItemModel
 				}
 
 				// Set params
-				$params       = $data->params;
+				$params       = new Registry($data->params);
 				$data->params = clone $this->getState('params');
 				$data->params->merge($params);
 
