@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Package
- * @version    __DEPLOY_VERSION__
+ * @version    1.2.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -68,7 +68,7 @@ class pkg_SWJPROJECTSInstallerScript
 	 *
 	 * @return  boolean True on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.2.0
 	 */
 	protected function checkCompatible()
 	{
@@ -108,7 +108,7 @@ class pkg_SWJPROJECTSInstallerScript
 	/**
 	 * Method to check update server and change if need.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.2.0
 	 */
 	protected function checkUpdateServer()
 	{

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.2.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -251,7 +251,7 @@ class SWJProjectsRouter extends RouterView
 	 *
 	 * @return  array|string  The segments of this item.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.2.0
 	 */
 	public function getDownloadSegment($id, $query)
 	{
@@ -402,7 +402,7 @@ class SWJProjectsRouter extends RouterView
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.2.0
 	 */
 	public function getDownloadId($segment, $query)
 	{
