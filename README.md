@@ -22,7 +22,13 @@ File storage structure allows you to store files outside the root directory, whi
 Developers who create extensions for Joomla! CMS are provided with additional functionality for creating and running their own update server, as part of the component.
 
 ## Differences
-* Convenient multilingual.
+* Convenient multilingual
 * Duplicate pages protection
-* OpenGraph and Twitter meta.
-* Caching Joomla! Extensions Server Update Manifest.
+* OpenGraph and Twitter meta
+* Caching Joomla! Extensions Server Update Manifest
+
+## Package Contents
+* **SW JProjects**  
+	Digital projects manager component
+* **JLSitemap - SW JProjects**  
+	Plugin to add SW JProjects content to the sitemap
