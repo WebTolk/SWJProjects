@@ -38,12 +38,14 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_projects`
     `relations` TEXT                                                   NOT NULL,
     `params`    TEXT                                                   NOT NULL,
     `ordering`  INT(11)                                                NOT NULL DEFAULT 0,
+    `hits`      INT(10)                                                NOT NULL DEFAULT 0,
     PRIMARY KEY `id` (`id`),
     KEY `idx_element` (`element`(100)),
     KEY `idx_alias` (`alias`(191)),
     KEY `idx_state` (`state`),
     KEY `idx_catid` (`catid`),
-    KEY `idx_ordering` (`ordering`)
+    KEY `idx_ordering` (`ordering`),
+    KEY `idx_hits` (`hits`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4

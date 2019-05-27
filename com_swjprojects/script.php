@@ -41,6 +41,9 @@ class com_swjprojectsInstallerScript
 
 		// Check files folder
 		$this->checkFilesFolder();
+
+		// Check files folder
+		$this->checkHitsColumn();
 	}
 
 	/**
@@ -191,6 +194,27 @@ class com_swjprojectsInstallerScript
 		if (!Folder::exists($folder))
 		{
 			Folder::create($folder);
+		}
+	}
+
+	/**
+	 * Method to create hits column if don't exist.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function checkHitsColumn()
+	{
+		$db      = Factory::getDbo();
+		$columns = $db->getTableColumns('#__swjprojects_projects');
+		if (!isset($columns['hits']))
+		{
+			// Create hits column
+			$db->setQuery('ALTER TABLE `#__swjprojects_projects` ADD `hits` INT(10) NOT NULL DEFAULT 0 AFTER `ordering`')
+				->execute();
+
+			// Create hits index
+			$db->setQuery('ALTER TABLE `#__swjprojects_projects` ADD INDEX `idx_hits`(`hits`)')
+				->execute();
 		}
 	}
 
