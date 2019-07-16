@@ -15,7 +15,7 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Version;
 
-class pkg_SWJPROJECTSInstallerScript
+class pkg_swjprojectsInstallerScript
 {
 	/**
 	 * Minimum PHP version required to install the extension.

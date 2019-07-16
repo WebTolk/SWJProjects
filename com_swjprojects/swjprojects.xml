@@ -69,5 +69,8 @@
 		<folder>css</folder>
 		<folder>js</folder>
 	</media>
-	<layouts destination="components/swjprojects" folder="layouts"/>
+	<layouts destination="components/swjprojects" folder="layouts">
+		<folder>toolbar</folder>
+		<folder>translate</folder>
+	</layouts>
 </extension>
