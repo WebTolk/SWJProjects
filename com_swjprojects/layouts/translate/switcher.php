@@ -14,8 +14,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\LanguageHelper;
 
-HTMLHelper::stylesheet('media/com_swjprojects/css/translate-switcher.min.css', array('version' => 'auto'));
-HTMLHelper::script('media/com_swjprojects/js/translate-switcher.min.js', array('version' => 'auto'));
+HTMLHelper::stylesheet('com_swjprojects/translate-switcher.min.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::script('com_swjprojects/translate-switcher.min.js', array('version' => 'auto', 'relative' => true));
 
 $default = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
 ?>

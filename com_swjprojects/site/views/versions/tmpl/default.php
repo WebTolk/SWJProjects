@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-HTMLHelper::stylesheet('media/com_swjprojects/css/site.min.css', array('version' => 'auto'));
+HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
 ?>
 <div id="SWJProjects" class="versions">
 	<div class="project info well">

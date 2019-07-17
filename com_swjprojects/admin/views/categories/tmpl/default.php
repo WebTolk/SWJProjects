@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::stylesheet('media/com_swjprojects/css/admin.min.css', array('version' => 'auto'));
+HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto', 'relative' => true));
 
 $user      = Factory::getUser();
 $listOrder = $this->escape($this->state->get('list.ordering'));
