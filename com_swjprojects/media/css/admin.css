@@ -32,6 +32,14 @@
 	width: 100% !important;
 }
 
+#item-form .span3 .well.form-horizontal .controls .field-calendar input {
+	width: 165px;
+}
+
+#item-form .span3 .well.form-horizontal .controls .field-calendar button {
+	vertical-align: middle;
+}
+
 @media (max-width: 1599px) {
 	#item-form .span3 .well.form-horizontal .control-label {
 		float: none;
