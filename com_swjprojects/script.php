@@ -28,6 +28,8 @@ class com_swjprojectsInstallerScript
 	 * @param   string            $type    Type of PostFlight action.
 	 * @param   InstallerAdapter  $parent  Parent object calling object.
 	 *
+	 * @throws  Exception
+	 *
 	 * @since  1.0.0
 	 */
 	function postflight($type, $parent)
@@ -168,16 +170,41 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to create files folder if don't exist.
 	 *
+	 * @throws  Exception
+	 *
 	 * @since  1.0.0
 	 */
 	protected function checkFilesFolder()
 	{
-		$params = ComponentHelper::getParams('com_swjprojects');
+		$params         = ComponentHelper::getParams('com_swjprojects');
+		$standardFolder = Path::clean(JPATH_ROOT . '/' . 'swjprojects');
+		$paramsFolder   = $params->get('files_folder');
+		$folder         = ($paramsFolder) ? Path::clean($paramsFolder) : $standardFolder;
+		$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
+
+		// Check folder exist
+		if (!Folder::exists($folder))
+		{
+			// Set standard folder
+			if (!Folder::create($folder) && $folder !== $standardFolder)
+			{
+				$folder    = $standardFolder;
+				$setParams = true;
+
+				Factory::getApplication()->enqueueMessage(
+					Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_FILES_FOLDER', $folder), 'warning'
+				);
+
+				if (!Folder::exists($folder))
+				{
+					Folder::create($folder);
+				}
+			}
+		}
 
 		// Set files_folder param
-		if (!$folder = $params->get('files_folder'))
+		if ($setParams)
 		{
-			$folder = JPATH_ROOT . '/' . 'swjprojects';
 			$params->set('files_folder', $folder);
 
 			$component          = new stdClass();
@@ -185,12 +212,6 @@ class com_swjprojectsInstallerScript
 			$component->params  = $params->toString();
 
 			Factory::getDbo()->updateObject('#__extensions', $component, array('element'));
-		}
-
-		// Create folder
-		if (!Folder::exists($folder))
-		{
-			Folder::create($folder);
 		}
 	}
 
@@ -289,7 +310,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @since  1.0.1
 	 */
-	function update($parent)
+	public function update($parent)
 	{
 		// Remove forgot js file
 		$file = JPATH_ROOT . '/media/com_swjprojects/js/translate-switcher.min.min.js';
