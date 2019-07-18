@@ -6,6 +6,10 @@
 			   label="COM_SWJPROJECTS_PARAMS_FILES_FOLDER"
 			   description="COM_SWJPROJECTS_PARAMS_FILES_FOLDER_DESC"
 			   class="input-xxlarge"/>
+		<field name="images_folder" type="text"
+			   label="COM_SWJPROJECTS_PARAMS_IMAGES_FOLDER"
+			   description="COM_SWJPROJECTS_PARAMS_IMAGES_FOLDER_DESC"
+			   class="input-xxlarge"/>
 		<field name="projects_limit" type="list"
 			   label="COM_SWJPROJECTS_PARAMS_PROJECTS_LIMIT"
 			   default="10">

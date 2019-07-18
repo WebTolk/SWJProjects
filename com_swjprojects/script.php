@@ -19,6 +19,8 @@ use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
 
 class com_swjprojectsInstallerScript
 {
@@ -46,8 +48,17 @@ class com_swjprojectsInstallerScript
 		// Check files folder
 		$this->checkFilesFolder();
 
-		// Check files folder
-		$this->checkHitsColumn();
+		// Check images folder
+		$this->checkImagesFolder();
+
+		if ($type == 'update')
+		{
+			// Check hits column
+			$this->checkHitsColumn();
+
+			// Prepare projects images
+			$this->prepareImagesColumn();
+		}
 	}
 
 	/**
@@ -179,7 +190,7 @@ class com_swjprojectsInstallerScript
 		$params         = ComponentHelper::getParams('com_swjprojects');
 		$standardFolder = Path::clean(JPATH_ROOT . '/' . 'swjprojects');
 		$paramsFolder   = $params->get('files_folder');
-		$folder         = ($paramsFolder) ? Path::clean($paramsFolder) : $standardFolder;
+		$folder         = ($paramsFolder) ? Path::clean(rtrim($paramsFolder, '/')) : $standardFolder;
 		$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
 
 		// Check folder exist
@@ -216,6 +227,56 @@ class com_swjprojectsInstallerScript
 	}
 
 	/**
+	 * Method to create images folder if don't exist.
+	 *
+	 * @throws  Exception
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function checkImagesFolder()
+	{
+		$params         = ComponentHelper::getParams('com_swjprojects');
+		$standardFolder = Path::clean('images/swjprojects');
+		$paramsFolder   = $params->get('images_folder');
+		$folder         = ($paramsFolder) ? Path::clean(trim($paramsFolder, '/')) : $standardFolder;
+		$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
+		$path           = Path::clean(JPATH_ROOT . '/' . $folder);
+
+		// Check folder exist
+		if (!Folder::exists($path))
+		{
+			// Set standard folder
+			if (!Folder::create($path) && $folder !== $standardFolder)
+			{
+				$folder    = $standardFolder;
+				$path      = Path::clean(JPATH_ROOT . '/' . $folder);
+				$setParams = true;
+
+				Factory::getApplication()->enqueueMessage(
+					Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_IMAGES_FOLDER', $folder), 'warning'
+				);
+
+				if (!Folder::exists($path))
+				{
+					Folder::create($path);
+				}
+			}
+		}
+
+		// Set images_folder param
+		if ($setParams)
+		{
+			$params->set('images_folder', $folder);
+
+			$component          = new stdClass();
+			$component->element = 'com_swjprojects';
+			$component->params  = $params->toString();
+
+			Factory::getDbo()->updateObject('#__extensions', $component, array('element'));
+		}
+	}
+
+	/**
 	 * Method to create hits column if don't exist.
 	 *
 	 * @since  1.2.1
@@ -233,6 +294,126 @@ class com_swjprojectsInstallerScript
 			// Create hits index
 			$db->setQuery('ALTER TABLE `#__swjprojects_projects` ADD INDEX `idx_hits`(`hits`)')
 				->execute();
+		}
+	}
+
+	/**
+	 * Method to move projects images and save gallery.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function prepareImagesColumn()
+	{
+		$db      = Factory::getDbo();
+		$table   = '#__swjprojects_translate_projects';
+		$columns = $db->getTableColumns($table);
+
+		// Check gallery column
+		if (!isset($columns['gallery']))
+		{
+			$db->setQuery('ALTER TABLE `' . $table . '` ADD `gallery` MEDIUMTEXT NOT NULL AFTER `fulltext`;')->execute();
+		}
+
+		if (isset($columns['images']))
+		{
+			$query = $db->getQuery(true)
+				->select(array('id', 'language', 'images'))
+				->from($db->quoteName($table));
+			$rows  = $db->setQuery($query)->loadObjectList();
+			$root  = ComponentHelper::getParams('com_swjprojects')->get('images_folder');
+
+			// Update projects
+			foreach ($rows as $row)
+			{
+				// Check project folder
+				$folder = Path::clean(JPATH_ROOT . '/' . $root . '/' . $row->id . '/' . $row->language);
+				if (!Folder::exists($folder))
+				{
+					Folder::create($folder);
+				}
+
+				if (!empty($row->images))
+				{
+					$registry    = new Registry($row->images);
+					$row->images = '';
+
+					// Copy icon
+					if ($icon = $registry->get('icon'))
+					{
+						$src  = Path::clean(JPATH_ROOT . '/' . $icon);
+						$dest = Path::clean($folder . '/icon.' . File::getExt($src));
+
+						if (!File::exists($dest))
+						{
+							File::copy($src, $dest);
+						}
+					}
+
+					// Copy cover
+					if ($icon = $registry->get('cover'))
+					{
+						$src  = Path::clean(JPATH_ROOT . '/' . $icon);
+						$dest = Path::clean($folder . '/cover.' . File::getExt($src));
+
+						if (!File::exists($dest))
+						{
+							File::copy($src, $dest);
+						}
+					}
+
+					// Copy and prepare gallery
+					$gallery = array();
+					if (!empty($registry->get('gallery')))
+					{
+						// Check folder
+						$folder = Path::clean($folder . '/gallery');
+						if (!Folder::exists($folder))
+						{
+							Folder::create($folder);
+						}
+
+						$names = array();
+						foreach (ArrayHelper::fromObject($registry->get('gallery')) as $key => $image)
+						{
+							$src      = Path::clean(JPATH_ROOT . '/' . $image['image']);
+							$text     = (isset($image['text'])) ? $image['text'] : '';
+							$ordering = (int) str_replace('gallery', '', $key) + 1;
+
+							// Prepare file name
+							$hashKey = $key . '_' . basename($src) . '_' . time();
+							$i       = 1;
+							$name    = substr(md5($hashKey . '_' . $i), 0, 11);
+							while (in_array($name, $names))
+							{
+								$i++;
+								$name = substr(md5($hashKey . '_' . $i), 0, 11);
+							}
+							$name = $name . '.' . File::getExt($src);
+							$dest = Path::clean($folder . '/' . $name);
+
+							// Set to gallery
+							$gallery[$name] = array(
+								'text'     => $text,
+								'ordering' => $ordering
+							);
+
+							// Copy image
+							if (!File::exists($dest))
+							{
+								File::copy($src, $dest);
+							}
+						}
+					}
+					$gallery      = new Registry($gallery);
+					$row->gallery = $gallery->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+
+					// Update row
+					$db->updateObject($table, $row, array('id', 'language'));
+				}
+			}
+
+			// Remove images column
+			$db->setQuery('ALTER TABLE `' . $table . '` drop column `images`;')->execute();
 		}
 	}
 
@@ -301,22 +482,5 @@ class com_swjprojectsInstallerScript
 		}
 
 		return true;
-	}
-
-	/**
-	 * This method is called when extension is updated.
-	 *
-	 * @param   InstallerAdapter  $parent  Parent object calling object.
-	 *
-	 * @since  1.0.1
-	 */
-	public function update($parent)
-	{
-		// Remove forgot js file
-		$file = JPATH_ROOT . '/media/com_swjprojects/js/translate-switcher.min.min.js';
-		if (File::exists($file))
-		{
-			File::delete($file);
-		}
 	}
 }
