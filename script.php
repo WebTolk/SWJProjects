@@ -112,8 +112,11 @@ class pkg_swjprojectsInstallerScript
 	 */
 	protected function checkUpdateServer()
 	{
-		$old = 'https://www.septdir.com/jupdate?element=pkg_swjprojects';
-		$new = 'https://www.septdir.com/marketplace/joomla/update?element=pkg_swjprojects';
+		$old = array(
+			'https://www.septdir.com/jupdate?element=pkg_swjprojects',
+			'https://www.septdir.com/marketplace/joomla/update?element=pkg_swjprojects'
+		);
+		$new = 'https://www.septdir.com/solutions/joomla/update?element=pkg_swjprojects';
 
 		$db      = Factory::getDbo();
 		$query   = $db->getQuery(true)
@@ -122,7 +125,7 @@ class pkg_swjprojectsInstallerScript
 			->where($db->quoteName('name') . ' = ' . $db->quote('SW JProjects'));
 		$current = $db->setQuery($query)->loadObject();
 
-		if ($current->location == $old)
+		if (in_array($current->location, $old))
 		{
 			$current->location = $new;
 			$db->updateObject('#__update_sites', $current, array('update_site_id'));

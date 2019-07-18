@@ -21,7 +21,7 @@
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="SW JProjects">
-			https://www.septdir.com/marketplace/joomla/update?element=pkg_swjprojects
+			https://www.septdir.com/solutions/joomla/update?element=pkg_swjprojects
 		</server>
 	</updateservers>
 </extension>
