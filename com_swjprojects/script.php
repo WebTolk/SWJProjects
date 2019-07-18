@@ -236,9 +236,9 @@ class com_swjprojectsInstallerScript
 	protected function checkImagesFolder()
 	{
 		$params         = ComponentHelper::getParams('com_swjprojects');
-		$standardFolder = Path::clean('images/swjprojects');
+		$standardFolder = 'images/swjprojects';
 		$paramsFolder   = $params->get('images_folder');
-		$folder         = ($paramsFolder) ? Path::clean(trim($paramsFolder, '/')) : $standardFolder;
+		$folder         = ($paramsFolder) ? trim($paramsFolder, '/') : $standardFolder;
 		$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
 		$path           = Path::clean(JPATH_ROOT . '/' . $folder);
 
@@ -326,7 +326,7 @@ class com_swjprojectsInstallerScript
 			foreach ($rows as $row)
 			{
 				// Check project folder
-				$folder = Path::clean(JPATH_ROOT . '/' . $root . '/' . $row->id . '/' . $row->language);
+				$folder = Path::clean(JPATH_ROOT . '/' . $root . '/projects/' . $row->id . '/' . $row->language);
 				if (!Folder::exists($folder))
 				{
 					Folder::create($folder);

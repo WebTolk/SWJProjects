@@ -305,7 +305,11 @@ class SWJProjectsModelProjects extends ListModel
 				$item->urls = new Registry($item->urls);
 
 				// Set images
-				$item->images = new Registry($item->images);
+				$item->images = new Registry();
+				$item->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $item->id, 'icon', $item->language));
+				$item->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $item->id, 'cover', $item->language));
 
 				// Set link
 				$item->slug     = $item->id . ':' . $item->alias;

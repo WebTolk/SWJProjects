@@ -12,20 +12,20 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\Utilities\ArrayHelper;
 
 HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
 ?>
 <div id="SWJProjects" class="project">
+	<?php if ($cover = $this->project->images->get('cover')): ?>
+		<p class="cover"><?php echo HTMLHelper::image($cover, $this->project->title); ?></p>
+		<hr>
+	<?php endif; ?>
 	<div class="project info well">
-		<?php if ($cover = $this->project->images->get('cover')): ?>
-			<p><?php echo HTMLHelper::image($cover, $this->project->title); ?></p>
-		<?php endif; ?>
-		<div class="clearfix">
+		<div class="row-fluid">
 			<?php if ($icon = $this->project->images->get('icon')): ?>
-				<div class="pull-right"><?php echo HTMLHelper::image($icon, $this->project->title); ?></div>
+				<div class="span3"><?php echo HTMLHelper::image($icon, $this->project->title); ?></div>
 			<?php endif; ?>
-			<div>
+			<div class="<?php echo ($icon) ? 'span9' : ''; ?>">
 				<h1><?php echo $this->project->title; ?></h1>
 				<?php if (!empty($this->project->introtext)): ?>
 					<p class="description">
@@ -63,7 +63,7 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 						<?php endif; ?>
 					</ul>
 					<div class="buttons">
-						<a href="<?php echo $this->project->download; ?>" class="btn btn-success" target="_blank">
+						<a href="<?php echo $this->project->download; ?>" class="btn btn-primary" target="_blank">
 							<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
 						</a>
 						<a href="<?php echo $this->project->versions; ?>" class="btn">
@@ -130,34 +130,44 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 		</ul>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>
-	<?php if ($gallery = $this->project->images->get('gallery')): ?>
+	<?php if ($this->project->gallery): ?>
 		<?php echo HTMLHelper::_('bootstrap.addTab', 'projectTab', 'gallery', Text::_('COM_SWJPROJECTS_IMAGES_GALLERY')); ?>
-		<?php foreach (ArrayHelper::fromObject($gallery) as $value):
-			if (empty($value['image'])) continue; ?>
-			<p>
-				<a href="<?php echo $value['image']; ?>" target="_blank">
-					<?php echo HTMLHelper::image($value['image'], $value['text']); ?>
-					<br>
-					<?php echo (!empty($value['text'])) ? $value['text'] : ''; ?>
-				</a>
-			</p>
+		<?php foreach (array_chunk($this->project->gallery, 2) as $r => $row):
+			echo ($r > 0) ? '<hr>' : ''; ?>
+			<div class="row-fluid">
+				<?php foreach ($row as $image): ?>
+					<div class="span6">
+						<p>
+							<a href="<?php echo $image->src; ?>" target="_blank">
+								<?php if ($image->text): ?>
+									<div class="lead"><?php echo $image->text; ?></div>
+								<?php endif; ?>
+								<?php echo HTMLHelper::image($image->src, htmlspecialchars($image->text)); ?>
+							</a>
+						</p>
+					</div>
+				<?php endforeach; ?>
+			</div>
 		<?php endforeach; ?>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>
 
 	<?php if (!empty($this->relations)): ?>
 		<?php echo HTMLHelper::_('bootstrap.addTab', 'projectTab', 'relations', Text::_('COM_SWJPROJECTS_RELATIONS')); ?>
-		<?php foreach ($this->relations as $relation):
-			if (empty($relation['link']) && empty($relation['title'])) continue; ?>
-			<p>
-				<a href="<?php echo $relation['link']; ?>" target="_blank">
-					<?php if (!empty($relation['icon'])): ?>
-						<?php echo HTMLHelper::image($relation['icon'], $relation['title']); ?>
-						<br>
-					<?php endif; ?>
-					<?php echo $relation['title']; ?>
-				</a>
-			</p>
+		<?php foreach (array_chunk($this->relations, 2) as $r => $row):
+			echo ($r > 0) ? '<hr>' : ''; ?>
+			<div class="row-fluid">
+				<?php foreach ($row as $relation): ?>
+					<div class="span6">
+						<p>
+							<a href="<?php echo $relation['link']; ?>" target="_blank">
+								<div class="lead"><?php echo $relation['title']; ?></div>
+								<?php echo HTMLHelper::image($relation['icon'], htmlspecialchars($relation['title'])); ?>
+							</a>
+						</p>
+					</div>
+				<?php endforeach; ?>
+			</div>
 		<?php endforeach; ?>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>

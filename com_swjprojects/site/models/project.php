@@ -269,7 +269,15 @@ class SWJProjectsModelProject extends ItemModel
 				$data->urls = new Registry($data->urls);
 
 				// Set images
-				$data->images = new Registry($data->images);
+				$data->images = new Registry();
+				$data->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'icon', $data->language));
+				$data->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'cover', $data->language));
+
+				// Set gallery
+				$data->gallery = SWJProjectsHelperImages::getImages('projects', $data->id, 'gallery',
+					$data->gallery, $data->language);
 
 				// Set link
 				$data->slug     = $data->id . ':' . $data->alias;
@@ -536,7 +544,7 @@ class SWJProjectsModelProject extends ItemModel
 
 						// Join over current translates
 						$current = $this->translates['current'];
-						$query->select(array('t_p.title', 't_p.images'))
+						$query->select(array('t_p.title', 't_p.language'))
 							->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 								. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -575,7 +583,11 @@ class SWJProjectsModelProject extends ItemModel
 							}
 
 							// Set images
-							$item->images = new Registry($item->images);
+							$item->images = new Registry();
+							$item->images->set('icon',
+								SWJProjectsHelperImages::getImage('projects', $item->id, 'icon', $item->language));
+							$item->images->set('cover',
+								SWJProjectsHelperImages::getImage('projects', $item->id, 'cover', $item->language));
 
 							// Set link
 							$item->slug  = $item->id . ':' . $item->alias;

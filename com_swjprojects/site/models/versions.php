@@ -198,7 +198,8 @@ class SWJProjectsModelVersions extends ListModel
 			->leftJoin($db->quoteName('#__swjprojects_translate_versions', 't_v')
 				. ' ON t_v.id = v.id AND ' . $db->quoteName('t_v.language') . ' = ' . $db->quote($current));
 
-		$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext'))
+		$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext',
+			't_p.language as project_language'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 				. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -342,6 +343,11 @@ class SWJProjectsModelVersions extends ListModel
 				$item->project->slug      = $item->pslug;
 				$item->project->link      = Route::_(SWJProjectsHelperRoute::getProjectRoute($item->pslug, $item->cslug));
 				$item->project->versions  = Route::_(SWJProjectsHelperRoute::getVersionsRoute($item->pslug, $item->cslug));
+				$item->project->images    = new Registry();
+				$item->project->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $item->project_id, 'icon', $item->project_language));
+				$item->project->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $item->project_id, 'cover', $item->project_language));
 
 				// Set category
 				$item->category        = new stdClass();
@@ -392,7 +398,7 @@ class SWJProjectsModelVersions extends ListModel
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.images as images', 'p.id as id'))
+				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.language', 'p.id as id'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -471,7 +477,11 @@ class SWJProjectsModelVersions extends ListModel
 				$data->urls = new Registry($data->urls);
 
 				// Set images
-				$data->images = new Registry($data->images);
+				$data->images = new Registry();
+				$data->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'icon', $data->language));
+				$data->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'cover', $data->language));
 
 				// Set link
 				$data->slug     = $data->id . ':' . $data->alias;

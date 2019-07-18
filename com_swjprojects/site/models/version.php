@@ -173,7 +173,7 @@ class SWJProjectsModelVersion extends ItemModel
 						. ' ON t_v.id = v.id AND ' . $db->quoteName('t_v.language') . ' = ' . $db->quote($current));
 
 				$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext',
-					't_p.images as project_images'))
+					't_p.language as project_language'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -291,10 +291,14 @@ class SWJProjectsModelVersion extends ItemModel
 				$data->project->elemet    = $data->project_element;
 				$data->project->introtext = nl2br($data->project_introtext);
 				$data->project->urls      = new Registry($data->project_urls);
-				$data->project->images    = new Registry($data->project_images);
 				$data->project->slug      = $data->pslug;
 				$data->project->link      = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->pslug, $data->cslug));
 				$data->project->versions  = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->pslug, $data->cslug));
+				$data->project->images    = new Registry();
+				$data->project->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'icon', $data->project_language));
+				$data->project->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'cover', $data->project_language));
 
 				// Set category
 				$data->category        = new stdClass();
