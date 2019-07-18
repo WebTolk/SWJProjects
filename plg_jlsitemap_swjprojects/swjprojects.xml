@@ -7,7 +7,7 @@
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.2.1</version>
+	<version>1.2.2-dev</version>
 	<description>PLG_JLSITEMAP_SWJPROJECTS_DESCRIPTION</description>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.plg_jlsitemap_swjprojects.ini</language>
