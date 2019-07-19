@@ -86,8 +86,14 @@ Factory::getDocument()->addScriptDeclaration('
 
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'images', Text::_('COM_SWJPROJECTS_IMAGES')); ?>
 			<fieldset class="form-horizontal">
-				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
-					'forms' => $this->translateForms, 'name' => 'images')); ?>
+				<?php if (empty($this->item->id)): ?>
+					<div class="alert alert-warning">
+						<?php echo Text::_('COM_SWJPROJECTS_IMAGES_AVAILABLE'); ?>
+					</div>
+				<?php else: ?>
+					<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+						'forms' => $this->translateForms, 'name' => 'images')); ?>
+				<?php endif; ?>
 			</fieldset>
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 			<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>

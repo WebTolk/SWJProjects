@@ -1,0 +1,90 @@
+/*
+ * @package    SW JProjects Component
+ * @version    __DEPLOY_VERSION__
+ * @author     Septdir Workshop - www.septdir.com
+ * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @link       https://www.septdir.com/
+ */
+
+[input-image="container"] {
+	display: block;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+[input-image="container"] [input-image="field"] {
+	display: none;
+}
+
+[input-image="container"].default [input-image="upload"] {
+	display: inline-block;
+	position: relative;
+	min-width: 250px;
+	max-width: 100%;
+	max-height: 250px;
+	overflow: hidden;
+	padding: 5px;
+	border: 1px dashed #999;
+	background-color: #fafbfc;
+	box-sizing: border-box;
+}
+
+[input-image="container"].default [input-image="upload"].dragend {
+	background-color: #e5e5e5;
+	border-color: #0071bc;
+}
+
+[input-image="container"].default [input-image="upload"].dragend [input-image="preview"] {
+	opacity: .3;
+}
+
+[input-image="container"].default .preview-block {
+	display: inline-flex;
+	height: 240px;
+	min-width: 240px;
+	align-items: center;
+	justify-content: center;
+}
+
+[input-image="container"].default [input-image="preview"] {
+	max-height: 100%;
+}
+
+[input-image="container"].default [input-image="actions"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 5px 10px 3px;
+	border: 1px solid #e5e5e5;
+	background: #fff;
+	line-height: 20px;
+	z-index: 2;
+	box-sizing: border-box;
+}
+
+[input-image="container"].default [input-image="upload"].dragend [input-image="actions"] {
+	display: none;
+}
+
+[input-image="container"].default [input-image="actions"] label {
+	margin-bottom: 0;
+}
+
+[input-image="container"].default [input-image="actions"] > * {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+[input-image="container"].default [input-image="actions"] > *:hover {
+	text-decoration: none;
+}
+
+[input-image="container"].default [input-image="drag"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+}

@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 JLoader::register('SWJProjectsHelper', __DIR__ . '/helpers/swjprojects.php');
+JLoader::register('SWJProjectsHelperImages', __DIR__ . '/helpers/images.php');
 
 use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Factory;

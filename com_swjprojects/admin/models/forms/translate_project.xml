@@ -18,19 +18,22 @@
 			   filter="JComponentHelper::filterText"/>
 	</fieldset>
 	<fieldset name="images" label="COM_SWJPROJECTS_IMAGES">
-		<fields name="images">
-			<field name="icon" type="media"
-				   label="COM_SWJPROJECTS_IMAGES_ICON"/>
-			<field name="cover" type="media"
-				   label="COM_SWJPROJECTS_IMAGES_COVER"/>
-			<field name="gallery" type="subform"
-				   label="COM_SWJPROJECTS_IMAGES_GALLERY"
-				   multiple="true">
-				<form>
-					<field name="image" type="media" label="COM_SWJPROJECTS_IMAGES_IMAGE"/>
-					<field name="text" type="text" label="COM_SWJPROJECTS_IMAGES_TEXT"/>
-				</form>
-			</field>
-		</fields>
+		<field name="icon" type="image"
+			   label="COM_SWJPROJECTS_IMAGES_ICON"
+			   section="projects"
+			   pk="jform[id]"
+			   filename="icon"
+			   language="[translate]"/>
+		<field name="cover" type="image"
+			   label="COM_SWJPROJECTS_IMAGES_COVER"
+			   section="projects"
+			   pk="jform[id]"
+			   filename="cover"
+			   language="[translate]"/>
+<!--		<field name="gallery" type="images"-->
+<!--			   label="COM_SWJPROJECTS_IMAGES_GALLERY"-->
+<!--			   section="projects"-->
+<!--			   folder="gallery"-->
+<!--			   language="[translate]"/>-->
 	</fieldset>
 </form>
