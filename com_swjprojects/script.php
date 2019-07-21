@@ -366,6 +366,8 @@ class com_swjprojectsInstallerScript
 					if (!empty($registry->get('gallery')))
 					{
 						// Check folder
+						JLoader::register('SWJProjectsHelperImages',
+							JPATH_ADMINISTRATOR . '/components/com_swjprojects/helpers/images.php');
 						$folder = Path::clean($folder . '/gallery');
 						if (!Folder::exists($folder))
 						{
@@ -380,16 +382,13 @@ class com_swjprojectsInstallerScript
 							$ordering = (int) str_replace('gallery', '', $key) + 1;
 
 							// Prepare file name
-							$hashKey = $key . '_' . basename($src) . '_' . time();
-							$i       = 1;
-							$name    = substr(md5($hashKey . '_' . $i), 0, 11);
+							$name    = SWJProjectsHelperImages::generateName();
 							while (in_array($name, $names))
 							{
-								$i++;
-								$name = substr(md5($hashKey . '_' . $i), 0, 11);
+								$name    = SWJProjectsHelperImages::generateName();
 							}
-							$name = $name . '.' . File::getExt($src);
-							$dest = Path::clean($folder . '/' . $name);
+							$filename = $name . '.' . File::getExt($src);
+							$dest = Path::clean($folder . '/' . $filename);
 
 							// Set to gallery
 							$gallery[$name] = array(

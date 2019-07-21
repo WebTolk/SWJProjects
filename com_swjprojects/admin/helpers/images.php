@@ -202,12 +202,13 @@ class SWJProjectsHelperImages
 				{
 					if (!self::checkImage($file)) continue;
 					$filename = basename($file);
-					$value    = (isset($values[$filename])) ? $values[$filename] : false;
+					$name     = File::stripExt($filename);
+					$value    = (isset($values[$name])) ? $values[$name] : false;
 
 					// Prepare image
 					$image       = new stdClass();
 					$image->file = $filename;
-					$image->name = File::stripExt($filename);
+					$image->name = $name;
 					$image->src  = $folder . '/' . $filename;
 					$image->text = (!empty($value) && !empty($value['text'])) ? $value['text'] : '';
 
@@ -258,5 +259,29 @@ class SWJProjectsHelperImages
 		}
 
 		return in_array($mimetype, self::$mime_types);
+	}
+
+	/**
+	 * Method to generate random iamge name.
+	 *
+	 * @param   int  $length  Name length.
+	 *
+	 * @return  string  Image name.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function generateName($length = 11)
+	{
+		$secret = '';
+		$chars  = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's',
+			't', 'u', 'v', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+			'P', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		for ($i = 0; $i < $length; $i++)
+		{
+			$key    = rand(0, count($chars) - 1);
+			$secret .= $chars[$key];
+		}
+
+		return $secret;
 	}
 }

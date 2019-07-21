@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
 				field = container.querySelector('[input-image="field"]'),
 				image = container.querySelector('[input-image="preview"]'),
 				error = container.querySelector('[input-image="error"]'),
-				deleteButton = container.querySelector('[input-image="delete"]');
+				deleteButton = container.querySelector('[input-image="delete"]'),
+				viewButton = container.querySelector('[input-image="view"]');
 
 			// Set noimage attr
 			image.setAttribute('data-noimage', image.getAttribute('src'));
@@ -53,6 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
 					deleteImage();
 				});
 
+				viewButton.addEventListener('click', function (element) {
+					preventDefaults(element);
+					viewImage();
+				});
+
 				upload.addEventListener('dragenter', preventDefaults, false);
 				upload.addEventListener('dragover', preventDefaults, false);
 				upload.addEventListener('dragleave', preventDefaults, false);
@@ -82,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				upload.classList.add('dragend')
 			}
 
-			// Unset Highlight
+			// Unset highlight
 			function unHighlightUpload() {
 				upload.classList.remove('dragend')
 			}
@@ -218,6 +224,11 @@ document.addEventListener("DOMContentLoaded", function () {
 						error.style.display = '';
 					}
 				};
+			}
+
+			// View image
+			function viewImage() {
+				openPopup(image.getAttribute('src'), '');
 			}
 		});
 	}

@@ -55,10 +55,6 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 5px 10px 3px;
-	border: 1px solid #e5e5e5;
-	background: #fff;
-	line-height: 20px;
 	z-index: 2;
 	box-sizing: border-box;
 }
@@ -71,9 +67,12 @@
 	margin-bottom: 0;
 }
 
-[input-image="container"].default [input-image="actions"] > * {
+[input-image="container"].default [input-image="actions"] .btn {
 	cursor: pointer;
 	text-decoration: none;
+	margin-right: 0;
+	min-width: auto;
+	border-radius: 0;
 }
 
 [input-image="container"].default [input-image="actions"] > *:hover {

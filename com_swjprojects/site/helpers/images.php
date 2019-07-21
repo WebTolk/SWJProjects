@@ -126,12 +126,13 @@ class SWJProjectsHelperImages
 				{
 					if (!self::checkImage($file)) continue;
 					$filename = basename($file);
-					$value    = (isset($values[$filename])) ? $values[$filename] : false;
+					$name     = File::stripExt($filename);
+					$value    = (isset($values[$name])) ? $values[$name] : false;
 
 					// Prepare image
 					$image       = new stdClass();
 					$image->file = $filename;
-					$image->name = File::stripExt($filename);
+					$image->name = $name;
 					$image->src  = $folder . '/' . $filename;
 					$image->text = (!empty($value) && !empty($value['text'])) ? $value['text'] : '';
 

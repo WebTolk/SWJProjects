@@ -14,6 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'relative' => true));
 ?>
 <div id="SWJProjects" class="project">
 	<?php if ($cover = $this->project->images->get('cover')): ?>
@@ -138,7 +139,7 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 				<?php foreach ($row as $image): ?>
 					<div class="span6">
 						<p>
-							<a href="<?php echo $image->src; ?>" target="_blank">
+							<a href="<?php echo $image->src; ?>" popup target="_blank">
 								<?php if ($image->text): ?>
 									<div class="lead"><?php echo $image->text; ?></div>
 								<?php endif; ?>
