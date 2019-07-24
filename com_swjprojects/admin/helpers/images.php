@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
@@ -111,11 +110,11 @@ class SWJProjectsHelperImages
 	{
 		$image = self::getImage($section, $pk, $name, $language, true);
 
-		return ($image && File::delete($image));
+		return (!$image || File::delete($image));
 	}
 
 	/**
-	 * Method to delete the simple image.
+	 * Method to upload the simple image.
 	 *
 	 * @param   string   $section   Component section selector (etc. projects).
 	 * @param   integer  $pk        The id of the item.
@@ -123,7 +122,7 @@ class SWJProjectsHelperImages
 	 * @param   string   $language  The language of the image.
 	 * @param   array    $image     The upload image data.
 	 *
-	 * @return  bool  Simple image path string on success, false on failure.
+	 * @return  bool|string  Simple image path string on success, false on failure.
 	 *
 	 * @since  __DEPLOY_VERSION__
 	 */
@@ -178,19 +177,20 @@ class SWJProjectsHelperImages
 	 */
 	public static function getImages($section = null, $pk = null, $folder = null, $values = null, $language = null)
 	{
-		$language = (!empty($language)) ? $language : Factory::getLanguage()->getTag();
 		if (empty($section) || empty($pk) || empty($folder) || empty($language)) return false;
 
 		// Check hash
 		$hash = md5($section . '_' . $pk . '_' . $folder . '_' . $language);
 		if (!isset(self::$_images[$hash]))
 		{
-			$images = false;
-			$values = ($values instanceof Registry) ? $values : new Registry($values);
-			$values = $values->toArray();
-			$root   = ComponentHelper::getParams('com_swjprojects')->get('images_folder', 'images/swjprojects');
-			$folder = $root . '/' . $section . '/' . $pk . '/' . $language . '/' . $folder;
-			$path   = Path::clean(JPATH_ROOT . '/' . $folder);
+			$images  = false;
+			$values  = ($values instanceof Registry) ? $values : new Registry($values);
+			$values  = $values->toArray();
+			$root    = ComponentHelper::getParams('com_swjprojects')->get('images_folder', 'images/swjprojects');
+			$folder  = $root . '/' . $section . '/' . $pk . '/' . $language . '/' . $folder;
+			$path    = Path::clean(JPATH_ROOT . '/' . $folder);
+			$site    = rtrim(Uri::root(true) . '/', '/');
+			$version = 'v=' . time();
 
 			// Get images
 			$files = (Folder::exists($path)) ? Folder::files($path, null, false, true) : false;
@@ -209,7 +209,7 @@ class SWJProjectsHelperImages
 					$image       = new stdClass();
 					$image->file = $filename;
 					$image->name = $name;
-					$image->src  = $folder . '/' . $filename;
+					$image->src  = $site . '/' . $folder . '/' . $filename . '?' . $version;
 					$image->text = (!empty($value) && !empty($value['text'])) ? $value['text'] : '';
 
 					// Set ordering
@@ -222,7 +222,33 @@ class SWJProjectsHelperImages
 					$image->ordering = (int) $image->ordering;
 
 					// Add to images
-					$images[] = $image;
+					$images[$name] = $image;
+				}
+
+				// Add empty images
+				foreach ($values as $name => $value)
+				{
+					if (!isset($images[$name]) && !empty($value['text']))
+					{
+						// Prepare image
+						$image       = new stdClass();
+						$image->file = false;
+						$image->name = $name;
+						$image->src  = '';
+						$image->text = $value['text'];
+
+						// Set ordering
+						$image->ordering = (!empty($value) && !empty($value['ordering'])) ? $value['ordering'] : 0;
+						if (empty($image->ordering))
+						{
+							$ordering        = $ordering + 1;
+							$image->ordering = $ordering;
+						}
+						$image->ordering = (int) $image->ordering;
+
+						// Add to images
+						$images[$name] = $image;
+					}
 				}
 
 				// Sort images array if don't empty
@@ -233,6 +259,178 @@ class SWJProjectsHelperImages
 		};
 
 		return self::$_images[$hash];
+	}
+
+	/**
+	 * Method to upload the multiple images.
+	 *
+	 * @param   string    $section   Component section selector (etc. projects).
+	 * @param   integer   $pk        The id of the item.
+	 * @param   string    $folder    The name of the images folder.
+	 * @param   Registry  $values    The images values array.
+	 * @param   string    $language  The language of the image.
+	 * @param   array     $upload    The upload images data.
+	 *
+	 * @return   false|array  New images names  array on success, false on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function uploadImages($section = null, $pk = null, $folder = null, $values = null, $language = null, $upload = array())
+	{
+		if (empty($section) || empty($pk) || empty($folder) || empty($language) || empty($upload)) return false;
+
+		// Get exist images
+		$images = self::getImages($section, $pk, $folder, $values, $language);
+		$names  = ($images)? ArrayHelper::getColumn($images, 'name') : array();
+
+		// Check folder
+		$root   = ComponentHelper::getParams('com_swjprojects')->get('images_folder', 'images/swjprojects');
+		$folder = $root . '/' . $section . '/' . $pk . '/' . $language . '/' . $folder;
+		$path   = Path::clean(JPATH_ROOT . '/' . $folder);
+		if (!Folder::exists($path) && !Folder::create($path))
+		{
+			return false;
+		}
+
+		// Upload images
+		$result = array();
+		foreach ($upload as $file)
+		{
+			// Check image before upload
+			if (empty($file) || empty($file['tmp_name']) || empty($file['name']) || !self::checkImage($file['tmp_name']))
+			{
+				continue;
+			}
+
+			// Prepare name
+			$name = self::generateName();
+			while (in_array($name, $names))
+			{
+				$name = self::generateName();
+			}
+			$filename = $name . '.' . File::getExt($file['name']);
+
+			// Upload
+			$src  = $file['tmp_name'];
+			$dest = Path::clean($path . '/' . $filename);
+			if (!File::upload($src, $dest, false, true))
+			{
+				continue;
+			}
+
+			// Add to names
+			$names[] = $name;
+
+			// Add to result
+			$result[] = $name;
+		}
+
+		return (!empty($result)) ? $result : false;
+	}
+
+	/**
+	 * Method to change the multiple images.
+	 *
+	 * @param   string   $section   Component section selector (etc. projects).
+	 * @param   integer  $pk        The id of the item.
+	 * @param   string   $folder    The name of the images folder.
+	 * @param   string   $language  The language of the image.
+	 * @param   string   $name      The name of the image file.
+	 * @param   array    $image     The upload image data.
+	 *
+	 * @return   false|string  New image src on success, false on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function changeImages($section = null, $pk = null, $folder = null, $language = null, $name = null, $image = array())
+	{
+		if (empty($section) || empty($pk) || empty($folder) || empty($language) || empty($name) || empty($image)) return false;
+
+		// Check upload image
+		if (empty($image) || empty($image['tmp_name']) || empty($image['name']) || !self::checkImage($image['tmp_name']))
+		{
+			return false;
+		}
+
+		// Check folder
+		$root   = ComponentHelper::getParams('com_swjprojects')->get('images_folder', 'images/swjprojects');
+		$folder = $root . '/' . $section . '/' . $pk . '/' . $language . '/' . $folder;
+		$path   = Path::clean(JPATH_ROOT . '/' . $folder);
+		if (!Folder::exists($path) && !Folder::create($path))
+		{
+			return false;
+		}
+
+		// Delete current
+		$current = false;
+		$files   = (Folder::exists($path)) ? Folder::files($path, $name, false) : false;
+		if ($files && !empty($files[0]))
+		{
+			$filename = $files[0];
+			if (self::checkImage($path . '/' . $filename))
+			{
+				$current = Path::clean($path . '/' . $filename);
+			}
+		}
+		if ($current && !File::delete($current))
+		{
+			return false;
+		}
+
+		// Upload image
+		$filename = $name . '.' . File::getExt($image['name']);
+		$src      = $image['tmp_name'];
+		$dest     = Path::clean($path . '/' . $filename);
+		if (!File::upload($src, $dest, false, true))
+		{
+			return false;
+		}
+
+		// Get new src
+		$site    = rtrim(Uri::root(true) . '/', '/');
+		$version = 'v=' . time();
+
+		return $site . '/' . $folder . '/' . $filename . '?' . $version;
+	}
+
+	/**
+	 * Method to delete the multiple images.
+	 *
+	 * @param   string   $section   Component section selector (etc. projects).
+	 * @param   integer  $pk        The id of the item.
+	 * @param   string   $folder    The name of the images folder.
+	 * @param   string   $language  The language of the image.
+	 * @param   string   $name      The name of the image file.
+	 *
+	 * @return  bool  True on success, false on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function deleteImages($section = null, $pk = null, $folder = null, $language = null, $name = null)
+	{
+		if (empty($section) || empty($pk) || empty($folder) || empty($language) || empty($name)) return false;
+
+		// Check folder
+		$root   = ComponentHelper::getParams('com_swjprojects')->get('images_folder', 'images/swjprojects');
+		$folder = $root . '/' . $section . '/' . $pk . '/' . $language . '/' . $folder;
+		$path   = Path::clean(JPATH_ROOT . '/' . $folder);
+		if (!Folder::exists($path) && !Folder::create($path))
+		{
+			return false;
+		}
+
+		$current = false;
+		$files   = (Folder::exists($path)) ? Folder::files($path, $name, false) : false;
+		if ($files && !empty($files[0]))
+		{
+			$filename = $files[0];
+			if (self::checkImage($path . '/' . $filename))
+			{
+				$current = Path::clean($path . '/' . $filename);
+			}
+		}
+
+		return (!$current || File::delete($current));
 	}
 
 	/**

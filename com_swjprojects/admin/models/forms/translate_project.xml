@@ -30,10 +30,11 @@
 			   pk="jform[id]"
 			   filename="cover"
 			   language="[translate]"/>
-<!--		<field name="gallery" type="images"-->
-<!--			   label="COM_SWJPROJECTS_IMAGES_GALLERY"-->
-<!--			   section="projects"-->
-<!--			   folder="gallery"-->
-<!--			   language="[translate]"/>-->
+		<field name="gallery" type="images"
+			   label="COM_SWJPROJECTS_IMAGES_GALLERY"
+			   section="projects"
+			   pk="jform[id]"
+			   folder="gallery"
+			   language="[translate]"/>
 	</fieldset>
 </form>

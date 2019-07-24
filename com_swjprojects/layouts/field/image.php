@@ -39,7 +39,7 @@ HTMLHelper::script('com_swjprojects/field-image.min.js', array('version' => 'aut
 
 $loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-loader.gif');
 ?>
-<div id="<?php echo $id; ?>" class="default <?php echo $class; ?>" input-image="container"
+<div id="<?php echo $id; ?>" class="<?php echo $class; ?>" input-image="container"
 	 data-controller="<?php echo Route::_('index.php?option=com_swjprojects'); ?>"
 	 data-section="<?php echo $section; ?>" data-pk="<?php echo $pk; ?>" data-filename="<?php echo $filename; ?>"
 	 data-language="<?php echo $language; ?>">

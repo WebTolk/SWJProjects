@@ -140,10 +140,10 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 					<div class="span6">
 						<p>
 							<a href="<?php echo $image->src; ?>" popup target="_blank">
+								<?php echo HTMLHelper::image($image->src, htmlspecialchars($image->text)); ?>
 								<?php if ($image->text): ?>
 									<div class="lead"><?php echo $image->text; ?></div>
 								<?php endif; ?>
-								<?php echo HTMLHelper::image($image->src, htmlspecialchars($image->text)); ?>
 							</a>
 						</p>
 					</div>

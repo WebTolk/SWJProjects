@@ -17,7 +17,7 @@
 	display: none;
 }
 
-[input-image="container"].default [input-image="upload"] {
+[input-image="container"] [input-image="upload"] {
 	display: inline-block;
 	position: relative;
 	min-width: 250px;
@@ -30,16 +30,16 @@
 	box-sizing: border-box;
 }
 
-[input-image="container"].default [input-image="upload"].dragend {
+[input-image="container"] [input-image="upload"].dragend {
 	background-color: #e5e5e5;
 	border-color: #0071bc;
 }
 
-[input-image="container"].default [input-image="upload"].dragend [input-image="preview"] {
+[input-image="container"] [input-image="upload"].dragend [input-image="preview"] {
 	opacity: .3;
 }
 
-[input-image="container"].default .preview-block {
+[input-image="container"] .preview-block {
 	display: inline-flex;
 	height: 240px;
 	min-width: 240px;
@@ -47,11 +47,11 @@
 	justify-content: center;
 }
 
-[input-image="container"].default [input-image="preview"] {
+[input-image="container"] [input-image="preview"] {
 	max-height: 100%;
 }
 
-[input-image="container"].default [input-image="actions"] {
+[input-image="container"] [input-image="actions"] {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -59,27 +59,23 @@
 	box-sizing: border-box;
 }
 
-[input-image="container"].default [input-image="upload"].dragend [input-image="actions"] {
-	display: none;
-}
-
-[input-image="container"].default [input-image="actions"] label {
+[input-image="container"] [input-image="actions"] label {
 	margin-bottom: 0;
 }
 
-[input-image="container"].default [input-image="actions"] .btn {
+[input-image="container"] [input-image="actions"] .btn {
 	cursor: pointer;
 	text-decoration: none;
 	margin-right: 0;
-	min-width: auto;
-	border-radius: 0;
+	min-width: auto !important;
+	border-radius: 0 !important;
 }
 
-[input-image="container"].default [input-image="actions"] > *:hover {
+[input-image="container"] [input-image="actions"] > *:hover {
 	text-decoration: none;
 }
 
-[input-image="container"].default [input-image="drag"] {
+[input-image="container"] [input-image="drag"] {
 	position: absolute;
 	top: 0;
 	right: 0;

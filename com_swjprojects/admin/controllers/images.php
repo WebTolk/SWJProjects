@@ -12,9 +12,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
+use Joomla\Registry\Registry;
 
 class SWJProjectsControllerImages extends BaseController
 {
@@ -69,7 +71,7 @@ class SWJProjectsControllerImages extends BaseController
 	}
 
 	/**
-	 * Method to delete single image.
+	 * Method to upload single image.
 	 *
 	 * @throws  Exception
 	 *
@@ -92,11 +94,143 @@ class SWJProjectsControllerImages extends BaseController
 		// Check image
 		if (!$image)
 		{
-			return $this->setResponse($image, Text::_('COM_SWJPROJECTS_ERROR_IMAGE_NOT_FOUND'));
+			return $this->setResponse($image, Text::_('COM_SWJPROJECTS_ERROR_IMAGE_NOT_FOUND'), true);
 		}
 
 		return ($result = SWJProjectsHelperImages::uploadImage($section, $pk, $filename, $language, $image)) ? $this->setResponse($result)
 			: $this->setResponse($result, Text::_('COM_SWJPROJECTS_ERROR_IMAGE_NOT_UPLOADED'), true);
+	}
+
+	/**
+	 * Method to load multiple images result.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  bool  Send json response with images src and field html on success, empty string on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function loadImages()
+	{
+		// Check token
+		$this->checkToken();
+
+		// Get data
+		$id       = $this->input->getCmd('id');
+		$section  = $this->input->getCmd('section');
+		$pk       = $this->input->getInt('pk');
+		$folder   = $this->input->getCmd('folder');
+		$language = $this->input->getCmd('language');
+		$name     = $this->input->get('name', '', 'raw');
+		$values   = new Registry($this->input->get('values', '', 'raw'));
+
+		// Get images
+		if (!$images = SWJProjectsHelperImages::getImages($section, $pk, $folder, $values, $language))
+		{
+			return $this->setResponse($images, Text::_('COM_SWJPROJECTS_ERROR_IMAGES_NOT_FOUND'));
+		}
+
+		// Prepare response
+		$response = array(
+			'images' => $images,
+			'html'   => LayoutHelper::render('components.swjprojects.field.images.result',
+				array('id' => $id, 'name' => $name, 'images' => $images)),
+		);
+
+		return $this->setResponse($response);
+	}
+
+	/**
+	 * Method to upload multiple images.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  bool  Send json response with new images names on success, empty string on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function uploadImages()
+	{
+		// Check token
+		$this->checkToken();
+
+		// Get data
+		$section  = $this->input->getCmd('section');
+		$pk       = $this->input->getInt('pk');
+		$folder   = $this->input->getCmd('folder');
+		$language = $this->input->getCmd('language');
+		$values   = new Registry($this->input->get('values', '', 'raw'));
+		$images   = $this->input->files->get('images', false, 'array');
+
+		// Check images
+		if (!$images)
+		{
+			return $this->setResponse($images, Text::_('COM_SWJPROJECTS_ERROR_IMAGES_NOT_FOUND'), true);
+		}
+
+		return ($uploads = SWJProjectsHelperImages::uploadImages($section, $pk, $folder, $values, $language, $images)) ?
+			$this->setResponse($uploads)
+			: $this->setResponse($uploads, Text::_('COM_SWJPROJECTS_ERROR_IMAGES_NOT_UPLOADED'),true);
+	}
+
+	/**
+	 * Method to change multiple images.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  bool  Send json response with image src on success, empty string on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function changeImages()
+	{
+		// Check token
+		$this->checkToken();
+
+		// Get data
+		$section  = $this->input->getCmd('section');
+		$pk       = $this->input->getInt('pk');
+		$folder   = $this->input->getCmd('folder');
+		$language = $this->input->getCmd('language');
+		$filename = $this->input->getCmd('filename');
+		$images   = $this->input->files->get('images', array(), 'array');
+		$image    = (!empty($images[0])) ? $images[0] : false;
+
+		// Check image
+		if (!$image)
+		{
+			return $this->setResponse($image, Text::_('COM_SWJPROJECTS_ERROR_IMAGE_NOT_FOUND'), true);
+		}
+
+		return ($result = SWJProjectsHelperImages::changeImages($section, $pk, $folder, $language, $filename, $image)) ?
+			$this->setResponse($result)
+			: $this->setResponse($result, Text::_('COM_SWJPROJECTS_ERROR_IMAGE_NOT_UPLOADED'), true);
+	}
+
+	/**
+	 * Method to delete multiple images.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  bool  Send json response with true on success, false on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function deleteImages()
+	{
+		// Check token
+		$this->checkToken();
+
+		// Get data
+		$section  = $this->input->get('section');
+		$pk       = $this->input->getInt('pk');
+		$folder   = $this->input->getCmd('folder');
+		$language = $this->input->getCmd('language');
+		$filename = $this->input->getCmd('filename');
+
+		// Delete images
+		return ($result = SWJProjectsHelperImages::deleteImages($section, $pk, $folder, $language, $filename)) ? $this->setResponse($result)
+			: $this->setResponse($result, Text::_('COM_SWJPROJECTS_ERROR_IMAGE_NOT_DELETED'), true);
 	}
 
 	/**

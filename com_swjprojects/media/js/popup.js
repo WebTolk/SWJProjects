@@ -8,7 +8,6 @@
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-	console.log('aaa');
 	let popups = document.querySelectorAll('[popup]');
 	if (popups) {
 		popups.forEach(function (element) {
