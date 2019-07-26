@@ -460,7 +460,7 @@ class SWJProjectsHelperImages
 	}
 
 	/**
-	 * Method to generate random iamge name.
+	 * Method to generate random image name.
 	 *
 	 * @param   int  $length  Name length.
 	 *

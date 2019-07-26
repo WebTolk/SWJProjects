@@ -32,6 +32,10 @@ class SWJProjectsHelper extends ContentHelper
 			'index.php?option=com_swjprojects&view=projects',
 			$vName == 'projects');
 
+		JHtmlSidebar::addEntry(Text::_('COM_SWJPROJECTS_KEYS'),
+			'index.php?option=com_swjprojects&view=keys',
+			$vName == 'keys');
+
 		JHtmlSidebar::addEntry(Text::_('COM_SWJPROJECTS_CATEGORIES'),
 			'index.php?option=com_swjprojects&view=categories',
 			$vName == 'categories');

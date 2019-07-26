@@ -14,14 +14,14 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 
-class SWJProjectsModelVersions extends ListModel
+class SWJProjectsModelKeys extends ListModel
 {
 	/**
 	 * Site default translate language.
 	 *
 	 * @var  array
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $translate = null;
 
@@ -30,7 +30,7 @@ class SWJProjectsModelVersions extends ListModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function __construct($config = array())
 	{
@@ -42,11 +42,8 @@ class SWJProjectsModelVersions extends ListModel
 		{
 			$config['filter_fields'] = array(
 				'id', 'v.id',
-				'published', 'state', 'v.state',
-				'version',
-				'tag', 'v.tag', 'v.stability',
-				'downloads', 'v.downloads',
-				'project', 'project_id', 'v.project_id', 'p.id',
+				'published', 'state', 'k.state',
+				'project', 'project_id', 'k.project_id', 'p.id',
 				'project_title', 'pl.title',
 				'element', 'p.element',
 			);
@@ -61,7 +58,7 @@ class SWJProjectsModelVersions extends ListModel
 	 * @param   string  $ordering   An optional ordering field.
 	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -77,12 +74,8 @@ class SWJProjectsModelVersions extends ListModel
 		$project = $this->getUserStateFromRequest($this->context . '.filter.project', 'filter_project', '');
 		$this->setState('filter.project', $project);
 
-		// Set tag filter state
-		$tag = $this->getUserStateFromRequest($this->context . '.filter.tag', 'filter_tag', '');
-		$this->setState('filter.tag', $tag);
-
 		// List state information
-		$ordering  = empty($ordering) ? 'v.date' : $ordering;
+		$ordering  = empty($ordering) ? 'k.date_start' : $ordering;
 		$direction = empty($direction) ? 'desc' : $direction;
 
 		parent::populateState($ordering, $direction);
@@ -95,14 +88,13 @@ class SWJProjectsModelVersions extends ListModel
 	 *
 	 * @return  string  A store id.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function getStoreId($id = '')
 	{
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.project');
-		$id .= ':' . $this->getState('filter.tag');
 
 		return parent::getStoreId($id);
 	}
@@ -112,18 +104,18 @@ class SWJProjectsModelVersions extends ListModel
 	 *
 	 * @return  JDatabaseQuery  Database query to load versions list.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
-			->select(array('v.*', 'CONCAT(v.major, ".", v.minor, ".", v.micro) as version'))
-			->from($db->quoteName('#__swjprojects_versions', 'v'));
+			->select(array('k.*'))
+			->from($db->quoteName('#__swjprojects_keys', 'k'));
 
 		// Join over the projects
-		$query->select(array('p.id as project_id', 'p.element as project_element'))
-			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
+		$query->select(array('k.project_id as project_id', 'p.element as project_element'))
+			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = k.project_id');
 
 		// Join over translates
 		$translate = $this->translate;
@@ -135,25 +127,18 @@ class SWJProjectsModelVersions extends ListModel
 		$published = $this->getState('filter.published');
 		if (is_numeric($published))
 		{
-			$query->where('v.state = ' . (int) $published);
+			$query->where('k.state = ' . (int) $published);
 		}
 		elseif ($published === '')
 		{
-			$query->where('(v.state = 0 OR v.state = 1)');
+			$query->where('(k.state = 0 OR k.state = 1)');
 		}
 
 		// Filter by project state
 		$project = $this->getState('filter.project');
 		if (is_numeric($project))
 		{
-			$query->where('v.project_id = ' . (int) $project);
-		}
-
-		// Filter by tag state
-		$tag = $this->getState('filter.tag');
-		if (!empty($tag))
-		{
-			$query->where('v.tag = ' . $tag);
+			$query->where('k.project_id = ' . (int) $project);
 		}
 
 		// Filter by search
@@ -162,12 +147,12 @@ class SWJProjectsModelVersions extends ListModel
 		{
 			if (stripos($search, 'id:') === 0)
 			{
-				$query->where('v.id = ' . (int) substr($search, 3));
+				$query->where('k.id = ' . (int) substr($search, 3));
 			}
 			else
 			{
 				$sql     = array();
-				$columns = array('version', 'v.joomla_version', 'v.tag', 'p.element', 't_p.title', 'ta_v.changelog');
+				$columns = array('k.key', 'k.note', 'p.element', 't_p.title');
 
 				foreach ($columns as $column)
 				{
@@ -175,49 +160,27 @@ class SWJProjectsModelVersions extends ListModel
 						. $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
 				}
 
-				$query->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'ta_v') . ' ON ta_v.id = v.id')
-					->where('(' . implode(' OR ', $sql) . ')');
+				$query->where('(' . implode(' OR ', $sql) . ')');
 			}
 		}
 
 		// Group by
-		$query->group(array('v.id'));
+		$query->group(array('k.id'));
 
 		// Add the list ordering clause
-		$ordering  = $this->state->get('list.ordering', 'v.date');
+		$ordering  = $this->state->get('list.ordering', 'k.date_start');
 		$direction = $this->state->get('list.direction', 'desc');
-
-		if ($ordering == 'title')
-		{
-			$query->order($db->escape('project_title') . ' ' . $db->escape($direction))
-				->order($db->escape('major') . ' ' . $db->escape($direction))
-				->order($db->escape('minor') . ' ' . $db->escape($direction))
-				->order($db->escape('micro') . ' ' . $db->escape($direction))
-				->order($db->escape('stability') . ' ' . $db->escape($direction))
-				->order($db->escape('stage') . ' ' . $db->escape($direction));
-		}
-		elseif ($ordering == 'version')
-		{
-			$query->order($db->escape('major') . ' ' . $db->escape($direction))
-				->order($db->escape('minor') . ' ' . $db->escape($direction))
-				->order($db->escape('micro') . ' ' . $db->escape($direction))
-				->order($db->escape('stability') . ' ' . $db->escape($direction))
-				->order($db->escape('stage') . ' ' . $db->escape($direction));
-		}
-		else
-		{
-			$query->order($db->escape($ordering) . ' ' . $db->escape($direction));
-		}
+		$query->order($db->escape($ordering) . ' ' . $db->escape($direction));
 
 		return $query;
 	}
 
 	/**
-	 * Method to get an array of versions data.
+	 * Method to get an array of keys data.
 	 *
 	 * @return  mixed  Versions objects array on success, false on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function getItems()
 	{
@@ -227,20 +190,13 @@ class SWJProjectsModelVersions extends ListModel
 			{
 				// Set project title
 				$item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
-
-				// Set version & title
-				$item->version = $item->major . '.' . $item->minor . '.' . $item->micro;
-				$item->title   = $item->project_title . ' ' . $item->version;
-				if ($item->tag !== 'stable')
+				if ($item->project_id == -1)
 				{
-					$item->version .= ' ' . $item->tag;
-					$item->title   .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $item->tag);
-					if ($item->tag !== 'dev' && !empty($item->stage))
-					{
-						$item->version .= $item->stage;
-						$item->title   .= ' ' . $item->stage;
-					}
+					$item->project_title = Text::_('JALL');
 				}
+
+				// Mask key
+				$item->key = SWJProjectsHelperKeys::maskKey($item->key);
 			}
 		}
 

@@ -51,6 +51,9 @@ class com_swjprojectsInstallerScript
 		// Check images folder
 		$this->checkImagesFolder();
 
+		// Check key params
+		$this->checkKeysParams();
+
 		if ($type == 'update')
 		{
 			// Check hits column
@@ -277,6 +280,52 @@ class com_swjprojectsInstallerScript
 	}
 
 	/**
+	 * Method to check keys params and set defaults if don't exist.
+	 *
+	 * @throws  Exception
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function checkKeysParams()
+	{
+		$params = ComponentHelper::getParams('com_swjprojects');
+		$update = false;
+		JLoader::register('SWJProjectsHelperKeys',
+			JPATH_ADMINISTRATOR . '/components/com_swjprojects/helpers/keys.php');
+
+		// Length
+		if (empty($params->get('key_length')))
+		{
+			$params->set('key_length', 16);
+			$update = true;
+		}
+
+		// Characters
+		if (empty($params->get('key_characters')))
+		{
+			$params->set('key_characters', implode(',', SWJProjectsHelperKeys::getCharacters()));
+			$update = true;
+		}
+
+		// Master
+		if (empty($params->get('key_master')))
+		{
+			$params->set('key_master', SWJProjectsHelperKeys::generateKey(128));
+			$update = true;
+		}
+
+		// Update
+		if ($update)
+		{
+			$component          = new stdClass();
+			$component->element = 'com_swjprojects';
+			$component->params  = $params->toString();
+
+			Factory::getDbo()->updateObject('#__extensions', $component, array('element'));
+		}
+	}
+
+	/**
 	 * Method to create hits column if don't exist.
 	 *
 	 * @since  1.2.1
@@ -382,13 +431,13 @@ class com_swjprojectsInstallerScript
 							$ordering = (int) str_replace('gallery', '', $key) + 1;
 
 							// Prepare file name
-							$name    = SWJProjectsHelperImages::generateName();
+							$name = SWJProjectsHelperImages::generateName();
 							while (in_array($name, $names))
 							{
-								$name    = SWJProjectsHelperImages::generateName();
+								$name = SWJProjectsHelperImages::generateName();
 							}
 							$filename = $name . '.' . File::getExt($src);
-							$dest = Path::clean($folder . '/' . $filename);
+							$dest     = Path::clean($folder . '/' . $filename);
 
 							// Set to gallery
 							$gallery[$name] = array(

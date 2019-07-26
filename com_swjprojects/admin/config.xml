@@ -67,6 +67,30 @@
 			<option value="0">JNO</option>
 		</field>
 	</fieldset>
+	<fieldset name="keys" label="COM_SWJPROJECTS_PARAMS_KEYS"
+			  addfieldpath="/administrator/components/com_swjprojects/models/fields">
+		<field name="key_length" type="list"
+			   label="COM_SWJPROJECTS_PARAMS_KEY_LENGTH"
+			   description="COM_SWJPROJECTS_PARAMS_KEY_LENGTH_DESC"
+			   default="16">
+			<option value="8">8</option>
+			<option value="16">16</option>
+			<option value="32">32</option>
+			<option value="64">64</option>
+		</field>
+		<field name="key_characters" type="textarea"
+			   label="COM_SWJPROJECTS_PARAMS_KEY_CHARACTERS"
+			   description="COM_SWJPROJECTS_PARAMS_KEY_CHARACTERS_DESC"
+			   default=""
+			   rows="3"
+			   class="input-xxlarge"/>
+		<field name="key_master" type="key"
+			   label="COM_SWJPROJECTS_PARAMS_KEY_MASTER"
+			   description="COM_SWJPROJECTS_PARAMS_KEY_MASTER_DESC"
+			   default=""
+			   length="128"
+			   class="input-xxlarge"/>
+	</fieldset>
 	<fieldset name="permissions"
 			  label="JCONFIG_PERMISSIONS_LABEL"
 			  description="JCONFIG_PERMISSIONS_DESC">

@@ -52,6 +52,30 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_projects`
     DEFAULT COLLATE = utf8mb4_unicode_ci
     AUTO_INCREMENT = 0;
 
+CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
+(
+    `id`         INT(11)             NOT NULL AUTO_INCREMENT,
+    `key`        VARCHAR(100) BINARY NOT NULL DEFAULT '',
+    `note`       VARCHAR(255)        NOT NULL DEFAULT '',
+    `email`      VARCHAR(100)        NOT NULL DEFAULT '',
+    `order`      VARCHAR(100)        NOT NULL DEFAULT '',
+    `project_id` INT(11)             NOT NULL DEFAULT 0,
+    `date_start` DATETIME            NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `date_end`   DATETIME            NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `state`      TINYINT(3)          NOT NULL DEFAULT 0,
+    `plugins`    MEDIUMTEXT          NOT NULL,
+    PRIMARY KEY `id` (`id`),
+    KEY `idx_key` (`key`(100)),
+    KEY `idx_email` (`email`(100)),
+    KEY `idx_order` (`order`(100)),
+    KEY `idx_project_id` (`project_id`),
+    KEY `idx_state` (`state`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci
+    AUTO_INCREMENT = 0;
+
 CREATE TABLE IF NOT EXISTS `#__swjprojects_categories`
 (
     `id`        INT(11)                                                NOT NULL AUTO_INCREMENT,
