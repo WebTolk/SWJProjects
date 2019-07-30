@@ -45,6 +45,16 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 							</h2>
 							<ul class="meta inline">
 								<li>
+									<strong><?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE'); ?>: </strong>
+									<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $item->download_type); ?>
+								</li>
+								<?php if ($item->download_type === 'paid' && $item->payment->get('price')): ?>
+									<li>
+										<strong><?php echo Text::_('COM_SWJPROJECTS_PRICE'); ?>: </strong>
+										<span class="text-success"><?php echo $item->payment->get('price'); ?></span>
+									</li>
+								<?php endif; ?>
+								<li>
 									<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
 									<a href="<?php echo $item->category->link; ?>">
 										<?php echo $item->category->title; ?>
@@ -79,9 +89,16 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 							<?php endif; ?>
 							<div class="clearfix">
 								<div class="btn-group pull-right">
-									<a href="<?php echo $item->download; ?>" class="btn btn-primary" target="_blank">
-										<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
-									</a>
+									<?php if (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
+										<a href="<?php echo $item->payment->get('link'); ?>" class="btn btn-success">
+											<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
+										</a>
+									<?php elseif ($item->download_type === 'free'): ?>
+										<a href="<?php echo $item->download; ?>" class="btn btn-primary"
+										   target="_blank">
+											<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+										</a>
+									<?php endif; ?>
 									<a href="<?php echo $item->link; ?>" class="btn">
 										<?php echo Text::_('COM_SWJPROJECTS_MORE'); ?>
 									</a>

@@ -98,8 +98,12 @@ class SWJProjectsModelProject extends AdminModel
 				foreach ($item->translates as &$translate)
 				{
 					// Convert the gallery field value to array
-					$registry          = new Registry($translate->gallery);
+					$registry           = new Registry($translate->gallery);
 					$translate->gallery = $registry->toArray();
+
+					// Convert the payment field value to array
+					$registry           = new Registry($translate->payment);
+					$translate->payment = $registry->toArray();
 				}
 
 				// Set downloads
@@ -479,6 +483,13 @@ class SWJProjectsModelProject extends AdminModel
 				{
 					$registry             = new Registry($translate['gallery']);
 					$translate['gallery'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+				}
+
+				// Prepare payment field data
+				if (isset($translate['payment']))
+				{
+					$registry             = new Registry($translate['payment']);
+					$translate['payment'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 				}
 
 				$translate = (object) $translate;

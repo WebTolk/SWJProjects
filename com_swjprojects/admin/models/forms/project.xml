@@ -143,4 +143,13 @@
 			</form>
 		</field>
 	</fieldset>
+	<fieldset name="payment" label="COM_SWJPROJECTS_PAYMENT">
+		<field name="download_type" type="radio"
+			   label="COM_SWJPROJECTS_DOWNLOAD_TYPE"
+			   class="btn-group btn-group-yesno"
+			   default="free">
+			<option value="free">COM_SWJPROJECTS_DOWNLOAD_TYPE_FREE</option>
+			<option value="paid">COM_SWJPROJECTS_DOWNLOAD_TYPE_PAID</option>
+		</field>
+	</fieldset>
 </form>

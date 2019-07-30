@@ -159,7 +159,7 @@ class SWJProjectsModelVersion extends ItemModel
 
 				// Join over the projects
 				$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element',
-					'p.urls as project_urls'))
+					'p.download_type', 'p.urls as project_urls'))
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 				// Join over the categories
@@ -172,7 +172,7 @@ class SWJProjectsModelVersion extends ItemModel
 					->leftJoin($db->quoteName('#__swjprojects_translate_versions', 't_v')
 						. ' ON t_v.id = v.id AND ' . $db->quoteName('t_v.language') . ' = ' . $db->quote($current));
 
-				$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext',
+				$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext', 't_p.payment',
 					't_p.language as project_language'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
@@ -189,7 +189,7 @@ class SWJProjectsModelVersion extends ItemModel
 						->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'td_v')
 							. ' ON td_v.id = v.id AND ' . $db->quoteName('td_v.language') . ' = ' . $db->quote($default));
 
-					$query->select(array('td_p.title as default_project_title'))
+					$query->select(array('td_p.title as default_project_title', 'td_p.payment as default_payment'))
 						->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 
@@ -299,6 +299,22 @@ class SWJProjectsModelVersion extends ItemModel
 					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'icon', $data->project_language));
 				$data->project->images->set('cover',
 					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'cover', $data->project_language));
+
+				// Set payment
+				$data->payment                = new Registry($data->payment);
+				$data->project->download_type = $data->download_type;
+				if ($data->project->download_type === 'paid' && $this->translates['current'] != $this->translates['default'])
+				{
+					$data->project->default_payment = new Registry($data->default_payment);
+					if (!$data->payment->get('link'))
+					{
+						$data->payment->set('link', $data->default_payment->get('link'));
+					}
+					if (!$data->payment->get('price'))
+					{
+						$data->payment->set('price', $data->default_payment->get('price'));
+					}
+				}
 
 				// Set category
 				$data->category        = new stdClass();

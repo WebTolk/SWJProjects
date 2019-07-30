@@ -65,6 +65,13 @@ Factory::getDocument()->addScriptDeclaration('
 				</div>
 			</fieldset>
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'payment', Text::_('COM_SWJPROJECTS_PAYMENT')); ?>
+			<fieldset class="form-horizontal">
+				<?php echo $this->form->renderFieldset('payment'); ?>
+				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+					'forms' => $this->translateForms, 'name' => 'payment')); ?>
+			</fieldset>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'joomla', Text::_('COM_SWJPROJECTS_JOOMLA')); ?>
 			<fieldset class="form-horizontal">

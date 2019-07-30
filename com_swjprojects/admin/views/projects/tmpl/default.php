@@ -69,6 +69,10 @@ $columns = 8;
 							$listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone center">
+						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_DOWNLOAD_TYPE', 'p.download_type',
+							$listDirn, $listOrder); ?>
+					</th>
+					<th width="10%" class="nowrap hidden-phone center">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_STATISTICS_DOWNLOADS', 'downloads',
 							$listDirn, $listOrder); ?>
 					</th>
@@ -135,6 +139,9 @@ $columns = 8;
 						</td>
 						<td class="small hidden-phone">
 							<?php echo Text::_($this->escape($item->category_title)); ?>
+						</td>
+						<td class="hidden-phone center">
+							<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $item->download_type); ?>
 						</td>
 						<td class="hidden-phone center">
 							<span class="badge badge-info">

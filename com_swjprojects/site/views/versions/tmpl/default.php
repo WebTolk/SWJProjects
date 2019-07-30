@@ -33,6 +33,16 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 				<div class="meta">
 					<ul class="inline">
 						<li>
+							<strong><?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE'); ?>: </strong>
+							<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $this->project->download_type); ?>
+						</li>
+						<?php if ($this->project->download_type === 'paid' && $this->project->payment->get('price')): ?>
+							<li>
+								<strong><?php echo Text::_('COM_SWJPROJECTS_PRICE'); ?>: </strong>
+								<span class="text-success"><?php echo $this->project->payment->get('price'); ?></span>
+							</li>
+						<?php endif; ?>
+						<li>
 							<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
 							<a href="<?php echo $this->category->link; ?>">
 								<?php echo $this->category->title; ?>
@@ -60,9 +70,16 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 						<?php endif; ?>
 					</ul>
 					<div class="buttons">
-						<a href="<?php echo $this->project->download; ?>" class="btn btn-primary" target="_blank">
-							<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
-						</a>
+						<?php if (($this->project->download_type === 'paid' && $this->project->payment->get('link'))): ?>
+							<a href="<?php echo $this->project->payment->get('link'); ?>" class="btn btn-success">
+								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
+							</a>
+						<?php elseif ($this->project->download_type === 'free'): ?>
+							<a href="<?php echo $this->project->download; ?>" class="btn btn-primary"
+							   target="_blank">
+								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+							</a>
+						<?php endif; ?>
 						<a href="<?php echo $this->project->link; ?>" class="btn">
 							<?php echo Text::_('COM_SWJPROJECTS_PROJECT'); ?>
 						</a>
@@ -90,10 +107,12 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 					<div class="item-<?php echo $item->id; ?>">
 						<h2 class="title">
 							<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
-							<a href="<?php echo $item->download; ?>" target="_blank"
-							   class="btn btn-<?php echo ($item->tag->key == 'stable') ? 'success' : 'inverse'; ?> pull-right">
-								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
-							</a>
+							<?php if ($this->project->download_type === 'free'): ?>
+								<a href="<?php echo $item->download; ?>" target="_blank"
+								   class="btn btn-<?php echo ($item->tag->key == 'stable') ? 'success' : 'inverse'; ?> pull-right">
+									<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+								</a>
+							<?php endif; ?>
 						</h2>
 						<ul class="unstyled">
 							<li>

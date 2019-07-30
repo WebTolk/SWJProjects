@@ -37,4 +37,14 @@
 			   folder="gallery"
 			   language="[translate]"/>
 	</fieldset>
+	<fieldset name="payment" label="COM_SWJPROJECTS_PAYMENT">
+		<fields name="payment">
+			<field name="link" type="text"
+				   label="COM_SWJPROJECTS_PAYMENT_LINK"
+				   class="input-xxlarge"/>
+			<field name="price" type="text"
+				   label="COM_SWJPROJECTS_PAYMENT_price"
+				   class="input-xlarge input-large-text"/>
+		</fields>
+	</fieldset>
 </form>

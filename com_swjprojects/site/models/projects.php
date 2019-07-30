@@ -200,7 +200,7 @@ class SWJProjectsModelProjects extends ListModel
 		$default = $this->translates['default'];
 		if ($current != $default)
 		{
-			$query->select(array('td_p.title as default_title'))
+			$query->select(array('td_p.title as default_title', 'td_p.payment as default_payment'))
 				->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
 					. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 
@@ -293,6 +293,21 @@ class SWJProjectsModelProjects extends ListModel
 
 				// Set introtext
 				$item->introtext = nl2br($item->introtext);
+
+				// Set payment
+				$item->payment = new Registry($item->payment);
+				if ($item->download_type === 'paid' && $this->translates['current'] != $this->translates['default'])
+				{
+					$item->default_payment = new Registry($item->default_payment);
+					if (!$item->payment->get('link'))
+					{
+						$item->payment->set('link', $item->default_payment->get('link'));
+					}
+					if (!$item->payment->get('price'))
+					{
+						$item->payment->set('price', $item->default_payment->get('price'));
+					}
+				}
 
 				// Set joomla
 				$item->joomla = new Registry($item->joomla);

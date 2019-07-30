@@ -44,6 +44,7 @@ class SWJProjectsModelProjects extends ListModel
 				'title', 'p.title',
 				'published', 'state', 'p.state',
 				'category', 'category_id', 'c.id', 'e.catid', 'catid', 'category_title', 'cl.title',
+				'download_type', 'p.download_type',
 				'downloads', 'p.downloads',
 				'hits', 'p.hits',
 				'ordering', 'p.ordering',
@@ -70,9 +71,13 @@ class SWJProjectsModelProjects extends ListModel
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		// Set category   filter state
-		$category = $this->getUserStateFromRequest($this->context . '.filter.category  ', 'filter_category  ', '');
+		// Set category filter state
+		$category = $this->getUserStateFromRequest($this->context . '.filter.category  ', 'filter_category', '');
 		$this->setState('filter.category  ', $category);
+
+		// Set download_type filter state
+		$download_type = $this->getUserStateFromRequest($this->context . '.filter.download_type  ', 'filter_download_type', '');
+		$this->setState('filter.category  ', $download_type);
 
 		// List state information
 		$ordering  = empty($ordering) ? 'p.ordering' : $ordering;
@@ -147,6 +152,13 @@ class SWJProjectsModelProjects extends ListModel
 		if (is_numeric($category))
 		{
 			$query->where('p.catid = ' . (int) $category);
+		}
+
+		// Filter by download_type state
+		$download_type = trim($this->getState('filter.download_type'));
+		if (!empty($download_type))
+		{
+			$query->where($db->quoteName('p.download_type') . ' = ' . $db->quote($download_type));
 		}
 
 		// Filter by search

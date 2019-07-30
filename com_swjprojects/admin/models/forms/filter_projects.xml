@@ -11,6 +11,11 @@
 		<field name="category" type="categories" onchange="this.form.submit();">
 			<option value="">COM_SWJPROJECTS_CATEGORY_SELECT</option>
 		</field>
+		<field name="download_type" type="list" onchange="this.form.submit();">
+			<option value="">COM_SWJPROJECTS_DOWNLOAD_TYPE_SELECT</option>
+			<option value="free">COM_SWJPROJECTS_DOWNLOAD_TYPE_FREE</option>
+			<option value="paid">COM_SWJPROJECTS_DOWNLOAD_TYPE_PAID</option>
+		</field>
 	</fields>
 	<fields name="list">
 		<field name="fullordering" type="list"
@@ -23,6 +28,8 @@
 			<option value="title DESC">JGLOBAL_TITLE_DESC</option>
 			<option value="category_title ASC">COM_SWJPROJECTS_CATEGORY_ASC</option>
 			<option value="category_title DESC">COM_SWJPROJECTS_CATEGORY_DESC</option>
+			<option value="p.download_type ASC">COM_SWJPROJECTS_DOWNLOAD_TYPE_ASC</option>
+			<option value="p.download_type DESC">COM_SWJPROJECTS_DOWNLOAD_TYPE_DESC</option>
 			<option value="p.id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="p.id DESC">JGRID_HEADING_ID_DESC</option>
 			<option value="p.state ASC">JSTATUS_ASC</option>

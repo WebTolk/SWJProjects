@@ -398,7 +398,7 @@ class SWJProjectsModelVersions extends ListModel
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.language', 'p.id as id'))
+				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.language', 't_p.payment', 'p.id as id'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -410,7 +410,7 @@ class SWJProjectsModelVersions extends ListModel
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_p.title as default_title'))
+					$query->select(array('td_p.title as default_title', 'td_p.payment as default_payment'))
 						->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 
@@ -472,6 +472,21 @@ class SWJProjectsModelVersions extends ListModel
 
 				// Set introtext
 				$data->introtext = nl2br($data->introtext);
+
+				// Set payment
+				$data->payment = new Registry($data->payment);
+				if ($data->download_type === 'paid' && $this->translates['current'] != $this->translates['default'])
+				{
+					$data->default_payment = new Registry($data->default_payment);
+					if (!$data->payment->get('link'))
+					{
+						$data->payment->set('link', $data->default_payment->get('link'));
+					}
+					if (!$data->payment->get('price'))
+					{
+						$data->payment->set('price', $data->default_payment->get('price'));
+					}
+				}
 
 				// Set urls
 				$data->urls = new Registry($data->urls);
