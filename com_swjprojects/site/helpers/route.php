@@ -17,14 +17,15 @@ class SWJProjectsHelperRoute extends RouteHelper
 	/**
 	 * Fetches jupdate route.
 	 *
-	 * @param   int     $project_id  The id of the project.
-	 * @param   string  $element     The element of the project.
+	 * @param   int     $project_id    The id of the project.
+	 * @param   string  $element       The element of the project.
+	 * @param   string  $download_key  The download key value.
 	 *
 	 * @return  string  Joomla update server view link.
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getJUpdateRoute($project_id = null, $element = null)
+	public static function getJUpdateRoute($project_id = null, $element = null, $download_key = null)
 	{
 		$link = 'index.php?option=com_swjprojects&view=jupdate&key=1';
 
@@ -38,21 +39,27 @@ class SWJProjectsHelperRoute extends RouteHelper
 			$link .= '&element=' . $element;
 		}
 
+		if (!empty($download_key))
+		{
+			$link .= '&download_key=' . $download_key;
+		}
+
 		return $link;
 	}
 
 	/**
 	 * Fetches download route.
 	 *
-	 * @param   int     $version_id  The id of the version.
-	 * @param   int     $project_id  The id of the project.
-	 * @param   string  $element     The element of the project.
+	 * @param   int     $version_id    The id of the version.
+	 * @param   int     $project_id    The id of the project.
+	 * @param   string  $element       The element of the project.
+	 * @param   string  $download_key  The download key value.
 	 *
 	 * @return  string  Download link.
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getDownloadRoute($version_id = null, $project_id = null, $element = null)
+	public static function getDownloadRoute($version_id = null, $project_id = null, $element = null, $download_key = null)
 	{
 		$link = 'index.php?option=com_swjprojects&view=download&key=1';
 
@@ -69,6 +76,11 @@ class SWJProjectsHelperRoute extends RouteHelper
 		if (!empty($element))
 		{
 			$link .= '&element=' . $element;
+		}
+
+		if (!empty($download_key))
+		{
+			$link .= '&download_key=' . $download_key;
 		}
 
 		return $link;

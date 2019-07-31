@@ -69,15 +69,6 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	protected $_updateServer = null;
 
 	/**
-	 * Project versions array.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $_versions = null;
-
-	/**
 	 * Project id by element.
 	 *
 	 * @var  int
@@ -160,6 +151,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 		// Set request states
 		$this->setState('project.id', $app->input->getInt('project_id', 0));
 		$this->setState('project.element', $app->input->get('element', ''));
+		$this->setState('download.key', $app->input->getCmd('download_key', ''));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -212,7 +204,8 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 			$this->_xml = array();
 		}
 
-		if (!isset($this->_xml[$pk]))
+		$hash = ($download_key = $this->getState('download.key')) ? md5($download_key . '_' . $pk) : md5($pk);
+		if (!isset($this->_xml[$hash]))
 		{
 			if (!$context = $this->getXMLCache($pk))
 			{
@@ -222,11 +215,11 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 				// Save cache
 				if (!$this->state->get('debug'))
 				{
-					$path = $this->filesPath['cache'] . '/jupdate_' . $pk . '.xml';
+					$path = $this->filesPath['cache'] . '/jupdate_' . $hash . '.xml';
+
 					File::append($path, $context);
 				}
 			}
-
 			$this->_xml[$pk] = $context;
 		}
 
@@ -263,10 +256,11 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 			$this->_xmlCache = array();
 		}
 
-		if (!isset($this->_xmlCache[$pk]))
+		$hash = ($download_key = $this->getState('download.key')) ? md5($download_key . '_' . $pk) : md5($pk);
+		if (!isset($this->_xmlCache[$hash]))
 		{
 			$cache = false;
-			$path  = $this->filesPath['cache'] . '/jupdate_' . $pk . '.xml';
+			$path  = $this->filesPath['cache'] . '/jupdate_' . $hash . '.xml';
 			if (File::exists($path))
 			{
 				$clearTime = Factory::getDate(' - ' . $this->cacheTimeout)->toUnix();
@@ -281,10 +275,10 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 				}
 			}
 
-			$this->_xmlCache[$pk] = $cache;
+			$this->_xmlCache[$hash] = $cache;
 		}
 
-		return $this->_xmlCache[$pk];
+		return $this->_xmlCache[$hash];
 	}
 
 	/**
@@ -398,7 +392,8 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 			$this->_extensionXML = array();
 		}
 
-		if (!isset($this->_extensionXML[$pk]))
+		$hash = ($download_key = $this->getState('download.key')) ? md5($download_key . '_' . $pk) : md5($pk);
+		if (!isset($this->_extensionXML[$hash]))
 		{
 			try
 			{
@@ -481,7 +476,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$item->pslug    = $item->project_id . ':' . $item->project_alias;
 					$item->cslug    = $item->category_id . ':' . $item->category_alias;
 					$item->link     = Route::_(SWJProjectsHelperRoute::getVersionRoute($item->slug, $item->pslug, $item->cslug));
-					$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($item->id));
+					$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($item->id, null, null, $download_key));
 
 					// Set version & name
 					$item->version = $item->major . '.' . $item->minor . '.' . $item->micro;
@@ -560,7 +555,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$targetPlatform->addAttribute('version', '');
 				}
 
-				$this->_extensionXML[$pk] = $updates;
+				$this->_extensionXML[$hash] = $updates;
 			}
 			catch (Exception $e)
 			{
@@ -568,7 +563,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 			}
 		}
 
-		return $this->_extensionXML[$pk];
+		return $this->_extensionXML[$hash];
 	}
 
 	/**
@@ -582,7 +577,13 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 	 */
 	public function getCollectionXML()
 	{
-		if ($this->_collectionXML === null)
+		if ($this->_extensionXML === null)
+		{
+			$this->_extensionXML = array();
+		}
+
+		$hash = ($download_key = $this->getState('download.key')) ? md5($download_key) : md5('0');
+		if (!isset($this->_collectionXML[$hash]))
 		{
 			try
 			{
@@ -676,7 +677,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$item->client = $item->joomla->get('client', 0);
 
 					// Set link
-					$item->link = Route::_(SWJProjectsHelperRoute::getJUpdateRoute($item->id));
+					$item->link = Route::_(SWJProjectsHelperRoute::getJUpdateRoute($item->id, null, $download_key));
 
 					// Add to extensionset
 					$extension = $extensionset->addChild('extension');
@@ -689,7 +690,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$extension->addAttribute('version', $item->version);
 				}
 
-				$this->_collectionXML = $extensionset;
+				$this->_collectionXML[$hash] = $extensionset;
 			}
 			catch (Exception $e)
 			{
@@ -697,7 +698,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 			}
 		}
 
-		return $this->_collectionXML;
+		return $this->_collectionXML[$hash];
 	}
 
 	/**

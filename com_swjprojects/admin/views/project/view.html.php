@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
@@ -133,7 +134,11 @@ class SWJProjectsViewProject extends HtmlView
 			$toolbar->appendButton('Custom', $preview, 'preview');
 
 			// Joomla update server button
-			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=jupdate&debug=1&element=' . $this->item->element;
+			$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=jupdate&debug=1&element=' . $this->item->element;
+			if ($this->item->download_type === 'paid')
+			{
+				$link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
+			}
 			$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
 				array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
 			$toolbar->appendButton('Custom', $jupdate, 'joomla');

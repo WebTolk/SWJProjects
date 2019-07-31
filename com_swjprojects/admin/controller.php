@@ -35,20 +35,21 @@ class SWJProjectsController extends BaseController
 	{
 		JLoader::register('SWJProjectsHelperRoute', JPATH_SITE . '/components/com_swjprojects/helpers/route.php');
 
-		$page       = $this->input->get('page', false);
-		$id         = $this->input->getInt('id');
-		$catid      = $this->input->getInt('catid');
-		$project_id = $this->input->getInt('project_id');
-		$version_id = $this->input->getInt('version_id');
-		$element    = $this->input->get('element');
+		$page         = $this->input->get('page', false);
+		$id           = $this->input->getInt('id');
+		$catid        = $this->input->getInt('catid');
+		$project_id   = $this->input->getInt('project_id');
+		$version_id   = $this->input->getInt('version_id');
+		$element      = $this->input->get('element');
+		$download_key = $this->input->get('download_key');
 
 		$redirects = array(
 			'projects' => SWJProjectsHelperRoute::getProjectsRoute($id),
 			'project'  => SWJProjectsHelperRoute::getProjectRoute($id, $catid),
 			'versions' => SWJProjectsHelperRoute::getVersionsRoute($id, $catid),
 			'version'  => SWJProjectsHelperRoute::getVersionRoute($id, $project_id, $catid),
-			'download' => SWJProjectsHelperRoute::getDownloadRoute($version_id, $project_id, $element),
-			'jupdate'  => SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element)
+			'download' => SWJProjectsHelperRoute::getDownloadRoute($version_id, $project_id, $element, $download_key),
+			'jupdate'  => SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element, $download_key)
 		);
 
 		$redirect = (!empty($page) && !empty($redirects[$page])) ? $redirects[$page] : false;

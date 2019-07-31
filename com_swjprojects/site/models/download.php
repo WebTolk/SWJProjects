@@ -96,14 +96,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 		$this->setState('version.id', $app->input->getInt('version_id', 0));
 		$this->setState('project.id', $app->input->getInt('project_id', 0));
 		$this->setState('project.element', $app->input->get('element', ''));
-
-		// Set key state from request
-		$key = $app->input->getCmd('key', false);
-		if (!empty($key))
-		{
-			$key = ($key != '1') ? $key : false;
-		}
-		$this->setState('download.key', $key);
+		$this->setState('download.key', $app->input->getCmd('download_key', ''));
 
 		// Set published && debug state
 		if ($app->input->getInt('debug', 0))

@@ -43,12 +43,13 @@ class SWJProjectsController extends BaseController
 		// Duplicates protection
 		if (Factory::getApplication()->getParams()->get('duplicates_protection', 1))
 		{
-			$view       = $this->input->get('view', $this->default_view);
-			$id         = $this->input->get('id', 0, 'raw');
-			$catid      = $this->input->get('catid', 1, 'raw');
-			$project_id = $this->input->get('project_id', 0, 'raw');
-			$element    = $this->input->get('element', '', 'raw');
-			$link       = false;
+			$view         = $this->input->get('view', $this->default_view);
+			$id           = $this->input->get('id', 0, 'raw');
+			$catid        = $this->input->get('catid', 1, 'raw');
+			$project_id   = $this->input->get('project_id', 0, 'raw');
+			$element      = $this->input->get('element', '', 'raw');
+			$download_key = $this->input->get('download_key', '', 'raw');
+			$link         = false;
 
 			if ($view == 'version')
 			{
@@ -73,7 +74,7 @@ class SWJProjectsController extends BaseController
 
 			if ($view == 'jupdate')
 			{
-				$link = SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element);
+				$link = SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element, $download_key);
 			}
 
 			if ($link)

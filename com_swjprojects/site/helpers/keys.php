@@ -43,12 +43,11 @@ class SWJProjectsHelperKeys
 		$hash = md5($hash);
 		if (!isset(self::$checkResults[$hash]))
 		{
-			$result = false;
 			$length = strlen($key);
-
 			if ($length < 8)
-			{    // Check min length
-				self::$checkResults[$hash] = false;
+			{
+				// Check min length
+				$result = false;
 			}
 			elseif ($length === 128)
 			{    // Check master key

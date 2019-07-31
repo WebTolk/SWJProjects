@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
@@ -162,8 +163,12 @@ class SWJProjectsViewVersion extends HtmlView
 			// Download button
 			if ($this->item->file)
 			{
-				$link     = 'index.php?option=com_swjprojects&task=siteRedirect&page=download&debug=1&version_id='
+				$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=download&debug=1&version_id='
 					. $this->item->id;
+				if ($this->project->download_type === 'paid')
+				{
+					$link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
+				}
 				$download = LayoutHelper::render('components.swjprojects.toolbar.link',
 					array('link' => $link, 'text' => 'COM_SWJPROJECTS_FILE_DOWNLOAD', 'icon' => 'download', 'new' => false));
 				$toolbar->appendButton('Custom', $download, 'download');
