@@ -335,10 +335,10 @@ class SWJProjectsModelCategory extends AdminModel
 
 		// Check alias is already exist
 		$checkAlias = $this->getTable();
-		$checkAlias->load(array('alias' => $alias));
+		$checkAlias->load(array('alias' => $alias, 'parent_id' => $data['parent_id']));
 		if (!empty($checkAlias->id) && ($checkAlias->id != $pk || $isNew))
 		{
-			$alias = $this->generateNewAlias($alias);
+			$alias = $this->generateNewAlias($alias, $data['parent_id']);
 			$app->enqueueMessage(Text::_('COM_SWJPROJECTS_ERROR_ALIAS_EXIST'), 'warning');
 		}
 		$data['alias'] = $alias;
@@ -435,18 +435,17 @@ class SWJProjectsModelCategory extends AdminModel
 	/**
 	 * Method to generate new alias if alias already exist.
 	 *
-	 * @param   string  $alias  The alias.
-	 *
-	 * @throws  Exception
+	 * @param   string   $alias      The alias.
+	 * @param   integer  $parent_id  The parent category id.
 	 *
 	 * @return  string  Contains the modified alias.
 	 *
 	 * @since  1.0.0
 	 */
-	protected function generateNewAlias($alias)
+	protected function generateNewAlias($alias, $parent_id)
 	{
 		$table = $this->getTable();
-		while ($table->load(array('alias' => $alias)))
+		while ($table->load(array('alias' => $alias, 'parent_id' => $parent_id)))
 		{
 			$alias = StringHelper::increment($alias, 'dash');
 		}

@@ -279,7 +279,8 @@ class SWJProjectsRouter extends RouterView
 				$dbquery = $db->getQuery(true)
 					->select('id')
 					->from('#__swjprojects_categories')
-					->where($db->quoteName('alias') . ' = ' . $db->quote($segment));
+					->where($db->quoteName('alias') . ' = ' . $db->quote($segment))
+					->where($db->quoteName('parent_id') . ' = ' . $db->quote($query['id']));
 				$db->setQuery($dbquery);
 
 				$this->_ids[$hash] = (int) $db->loadResult();
