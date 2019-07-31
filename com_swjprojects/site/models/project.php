@@ -49,6 +49,15 @@ class SWJProjectsModelProject extends ItemModel
 	protected $_relations = null;
 
 	/**
+	 * Project last version object.
+	 *
+	 * @var  object
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $_version = null;
+
+	/**
 	 * Translates languages.
 	 *
 	 * @var  array
@@ -193,18 +202,6 @@ class SWJProjectsModelProject extends ItemModel
 							. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
 				}
 
-				// Join over versions for last version
-				$subQuery = $db->getQuery(true)
-					->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
-					->from($db->quoteName('#__swjprojects_versions', 'lv'))
-					->where('lv.project_id = p.id')
-					->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
-					->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
-					->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
-					->order($db->escape('lv.micro') . ' ' . $db->escape('desc'))
-					->setLimit(1);
-				$query->select('(' . $subQuery->__toString() . ') as last_version');
-
 				// Join over versions for download counter
 				$query->select(array('SUM(dc.downloads) as downloads'))
 					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
@@ -310,15 +307,7 @@ class SWJProjectsModelProject extends ItemModel
 				$data->category->link  = Route::_(SWJProjectsHelperRoute::getProjectsRoute($data->cslug));
 
 				// Set version
-				$data->version = false;
-				if (!empty($data->last_version))
-				{
-					$data->version = new stdClass();
-					list($data->version->slug, $data->version->version) = explode('|', $data->last_version, 2);
-					list($data->version->id, $data->version->alias) = explode(':', $data->version->slug, 2);
-					$data->version->link = Route::_(SWJProjectsHelperRoute::getVersionRoute($data->version->slug,
-						$data->slug, $data->cslug));
-				}
+				$data->version = $this->getVersion($data->id);
 
 				// Set params
 				$params       = new Registry($data->params);
@@ -630,5 +619,145 @@ class SWJProjectsModelProject extends ItemModel
 		}
 
 		return $this->_relations[$pk];
+	}
+
+	/**
+	 * Method to get project last version data.
+	 *
+	 * @param   integer  $pk      The ids of the project.
+	 * @param   boolean  $stable  Get only stable version.
+	 *
+	 * @return  array|boolean|Exception  Last version object on success, false or exception on failure.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getVersion($pk = null, $stable = true)
+	{
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+
+		if (empty($pk)) return false;
+
+		if ($this->_version === null)
+		{
+			$this->_version = array();
+		}
+
+		if (!isset($this->_version[$pk]))
+		{
+			try
+			{
+				$db    = $this->getDbo();
+				$query = $db->getQuery(true)
+					->select(array('v.*', 'v.tag as tag_key'))
+					->from($db->quoteName('#__swjprojects_versions', 'v'))
+					->where('v.project_id = ' . (int) $pk);
+
+				// Join over the projects
+				$query->select(array('p.id as project_id', 'p.alias as project_alias'))
+					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
+
+				// Join over the categories
+				$query->select(array('c.id as category_id', 'c.alias as category_alias'))
+					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
+
+				// Join over current translates
+				$current = $this->translates['current'];
+				$query->select(array('t_v.*', 'v.id as id'))
+					->leftJoin($db->quoteName('#__swjprojects_translate_versions', 't_v')
+						. ' ON t_v.id = v.id AND ' . $db->quoteName('t_v.language') . ' = ' . $db->quote($current));
+
+				// Join over default translates
+				$default = $this->translates['default'];
+				if ($current != $default)
+				{
+					$query->select(array('td_v.changelog as default_changelog'))
+						->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'td_v')
+							. ' ON td_v.id = v.id AND ' . $db->quoteName('td_v.language') . ' = ' . $db->quote($default));
+				}
+
+				// Filter by published state
+				$published = $this->getState('filter.published');
+				if (is_numeric($published))
+				{
+					$query->where('v.state = ' . (int) $published)
+						->where('p.state = ' . (int) $published)
+						->where('c.state = ' . (int) $published);
+				}
+				elseif (is_array($published))
+				{
+					$published = ArrayHelper::toInteger($published);
+					$published = implode(',', $published);
+
+					$query->where('v.state IN (' . $published . ')')
+						->where('p.state IN (' . $published . ')')
+						->where('c.state IN (' . $published . ')');
+				}
+
+				// Filter by tag
+				if ($stable)
+				{
+					$query->where($db->quoteName('v.tag') . ' = ' . $db->quote('stable'));
+				}
+
+				// Set ordering
+				$query->order($db->escape('v.major') . ' ' . $db->escape('desc'))
+					->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
+					->order($db->escape('v.micro') . ' ' . $db->escape('desc'));
+
+				$data = $db->setQuery($query)->loadObject();
+				if ((empty($data) || empty($data->id)) && $stable)
+				{
+					return $this->getVersion($pk, false);
+				}
+				elseif (empty($data) || empty($data->id))
+				{
+					$data = false;
+				}
+				else
+				{
+					// Set default translates data
+					if ($this->translates['current'] != $this->translates['default'])
+					{
+						$data->changelog = (empty($data->changelog) || $data->changelog == '{}') ? $data->default_changelog
+							: $data->changelog;
+					}
+
+					// Set link
+					$data->slug     = $data->id . ':' . $data->alias;
+					$data->pslug    = $data->project_id . ':' . $data->project_alias;
+					$data->cslug    = $data->category_id . ':' . $data->category_alias;
+					$data->link     = Route::_(SWJProjectsHelperRoute::getVersionRoute($data->slug, $data->pslug, $data->cslug));
+					$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($data->id));
+
+					// Set version
+					$data->version = $data->major . '.' . $data->minor . '.' . $data->micro;
+					if ($data->tag_key !== 'stable')
+					{
+						$data->version .= ' ' . $data->tag_key;
+						if ($data->tag_key !== 'dev' && !empty($data->stage))
+						{
+							$data->version .= $data->stage;
+						}
+					}
+
+					// Set changelog
+					$registry        = new Registry($data->changelog);
+					$data->changelog = $registry->toArray();
+					foreach ($data->changelog as &$changelog)
+					{
+						$changelog['description'] = nl2br($changelog['description']);
+					}
+				}
+
+				$this->_version[$pk] = $data;
+			}
+			catch (Exception $e)
+			{
+				$this->setError($e);
+				$this->_version[$pk] = false;
+			}
+		}
+
+		return $this->_version[$pk];
 	}
 }

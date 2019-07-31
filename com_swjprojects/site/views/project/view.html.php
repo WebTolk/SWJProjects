@@ -66,6 +66,15 @@ class SWJProjectsViewProject extends HtmlView
 	protected $relations;
 
 	/**
+	 * Last version object.
+	 *
+	 * @var  array|false
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $version;
+
+	/**
 	 * Active menu item.
 	 *
 	 * @var  MenuItem
@@ -101,6 +110,7 @@ class SWJProjectsViewProject extends HtmlView
 		$this->project   = $this->get('Item');
 		$this->category  = $this->project->category;
 		$this->relations = $this->get('Relations');
+		$this->version   = $this->get('Version');
 		$this->menu      = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors

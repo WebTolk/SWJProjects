@@ -51,11 +51,12 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 								<?php echo $this->category->title; ?>
 							</a>
 						</li>
-						<?php if ($this->project->version): ?>
+						<?php if ($this->version): ?>
 							<li>
 								<strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
-								<a href="<?php echo $this->project->version->link; ?>">
-									<?php echo $this->project->version->version; ?>
+								<a href="<?php echo $this->version->link; ?>"
+								   class="<?php echo ($this->version->tag_key !== 'stable') ? 'text-error' : ''; ?>">
+									<?php echo $this->version->version; ?>
 								</a>
 							</li>
 						<?php endif; ?>
@@ -187,6 +188,27 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 				<?php endforeach; ?>
 			</div>
 		<?php endforeach; ?>
+		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+	<?php endif; ?>
+
+	<?php if ($this->version && !empty($this->version->changelog)): ?>
+		<?php echo HTMLHelper::_('bootstrap.addTab', 'projectTab', 'whats_new', Text::_('COM_SWJPROJECTS_WHATS_NEW')); ?>
+		<?php foreach ($this->version->changelog as $item):
+			if (empty($item['title']) && empty($item['description'])) continue;
+			?>
+			<div class="item">
+				<?php if (!empty($item['title'])): ?>
+					<h3><?php echo $item['title']; ?></h3>
+				<?php endif; ?>
+				<?php if (!empty($item['description'])): ?>
+					<div class="description"><?php echo $item['description']; ?></div>
+				<?php endif; ?>
+			</div>
+			<hr>
+		<?php endforeach; ?>
+		<div class="text-right small muted">
+			<?php echo HTMLHelper::_('date', $this->version->date, Text::_('DATE_FORMAT_LC6')); ?>
+		</div>
 		<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 	<?php endif; ?>
 	<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
