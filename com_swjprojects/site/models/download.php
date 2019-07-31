@@ -10,6 +10,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('SWJProjectsHelperKeys', JPATH_SITE . '/components/com_swjprojects/helpers/keys.php');
+
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -95,6 +97,14 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 		$this->setState('project.id', $app->input->getInt('project_id', 0));
 		$this->setState('project.element', $app->input->get('element', ''));
 
+		// Set key state from request
+		$key = $app->input->getCmd('key', false);
+		if (!empty($key))
+		{
+			$key = ($key != '1') ? $key : false;
+		}
+		$this->setState('download.key', $key);
+
 		// Set published && debug state
 		if ($app->input->getInt('debug', 0))
 		{
@@ -138,7 +148,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 			{
 				$db    = $this->getDbo();
 				$query = $db->getQuery(true)
-					->select(array('v.*', 'p.element'))
+					->select(array('v.*', 'p.id as project_id', 'p.element', 'p.download_type'))
 					->from($db->quoteName('#__swjprojects_versions', 'v'))
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id')
 					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
@@ -354,11 +364,19 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 	 */
 	public function getFile()
 	{
+		// Get version
 		if (!$version = $this->getVersion())
 		{
 			throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_VERSION_NOT_FOUND'), 404);
 		}
 
+		// Check key
+		if ($version->download_type !== 'free' && !SWJProjectsHelperKeys::checkKey($version->project_id, $this->getState('download.key')))
+		{
+			throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_INVALID_KEY'), 403);
+		}
+
+		// Get file
 		$path  = $this->filesPath['versions'] . '/' . $version->id;
 		$files = Folder::files($path, 'download', false, true);
 		if (empty($files))
@@ -366,6 +384,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 			throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_FILE_NOT_FOUND'), 404);
 		}
 
+		// Prepare return object
 		$file       = new stdClass();
 		$file->name = $version->filename . '.' . File::getExt($files[0]);
 		$file->path = $files[0];

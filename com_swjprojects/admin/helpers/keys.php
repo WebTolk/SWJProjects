@@ -8,9 +8,9 @@
  * @link       https://www.septdir.com/
  */
 
-use Joomla\CMS\Component\ComponentHelper;
-
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Component\ComponentHelper;
 
 class SWJProjectsHelperKeys
 {

@@ -71,6 +71,7 @@
 		<folder>js</folder>
 	</media>
 	<layouts destination="components/swjprojects" folder="layouts">
+		<folder>field</folder>
 		<folder>toolbar</folder>
 		<folder>translate</folder>
 	</layouts>
