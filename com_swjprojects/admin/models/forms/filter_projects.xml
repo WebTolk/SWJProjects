@@ -20,10 +20,10 @@
 	<fields name="list">
 		<field name="fullordering" type="list"
 			   onchange="this.form.submit();"
-			   default="e.ordering ASC">
+			   default="p.ordering ASC">
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="e.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
-			<option value="e.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
+			<option value="p.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="p.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
 			<option value="title ASC">JGLOBAL_TITLE_ASC</option>
 			<option value="title DESC">JGLOBAL_TITLE_DESC</option>
 			<option value="category_title ASC">COM_SWJPROJECTS_CATEGORY_ASC</option>

@@ -43,7 +43,7 @@ class SWJProjectsModelProjects extends ListModel
 				'id', 'p.id',
 				'title', 'p.title',
 				'published', 'state', 'p.state',
-				'category', 'category_id', 'c.id', 'e.catid', 'catid', 'category_title', 'cl.title',
+				'category', 'category_id', 'c.id', 'p.catid', 'catid', 'category_title', 'cl.title',
 				'download_type', 'p.download_type',
 				'downloads', 'p.downloads',
 				'hits', 'p.hits',
@@ -77,7 +77,7 @@ class SWJProjectsModelProjects extends ListModel
 
 		// Set download_type filter state
 		$download_type = $this->getUserStateFromRequest($this->context . '.filter.download_type  ', 'filter_download_type', '');
-		$this->setState('filter.category  ', $download_type);
+		$this->setState('filter.download_type  ', $download_type);
 
 		// List state information
 		$ordering  = empty($ordering) ? 'p.ordering' : $ordering;
@@ -100,6 +100,7 @@ class SWJProjectsModelProjects extends ListModel
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.category');
+		$id .= ':' . $this->getState('filter.download_type');
 
 		return parent::getStoreId($id);
 	}
