@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_versions`
     `id`        INT(11)    NOT NULL DEFAULT 0,
     `language`  CHAR(7)    NOT NULL DEFAULT '',
     `changelog` MEDIUMTEXT NOT NULL,
+    `metadata`  TEXT       NOT NULL,
     PRIMARY KEY (`id`, `language`)
 )
     ENGINE = InnoDB
@@ -120,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_projects`
     `fulltext`  MEDIUMTEXT   NOT NULL,
     `gallery`   MEDIUMTEXT   NOT NULL,
     `payment`   MEDIUMTEXT   NOT NULL,
+    `metadata`  TEXT         NOT NULL,
     PRIMARY KEY (`id`, `language`)
 )
     ENGINE = InnoDB
@@ -132,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_categories`
     `language`    CHAR(7)      NOT NULL DEFAULT '',
     `title`       VARCHAR(255) NOT NULL DEFAULT '',
     `description` MEDIUMTEXT   NOT NULL,
+    `metadata`    TEXT         NOT NULL,
     PRIMARY KEY (`id`, `language`)
 )
     ENGINE = InnoDB

@@ -37,38 +37,47 @@ Factory::getDocument()->addScriptDeclaration('
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=version&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">
+	<fieldset class="form-inline form-inline-header">
+		<?php echo $this->form->renderField('project_id'); ?>
+		<div class="control-group">
+			<div class="control-label">
+				<?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>
+				<span class="star">&nbsp;*</span>
+			</div>
+			<div class="controls">
+				<?php
+				$this->form->setFieldAttribute('stage', 'hiddenLabel', 'true');
+				echo $this->form->getInput('major')
+					. $this->form->getInput('minor')
+					. $this->form->getInput('micro')
+					. $this->form->getInput('tag')
+					. $this->form->renderField('stage');
+				?>
+			</div>
+		</div>
+	</fieldset>
 	<div class="row-fluid">
 		<div class="span9">
-			<fieldset class="form-inline form-inline-header">
-				<?php echo $this->form->renderField('project_id'); ?>
-				<div class="control-group">
-					<div class="control-label">
-						<?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>
-						<span class="star">&nbsp;*</span>
-					</div>
-					<div class="controls">
-						<?php
-						$this->form->setFieldAttribute('stage', 'hiddenLabel', 'true');
-						echo $this->form->getInput('major')
-							. $this->form->getInput('minor')
-							. $this->form->getInput('micro')
-							. $this->form->getInput('tag')
-							. $this->form->renderField('stage');
-						?>
-					</div>
-				</div>
-			</fieldset>
-			<hr>
+			<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'general', 'class')); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
 			<fieldset class="form-horizontal">
 				<div class="control-group">
 					<p class="lead">
 						<?php echo LayoutHelper::render('components.swjprojects.translate.text',
-							'COM_SWJPROJECTS_VERSION_CHANGELOG'); ?>
+							''); ?>
 					</p>
 					<?php echo LayoutHelper::render('components.swjprojects.translate.input', array(
 						'forms' => $this->translateForms, 'name' => 'changelog')); ?>
 				</div>
 			</fieldset>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'metadata', Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS')); ?>
+			<fieldset class="form-horizontal">
+				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+					'forms' => $this->translateForms, 'name' => 'metadata')); ?>
+			</fieldset>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 		</div>
 		<div class="span3">
 			<fieldset class="well form-horizontal form-horizontal-desktop">

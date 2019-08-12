@@ -55,6 +55,12 @@ Factory::getDocument()->addScriptDeclaration('
 				</div>
 			</fieldset>
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'metadata', Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS')); ?>
+			<fieldset class="form-horizontal">
+				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+					'forms' => $this->translateForms, 'name' => 'metadata')); ?>
+			</fieldset>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 			<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 		</div>
 		<div class="span3">

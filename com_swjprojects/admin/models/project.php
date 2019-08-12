@@ -104,6 +104,10 @@ class SWJProjectsModelProject extends AdminModel
 					// Convert the payment field value to array
 					$registry           = new Registry($translate->payment);
 					$translate->payment = $registry->toArray();
+
+					// Convert the metadata field value to array
+					$registry           = new Registry($translate->metadata);
+					$translate->metadata = $registry->toArray();
 				}
 
 				// Set downloads
@@ -490,6 +494,13 @@ class SWJProjectsModelProject extends AdminModel
 				{
 					$registry             = new Registry($translate['payment']);
 					$translate['payment'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+				}
+
+				// Prepare metadata field data
+				if (isset($translate['metadata']))
+				{
+					$registry             = new Registry($translate['metadata']);
+					$translate['metadata'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 				}
 
 				$translate = (object) $translate;

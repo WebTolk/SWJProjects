@@ -84,7 +84,6 @@ class SWJProjectsModelVersion extends AdminModel
 					->from('#__swjprojects_translate_versions')
 					->where('id = ' . $item->id);
 				$db->setQuery($query);
-
 				$item->translates = $db->loadObjectList('language');
 
 				if (!empty($item->translates))
@@ -94,6 +93,10 @@ class SWJProjectsModelVersion extends AdminModel
 						// Convert the changelog field value to array
 						$registry             = new Registry($translate->changelog);
 						$translate->changelog = $registry->toArray();
+
+						// Convert the metadata field value to array
+						$registry             = new Registry($translate->metadata);
+						$translate->metadata = $registry->toArray();
 					}
 				}
 
@@ -451,6 +454,13 @@ class SWJProjectsModelVersion extends AdminModel
 				{
 					$registry               = new Registry($translate['changelog']);
 					$translate['changelog'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+				}
+
+				// Prepare metadata field data
+				if (isset($translate['metadata']))
+				{
+					$registry               = new Registry($translate['metadata']);
+					$translate['metadata'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 				}
 
 				$translate = (object) $translate;

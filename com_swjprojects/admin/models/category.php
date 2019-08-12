@@ -78,6 +78,16 @@ class SWJProjectsModelCategory extends AdminModel
 					->where('id = ' . $item->id);
 				$db->setQuery($query);
 				$item->translates = $db->loadObjectList('language');
+
+				if (!empty($item->translates))
+				{
+					foreach ($item->translates as &$translate)
+					{
+						// Convert the metadata field value to array
+						$registry             = new Registry($translate->metadata);
+						$translate->metadata = $registry->toArray();
+					}
+				}
 			}
 		}
 
@@ -420,6 +430,13 @@ class SWJProjectsModelCategory extends AdminModel
 
 			// Prepare language field data
 			$translate['language'] = $code;
+
+			// Prepare metadata field data
+			if (isset($translate['metadata']))
+			{
+				$registry               = new Registry($translate['metadata']);
+				$translate['metadata'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+			}
 
 			$translate = (object) $translate;
 
