@@ -77,7 +77,8 @@ class SWJProjectsHelperImages
 
 			// Get file
 			$file  = false;
-			$files = (Folder::exists($path)) ? Folder::files($path, $name, false) : false;
+			$filter = '^' . $name . '\.[a-zA-Z]*$';
+			$files = (Folder::exists($path)) ? Folder::files($path, $filter, false) : false;
 			if ($files && !empty($files[0]))
 			{
 				$filename = $files[0];
@@ -363,7 +364,8 @@ class SWJProjectsHelperImages
 
 		// Delete current
 		$current = false;
-		$files   = (Folder::exists($path)) ? Folder::files($path, $name, false) : false;
+		$filter = '^' . $name . '\.[a-zA-Z]*$';
+		$files   = (Folder::exists($path)) ? Folder::files($path, $filter, false) : false;
 		if ($files && !empty($files[0]))
 		{
 			$filename = $files[0];
@@ -420,7 +422,8 @@ class SWJProjectsHelperImages
 		}
 
 		$current = false;
-		$files   = (Folder::exists($path)) ? Folder::files($path, $name, false) : false;
+		$filter = '^' . $name . '\.[a-zA-Z]*$';
+		$files   = (Folder::exists($path)) ? Folder::files($path, $filter, false) : false;
 		if ($files && !empty($files[0]))
 		{
 			$filename = $files[0];
