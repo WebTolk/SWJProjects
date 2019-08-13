@@ -444,6 +444,11 @@ class SWJProjectsModelProjects extends ListModel
 				$data->params = clone $this->getState('params');
 				$data->params->merge($params);
 
+				// Set metadata
+				$data->metadata = new Registry($data->metadata);
+				$data->metadata->set('image',
+					SWJProjectsHelperImages::getImage('categories', $data->id, 'meta', $data->language));
+
 				$this->_item[$pk] = $data;
 			}
 			catch (Exception $e)

@@ -195,7 +195,15 @@ class SWJProjectsViewProjects extends HtmlView
 		}
 
 		// Set meta title
-		$title    = (!$current && $category->id > 0) ? $category->title : $this->params->get('page_title');
+		$title = ($category->id > 0) ? $category->title : $this->params->get('page_title');
+		if ($current && $this->params->get('page_title'))
+		{
+			$title = $this->params->get('page_title');
+		}
+		elseif ($category->metadata->get('title'))
+		{
+			$title = $category->metadata->get('title');
+		};
 		$sitename = $app->get('sitename');
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
@@ -212,6 +220,10 @@ class SWJProjectsViewProjects extends HtmlView
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
+		elseif ($category->metadata->get('description'))
+		{
+			$this->document->setDescription($category->metadata->get('description'));
+		}
 		elseif (!empty($category->description))
 		{
 			$this->document->setDescription(JHtmlString::truncate($category->description, 150, false, false));
@@ -222,6 +234,20 @@ class SWJProjectsViewProjects extends HtmlView
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
+		elseif ($category->metadata->get('keywords'))
+		{
+			$this->document->setMetadata('keywords', $category->metadata->get('keywords'));
+		}
+
+		// Set meta image
+		if ($current && $this->params->get('menu-meta_image'))
+		{
+			$this->document->setMetadata('image', $root . '/' . $this->params->get('menu-meta_image'));
+		}
+		elseif ($category->metadata->get('image'))
+		{
+			$this->document->setMetadata('image', $root . '/' . $category->metadata->get('image'));
+		}
 
 		// Set meta robots
 		if ($this->state->get('debug', 0))
@@ -231,6 +257,10 @@ class SWJProjectsViewProjects extends HtmlView
 		elseif ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
+		}
+		elseif ($category->metadata->get('robots'))
+		{
+			$this->document->setMetadata('robots', $category->metadata->get('robots'));
 		}
 
 		// Set meta url

@@ -217,7 +217,15 @@ class SWJProjectsViewProject extends HtmlView
 		}
 
 		// Set meta title
-		$title    = (!$current) ? $project->title : $this->params->get('page_title');
+		$title    = $project->title;
+		if ($current && $this->params->get('page_title'))
+		{
+			$title = $this->params->get('page_title');
+		}
+		elseif ($project->metadata->get('title'))
+		{
+			$title = $project->metadata->get('title');
+		};
 		$sitename = $app->get('sitename');
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
@@ -234,6 +242,10 @@ class SWJProjectsViewProject extends HtmlView
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
+		elseif ($project->metadata->get('description'))
+		{
+			$this->document->setDescription($project->metadata->get('description'));
+		}
 		elseif (!empty($project->introtext))
 		{
 			$this->document->setDescription(JHtmlString::truncate($project->introtext, 150, false, false));
@@ -244,11 +256,19 @@ class SWJProjectsViewProject extends HtmlView
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
+		elseif ($project->metadata->get('keywords'))
+		{
+			$this->document->setMetadata('keywords', $project->metadata->get('keywords'));
+		}
 
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$this->document->setDescription($this->params->get('menu-meta_image'));
+			$this->document->setMetadata('image',$root . '/' .$this->params->get('menu-meta_image'));
+		}
+		elseif ($project->metadata->get('image'))
+		{
+			$this->document->setMetadata('image', $root . '/' . $project->metadata->get('image'));
 		}
 		elseif (!empty($project->images->get('cover')))
 		{
@@ -267,6 +287,10 @@ class SWJProjectsViewProject extends HtmlView
 		elseif ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
+		}
+		elseif ($project->metadata->get('robots'))
+		{
+			$this->document->setMetadata('robots', $project->metadata->get('robots'));
 		}
 
 		// Set meta url

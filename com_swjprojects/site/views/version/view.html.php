@@ -211,7 +211,15 @@ class SWJProjectsViewVersion extends HtmlView
 		}
 
 		// Set meta title
-		$title    = (!$current) ? $version->title : $this->params->get('page_title');
+		$title = $version->title;
+		if ($current && $this->params->get('page_title'))
+		{
+			$title = $this->params->get('page_title');
+		}
+		elseif ($version->metadata->get('title'))
+		{
+			$title = $version->metadata->get('title');
+		}
 		$sitename = $app->get('sitename');
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
@@ -228,17 +236,29 @@ class SWJProjectsViewVersion extends HtmlView
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
+		elseif ($version->metadata->get('description'))
+		{
+			$this->document->setDescription($version->metadata->get('description'));
+		}
 
 		// Set meta keywords
 		if ($current && $this->params->get('menu-meta_keywords'))
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
+		elseif ($version->metadata->get('keywords'))
+		{
+			$this->document->setMetadata('keywords', $version->metadata->get('keywords'));
+		}
 
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$this->document->setDescription($this->params->get('menu-meta_image'));
+			$this->document->setMetadata('image',$root . '/' .$this->params->get('menu-meta_image'));
+		}
+		elseif ($version->metadata->get('image'))
+		{
+			$this->document->setMetadata('image', $root . '/' . $version->metadata->get('image'));
 		}
 		elseif (!empty($this->project->images->get('cover')))
 		{
@@ -257,6 +277,10 @@ class SWJProjectsViewVersion extends HtmlView
 		elseif ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
+		}
+		elseif ($version->metadata->get('robots'))
+		{
+			$this->document->setMetadata('robots', $version->metadata->get('robots'));
 		}
 
 		// Set meta url

@@ -214,7 +214,15 @@ class SWJProjectsViewVersions extends HtmlView
 		}
 
 		// Set meta title
-		$title    = (!$current) ? Text::sprintf('COM_SWJPROJECTS_VERSIONS_TITLE', $project->title) : $this->params->get('page_title');
+		$title    =  Text::sprintf('COM_SWJPROJECTS_VERSIONS_TITLE', $project->title);
+		if ($current && $this->params->get('page_title'))
+		{
+			$title = $this->params->get('page_title');
+		}
+		elseif ($project->metadata->get('versions_title'))
+		{
+			$title = $project->metadata->get('versions_title');
+		}
 		$sitename = $app->get('sitename');
 		if ($app->get('sitename_pagetitles', 0) == 1)
 		{
@@ -231,6 +239,10 @@ class SWJProjectsViewVersions extends HtmlView
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
+		elseif ($project->metadata->get('versions_description'))
+		{
+			$this->document->setDescription($project->metadata->get('versions_description'));
+		}
 		elseif (!empty($project->introtext))
 		{
 			$this->document->setDescription(JHtmlString::truncate($project->introtext, 150, false, false));
@@ -241,11 +253,19 @@ class SWJProjectsViewVersions extends HtmlView
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
+		elseif ($project->metadata->get('versions_keywords'))
+		{
+			$this->document->setMetadata('keywords', $project->metadata->get('versions_keywords'));
+		}
 
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$this->document->setDescription($this->params->get('menu-meta_image'));
+			$this->document->setMetadata('image',$root . '/' .$this->params->get('menu-meta_image'));
+		}
+		elseif ($project->metadata->get('versions_image'))
+		{
+			$this->document->setMetadata('image', $root . '/' . $project->metadata->get('versions_image'));
 		}
 		elseif (!empty($project->images->get('cover')))
 		{
@@ -264,6 +284,10 @@ class SWJProjectsViewVersions extends HtmlView
 		elseif ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
+		}
+		elseif ($project->metadata->get('versions_robots'))
+		{
+			$this->document->setMetadata('robots', $project->metadata->get('versions_robots'));
 		}
 
 		// Set meta url

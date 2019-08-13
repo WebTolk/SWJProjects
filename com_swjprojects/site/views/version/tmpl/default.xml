@@ -14,4 +14,11 @@
 			</field>
 		</fieldset>
 	</fields>
+	<fields name="params">
+		<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field name="menu-meta_image" type="media"
+				   label="JFIELD_META_IMAGE_LABEL"
+				   description="JFIELD_META_IMAGE_DESC"/>
+		</fieldset>
+	</fields>
 </metadata>
