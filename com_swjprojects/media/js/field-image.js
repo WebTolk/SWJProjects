@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				formData.set('language', language);
 
 				request.open('POST', requestUrl);
-				request.send(new URLSearchParams(formData));
+				request.send(formData);
 				request.onreadystatechange = function () {
 					if (this.readyState === 4 && this.status === 200) {
 						let response = false;
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				formData.set('language', language);
 
 				request.open('POST', requestUrl);
-				request.send(new URLSearchParams(formData));
+				request.send(formData);
 				request.onreadystatechange = function () {
 					if (this.readyState === 4 && this.status === 200) {
 						let response = false;

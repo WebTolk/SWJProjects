@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				formData.set('values', JSON.stringify(getValues()));
 
 				request.open('POST', requestUrl);
-				request.send(new URLSearchParams(formData));
+				request.send(formData);
 				request.onreadystatechange = function () {
 					if (this.readyState === 4 && this.status === 200) {
 						let response = false;
@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
 								formData.set('filename', element.target.getAttribute('data-key'));
 
 								request.open('POST', requestUrl);
-								request.send(new URLSearchParams(formData));
+								request.send(formData);
 								request.onreadystatechange = function () {
 									if (this.readyState === 4 && this.status === 200) {
 										let response = false;
