@@ -18,6 +18,7 @@
 	<files>
 		<folder type="component" id="com_swjprojects">com_swjprojects</folder>
 		<folder type="module" id="mod_swjprojects_projects" client="site">mod_swjprojects_projects</folder>
+		<folder type="module" id="mod_swjprojects_versions" client="site">mod_swjprojects_versions</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="SW JProjects">

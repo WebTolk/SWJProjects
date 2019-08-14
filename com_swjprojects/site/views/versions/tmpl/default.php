@@ -107,7 +107,7 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 					<div class="item-<?php echo $item->id; ?>">
 						<h2 class="title">
 							<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
-							<?php if ($this->project->download_type === 'free'): ?>
+							<?php if ($item->download_type === 'free'): ?>
 								<a href="<?php echo $item->download; ?>" target="_blank"
 								   class="btn btn-<?php echo ($item->tag->key == 'stable') ? 'success' : 'inverse'; ?> pull-right">
 									<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>

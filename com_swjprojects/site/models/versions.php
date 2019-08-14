@@ -185,7 +185,7 @@ class SWJProjectsModelVersions extends ListModel
 			->from($db->quoteName('#__swjprojects_versions', 'v'));
 
 		// Join over the projects
-		$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element'))
+		$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element', 'p.download_type'))
 			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 		// Join over the categories
