@@ -308,11 +308,11 @@ class SWJProjectsModelVersion extends ItemModel
 					$data->project->default_payment = new Registry($data->default_payment);
 					if (!$data->payment->get('link'))
 					{
-						$data->payment->set('link', $data->default_payment->get('link'));
+						$data->payment->set('link', $data->project->default_payment->get('link'));
 					}
 					if (!$data->payment->get('price'))
 					{
-						$data->payment->set('price', $data->default_payment->get('price'));
+						$data->payment->set('price', $data->project->default_payment->get('price'));
 					}
 				}
 
