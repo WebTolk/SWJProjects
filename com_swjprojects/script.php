@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -76,7 +76,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function parseLayouts(SimpleXMLElement $element, $installer)
 	{
@@ -238,7 +238,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function checkImagesFolder()
 	{
@@ -288,7 +288,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function checkKeysParams()
 	{
@@ -353,7 +353,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to move projects images and save gallery.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function prepareImagesColumn()
 	{
@@ -489,7 +489,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function removeLayouts(SimpleXMLElement $element)
 	{

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -27,7 +27,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with image src on success, empty string on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function loadImage()
 	{
@@ -52,7 +52,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with true on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function deleteImage()
 	{
@@ -77,7 +77,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with image src on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function uploadImage()
 	{
@@ -108,7 +108,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with images src and field html on success, empty string on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function loadImages()
 	{
@@ -147,7 +147,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with new images names on success, empty string on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function uploadImages()
 	{
@@ -180,7 +180,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with image src on success, empty string on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function changeImages()
 	{
@@ -214,7 +214,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  bool  Send json response with true on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function deleteImages()
 	{
@@ -244,7 +244,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return   True on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function setResponse($response = null, $message = null, $error = false)
 	{
@@ -267,7 +267,7 @@ class SWJProjectsControllerImages extends BaseController
 	 *
 	 * @return  boolean  True if found and valid, false otherwise.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function checkToken($method = 'post', $json = true)
 	{

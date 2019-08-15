@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -21,7 +21,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $type = 'images';
 
@@ -30,7 +30,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $layout = 'components.swjprojects.field.images';
 
@@ -39,7 +39,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $section = null;
 
@@ -48,7 +48,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $pk = null;
 
@@ -57,7 +57,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $folder = null;
 
@@ -66,7 +66,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $language = null;
 
@@ -79,7 +79,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function setup(SimpleXMLElement $element, $value, $group = null)
 	{
@@ -117,7 +117,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @return  string  The field input markup.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function getInput()
 	{
@@ -129,7 +129,7 @@ class JFormFieldImages extends FormField
 	 *
 	 * @return  array Layout data array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function getLayoutData()
 	{

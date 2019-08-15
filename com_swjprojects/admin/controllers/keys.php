@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -20,7 +20,7 @@ class SWJProjectsControllerKeys extends AdminController
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $text_prefix = 'COM_SWJPROJECTS_KEYS';
 
@@ -33,7 +33,7 @@ class SWJProjectsControllerKeys extends AdminController
 	 *
 	 * @return  BaseDatabaseModel|SWJProjectsModelKey  A model object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function getModel($name = 'Key', $prefix = 'SWJProjectsModel', $config = array('ignore_request' => true))
 	{

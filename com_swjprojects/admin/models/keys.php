@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -21,7 +21,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $translate = null;
 
@@ -30,7 +30,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function __construct($config = array())
 	{
@@ -58,7 +58,7 @@ class SWJProjectsModelKeys extends ListModel
 	 * @param   string  $ordering   An optional ordering field.
 	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -88,7 +88,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  string  A store id.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -104,7 +104,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  JDatabaseQuery  Database query to load versions list.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function getListQuery()
 	{
@@ -180,7 +180,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  mixed  Versions objects array on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function getItems()
 	{

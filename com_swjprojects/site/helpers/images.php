@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected static $_image = array();
 
@@ -34,7 +34,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected static $_images = array();
 
@@ -43,7 +43,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @var  array
 	 *
-	 * @since __DEPLOY_VERSION__
+	 * @since 1.3.0
 	 */
 	public static $mime_types = array('image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg', 'image/svg+xml');
 
@@ -57,7 +57,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @return  false|string  Simple image path string on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public static function getImage($section = null, $pk = null, $name = null, $language = null)
 	{
@@ -99,7 +99,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @return false|object[] Multiple images array on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public static function getImages($section = null, $pk = null, $folder = null, $values = null, $language = null)
 	{
@@ -167,7 +167,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @return  true|false  True on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public static function checkImage($image = '')
 	{

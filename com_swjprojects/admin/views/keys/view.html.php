@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @var  Joomla\CMS\Object\CMSObject
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $state;
 
@@ -34,7 +34,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $items;
 
@@ -43,7 +43,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @var  Pagination
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $pagination;
 
@@ -52,7 +52,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @var  Form
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public $filterForm;
 
@@ -61,7 +61,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public $activeFilters;
 
@@ -70,7 +70,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public $sidebar;
 
@@ -83,7 +83,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function display($tpl = null)
 	{
@@ -112,7 +112,7 @@ class SWJProjectsViewKeys extends HtmlView
 	/**
 	 * Add title and toolbar.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function addToolbar()
 	{
@@ -169,7 +169,7 @@ class SWJProjectsViewKeys extends HtmlView
 	 *
 	 * @return  array  Array containing the field name to sort by as the key and display text as value.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function getSortFields()
 	{

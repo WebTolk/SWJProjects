@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -19,7 +19,7 @@ class SWJProjectsHelperKeys
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected static $characters = null;
 
@@ -30,7 +30,7 @@ class SWJProjectsHelperKeys
 	 *
 	 * @return  string  The key.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public static function generateKey($length = null)
 	{
@@ -52,7 +52,7 @@ class SWJProjectsHelperKeys
 	 *
 	 * @return  array  The key characters.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public static function getCharacters()
 	{
@@ -87,7 +87,7 @@ class SWJProjectsHelperKeys
 	 *
 	 * @return  string  The key with mask.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public static function maskKey($key = null)
 	{

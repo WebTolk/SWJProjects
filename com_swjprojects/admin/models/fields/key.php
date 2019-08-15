@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -23,7 +23,7 @@ class JFormFieldKey extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $type = 'key';
 
@@ -32,7 +32,7 @@ class JFormFieldKey extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $layout = 'components.swjprojects.field.key';
 
@@ -41,7 +41,7 @@ class JFormFieldKey extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $length = null;
 
@@ -50,7 +50,7 @@ class JFormFieldKey extends FormField
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $characters = null;
 
@@ -63,7 +63,7 @@ class JFormFieldKey extends FormField
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function setup(SimpleXMLElement $element, $value, $group = null)
 	{
@@ -83,7 +83,7 @@ class JFormFieldKey extends FormField
 	 *
 	 * @return  array Layout data array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function getLayoutData()
 	{

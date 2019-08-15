@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsViewKey extends HtmlView
 	 *
 	 * @var  Joomla\CMS\Object\CMSObject
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $state;
 
@@ -34,7 +34,7 @@ class SWJProjectsViewKey extends HtmlView
 	 *
 	 * @var  Form
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $form;
 
@@ -43,7 +43,7 @@ class SWJProjectsViewKey extends HtmlView
 	 *
 	 * @var  object
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected $item;
 
@@ -56,7 +56,7 @@ class SWJProjectsViewKey extends HtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function display($tpl = null)
 	{
@@ -87,7 +87,7 @@ class SWJProjectsViewKey extends HtmlView
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function addToolbar()
 	{

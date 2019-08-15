@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsModelKey extends AdminModel
 	 *
 	 * @return  mixed  Key object on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -48,7 +48,7 @@ class SWJProjectsModelKey extends AdminModel
 	 *
 	 * @return  Table  A database object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function getTable($type = 'Keys', $prefix = 'SWJProjectsTable', $config = array())
 	{
@@ -65,7 +65,7 @@ class SWJProjectsModelKey extends AdminModel
 	 *
 	 * @return  Form|boolean  A Form object on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -95,7 +95,7 @@ class SWJProjectsModelKey extends AdminModel
 	 *
 	 * @return  mixed  The data for the form.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function loadFormData()
 	{
@@ -118,7 +118,7 @@ class SWJProjectsModelKey extends AdminModel
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	public function save($data)
 	{
@@ -172,7 +172,7 @@ class SWJProjectsModelKey extends AdminModel
 	 *
 	 * @return  string  New key value.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.0
 	 */
 	protected function generateNewKey()
 	{
