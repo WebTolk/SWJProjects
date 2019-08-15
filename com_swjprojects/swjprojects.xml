@@ -74,5 +74,6 @@
 		<folder>field</folder>
 		<folder>toolbar</folder>
 		<folder>translate</folder>
+		<folder>message</folder>
 	</layouts>
 </extension>
