@@ -13,7 +13,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 class SWJProjectsViewKey extends HtmlView
@@ -72,7 +74,8 @@ class SWJProjectsViewKey extends HtmlView
 		$this->addToolbar();
 
 		// Re-generate field
-		if (empty($this->item->id)) {
+		if (empty($this->item->id))
+		{
 			$this->form->removeField('key_regenerate');
 		}
 
@@ -88,8 +91,9 @@ class SWJProjectsViewKey extends HtmlView
 	 */
 	protected function addToolbar()
 	{
-		$isNew = ($this->item->id == 0);
-		$canDo = SWJProjectsHelper::getActions('com_swjprojects', 'key', $this->item->id);
+		$isNew   = ($this->item->id == 0);
+		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'key', $this->item->id);
+		$toolbar = Toolbar::getInstance('toolbar');
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);
@@ -113,5 +117,17 @@ class SWJProjectsViewKey extends HtmlView
 
 		// Add cancel button
 		ToolbarHelper::cancel('key.cancel', 'JTOOLBAR_CLOSE');
+
+		// Add support button
+		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
+		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $download, 'support');
+
+		// Add donate button
+		$link     = 'https://www.septdir.com/donation#solution=SWJProjects';
+		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $download, 'donate');
 	}
 }

@@ -158,6 +158,18 @@ class SWJProjectsViewProjects extends HtmlView
 		{
 			ToolbarHelper::preferences('com_swjprojects');
 		}
+
+		// Add support button
+		$link = 'https://www.septdir.com/support#solution=SWJProjects';
+		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $download, 'support');
+
+		// Add donate button
+		$link = 'https://www.septdir.com/donation#solution=SWJProjects';
+		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $download, 'donate');
 	}
 
 	/**

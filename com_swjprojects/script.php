@@ -18,6 +18,7 @@ use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
@@ -62,6 +63,9 @@ class com_swjprojectsInstallerScript
 			// Prepare projects images
 			$this->prepareImagesColumn();
 		}
+
+		// Donate message
+		Factory::getApplication()->enqueueMessage(LayoutHelper::render('components.swjprojects.message.donate'), '');
 	}
 
 	/**

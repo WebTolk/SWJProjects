@@ -13,6 +13,11 @@
 	color: inherit;
 }
 
+#toolbar-support,
+#toolbar-donate {
+	float: right;
+}
+
 #item-form .span3 .well.form-horizontal {
 	box-sizing: border-box;
 	max-width: 100%;

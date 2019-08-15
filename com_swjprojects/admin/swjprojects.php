@@ -24,6 +24,9 @@ if (!Factory::getUser()->authorise('core.manage', 'com_swjprojects'))
 	throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
 }
 
+// Show donate message
+SWJProjectsHelper::showDonateMessage();
+
 $controller = BaseController::getInstance('SWJProjects');
 $controller->execute(Factory::getApplication()->input->get('task'));
 $controller->redirect();
