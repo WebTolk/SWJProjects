@@ -70,15 +70,15 @@ class SWJProjectsHelper extends ContentHelper
 		{
 			Factory::getApplication()->enqueueMessage(
 				LayoutHelper::render('components.swjprojects.message.donate'), '');
+
+			// Update params
+			$params->set('donate_counter', $downloads);
+
+			$component          = new stdClass();
+			$component->element = 'com_swjprojects';
+			$component->params  = $params->toString();
+
+			$db->updateObject('#__extensions', $component, array('element'));
 		}
-
-		// Update params
-		$params->set('donate_counter', $downloads);
-
-		$component          = new stdClass();
-		$component->element = 'com_swjprojects';
-		$component->params  = $params->toString();
-
-		$db->updateObject('#__extensions', $component, array('element'));
 	}
 }
