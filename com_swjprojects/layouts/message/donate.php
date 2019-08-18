@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 
 ?>
-<a href="https://www.septdir.com/donation#solution=SWJProjects" class="btn btn-primary pull-right" target="_blank">
+<a href="https://www.septdir.com/donate#solution=swjprojects" class="btn btn-primary pull-right" target="_blank">
 	<?php echo Text::_('COM_SWJPROJECTS_DONATE'); ?>
 </a>
 <?php echo Text::_('COM_SWJPROJECTS_DONATE_MESSAGE'); ?>

@@ -182,7 +182,7 @@ class SWJProjectsViewCategories extends HtmlView
 		$toolbar->appendButton('Custom', $download, 'support');
 
 		// Add donate button
-		$link     = 'https://www.septdir.com/donation#solution=SWJProjects';
+		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
 		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
 		$toolbar->appendButton('Custom', $download, 'donate');
