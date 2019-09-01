@@ -476,7 +476,8 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$item->pslug    = $item->project_id . ':' . $item->project_alias;
 					$item->cslug    = $item->category_id . ':' . $item->category_alias;
 					$item->link     = Route::_(SWJProjectsHelperRoute::getVersionRoute($item->slug, $item->pslug, $item->cslug));
-					$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($item->id, null, null, $download_key));
+					$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($item->id, null,
+						$item->project_element, $download_key));
 
 					// Set version & name
 					$item->version = $item->major . '.' . $item->minor . '.' . $item->micro;
