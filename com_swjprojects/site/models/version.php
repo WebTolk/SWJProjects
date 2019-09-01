@@ -159,7 +159,7 @@ class SWJProjectsModelVersion extends ItemModel
 
 				// Join over the projects
 				$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element',
-					'p.download_type', 'p.urls as project_urls'))
+					'p.download_type', 'p.urls as project_urls', 'p.joomla'))
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 				// Join over the categories
@@ -314,6 +314,17 @@ class SWJProjectsModelVersion extends ItemModel
 					{
 						$data->payment->set('price', $data->project->default_payment->get('price'));
 					}
+				}
+
+				// Set joomla
+				$data->joomla = new Registry($data->joomla);
+				if (!$data->joomla->get('type'))
+				{
+					$data->joomla = false;
+				}
+				else
+				{
+					$data->joomla->set('version', $data->joomla_version);
 				}
 
 				// Set category
