@@ -159,7 +159,7 @@ class SWJProjectsModelVersion extends ItemModel
 
 				// Join over the projects
 				$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element',
-					'p.download_type', 'p.urls as project_urls'))
+					'p.download_type', 'p.urls as project_urls', 'p.joomla'))
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 				// Join over the categories
@@ -244,26 +244,27 @@ class SWJProjectsModelVersion extends ItemModel
 				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($data->id));
 
 				// Set version
-				$data->version         = new stdClass();
-				$data->version->id     = $data->id;
-				$data->version->major  = $data->major;
-				$data->version->minor  = $data->minor;
-				$data->version->micro  = $data->micro;
-				$data->version->tag    = $data->tag_key;
-				$data->version->stage  = $data->stage;
-				$data->version->string = $data->project_element . ' ' . $data->major . '.' . $data->minor . '.' . $data->micro;
-				$data->version->title  = $data->project_title . ' ' . $data->major . '.' . $data->minor . '.' . $data->micro;
+				$data->version          = new stdClass();
+				$data->version->id      = $data->id;
+				$data->version->major   = $data->major;
+				$data->version->minor   = $data->minor;
+				$data->version->micro   = $data->micro;
+				$data->version->tag     = $data->tag_key;
+				$data->version->stage   = $data->stage;
+				$data->version->version = $data->major . '.' . $data->minor . '.' . $data->micro;
+				$data->version->title   = $data->project_title . ' ' . $data->version->version;
 				if ($data->tag_key !== 'stable')
 				{
-					$data->version->string .= ' ' . $data->tag_key;
-					$data->version->title  .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $data->tag_key);
+					$data->version->version .= ' ' . $data->tag_key;
+					$data->version->title   .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $data->tag_key);
 
 					if ($data->tag_key !== 'dev' && !empty($data->stage))
 					{
-						$data->version->string .= $data->stage;
-						$data->version->title  .= ' ' . $data->stage;
+						$data->version->version .= $data->stage;
+						$data->version->title   .= ' ' . $data->stage;
 					}
 				}
+				$data->version->string = $data->project_element . ' ' . $data->version->version;
 
 				// Set title
 				$data->title = $data->version->title;
@@ -314,6 +315,17 @@ class SWJProjectsModelVersion extends ItemModel
 					{
 						$data->payment->set('price', $data->project->default_payment->get('price'));
 					}
+				}
+
+				// Set joomla
+				$data->joomla = new Registry($data->joomla);
+				if (!$data->joomla->get('type'))
+				{
+					$data->joomla = false;
+				}
+				else
+				{
+					$data->joomla->set('version', $data->joomla_version);
 				}
 
 				// Set category

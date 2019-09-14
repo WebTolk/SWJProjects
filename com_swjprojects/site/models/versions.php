@@ -294,26 +294,27 @@ class SWJProjectsModelVersions extends ListModel
 				$item->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($item->id));
 
 				// Set version
-				$item->version         = new stdClass();
-				$item->version->id     = $item->id;
-				$item->version->major  = $item->major;
-				$item->version->minor  = $item->minor;
-				$item->version->micro  = $item->micro;
-				$item->version->tag    = $item->tag_key;
-				$item->version->stage  = $item->stage;
-				$item->version->string = $item->project_element . ' ' . $item->major . '.' . $item->minor . '.' . $item->micro;
-				$item->version->title  = $item->project_title . ' ' . $item->major . '.' . $item->minor . '.' . $item->micro;
+				$item->version          = new stdClass();
+				$item->version->id      = $item->id;
+				$item->version->major   = $item->major;
+				$item->version->minor   = $item->minor;
+				$item->version->micro   = $item->micro;
+				$item->version->tag     = $item->tag_key;
+				$item->version->stage   = $item->stage;
+				$item->version->version = $item->major . '.' . $item->minor . '.' . $item->micro;
+				$item->version->title   = $item->project_title . ' ' . $item->version->version;
 				if ($item->tag_key !== 'stable')
 				{
-					$item->version->string .= ' ' . $item->tag_key;
-					$item->version->title  .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $item->tag_key);
+					$item->version->version .= ' ' . $item->tag_key;
+					$item->version->title   .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $item->tag_key);
 
 					if ($item->tag_key !== 'dev' && !empty($item->stage))
 					{
-						$item->version->string .= $item->stage;
-						$item->version->title  .= ' ' . $item->stage;
+						$item->version->version .= $item->stage;
+						$item->version->title   .= ' ' . $item->stage;
 					}
 				}
+				$item->version->string = $item->project_element . ' ' . $item->version->version;
 
 				// Set title
 				$item->title = $item->version->title;
