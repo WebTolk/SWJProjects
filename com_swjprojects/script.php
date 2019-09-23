@@ -194,7 +194,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function checkFilesFolder()
 	{
-		$params         = ComponentHelper::getParams('com_swjprojects');
+		$params         = $this->getComponentParams();
 		$standardFolder = Path::clean(JPATH_ROOT . '/' . 'swjprojects');
 		$paramsFolder   = $params->get('files_folder');
 		$folder         = ($paramsFolder) ? Path::clean(rtrim($paramsFolder, '/')) : $standardFolder;
@@ -242,7 +242,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function checkImagesFolder()
 	{
-		$params         = ComponentHelper::getParams('com_swjprojects');
+		$params         = $this->getComponentParams();
 		$standardFolder = 'images/swjprojects';
 		$paramsFolder   = $params->get('images_folder');
 		$folder         = ($paramsFolder) ? trim($paramsFolder, '/') : $standardFolder;
@@ -292,7 +292,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function checkKeysParams()
 	{
-		$params = ComponentHelper::getParams('com_swjprojects');
+		$params = $this->getComponentParams();
 		$update = false;
 		JLoader::register('SWJProjectsHelperKeys',
 			JPATH_ADMINISTRATOR . '/components/com_swjprojects/helpers/keys.php');
@@ -534,5 +534,23 @@ class com_swjprojectsInstallerScript
 		}
 
 		return true;
+	}
+
+	/**
+	 * Method to get component params.
+	 *
+	 * @return  Registry  Component params registry.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function getComponentParams()
+	{
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select('params')
+			->from('#__extensions')
+			->where($db->quoteName('element') . ' = ' . $db->quote('com_swjprojects'));
+
+		return new Registry($db->setQuery($query)->loadResult());
 	}
 }
