@@ -27,7 +27,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	 */
 	public static function getJUpdateRoute($project_id = null, $element = null, $download_key = null)
 	{
-		$link = 'index.php?option=com_swjprojects&view=jupdate&key=1';
+		$link = 'index.php?option=com_swjprojects&view=jupdate';
 
 		if (!empty($project_id))
 		{
@@ -61,7 +61,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	 */
 	public static function getDownloadRoute($version_id = null, $project_id = null, $element = null, $download_key = null)
 	{
-		$link = 'index.php?option=com_swjprojects&view=download&key=1';
+		$link = 'index.php?option=com_swjprojects&view=download';
 
 		if (!empty($version_id))
 		{

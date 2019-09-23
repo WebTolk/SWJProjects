@@ -71,12 +71,10 @@ class SWJProjectsRouter extends RouterView
 
 		// JUpdate route
 		$jupdate = new RouterViewConfiguration('jupdate');
-		$jupdate->setKey('key');
 		$this->registerView($jupdate);
 
 		// Download route
 		$download = new RouterViewConfiguration('download');
-		$download->setKey('key');
 		$this->registerView($download);
 
 		parent::__construct($app, $menu);

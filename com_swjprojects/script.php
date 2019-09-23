@@ -62,6 +62,9 @@ class com_swjprojectsInstallerScript
 
 			// Prepare projects images
 			$this->prepareImagesColumn();
+
+			// Remove router rudiments
+			$this->removeRouterRudiments();
 		}
 
 		// Donate message
@@ -467,6 +470,25 @@ class com_swjprojectsInstallerScript
 			// Remove images column
 			$db->setQuery('ALTER TABLE `' . $table . '` drop column `images`;')->execute();
 		}
+	}
+
+
+	/**
+	 * Method to remove route rudiments from menu items.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function removeRouterRudiments()
+	{
+		// Remove key
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->update($db->quoteName('#__menu'))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote('%com_swjprojects%'))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote('%&key=1%'))
+			->set($db->quoteName('link') . ' = REPLACE (' . $db->quoteName('link') . ','
+				. $db->quote('&key=1') . ',' . $db->quote('') . ')');
+		$db->setQuery($query)->execute();
 	}
 
 	/**
