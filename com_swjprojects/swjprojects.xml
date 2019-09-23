@@ -69,6 +69,7 @@
 	<media destination="com_swjprojects" folder="media">
 		<folder>css</folder>
 		<folder>js</folder>
+		<folder>images</folder>
 	</media>
 	<layouts destination="components/swjprojects" folder="layouts">
 		<folder>field</folder>
