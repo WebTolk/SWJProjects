@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.3.1
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -476,7 +476,7 @@ class com_swjprojectsInstallerScript
 	/**
 	 * Method to remove route rudiments from menu items.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.1
 	 */
 	protected function removeRouterRudiments()
 	{
@@ -563,7 +563,7 @@ class com_swjprojectsInstallerScript
 	 *
 	 * @return  Registry  Component params registry.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.3.1
 	 */
 	protected function getComponentParams()
 	{
