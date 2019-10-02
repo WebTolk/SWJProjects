@@ -1,4 +1,4 @@
-[![SW JProjects](https://www.septdir.com/images/solutions/projects/1/en-GB/cover.jpg)](https://www.septdir.com/marketplace/joomla/components/swjprojects)  
+[![SW JProjects](https://www.septdir.com/images/solutions/projects/1/en-GB/cover.jpg)](https://www.septdir.com/solutions/joomla/components/swjprojects)  
 [![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/solutions/joomla/components/swjprojects)
 [![Support](https://img.shields.io/badge/support--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/support#solution=swjprojects)
 [![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://joomla.septdir.com/swjprojects)
