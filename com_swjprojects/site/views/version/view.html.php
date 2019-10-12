@@ -162,7 +162,6 @@ class SWJProjectsViewVersion extends HtmlView
 	protected function _prepareDocument()
 	{
 		$app     = Factory::getApplication();
-		$root    = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
 		$version = $this->version;
 		$menu    = $this->menu;
 		$current = ($menu && $menu->query['option'] === 'com_swjprojects'
@@ -254,19 +253,19 @@ class SWJProjectsViewVersion extends HtmlView
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$this->document->setMetadata('image',$root . '/' .$this->params->get('menu-meta_image'));
+			$this->document->setMetadata('image',Uri::root() .$this->params->get('menu-meta_image'));
 		}
 		elseif ($version->metadata->get('image'))
 		{
-			$this->document->setMetadata('image', $root . '/' . $version->metadata->get('image'));
+			$this->document->setMetadata('image', Uri::root() . $version->metadata->get('image'));
 		}
 		elseif (!empty($this->project->images->get('cover')))
 		{
-			$this->document->setMetadata('image', $root . '/' . $this->project->images->get('cover'));
+			$this->document->setMetadata('image', Uri::root() . $this->project->images->get('cover'));
 		}
 		elseif (!empty($this->project->images->get('icon')))
 		{
-			$this->document->setMetadata('image', $root . '/' . $this->project->images->get('icon'));
+			$this->document->setMetadata('image', Uri::root() . $this->project->images->get('icon'));
 		}
 
 		// Set meta robots
@@ -284,7 +283,7 @@ class SWJProjectsViewVersion extends HtmlView
 		}
 
 		// Set meta url
-		$url = $root . $version->link;
+		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $version->link;
 		$this->document->setMetaData('url', $url);
 
 		// Set meta twitter

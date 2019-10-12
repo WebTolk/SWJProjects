@@ -456,7 +456,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 
 				$items      = $db->loadObjectList();
 				$files_root = $this->filesPath['versions'];
-				$site_root  = rtrim(URI::root(), '/');
+				$site_root  = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
 				$updates    = new SimpleXMLElement('<updates/>');
 
 				foreach ($items as $item)
@@ -644,7 +644,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 				$items = $db->setQuery($query)->loadObjectList();
 
 				$extensionset = new SimpleXMLElement('<extensionset/>');
-				$site_root    = rtrim(URI::root(), '/');
+				$site_root    = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
 
 				foreach ($items as &$item)
 				{

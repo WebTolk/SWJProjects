@@ -163,7 +163,6 @@ class SWJProjectsViewProjects extends HtmlView
 	protected function _prepareDocument()
 	{
 		$app      = Factory::getApplication();
-		$root     = Uri::getInstance()->toString(array('scheme', 'host', 'port'));
 		$category = $this->category;
 		$menu     = $this->menu;
 		$current  = ($menu && $menu->query['option'] === 'com_swjprojects'
@@ -242,11 +241,11 @@ class SWJProjectsViewProjects extends HtmlView
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$this->document->setMetadata('image', $root . '/' . $this->params->get('menu-meta_image'));
+			$this->document->setMetadata('image', Uri::root() . $this->params->get('menu-meta_image'));
 		}
 		elseif ($category->metadata->get('image'))
 		{
-			$this->document->setMetadata('image', $root . '/' . $category->metadata->get('image'));
+			$this->document->setMetadata('image', Uri::root() . $category->metadata->get('image'));
 		}
 
 		// Set meta robots
@@ -264,7 +263,7 @@ class SWJProjectsViewProjects extends HtmlView
 		}
 
 		// Set meta url
-		$url = $root . $category->link;
+		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $category->link;
 		$this->document->setMetaData('url', $url);
 
 		// Set meta twitter
