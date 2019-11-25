@@ -105,20 +105,31 @@ Factory::getDocument()->addScriptDeclaration('
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'metadata', Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS')); ?>
-			<fieldset class="form-horizontal row-fluid">
-				<div class="span6">
-					<p class="lead">
-						<?php echo Text::_('COM_SWJPROJECTS_PROJECT'); ?>
-					</p>
-					<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
-						'forms' => $this->translateForms, 'name' => 'metadata_project')); ?>
+			<fieldset class="form-horizontal">
+				<div class="row-fluid">
+					<div class="span6">
+						<p class="lead">
+							<?php echo Text::_('COM_SWJPROJECTS_PROJECT'); ?>
+						</p>
+						<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+							'forms' => $this->translateForms, 'name' => 'metadata_project')); ?>
+					</div>
+					<div class="span6">
+						<p class="lead">
+							<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
+						</p>
+						<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+							'forms' => $this->translateForms, 'name' => 'metadata_versions')); ?>
+					</div>
 				</div>
-				<div class="span6">
-					<p class="lead">
-						<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
-					</p>
-					<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
-						'forms' => $this->translateForms, 'name' => 'metadata_versions')); ?>
+				<div class="row-fluid">
+					<div class="span6">
+						<p class="lead">
+							<?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION'); ?>
+						</p>
+						<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+							'forms' => $this->translateForms, 'name' => 'metadata_documentation')); ?>
+					</div>
 				</div>
 			</fieldset>
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>

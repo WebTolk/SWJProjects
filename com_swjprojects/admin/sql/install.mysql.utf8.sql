@@ -78,6 +78,26 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
     DEFAULT COLLATE = utf8mb4_unicode_ci
     AUTO_INCREMENT = 0;
 
+CREATE TABLE IF NOT EXISTS `#__swjprojects_documentation`
+(
+    `id`         INT(11)                                                NOT NULL AUTO_INCREMENT,
+    `element`    VARCHAR(100)                                           NOT NULL DEFAULT '',
+    `alias`      VARCHAR(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+    `state`      TINYINT(3)                                             NOT NULL DEFAULT 0,
+    `project_id` INT(11)                                                NOT NULL DEFAULT 0,
+    `params`     TEXT                                                   NOT NULL,
+    `ordering`   INT(11)                                                NOT NULL DEFAULT 0,
+    PRIMARY KEY `id` (`id`),
+    KEY `idx_alias` (`alias`(191)),
+    KEY `idx_state` (`state`),
+    KEY `idx_project` (`project_id`),
+    KEY `idx_ordering` (`ordering`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci
+    AUTO_INCREMENT = 0;
+
 CREATE TABLE IF NOT EXISTS `#__swjprojects_categories`
 (
     `id`        INT(11)                                                NOT NULL AUTO_INCREMENT,
@@ -121,6 +141,20 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_projects`
     `fulltext`  MEDIUMTEXT   NOT NULL,
     `gallery`   MEDIUMTEXT   NOT NULL,
     `payment`   MEDIUMTEXT   NOT NULL,
+    `metadata`  TEXT         NOT NULL,
+    PRIMARY KEY (`id`, `language`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_documentation`
+(
+    `id`        INT(11)      NOT NULL DEFAULT 0,
+    `language`  CHAR(7)      NOT NULL DEFAULT '',
+    `title`     VARCHAR(255) NOT NULL DEFAULT '',
+    `introtext` TEXT         NOT NULL,
+    `fulltext`  MEDIUMTEXT   NOT NULL,
     `metadata`  TEXT         NOT NULL,
     PRIMARY KEY (`id`, `language`)
 )

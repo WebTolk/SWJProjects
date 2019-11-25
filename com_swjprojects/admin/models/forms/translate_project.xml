@@ -98,5 +98,30 @@
 				   filename="meta_versions"
 				   language="[translate]"/>
 		</fieldset>
+		<fieldset name="metadata_documentation">
+			<field name="documentation_title" type="text" label="COM_SWJPROJECTS_META_TITLE"/>
+			<field name="documentation_description" type="textarea"
+				   label="COM_SWJPROJECTS_META_DESCRIPTION"
+				   rows="3"
+				   cols="30"/>
+			<field name="documentation_keywords" type="textarea"
+				   label="COM_SWJPROJECTS_META_KEYWORDS"
+				   description="JFIELD_META_KEYWORDS_DESC"
+				   rows="3"
+				   cols="30"/>
+			<field name="documentation_robots" type="list" label="COM_SWJPROJECTS_META_ROBOTS">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+			<field name="documentation_image" type="image"
+				   label="COM_SWJPROJECTS_META_IMAGE"
+				   section="projects"
+				   pk="jform[id]"
+				   filename="meta_documentation"
+				   language="[translate]"/>
+		</fieldset>
 	</fields>
 </form>

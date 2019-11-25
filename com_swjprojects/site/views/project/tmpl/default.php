@@ -88,6 +88,11 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 						<a href="<?php echo $this->project->versions; ?>" class="btn">
 							<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
 						</a>
+						<?php if ($this->project->documentation): ?>
+							<a href="<?php echo $this->project->documentation; ?>" class="btn">
+								<?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION'); ?>
+							</a>
+						<?php endif; ?>
 						<?php if ($urls = $this->project->urls->toArray()): ?>
 							<?php foreach ($urls as $txt => $url):
 								if (empty($url)) continue; ?>

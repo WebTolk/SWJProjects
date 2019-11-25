@@ -147,6 +147,66 @@ class SWJProjectsHelperRoute extends RouteHelper
 	}
 
 	/**
+	 * Fetches document route.
+	 *
+	 * @param   int  $id          The id of the version.
+	 * @param   int  $project_id  The id of the project.
+	 * @param   int  $catid       The id of the category.
+	 *
+	 * @return  string  Document view link.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function getDocumentRoute($id = null, $project_id = null, $catid = null)
+	{
+		$link = 'index.php?option=com_swjprojects&view=document';
+
+		if (!empty($id))
+		{
+			$link .= '&id=' . $id;
+		}
+
+		if (!empty($project_id))
+		{
+			$link .= '&project_id=' . $project_id;
+		}
+
+		if (!empty($catid))
+		{
+			$link .= '&catid=' . $catid;
+		}
+
+		return $link;
+	}
+
+	/**
+	 * Fetches documentation route.
+	 *
+	 * @param   int  $id     The id of the project.
+	 * @param   int  $catid  The id of the category.
+	 *
+	 * @return  string  Documentation view link.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function getDocumentationRoute($id = null, $catid = null)
+	{
+		$link = 'index.php?option=com_swjprojects&view=documentation';
+
+		if (!empty($id))
+		{
+			$link .= '&id=' . $id;
+		}
+
+		if (!empty($catid))
+		{
+			$link .= '&catid=' . $catid;
+		}
+
+		return $link;
+	}
+
+	/**
 	 * Fetches project route.
 	 *
 	 * @param   int  $id     The id of the project.

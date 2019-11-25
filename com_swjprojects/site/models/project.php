@@ -213,6 +213,11 @@ class SWJProjectsModelProject extends ItemModel
 					->where('jv.project_id = p.id');
 				$query->select('(' . $subQuery->__toString() . ') as joomla_versions');
 
+				// Join over documentation for documentation link
+				$query->select(array('d.id as documentation'))
+					->leftJoin($db->quoteName('#__swjprojects_documentation', 'd') .
+						' ON d.project_id = p.id AND d.state = 1');
+
 				// Filter by published state
 				$published = $this->getState('filter.published');
 				if (is_numeric($published))
@@ -292,11 +297,13 @@ class SWJProjectsModelProject extends ItemModel
 					$data->gallery, $data->language);
 
 				// Set link
-				$data->slug     = $data->id . ':' . $data->alias;
-				$data->cslug    = $data->category_id . ':' . $data->category_alias;
-				$data->link     = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
-				$data->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
-				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $data->element));
+				$data->slug          = $data->id . ':' . $data->alias;
+				$data->cslug         = $data->category_id . ':' . $data->category_alias;
+				$data->link          = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
+				$data->versions      = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
+				$data->download      = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $data->element));
+				$data->documentation = (!$data->documentation) ? false :
+					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
 
 				// Set category
 				$data->category        = new stdClass();

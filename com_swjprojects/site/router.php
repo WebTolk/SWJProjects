@@ -69,6 +69,16 @@ class SWJProjectsRouter extends RouterView
 		$version->setKey('id')->setParent($versions, 'project_id');
 		$this->registerView($version);
 
+		// Documentation route
+		$documentation = new RouterViewConfiguration('documentation');
+		$documentation->setKey('id')->setParent($project, 'project_id');
+		$this->registerView($documentation);
+
+		// document route
+		$document = new RouterViewConfiguration('document');
+		$document->setKey('id')->setParent($documentation, 'project_id');
+		$this->registerView($document);
+
 		// JUpdate route
 		$jupdate = new RouterViewConfiguration('jupdate');
 		$this->registerView($jupdate);
@@ -227,6 +237,65 @@ class SWJProjectsRouter extends RouterView
 	}
 
 	/**
+	 * Method to get the segment(s) for documentation.
+	 *
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
+	 *
+	 * @return  array  The segments of this item.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getDocumentationSegment($id, $query)
+	{
+		if (strpos($id, ':'))
+		{
+			$id = explode(':', $id, 2)[0];
+		}
+
+		return array($id => 'documentation');
+	}
+
+	/**
+	 * Method to get the segment(s) for document.
+	 *
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
+	 *
+	 * @return  array|boolean  The segments of this item.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getDocumentSegment($id, $query)
+	{
+		if (@$query['view'] == 'document')
+		{
+			if (!strpos($id, ':'))
+			{
+				$hash = md5('version_' . $id);
+				if (!isset($this->_segments[$hash]))
+				{
+					$db      = Factory::getDbo();
+					$dbquery = $db->getQuery(true)
+						->select('alias')
+						->from('#__swjprojects_documentation')
+						->where('id = ' . (int) $id);
+					$db->setQuery($dbquery);
+					$this->_segments[$hash] = $db->loadResult();
+				}
+
+				$id .= ':' . $this->_segments[$hash];
+			}
+
+			list($void, $segment) = explode(':', $id, 2);
+
+			return array($void => $segment);
+		}
+
+		return false;
+	}
+
+	/**
 	 * Method to get the segment(s) for jupdate.
 	 *
 	 * @param   string  $id     ID of the item to retrieve the segments.
@@ -365,6 +434,60 @@ class SWJProjectsRouter extends RouterView
 				$dbquery = $db->getQuery(true)
 					->select('id')
 					->from('#__swjprojects_versions')
+					->where($db->quoteName('alias') . ' = ' . $db->quote($segment))
+					->where($db->quoteName('project_id') . ' = ' . $db->quote($query['id']));
+				$db->setQuery($dbquery);
+
+				$this->_ids[$hash] = (int) $db->loadResult();
+			}
+
+			return $this->_ids[$hash];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Method to get the id for documentation.
+	 *
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
+	 *
+	 * @return  integer|false  The id of this item or false.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getDocumentationId($segment, $query)
+	{
+		if (!empty($segment) && $segment == 'documentation')
+		{
+			return (!empty($query['id'])) ? (int) $query['id'] : false;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Method to get the id for version.
+	 *
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
+	 *
+	 * @return  integer|false  The id of this item or false.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getDocumentId($segment, $query)
+	{
+		if (!empty($segment))
+		{
+			$hash = md5('document_' . $segment);
+			if (!isset($this->_ids[$hash]))
+			{
+				$db      = Factory::getDbo();
+				$dbquery = $db->getQuery(true)
+					->select('id')
+					->from('#__swjprojects_documentation')
 					->where($db->quoteName('alias') . ' = ' . $db->quote($segment))
 					->where($db->quoteName('project_id') . ' = ' . $db->quote($query['id']));
 				$db->setQuery($dbquery);

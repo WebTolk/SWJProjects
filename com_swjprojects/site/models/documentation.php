@@ -18,23 +18,23 @@ use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
-class SWJProjectsModelProjects extends ListModel
+class SWJProjectsModelDocumentation extends ListModel
 {
 	/**
 	 * Model context string.
 	 *
 	 * @var  string
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
-	protected $_context = 'swjprojects.projects';
+	protected $_context = 'swjprojects.documentation';
 
 	/**
-	 * An category.
+	 * An project.
 	 *
 	 * @var  array
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $_item = null;
 
@@ -43,7 +43,7 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @var  object
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $_categoryParent = null;
 
@@ -52,7 +52,7 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $translates = null;
 
@@ -61,7 +61,7 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $filesPath = null;
 
@@ -72,7 +72,7 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function __construct($config = array())
 	{
@@ -82,7 +82,7 @@ class SWJProjectsModelProjects extends ListModel
 		$root            = $params->get('files_folder');
 		$this->filesPath = array(
 			'root'     => $root,
-			'versions' => $root . '/versions'
+			'documentation' => $root . '/documentation'
 		);
 
 		// Set translates
@@ -102,14 +102,15 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$app = Factory::getApplication('site');
 
 		// Set request states
-		$this->setState('category.id', $app->input->getInt('id', 1));
+		$this->setState('project.id', $app->input->getInt('id', 0));
+		$this->setState('category.id', $app->input->getInt('catid', 1));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -137,7 +138,7 @@ class SWJProjectsModelProjects extends ListModel
 		}
 
 		// List state information
-		$ordering  = empty($ordering) ? 'p.ordering' : $ordering;
+		$ordering  = empty($ordering) ? 'd.ordering' : $ordering;
 		$direction = empty($direction) ? 'asc' : $direction;
 
 		parent::populateState($ordering, $direction);
@@ -147,7 +148,7 @@ class SWJProjectsModelProjects extends ListModel
 		$this->setState('list.direction', $direction);
 
 		// Set limit & start for query
-		$this->setState('list.limit', $params->get('projects_limit', 10, 'uint'));
+		$this->setState('list.limit', $params->get('documentation_limit', 10, 'uint'));
 		$this->setState('list.start', $app->input->get('start', 0, 'uint'));
 	}
 
@@ -158,10 +159,11 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @return  string  A store id.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function getStoreId($id = '')
 	{
+		$id .= ':' . $this->getState('project.id');
 		$id .= ':' . $this->getState('category.id');
 		$id .= ':' . serialize($this->getState('filter.published'));
 
@@ -169,18 +171,22 @@ class SWJProjectsModelProjects extends ListModel
 	}
 
 	/**
-	 * Build an sql query to load projects list.
+	 * Build an sql query to load documents list.
 	 *
-	 * @return  JDatabaseQuery  Database query to load projects list.
+	 * @return  JDatabaseQuery  Database query to load documents list.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected function getListQuery()
 	{
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
-			->select(array('p.*'))
-			->from($db->quoteName('#__swjprojects_projects', 'p'));
+			->select(array('d.*'))
+			->from($db->quoteName('#__swjprojects_documentation', 'd'));
+
+		// Join over the projects
+		$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element', 'p.download_type'))
+			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = d.project_id');
 
 		// Join over the categories
 		$query->select(array('c.id as category_id', 'c.alias as category_alias'))
@@ -188,7 +194,12 @@ class SWJProjectsModelProjects extends ListModel
 
 		// Join over current translates
 		$current = $this->translates['current'];
-		$query->select(array('t_p.*', 'p.id as id'))
+		$query->select(array('t_d.*', 'd.id as id'))
+			->leftJoin($db->quoteName('#__swjprojects_translate_documentation', 't_d')
+				. ' ON t_d.id = d.id AND ' . $db->quoteName('t_d.language') . ' = ' . $db->quote($current));
+
+		$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext',
+			't_p.language as project_language'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 				. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -200,7 +211,11 @@ class SWJProjectsModelProjects extends ListModel
 		$default = $this->translates['default'];
 		if ($current != $default)
 		{
-			$query->select(array('td_p.title as default_title', 'td_p.payment as default_payment'))
+			$query->select(array('td_d.title as default_title'))
+				->leftJoin($db->quoteName('#__swjprojects_translate_documentation', 'td_d')
+					. ' ON td_d.id = d.id AND ' . $db->quoteName('td_d.language') . ' = ' . $db->quote($default));
+
+			$query->select(array('td_p.title as default_project_title'))
 				->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
 					. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 
@@ -209,32 +224,12 @@ class SWJProjectsModelProjects extends ListModel
 					. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
 		}
 
-		// Join over versions for last version
-		$subQuery = $db->getQuery(true)
-			->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
-			->from($db->quoteName('#__swjprojects_versions', 'lv'))
-			->where('lv.project_id = p.id')
-			->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
-			->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
-			->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
-			->order($db->escape('lv.micro') . ' ' . $db->escape('desc'))
-			->setLimit(1);
-		$query->select('(' . $subQuery->__toString() . ') as last_version');
-
-		// Join over versions for download counter
-		$query->select(array('SUM(dc.downloads) as downloads'))
-			->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
-
-		// Join over documentation for documentation link
-		$query->select(array('d.id as documentation'))
-			->leftJoin($db->quoteName('#__swjprojects_documentation', 'd') .
-				' ON d.project_id = p.id AND d.state = 1');
-
 		// Filter by published state
 		$published = $this->getState('filter.published');
 		if (is_numeric($published))
 		{
-			$query->where('p.state = ' . (int) $published)
+			$query->where('d.state = ' . (int) $published)
+				->where('p.state = ' . (int) $published)
 				->where('c.state = ' . (int) $published);
 		}
 		elseif (is_array($published))
@@ -242,29 +237,23 @@ class SWJProjectsModelProjects extends ListModel
 			$published = ArrayHelper::toInteger($published);
 			$published = implode(',', $published);
 
-			$query->where('p.state IN (' . $published . ')')
+			$query->where('d.state IN (' . $published . ')')
+				->where('p.state IN (' . $published . ')')
 				->where('c.state IN (' . $published . ')');
 		}
 
-		// Filter by category state
-		$category = $this->getState('category.id');
-		if (is_numeric($category) && $category > 1)
+		// Filter by project state
+		$project = $this->getState('project.id');
+		if (is_numeric($project) && $project > 0)
 		{
-			$subQuery = $db->getQuery(true)
-				->select('sub.id')
-				->from($db->quoteName('#__swjprojects_categories', 'sub'))
-				->innerJoin($db->quoteName('#__swjprojects_categories', 'this') .
-					' ON sub.lft > this.lft AND sub.rgt < this.rgt')
-				->where('this.id = ' . (int) $category);
-
-			$query->where('(c.id =' . (int) $category . ' OR c.id IN (' . $subQuery->__toString() . '))');
+			$query->where('d.project_id = ' . (int) $project);
 		}
 
 		// Group by
-		$query->group(array('p.id'));
+		$query->group(array('d.id'));
 
 		// Add the list ordering clause
-		$ordering  = $this->state->get('list.ordering', 'p.ordering');
+		$ordering  = $this->state->get('list.ordering', 'd.ordering');
 		$direction = $this->state->get('list.direction', 'asc');
 		$query->order($db->escape($ordering) . ' ' . $db->escape($direction));
 
@@ -272,11 +261,11 @@ class SWJProjectsModelProjects extends ListModel
 	}
 
 	/**
-	 * Method to get an array of projects data.
+	 * Method to get an array of documentation data.
 	 *
-	 * @return  mixed  Projects objects array on success, false on failure.
+	 * @return  mixed  Versions objects array on success, false on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function getItems()
 	{
@@ -287,58 +276,38 @@ class SWJProjectsModelProjects extends ListModel
 				// Set default translates data
 				if ($this->translates['current'] != $this->translates['default'])
 				{
-					$item->title = (empty($item->title)) ? $item->default_title : $item->title;
+					$item->title = (empty($item->title)) ? $item->default_title
+						: $item->title;
+
+					$item->project_title = (empty($item->project_title)) ? $item->default_project_title
+						: $item->project_title;
 
 					$item->category_title = (empty($item->category_title)) ? $item->default_category_title
 						: $item->category_title;
 				}
 
-				// Set title
-				$item->title = (empty($item->title)) ? $item->element : $item->title;
-
-				// Set introtext
-				$item->introtext = nl2br($item->introtext);
-
-				// Set payment
-				$item->payment = new Registry($item->payment);
-				if ($item->download_type === 'paid' && $this->translates['current'] != $this->translates['default'])
-				{
-					$item->default_payment = new Registry($item->default_payment);
-					if (!$item->payment->get('link'))
-					{
-						$item->payment->set('link', $item->default_payment->get('link'));
-					}
-					if (!$item->payment->get('price'))
-					{
-						$item->payment->set('price', $item->default_payment->get('price'));
-					}
-				}
-
-				// Set joomla
-				$item->joomla = new Registry($item->joomla);
-				if (!$item->joomla->get('type'))
-				{
-					$item->joomla = false;
-				}
-
-				// Set urls
-				$item->urls = new Registry($item->urls);
-
-				// Set images
-				$item->images = new Registry();
-				$item->images->set('icon',
-					SWJProjectsHelperImages::getImage('projects', $item->id, 'icon', $item->language));
-				$item->images->set('cover',
-					SWJProjectsHelperImages::getImage('projects', $item->id, 'cover', $item->language));
-
 				// Set link
-				$item->slug          = $item->id . ':' . $item->alias;
-				$item->cslug         = $item->category_id . ':' . $item->category_alias;
-				$item->link          = Route::_(SWJProjectsHelperRoute::getProjectRoute($item->slug, $item->cslug));
-				$item->versions      = Route::_(SWJProjectsHelperRoute::getVersionsRoute($item->slug, $item->cslug));
-				$item->download      = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $item->element));
-				$item->documentation = (!$item->documentation) ? false :
-					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($item->slug, $item->cslug));
+				$item->slug     = $item->id . ':' . $item->alias;
+				$item->pslug    = $item->project_id . ':' . $item->project_alias;
+				$item->cslug    = $item->category_id . ':' . $item->category_alias;
+				$item->link     = Route::_(SWJProjectsHelperRoute::getDocumentRoute($item->slug, $item->pslug, $item->cslug));
+
+				// Set project
+				$item->project            = new stdClass();
+				$item->project->id        = $item->project_id;
+				$item->project->title     = (!empty($item->project_title)) ? $item->project_title : $item->project_alias;
+				$item->project->alias     = $item->project_alias;
+				$item->project->elemet    = $item->project_element;
+				$item->project->introtext = nl2br($item->project_introtext);
+				$item->project->slug      = $item->pslug;
+				$item->project->link      = Route::_(SWJProjectsHelperRoute::getProjectRoute($item->pslug, $item->cslug));
+				$item->project->versions  = Route::_(SWJProjectsHelperRoute::getVersionsRoute($item->pslug, $item->cslug));
+				$item->project->documentation  = Route::_(SWJProjectsHelperRoute::getDocumentationRoute($item->pslug, $item->cslug));
+				$item->project->images    = new Registry();
+				$item->project->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $item->project_id, 'icon', $item->project_language));
+				$item->project->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $item->project_id, 'cover', $item->project_language));
 
 				// Set category
 				$item->category        = new stdClass();
@@ -347,17 +316,6 @@ class SWJProjectsModelProjects extends ListModel
 				$item->category->alias = $item->category_alias;
 				$item->category->slug  = $item->cslug;
 				$item->category->link  = Route::_(SWJProjectsHelperRoute::getProjectsRoute($item->cslug));
-
-				// Set version
-				$item->version = false;
-				if (!empty($item->last_version))
-				{
-					$item->version = new stdClass();
-					list($item->version->slug, $item->version->version) = explode('|', $item->last_version, 2);
-					list($item->version->id, $item->version->alias) = explode(':', $item->version->slug, 2);
-					$item->version->link = Route::_(SWJProjectsHelperRoute::getVersionRoute($item->version->slug,
-						$item->slug, $item->cslug));
-				}
 			}
 		}
 
@@ -365,19 +323,19 @@ class SWJProjectsModelProjects extends ListModel
 	}
 
 	/**
-	 * Method to get category data.
+	 * Method to get project data.
 	 *
-	 * @param   integer  $pk  The id of the category.
+	 * @param   integer  $pk  The id of the project.
 	 *
 	 * @throws  Exception
 	 *
-	 * @return  object|boolean|Exception  Category object on success, false or exception on failure.
+	 * @return  object|boolean|Exception  Project object on success, false or exception on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function getItem($pk = null)
 	{
-		$pk = (!empty($pk)) ? $pk : (int) $this->getState('category.id');
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
 		if ($this->_item === null)
 		{
@@ -390,13 +348,22 @@ class SWJProjectsModelProjects extends ListModel
 			{
 				$db    = $this->getDbo();
 				$query = $db->getQuery(true)
-					->select(array('c.*'))
-					->from($db->quoteName('#__swjprojects_categories', 'c'))
-					->where('c.id = ' . (int) $pk);
+					->select(array('p.*'))
+					->from($db->quoteName('#__swjprojects_projects', 'p'))
+					->where('p.id = ' . (int) $pk);
+
+				// Join over the categories
+				$query->select(array('c.id as category_id', 'c.alias as category_alias'))
+					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_c.*', 'c.id as id'))
+				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.language', 't_p.payment',
+					't_p.metadata', 'p.id as id'))
+					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
+						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
+
+				$query->select(array('t_c.title as category_title'))
 					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 						. '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current));
 
@@ -404,47 +371,119 @@ class SWJProjectsModelProjects extends ListModel
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_c.title as default_title'))
+					$query->select(array('td_p.title as default_title', 'td_p.payment as default_payment'))
+						->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
+							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
+
+					$query->select(array('td_c.title as default_category_title'))
 						->leftJoin($db->quoteName('#__swjprojects_translate_categories', 'td_c')
 							. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
 				}
+
+				// Join over versions for last version
+				$subQuery = $db->getQuery(true)
+					->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
+					->from($db->quoteName('#__swjprojects_versions', 'lv'))
+					->where('lv.project_id = p.id')
+					->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
+					->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
+					->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
+					->order($db->escape('lv.micro') . ' ' . $db->escape('desc'))
+					->setLimit(1);
+				$query->select('(' . $subQuery->__toString() . ') as last_version');
+
+				// Join over versions for download counter
+				$query->select(array('SUM(dc.downloads) as downloads'))
+					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
 
 				// Filter by published state
 				$published = $this->getState('filter.published');
 				if (is_numeric($published))
 				{
-					$query->where('c.state = ' . (int) $published);
+					$query->where('p.state = ' . (int) $published)
+						->where('c.state = ' . (int) $published);
 				}
 				elseif (is_array($published))
 				{
 					$published = ArrayHelper::toInteger($published);
 					$published = implode(',', $published);
 
-					$query->where('c.state IN (' . $published . ')');
+					$query->where('p.state IN (' . $published . ')')
+						->where('c.state IN (' . $published . ')');
 				}
 
 				$data = $db->setQuery($query)->loadObject();
 
-				if (empty($data))
+				if (!$data->id)
 				{
-					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
+					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
 				if ($this->translates['current'] != $this->translates['default'])
 				{
 					$data->title = (empty($data->title)) ? $data->default_title : $data->title;
+
+					$data->category_title = (empty($data->category_title)) ? $data->default_category_title
+						: $data->category_title;
 				}
 
 				// Set title
-				$data->title = (empty($data->title)) ? $data->alias : $data->title;
+				$data->title = (empty($data->title)) ? $data->element : $data->title;
 
-				// Set description
-				$data->description = nl2br($data->description);
+				// Set introtext
+				$data->introtext = nl2br($data->introtext);
+
+				// Set payment
+				$data->payment = new Registry($data->payment);
+				if ($data->download_type === 'paid' && $this->translates['current'] != $this->translates['default'])
+				{
+					$data->default_payment = new Registry($data->default_payment);
+					if (!$data->payment->get('link'))
+					{
+						$data->payment->set('link', $data->default_payment->get('link'));
+					}
+					if (!$data->payment->get('price'))
+					{
+						$data->payment->set('price', $data->default_payment->get('price'));
+					}
+				}
+
+				// Set urls
+				$data->urls = new Registry($data->urls);
+
+				// Set images
+				$data->images = new Registry();
+				$data->images->set('icon',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'icon', $data->language));
+				$data->images->set('cover',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'cover', $data->language));
 
 				// Set link
-				$data->slug = $data->id . ':' . $data->alias;
-				$data->link = Route::_(SWJProjectsHelperRoute::getProjectsRoute($data->slug));
+				$data->slug     = $data->id . ':' . $data->alias;
+				$data->cslug    = $data->category_id . ':' . $data->category_alias;
+				$data->link     = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
+				$data->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
+				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->id));
+
+				// Set category
+				$data->category        = new stdClass();
+				$data->category->id    = $data->category_id;
+				$data->category->title = (!empty($data->category_title)) ? $data->category_title : $data->category_alias;
+				$data->category->alias = $data->category_alias;
+				$data->category->slug  = $data->cslug;
+				$data->category->link  = Route::_(SWJProjectsHelperRoute::getProjectsRoute($data->cslug));
+
+				// Set version
+				$data->version = false;
+				if (!empty($data->last_version))
+				{
+					$data->version = new stdClass();
+					list($data->version->slug, $data->version->version) = explode('|', $data->last_version, 2);
+					list($data->version->id, $data->version->alias) = explode(':', $data->version->slug, 2);
+					$data->version->link = Route::_(SWJProjectsHelperRoute::getVersionRoute($data->version->slug,
+						$data->slug, $data->cslug));
+				}
 
 				// Set params
 				$params       = new Registry($data->params);
@@ -453,8 +492,8 @@ class SWJProjectsModelProjects extends ListModel
 
 				// Set metadata
 				$data->metadata = new Registry($data->metadata);
-				$data->metadata->set('image',
-					SWJProjectsHelperImages::getImage('categories', $data->id, 'meta', $data->language));
+				$data->metadata->set('versions_image',
+					SWJProjectsHelperImages::getImage('projects', $data->id, 'meta_versions', $data->language));
 
 				$this->_item[$pk] = $data;
 			}
@@ -484,7 +523,7 @@ class SWJProjectsModelProjects extends ListModel
 	 *
 	 * @return  object|boolean|Exception  Category object on success, false or exception on failure.
 	 *
-	 * @since  1.0.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function getCategoryParent($pk = null)
 	{
