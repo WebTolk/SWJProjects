@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -20,7 +20,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $translate = null;
 
@@ -29,7 +29,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function __construct($config = array())
 	{
@@ -57,7 +57,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 * @param   string  $ordering   An optional ordering field.
 	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -87,7 +87,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  string  A store id.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -103,7 +103,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  JDatabaseQuery  Database query to load versions list.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function getListQuery()
 	{
@@ -184,7 +184,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  mixed  Documents objects array on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getItems()
 	{

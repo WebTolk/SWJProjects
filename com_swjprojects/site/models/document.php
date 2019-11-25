@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $_context = 'swjprojects.version';
 
@@ -34,7 +34,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @var  object
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $_categoryParent = null;
 
@@ -43,7 +43,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $translates = null;
 
@@ -52,7 +52,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $filesPath = null;
 
@@ -63,7 +63,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function __construct($config = array())
 	{
@@ -90,7 +90,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function populateState()
 	{
@@ -136,7 +136,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @return  object|boolean|Exception  Version object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -322,7 +322,7 @@ class SWJProjectsModelDocument extends ItemModel
 	 *
 	 * @return  object|boolean|Exception  Category object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getCategoryParent($pk = null)
 	{

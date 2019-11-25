@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $_context = 'swjprojects.documentation';
 
@@ -34,7 +34,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $_item = null;
 
@@ -43,7 +43,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @var  object
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $_categoryParent = null;
 
@@ -52,7 +52,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $translates = null;
 
@@ -61,7 +61,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $filesPath = null;
 
@@ -72,7 +72,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function __construct($config = array())
 	{
@@ -102,7 +102,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -159,7 +159,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  string  A store id.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -175,7 +175,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  JDatabaseQuery  Database query to load documents list.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function getListQuery()
 	{
@@ -265,7 +265,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  mixed  Versions objects array on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getItems()
 	{
@@ -331,7 +331,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  object|boolean|Exception  Project object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -523,7 +523,7 @@ class SWJProjectsModelDocumentation extends ListModel
 	 *
 	 * @return  object|boolean|Exception  Category object on success, false or exception on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getCategoryParent($pk = null)
 	{

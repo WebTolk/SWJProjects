@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -155,7 +155,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	 *
 	 * @return  string  Document view link.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public static function getDocumentRoute($id = null, $project_id = null, $catid = null)
 	{
@@ -187,7 +187,7 @@ class SWJProjectsHelperRoute extends RouteHelper
 	 *
 	 * @return  string  Documentation view link.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public static function getDocumentationRoute($id = null, $catid = null)
 	{

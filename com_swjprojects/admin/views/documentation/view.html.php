@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -37,7 +37,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @var  Joomla\CMS\Object\CMSObject
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $state;
 
@@ -46,7 +46,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $items;
 
@@ -55,7 +55,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @var  Pagination
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $pagination;
 
@@ -64,7 +64,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @var  Form
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public $filterForm;
 
@@ -73,7 +73,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public $activeFilters;
 
@@ -82,7 +82,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public $sidebar;
 
@@ -95,7 +95,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function display($tpl = null)
 	{
@@ -124,7 +124,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	/**
 	 * Add title and toolbar.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function addToolbar()
 	{
@@ -181,7 +181,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	 *
 	 * @return  array  Array containing the field name to sort by as the key and display text as value.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function getSortFields()
 	{

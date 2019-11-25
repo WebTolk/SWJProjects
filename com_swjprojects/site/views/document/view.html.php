@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  Joomla\CMS\Object\CMSObject
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $state;
 
@@ -34,7 +34,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  Registry;
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public $params;
 
@@ -43,7 +43,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  object|false
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $item;
 
@@ -52,7 +52,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  object|false
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $project;
 
@@ -61,7 +61,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  object|false
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $category;
 
@@ -70,7 +70,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  MenuItem
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $menu;
 
@@ -79,7 +79,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public $pageclass_sfx;
 
@@ -92,7 +92,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function display($tpl = null)
 	{
@@ -165,7 +165,7 @@ class SWJProjectsViewDocument extends HtmlView
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function _prepareDocument()
 	{

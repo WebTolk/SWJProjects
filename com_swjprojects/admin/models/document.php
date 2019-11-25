@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -41,7 +41,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @var  object
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $_project = null;
 
@@ -50,7 +50,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected $translate = null;
 
@@ -59,7 +59,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function __construct($config = array())
 	{
@@ -76,7 +76,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  mixed  Project object on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getItem($pk = null)
 	{
@@ -123,7 +123,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  mixed  Project object on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getProject($pk = null)
 	{
@@ -154,7 +154,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  Table  A database object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getTable($type = 'Documentation', $prefix = 'SWJProjectsTable', $config = array())
 	{
@@ -166,7 +166,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @param   Table  $table  The Table object.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function prepareTable($table)
 	{
@@ -197,7 +197,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  Form|boolean  A Form object on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -227,7 +227,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  mixed  The data for the form.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function loadFormData()
 	{
@@ -251,7 +251,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  array  Translates forms array on success, false on failure.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getTranslateForms($loadData = true, $clear = false)
 	{
@@ -342,7 +342,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  array|boolean  Array of filtered data if valid, false otherwise.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function validate($form, $data, $group = null)
 	{
@@ -382,7 +382,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  boolean  True on success.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function save($data)
 	{
@@ -474,7 +474,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  string  Contains the modified alias.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	protected function generateNewAlias($alias, $project_id = null)
 	{
@@ -496,7 +496,7 @@ class SWJProjectsModelDocument extends AdminModel
 	 *
 	 * @return  boolean  True if successful, false if an error occurs.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function delete(&$pks)
 	{

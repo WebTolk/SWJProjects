@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.4.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -244,7 +244,7 @@ class SWJProjectsRouter extends RouterView
 	 *
 	 * @return  array  The segments of this item.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getDocumentationSegment($id, $query)
 	{
@@ -264,7 +264,7 @@ class SWJProjectsRouter extends RouterView
 	 *
 	 * @return  array|boolean  The segments of this item.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getDocumentSegment($id, $query)
 	{
@@ -455,7 +455,7 @@ class SWJProjectsRouter extends RouterView
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getDocumentationId($segment, $query)
 	{
@@ -475,7 +475,7 @@ class SWJProjectsRouter extends RouterView
 	 *
 	 * @return  integer|false  The id of this item or false.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.4.0
 	 */
 	public function getDocumentId($segment, $query)
 	{
