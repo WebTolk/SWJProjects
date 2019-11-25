@@ -53,6 +53,27 @@
 			   label="COM_SWJPROJECTS_PARAMS_VERSION_LAYOUT"
 			   extension="com_swjprojects"
 			   view="version"/>
+		<field name="documentation_layout" type="componentlayout"
+			   label="com_swjprojects_params_documentation_layout"
+			   extension="com_swjprojects"
+			   view="documentation"/>
+		<field name="document_layout" type="componentlayout"
+			   label="COM_SWJPROJECTS_PARAMS_DOCUMENT_LAYOUT"
+			   extension="com_swjprojects"
+			   view="document"/>
+		<field name="documentation_limit" type="list"
+			   label="COM_SWJPROJECTS_PARAMS_DOCUMENTATION_LIMIT"
+			   default="10">
+			<option value="5">J5</option>
+			<option value="10">J10</option>
+			<option value="15">J15</option>
+			<option value="20">J20</option>
+			<option value="25">J25</option>
+			<option value="30">J30</option>
+			<option value="50">J50</option>
+			<option value="100">J100</option>
+			<option value="0">JALL</option>
+		</field>
 		<field name="jupdate_cachetimeout" type="integer"
 			   label="COM_SWJPROJECTS_PARAMS_JUPDATE_CACHETIMEOUT"
 			   description="COM_SWJPROJECTS_PARAMS_JUPDATE_CACHETIMEOUT_DESC"
