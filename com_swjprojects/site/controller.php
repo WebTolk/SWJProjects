@@ -61,6 +61,16 @@ class SWJProjectsController extends BaseController
 				$link = SWJProjectsHelperRoute::getVersionsRoute($id, $catid);
 			}
 
+			if ($view == 'document')
+			{
+				$link = SWJProjectsHelperRoute::getDocumentRoute($id, $project_id, $catid);
+			}
+
+			if ($view == 'documentation')
+			{
+				$link = SWJProjectsHelperRoute::getDocumentationRoute($id, $catid);
+			}
+
 			if ($view == 'project')
 			{
 
