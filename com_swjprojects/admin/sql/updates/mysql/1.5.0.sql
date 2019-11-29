@@ -1,0 +1,1 @@
+ALTER TABLE `#__swjprojects_projects` ADD `additional_categories` TEXT NOT NULL AFTER `catid`;

@@ -78,6 +78,9 @@ class SWJProjectsModelProject extends AdminModel
 			$registry     = new Registry($item->params);
 			$item->params = $registry->toArray();
 
+			// Convert the additional_categories field value to array
+			$item->additional_categories = explode(',', $item->additional_categories);
+
 			// Default values
 			$item->translates = array();
 			$item->downloads  = 0;
@@ -106,7 +109,7 @@ class SWJProjectsModelProject extends AdminModel
 					$translate->payment = $registry->toArray();
 
 					// Convert the metadata field value to array
-					$registry           = new Registry($translate->metadata);
+					$registry            = new Registry($translate->metadata);
 					$translate->metadata = $registry->toArray();
 				}
 
@@ -408,6 +411,14 @@ class SWJProjectsModelProject extends AdminModel
 		}
 		$data['alias'] = $alias;
 
+		// Prepare additional_categories field data
+		$additional_categories = false;
+		if (isset($data['additional_categories']))
+		{
+			$additional_categories         = $data['additional_categories'];
+			$data['additional_categories'] = implode(',', $additional_categories);
+		}
+
 		// Prepare joomla field data
 		if (isset($data['joomla']))
 		{
@@ -465,7 +476,7 @@ class SWJProjectsModelProject extends AdminModel
 
 		if (parent::save($data))
 		{
-			$id = $this->getState($this->getName() . '.id');
+			$id = (int) $this->getState($this->getName() . '.id');
 
 			// Save translates
 			$db    = $this->getDbo();
@@ -499,13 +510,30 @@ class SWJProjectsModelProject extends AdminModel
 				// Prepare metadata field data
 				if (isset($translate['metadata']))
 				{
-					$registry             = new Registry($translate['metadata']);
+					$registry              = new Registry($translate['metadata']);
 					$translate['metadata'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 				}
 
 				$translate = (object) $translate;
 
 				$db->insertObject('#__swjprojects_translate_projects', $translate);
+			}
+
+			// Save additional categories
+			if ($additional_categories)
+			{
+				$query = $db->getQuery(true)
+					->delete($db->quoteName('#__swjprojects_projects_categories'))
+					->where('project_id = ' . $id);
+				$db->setQuery($query)->execute();
+
+				foreach ($additional_categories as $category)
+				{
+					$insert              = new stdClass();
+					$insert->project_id  = $id;
+					$insert->category_id = $category;
+					$db->insertObject('#__swjprojects_projects_categories', $insert);
+				}
 			}
 
 			return $id;
@@ -609,6 +637,12 @@ class SWJProjectsModelProject extends AdminModel
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__swjprojects_translate_projects'))
 				->where('id IN (' . implode(',', $pks) . ')');
+			$db->setQuery($query)->execute();
+
+			// Delete addition categories
+			$query = $db->getQuery(true)
+				->delete($db->quoteName('#__swjprojects_projects_categories'))
+				->where('project_id IN (' . implode(',', $pks) . ')');
 			$db->setQuery($query)->execute();
 		}
 

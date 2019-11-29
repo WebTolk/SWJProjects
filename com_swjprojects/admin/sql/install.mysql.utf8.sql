@@ -28,18 +28,19 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_versions`
 
 CREATE TABLE IF NOT EXISTS `#__swjprojects_projects`
 (
-    `id`            INT(11)                                                NOT NULL AUTO_INCREMENT,
-    `element`       VARCHAR(100)                                           NOT NULL DEFAULT '',
-    `alias`         VARCHAR(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-    `state`         TINYINT(3)                                             NOT NULL DEFAULT 0,
-    `catid`         INT(11)                                                NOT NULL DEFAULT 0,
-    `download_type` VARCHAR(100)                                           NOT NULL DEFAULT 'free',
-    `joomla`        TEXT                                                   NOT NULL,
-    `urls`          TEXT                                                   NOT NULL,
-    `relations`     TEXT                                                   NOT NULL,
-    `params`        TEXT                                                   NOT NULL,
-    `ordering`      INT(11)                                                NOT NULL DEFAULT 0,
-    `hits`          INT(10)                                                NOT NULL DEFAULT 0,
+    `id`                    INT(11)                                                NOT NULL AUTO_INCREMENT,
+    `element`               VARCHAR(100)                                           NOT NULL DEFAULT '',
+    `alias`                 VARCHAR(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+    `state`                 TINYINT(3)                                             NOT NULL DEFAULT 0,
+    `catid`                 INT(11)                                                NOT NULL DEFAULT 0,
+    `additional_categories` TEXT                                                   NOT NULL,
+    `download_type`         VARCHAR(100)                                           NOT NULL DEFAULT 'free',
+    `joomla`                TEXT                                                   NOT NULL,
+    `urls`                  TEXT                                                   NOT NULL,
+    `relations`             TEXT                                                   NOT NULL,
+    `params`                TEXT                                                   NOT NULL,
+    `ordering`              INT(11)                                                NOT NULL DEFAULT 0,
+    `hits`                  INT(10)                                                NOT NULL DEFAULT 0,
     PRIMARY KEY `id` (`id`),
     KEY `idx_element` (`element`(100)),
     KEY `idx_download` (`download_type`(100)),
@@ -174,3 +175,10 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_categories`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__swjprojects_projects_categories`
+(
+    `project_id`  INT(11) NOT NULL DEFAULT 0,
+    `category_id` INT(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`project_id`, `category_id`)
+)
