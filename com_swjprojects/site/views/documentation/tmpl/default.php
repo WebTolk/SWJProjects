@@ -42,12 +42,26 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 								<span class="text-success"><?php echo $this->project->payment->get('price'); ?></span>
 							</li>
 						<?php endif; ?>
-						<li>
-							<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
-							<a href="<?php echo $this->category->link; ?>">
-								<?php echo $this->category->title; ?>
-							</a>
-						</li>
+						<?php if (!empty($this->project->categories)): ?>
+							<li>
+								<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORIES'); ?>: </strong>
+								<?php $i = 0;
+								foreach ($this->project->categories as $category)
+								{
+									if ($i > 0) echo ', ';
+									$i++;
+									echo '<a href="' . $category->link . '">' . $category->title . '</a>';
+								}
+								?>
+							</li>
+						<?php else: ?>
+							<li>
+								<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
+								<a href="<?php echo $this->category->link; ?>">
+									<?php echo $this->category->title; ?>
+								</a>
+							</li>
+						<?php endif; ?>
 						<?php if ($this->project->version): ?>
 							<li>
 								<strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>

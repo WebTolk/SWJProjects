@@ -47,9 +47,8 @@ class SWJProjectsModelProjects extends ListModel
 	 */
 	protected $_categoryParent = null;
 
-
 	/**
-	 * Tenders categories array
+	 * Projects categories array
 	 *
 	 * @var  array
 	 *
@@ -692,5 +691,4 @@ class SWJProjectsModelProjects extends ListModel
 
 		return $categories;
 	}
-
 }
