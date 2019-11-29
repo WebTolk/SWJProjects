@@ -26,6 +26,9 @@
 			   required="true">
 			<option value="">COM_SWJPROJECTS_CATEGORY_SELECT</option>
 		</field>
+		<field name="additional_categories" type="categories"
+			   label="COM_SWJPROJECTS_PROJECT_ADDITIONAL_CATEGORIES"
+			   multiple="true"/>
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"
