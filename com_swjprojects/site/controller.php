@@ -99,13 +99,12 @@ class SWJProjectsController extends BaseController
 					Factory::getDocument()->addCustomTag('<link href="' . $root . $canonical . '" rel="canonical"/>');
 
 					$redirect = Uri::getInstance(Route::_($link));
-					if (!empty($uri->getVar('start')))
+					foreach ($uri->getQuery(true) as $key => $value)
 					{
-						$redirect->setVar('start', $uri->getVar('start'));
-					}
-					if (!empty($uri->getVar('debug')))
-					{
-						$redirect->setVar('debug', $uri->getVar('debug'));
+						if (!empty($value) && (preg_match('#^utm_#', $key) || $key == 'start' || $key == 'debug'))
+						{
+							$redirect->setVar($key, $value);
+						}
 					}
 					$redirect = $redirect->toString(array('path', 'query', 'fragment'));
 
