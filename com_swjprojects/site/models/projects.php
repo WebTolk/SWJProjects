@@ -295,9 +295,6 @@ class SWJProjectsModelProjects extends ListModel
 				if ($this->translates['current'] != $this->translates['default'])
 				{
 					$item->title = (empty($item->title)) ? $item->default_title : $item->title;
-
-					$item->category_title = (empty($item->category_title)) ? $item->default_category_title
-						: $item->category_title;
 				}
 
 				// Set title
