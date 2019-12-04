@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.5.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -52,7 +52,7 @@ class SWJProjectsModelVersions extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.0
 	 */
 	protected $_categories = null;
 
@@ -671,7 +671,7 @@ class SWJProjectsModelVersions extends ListModel
 	 *
 	 * @return  object[] Direction array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.0
 	 */
 	public function getCategories($pks = null)
 	{
