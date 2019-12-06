@@ -223,39 +223,52 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 		{
 			try
 			{
-				$db    = $this->getDbo();
-				$query = $db->getQuery(true)
-					->select('v.id')
-					->from($db->quoteName('#__swjprojects_versions', 'v'))
-					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id')
-					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
-					->where('p.id =' . (int) $pk)
-					->where($db->quoteName('v.tag') . ' = ' . $db->quote('stable'))
-					->order($db->escape('v.major') . ' ' . $db->escape('desc'))
-					->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
-					->order($db->escape('v.micro') . ' ' . $db->escape('desc'));
-
-				// Filter by published state
-				$published = $this->getState('filter.published');
-				if (is_numeric($published))
+				$db   = $this->getDbo();
+				$data = false;
+				foreach (array('stable', 'rc', 'beta', 'alpha', 'dev') as $tag)
 				{
-					$query->where('v.state = ' . (int) $published)
-						->where('p.state = ' . (int) $published)
-						->where('c.state = ' . (int) $published);
+					$query = $db->getQuery(true)
+						->select('v.id')
+						->from($db->quoteName('#__swjprojects_versions', 'v'))
+						->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id')
+						->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
+						->where('p.id =' . (int) $pk)
+						->where($db->quoteName('v.tag') . ' = ' . $db->quote($tag))
+						->order($db->escape('v.major') . ' ' . $db->escape('desc'))
+						->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
+						->order($db->escape('v.micro') . ' ' . $db->escape('desc'));
+
+					// Set stage ordering
+					if (in_array($tag, array('rc', 'beta', 'alpha')))
+					{
+						$query->order($db->escape('v.stage') . ' ' . $db->escape('desc'));
+					}
+
+					// Filter by published state
+					$published = $this->getState('filter.published');
+					if (is_numeric($published))
+					{
+						$query->where('v.state = ' . (int) $published)
+							->where('p.state = ' . (int) $published)
+							->where('c.state = ' . (int) $published);
+					}
+					elseif (is_array($published))
+					{
+						$published = ArrayHelper::toInteger($published);
+						$published = implode(',', $published);
+
+						$query->where('v.state IN (' . $published . ')')
+							->where('p.state IN (' . $published . ')')
+							->where('c.state IN (' . $published . ')');
+					}
+
+					if ($data = $db->setQuery($query)->loadResult())
+					{
+						break;
+					}
 				}
-				elseif (is_array($published))
-				{
-					$published = ArrayHelper::toInteger($published);
-					$published = implode(',', $published);
 
-					$query->where('v.state IN (' . $published . ')')
-						->where('p.state IN (' . $published . ')')
-						->where('c.state IN (' . $published . ')');
-				}
-
-				$data = $db->setQuery($query)->loadResult();
-
-				if (empty($data))
+				if (!$data)
 				{
 					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_VERSION_NOT_FOUND'), 404);
 				}
