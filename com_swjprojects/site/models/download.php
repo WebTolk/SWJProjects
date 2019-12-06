@@ -413,11 +413,25 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 			throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_VERSION_NOT_FOUND'), 404);
 		}
 
-		$db    = Factory::getDbo();
+		$db = Factory::getDbo();
+
+		// Set statistic
 		$query = $db->getQuery(true)
 			->update('#__swjprojects_versions')
 			->set('downloads = downloads + 1')
 			->where('id = ' . (int) $version->id);
 		$db->setQuery($query)->execute();
+
+		// Set limit
+		$download_key = $this->getState('download.key');
+		if (!empty($download_key) && strlen($download_key) !== 128)
+		{
+			$query = $db->getQuery(true)
+				->update('#__swjprojects_keys')
+				->set('limit_count = limit_count - 1')
+				->where($db->quoteName('key') . ' = ' . $db->quote($download_key))
+				->where($db->quoteName('limit') . ' = 1');
+			$db->setQuery($query)->execute();
+		}
 	}
 }

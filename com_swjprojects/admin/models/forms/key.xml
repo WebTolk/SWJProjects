@@ -53,6 +53,16 @@
 			   size="22"
 			   filter="user_utc"
 			   class="input-medium"/>
+		<field name="limit" type="radio"
+			   label="COM_SWJPROJECTS_KEY_LIMIT"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="limit_count" type="number"
+			   label="COM_SWJPROJECTS_KEY_LIMIT_COUNT"
+			   showon="limit:1"/>
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"

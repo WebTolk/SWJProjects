@@ -80,7 +80,8 @@ class SWJProjectsHelperKeys
 					->where($db->quoteName('key') . ' = ' . $db->quote($key))
 					->where('state = 1')
 					->where('(date_start = ' . $nullDate . ' OR date_start <= ' . $nowDate . ')')
-					->where('(date_end = ' . $nullDate . ' OR date_end >= ' . $nowDate . ')');
+					->where('(date_end = ' . $nullDate . ' OR date_end >= ' . $nowDate . ')')
+					->where('(' . $db->quoteName('limit') . ' = 0 OR limit_count > 0)');
 				$result = (int) $db->setQuery($query)->loadResult();
 			}
 
