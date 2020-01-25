@@ -29,6 +29,7 @@
 		<field name="additional_categories" type="categories"
 			   label="COM_SWJPROJECTS_PROJECT_ADDITIONAL_CATEGORIES"
 			   multiple="true"/>
+		<field name="remove_additional_categories" type="hidden" default="0"/>
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"

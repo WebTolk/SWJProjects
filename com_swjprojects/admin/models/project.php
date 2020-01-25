@@ -412,11 +412,17 @@ class SWJProjectsModelProject extends AdminModel
 		$data['alias'] = $alias;
 
 		// Prepare additional_categories field data
-		$additional_categories = false;
+		$remove_additional_categories = false;
+		$additional_categories        = false;
 		if (isset($data['additional_categories']))
 		{
 			$additional_categories         = $data['additional_categories'];
 			$data['additional_categories'] = implode(',', $additional_categories);
+		}
+		if (!empty($data['remove_additional_categories']))
+		{
+			$remove_additional_categories  = true;
+			$data['additional_categories'] = '';
 		}
 
 		// Prepare joomla field data
@@ -520,19 +526,22 @@ class SWJProjectsModelProject extends AdminModel
 			}
 
 			// Save additional categories
-			if ($additional_categories)
+			if ($additional_categories || $remove_additional_categories)
 			{
 				$query = $db->getQuery(true)
 					->delete($db->quoteName('#__swjprojects_projects_categories'))
 					->where('project_id = ' . $id);
 				$db->setQuery($query)->execute();
 
-				foreach ($additional_categories as $category)
+				if ($additional_categories)
 				{
-					$insert              = new stdClass();
-					$insert->project_id  = $id;
-					$insert->category_id = $category;
-					$db->insertObject('#__swjprojects_projects_categories', $insert);
+					foreach ($additional_categories as $category)
+					{
+						$insert              = new stdClass();
+						$insert->project_id  = $id;
+						$insert->category_id = $category;
+						$db->insertObject('#__swjprojects_projects_categories', $insert);
+					}
 				}
 			}
 

@@ -24,10 +24,13 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto', 'relative' => true));
 
 Factory::getDocument()->addScriptDeclaration('
-	Joomla.submitbutton = function(task)
-	{
-		if (task == "project.cancel" || document.formvalidator.isValid(document.getElementById("item-form")))
-		{
+	Joomla.submitbutton = function (task) {
+		if (task == "project.cancel" || document.formvalidator.isValid(document.getElementById("item-form"))) {
+			if (document.querySelector("#jform_additional_categories").value === "") {
+				document.querySelector("#jform_remove_additional_categories").value = 1;
+			} else {
+				document.querySelector("#jform_remove_additional_categories").value = 0;
+			}
 			Joomla.submitform(task, document.getElementById("item-form"));
 		}
 	};
