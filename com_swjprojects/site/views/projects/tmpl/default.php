@@ -68,7 +68,6 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 									</li>
 								<?php else: ?>
 									<li>
-
 										<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
 										<a href="<?php echo $item->category->link; ?>">
 											<?php echo $item->category->title; ?>
