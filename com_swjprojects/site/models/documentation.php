@@ -477,11 +477,12 @@ class SWJProjectsModelDocumentation extends ListModel
 					SWJProjectsHelperImages::getImage('projects', $data->id, 'cover', $data->language));
 
 				// Set link
-				$data->slug     = $data->id . ':' . $data->alias;
-				$data->cslug    = ($data->category) ? $data->category->slug : $data->catid;
-				$data->link     = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
-				$data->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
-				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->id));
+				$data->slug          = $data->id . ':' . $data->alias;
+				$data->cslug         = ($data->category) ? $data->category->slug : $data->catid;
+				$data->link          = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
+				$data->versions      = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
+				$data->download      = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->id));
+				$data->documentation = Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
 
 				// Set version
 				$data->version = false;
