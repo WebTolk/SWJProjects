@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.5.2
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -39,7 +39,7 @@ class SWJProjectsController extends BaseController
 	 *
 	 * @return  BaseController  A BaseController object to support chaining.
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   1.5.2
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
@@ -95,7 +95,7 @@ class SWJProjectsController extends BaseController
 	 *
 	 * @throws  Exception
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.2
 	 */
 	protected function showDonateMessage()
 	{
