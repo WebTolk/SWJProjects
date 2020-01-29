@@ -3,11 +3,11 @@
 	<name>MOD_SWJPROJECTS_PROJECTS</name>
 	<author>Septdir Workshop</author>
 	<creationDate>January 2020</creationDate>
-	<copyright>Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.</copyright>
+	<copyright>Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.5.2</version>
+	<version>1.5.3-dev</version>
 	<description>MOD_SWJPROJECTS_PROJECTS_DESCRIPTION</description>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_projects.ini</language>
