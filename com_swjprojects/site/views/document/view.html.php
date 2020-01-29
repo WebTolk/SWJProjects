@@ -110,7 +110,7 @@ class SWJProjectsViewDocument extends HtmlView
 		}
 
 		// Create a shortcut for item
-		$item = $this->params;
+		$item = $this->item;
 
 		// Check to see which parameters should take priority
 		$temp = clone $this->params;

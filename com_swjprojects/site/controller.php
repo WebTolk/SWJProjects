@@ -116,6 +116,25 @@ class SWJProjectsController extends BaseController
 			}
 		}
 
+		// Cache
+		if ($view !== 'jupdate' && $view !== 'download' && $this->input->get('task') !== 'download')
+		{
+			$cachable  = true;
+			$urlparams = array(
+				'id'            => 'INT',
+				'catid'         => 'INT',
+				'project_id'    => 'INT',
+				'element'       => 'STRING',
+				'limit'         => 'UINT',
+				'limitstart'    => 'UINT',
+				'showall'       => 'INT',
+				'return'        => 'BASE64',
+				'filter'        => 'STRING',
+				'filter-search' => 'STRING',
+				'lang'          => 'CMD',
+				'Itemid'        => 'INT');
+		}
+
 		return parent::display($cachable, $urlparams);
 	}
 

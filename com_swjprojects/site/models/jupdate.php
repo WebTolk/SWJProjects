@@ -122,7 +122,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 		$this->filesPath = array(
 			'root'     => $root,
 			'versions' => $root . '/versions',
-			'cache'    => JPATH_CACHE . '/swjprojects'
+			'cache'    => JPATH_CACHE . '/com_swjprojects'
 		);
 
 		// Set translates
