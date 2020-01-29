@@ -549,7 +549,6 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 
 					$tags = $update->addChild('tags');
 					$tags->addChild('tag', $item->tag);
-					$update->addChild('tag', $item->tag);
 
 					$targetPlatform = $update->addChild('targetPlatform');
 					$targetPlatform->addAttribute('name', 'joomla');
