@@ -47,42 +47,4 @@ class SWJProjectsHelper extends ContentHelper
 			'index.php?option=com_swjprojects&view=categories',
 			$vName == 'categories');
 	}
-
-	/**
-	 * Method to show donate message by downloads counter.
-	 *
-	 * @throws  Exception
-	 *
-	 * @since  1.3.0
-	 */
-	public static function showDonateMessage()
-	{
-		// Get params
-		$params = ComponentHelper::getParams('com_swjprojects');
-		$config = $params->get('donate_counter', 0);
-
-		// Get current downloads
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true)
-			->select('SUM(downloads)')
-			->from('#__swjprojects_versions');
-		$db->setQuery($query);
-		$downloads = $db->loadResult();
-
-		// Set message
-		if (($downloads - $config) >= 10)
-		{
-			Factory::getApplication()->enqueueMessage(
-				LayoutHelper::render('components.swjprojects.message.donate'), '');
-
-			// Update params
-			$params->set('donate_counter', $downloads);
-
-			$component          = new stdClass();
-			$component->element = 'com_swjprojects';
-			$component->params  = $params->toString();
-
-			$db->updateObject('#__extensions', $component, array('element'));
-		}
-	}
 }

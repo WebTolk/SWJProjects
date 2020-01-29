@@ -10,7 +10,10 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -25,6 +28,26 @@ class SWJProjectsController extends BaseController
 	 * @since  1.0.0
 	 */
 	protected $default_view = 'versions';
+
+	/**
+	 * Typical view method for MVC based architecture
+	 *
+	 * @param   boolean  $cachable   If true, the view output will be cached
+	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link \JFilterInput::clean()}.
+	 *
+	 * @throws  Exception
+	 *
+	 * @return  BaseController  A BaseController object to support chaining.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function display($cachable = false, $urlparams = array())
+	{
+		// Show donate message
+		$this->showDonatemessage();
+
+		return parent::display($cachable, $urlparams);
+	}
 
 	/**
 	 * Redirect to site.
@@ -65,5 +88,43 @@ class SWJProjectsController extends BaseController
 		$debug = ($this->input->get('debug', false)) ? '&debug=1' : '';
 		$this->setRedirect(Uri::root() . $redirect . $debug);
 		$this->redirect();
+	}
+
+	/**
+	 * Method to show donate message by downloads counter.
+	 *
+	 * @throws  Exception
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected function showDonateMessage()
+	{
+		// Get params
+		$params = ComponentHelper::getParams('com_swjprojects');
+		$config = $params->get('donate_counter', 0);
+
+		// Get current downloads
+		$db    = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select('SUM(downloads)')
+			->from('#__swjprojects_versions');
+		$db->setQuery($query);
+		$downloads = $db->loadResult();
+
+		// Set message
+		if (($downloads - $config) >= 10)
+		{
+			Factory::getApplication()->enqueueMessage(
+				LayoutHelper::render('components.swjprojects.message.donate'), '');
+
+			// Update params
+			$params->set('donate_counter', $downloads);
+
+			$component          = new stdClass();
+			$component->element = 'com_swjprojects';
+			$component->params  = $params->toString();
+
+			$db->updateObject('#__extensions', $component, array('element'));
+		}
 	}
 }
