@@ -184,3 +184,6 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_projects_categories`
     `category_id` INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`project_id`, `category_id`)
 )
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    DEFAULT COLLATE = utf8mb4_unicode_ci;
