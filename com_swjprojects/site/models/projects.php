@@ -679,9 +679,11 @@ class SWJProjectsModelProjects extends ListModel
 					// Set title
 					$row->title = (empty($row->title)) ? $row->alias : $row->title;
 
-					$row->slug            = $row->id . ':' . $row->alias;
-					$row->link            = Route::_(SWJProjectsHelperRoute::getProjectsRoute($row->slug));
-					$categories[$row->id] = $row;
+					$row->slug = $row->id . ':' . $row->alias;
+					$row->link = Route::_(SWJProjectsHelperRoute::getProjectsRoute($row->slug));
+
+					$this->_categories[$row->id] = $row;
+					$categories[$row->id]        = $row;
 				}
 			}
 		}
