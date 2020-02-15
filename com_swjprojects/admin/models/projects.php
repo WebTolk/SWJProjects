@@ -135,7 +135,8 @@ class SWJProjectsModelProjects extends ListModel
 
 		// Join over versions for download counter
 		$query->select(array('SUM(vd.downloads) as downloads'))
-			->leftJoin($db->quoteName('#__swjprojects_versions', 'vd') . ' ON vd.project_id = p.id');
+			->leftJoin($db->quoteName('#__swjprojects_versions', 'vd') . ' ON vd.project_id = p.id'
+				. ' AND vd.state = 1');
 
 		// Filter by published state
 		$published = $this->getState('filter.published');

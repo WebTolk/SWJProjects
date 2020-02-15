@@ -614,6 +614,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					->select(array('CONCAT(lv.major, ".", lv.minor, ".", lv.micro)'))
 					->from($db->quoteName('#__swjprojects_versions', 'lv'))
 					->where('lv.project_id = p.id')
+					->where('lv.state = 1')
 					->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
 					->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
 					->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))

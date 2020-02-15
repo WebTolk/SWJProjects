@@ -204,7 +204,8 @@ class SWJProjectsModelProject extends ItemModel
 
 				// Join over versions for download counter
 				$query->select(array('SUM(dc.downloads) as downloads'))
-					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
+					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id'
+						. ' AND dc.state = 1');
 
 				// Join over versions for joomla versions
 				$subQuery = $db->getQuery(true)

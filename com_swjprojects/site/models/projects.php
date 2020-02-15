@@ -214,6 +214,7 @@ class SWJProjectsModelProjects extends ListModel
 			->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
 			->from($db->quoteName('#__swjprojects_versions', 'lv'))
 			->where('lv.project_id = p.id')
+			->where('state = 1')
 			->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
 			->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
 			->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
@@ -223,7 +224,8 @@ class SWJProjectsModelProjects extends ListModel
 
 		// Join over versions for download counter
 		$query->select(array('SUM(dc.downloads) as downloads'))
-			->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id');
+			->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id '
+				. ' AND dc.state = 1');
 
 		// Join over documentation for documentation link
 		$query->select(array('d.id as documentation'))
