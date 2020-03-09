@@ -16,15 +16,6 @@ use Joomla\CMS\MVC\Model\ListModel;
 class SWJProjectsModelDocumentation extends ListModel
 {
 	/**
-	 * Site default translate language.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.4.0
-	 */
-	protected $translate = null;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
@@ -33,9 +24,6 @@ class SWJProjectsModelDocumentation extends ListModel
 	 */
 	public function __construct($config = array())
 	{
-		// Set translate
-		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
-
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
@@ -117,7 +105,7 @@ class SWJProjectsModelDocumentation extends ListModel
 			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = d.project_id');
 
 		// Join over translates
-		$translate = $this->translate;
+		$translate = SWJProjectsHelperTranslation::getDefault();
 		$query->select(array('t_d.title as title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_documentation', 't_d')
 				. ' ON t_d.id = d.id AND ' . $db->quoteName('t_d.language') . ' = ' . $db->quote($translate));

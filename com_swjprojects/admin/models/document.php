@@ -10,24 +10,10 @@
 
 defined('_JEXEC') or die;
 
-
-/**
- * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
- * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
- */
-
-defined('_JEXEC') or die;
-
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
@@ -44,30 +30,6 @@ class SWJProjectsModelDocument extends AdminModel
 	 * @since  1.4.0
 	 */
 	protected $_project = null;
-
-	/**
-	 * Site default translate language.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.4.0
-	 */
-	protected $translate = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @since  1.4.0
-	 */
-	public function __construct($config = array())
-	{
-		// Set translate
-		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
-
-		parent::__construct($config);
-	}
 
 	/**
 	 * Method to get project data.
@@ -255,7 +217,6 @@ class SWJProjectsModelDocument extends AdminModel
 	 */
 	public function getTranslateForms($loadData = true, $clear = false)
 	{
-		$languages  = LanguageHelper::getLanguages('lang_code');
 		$translates = new Registry();
 
 		// Get data
@@ -273,9 +234,9 @@ class SWJProjectsModelDocument extends AdminModel
 			throw new RuntimeException('Could not load translate form file', 500);
 		}
 
-		foreach ($languages as $code => $language)
+		foreach (SWJProjectsHelperTranslation::getCodes() as $code)
 		{
-			$default = ($code == $this->translate);
+			$default = ($code == SWJProjectsHelperTranslation::getDefault());
 			$source  = $name . '_' . str_replace('-', '_', $code);
 			$options = array('control' => 'jform[translates][' . $code . ']');
 
@@ -398,7 +359,7 @@ class SWJProjectsModelDocument extends AdminModel
 		}
 
 		// Prepare alias field data
-		$alias = (!empty($data['alias'])) ? $data['alias'] : $data['translates'][$this->translate]['title'];
+		$alias = (!empty($data['alias'])) ? $data['alias'] : $data['translates'][SWJProjectsHelperTranslation::getDefault()]['title'];
 		if (Factory::getConfig()->get('unicodeslugs') == 1)
 		{
 			$alias = OutputFilter::stringURLUnicodeSlug($alias);

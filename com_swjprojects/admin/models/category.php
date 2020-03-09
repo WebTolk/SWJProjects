@@ -305,7 +305,7 @@ class SWJProjectsModelCategory extends AdminModel
 		}
 
 		// Prepare alias field data
-		$alias = (!empty($data['alias'])) ? $data['alias'] : $data['translates'][$this->translate]['title'];
+		$alias = (!empty($data['alias'])) ? $data['alias'] : $data['translates'][SWJProjectsHelperTranslation::getDefault()]['title'];
 		if (Factory::getConfig()->get('unicodeslugs') == 1)
 		{
 			$alias = OutputFilter::stringURLUnicodeSlug($alias);
