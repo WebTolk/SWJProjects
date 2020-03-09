@@ -10,7 +10,6 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -26,7 +25,7 @@ extract($displayData);
  */
 
 $group        = (isset($group)) ? $group : '';
-$languages    = LanguageHelper::getLanguages('lang_code');
+$languages    = SWJProjectsHelperTranslation::getTranslations();
 ?>
 <?php foreach ($forms as $code => $form):
 	$field = (!empty($form->getField($name, $group))) ? $form->getField($name, $group) : false;
