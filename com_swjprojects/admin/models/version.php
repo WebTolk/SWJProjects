@@ -16,7 +16,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
@@ -32,30 +31,6 @@ class SWJProjectsModelVersion extends AdminModel
 	 * @since  1.0.0
 	 */
 	protected $_project = null;
-
-	/**
-	 * Site default translate language.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $translate = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @since  1.0.0
-	 */
-	public function __construct($config = array())
-	{
-		// Set translate
-		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
-
-		parent::__construct($config);
-	}
 
 	/**
 	 * Method to get version data.
@@ -223,7 +198,6 @@ class SWJProjectsModelVersion extends AdminModel
 	 */
 	public function getTranslateForms($loadData = true, $clear = false)
 	{
-		$languages  = LanguageHelper::getLanguages('lang_code');
 		$translates = new Registry();
 
 		// Get data
@@ -241,9 +215,9 @@ class SWJProjectsModelVersion extends AdminModel
 			throw new RuntimeException('Could not load translate form file', 500);
 		}
 
-		foreach ($languages as $code => $language)
+		foreach (SWJProjectsHelperTranslation::getCodes() as $code)
 		{
-			$default = ($code == $this->translate);
+			$default = ($code == SWJProjectsHelperTranslation::getDefault());
 			$source  = $name . '_' . str_replace('-', '_', $code);
 			$options = array('control' => 'jform[translates][' . $code . ']');
 
