@@ -17,6 +17,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 
 class SWJProjectsController extends BaseController
 {
@@ -100,11 +101,15 @@ class SWJProjectsController extends BaseController
 	protected function showDonateMessage()
 	{
 		// Get params
-		$params = ComponentHelper::getParams('com_swjprojects');
+		$db     = Factory::getDbo();
+		$query  = $db->getQuery(true)
+			->select('params')
+			->from($db->quoteName('#__extensions'))
+			->where($db->quoteName('element') . ' = ' . $db->quote('com_swjprojects'));
+		$params = new Registry($db->setQuery($query)->loadResult());
 		$config = $params->get('donate_counter', 0);
 
 		// Get current downloads
-		$db    = Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select('SUM(downloads)')
 			->from('#__swjprojects_versions');
