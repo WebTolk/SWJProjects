@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.5.3
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -22,7 +22,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	protected static $_translations = null;
 
@@ -31,7 +31,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	protected static $_codes = null;
 
@@ -40,7 +40,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	protected static $_default = null;
 
@@ -49,7 +49,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @var  string
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	protected static $_current = null;
 
@@ -58,7 +58,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @return  object[]  Translations data array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	public static function getTranslations()
 	{
@@ -111,7 +111,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @return  array  Translations codes.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	public static function getCodes()
 	{
@@ -128,7 +128,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @return  string Default translation code.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	public static function getDefault()
 	{
@@ -145,7 +145,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @return  string Default translation code.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	public static function getCurrent()
 	{
@@ -162,7 +162,7 @@ class SWJProjectsHelperTranslation
 	 *
 	 * @return  bool Default translation code.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.5.3
 	 */
 	public static function isDefault()
 	{
