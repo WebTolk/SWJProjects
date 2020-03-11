@@ -8,7 +8,7 @@
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.5.4-dev</version>
+	<version>1.5.4</version>
 	<description>PKG_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
