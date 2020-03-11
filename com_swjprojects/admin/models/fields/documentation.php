@@ -10,7 +10,6 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
 
@@ -53,7 +52,9 @@ class JFormFieldDocumentation extends JFormFieldList
 				->from($db->quoteName('#__swjprojects_documentation', 'd'));
 
 			// Join over translates
-			$translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
+			JLoader::register('SWJProjectsHelperTranslation',
+				JPATH_ADMINISTRATOR . '/components/com_swjprojects/helpers/translation.php');
+			$translate = SWJProjectsHelperTranslation::getDefault();
 			$query->select(array('t_d.title as title'))
 				->leftJoin($db->quoteName('#__swjprojects_translate_documentation', 't_d')
 					. ' ON t_d.id = d.id AND ' . $db->quoteName('t_d.language') . ' = ' . $db->quote($translate));

@@ -10,21 +10,11 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 
 class SWJProjectsModelVersions extends ListModel
 {
-	/**
-	 * Site default translate language.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $translate = null;
-
 	/**
 	 * Constructor.
 	 *
@@ -34,9 +24,6 @@ class SWJProjectsModelVersions extends ListModel
 	 */
 	public function __construct($config = array())
 	{
-		// Set translate
-		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
-
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
@@ -126,7 +113,7 @@ class SWJProjectsModelVersions extends ListModel
 			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 		// Join over translates
-		$translate = $this->translate;
+		$translate = SWJProjectsHelperTranslation::getDefault();
 		$query->select(array('t_p.title as project_title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 				. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));

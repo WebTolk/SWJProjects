@@ -10,12 +10,10 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
@@ -25,30 +23,6 @@ use Joomla\Utilities\ArrayHelper;
 
 class SWJProjectsModelProject extends AdminModel
 {
-	/**
-	 * Site default translate language.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $translate = null;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @since  1.0.0
-	 */
-	public function __construct($config = array())
-	{
-		// Set translate
-		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
-
-		parent::__construct($config);
-	}
-
 	/**
 	 * Method to get project data.
 	 *
@@ -236,7 +210,6 @@ class SWJProjectsModelProject extends AdminModel
 	 */
 	public function getTranslateForms($loadData = true, $clear = false)
 	{
-		$languages  = LanguageHelper::getLanguages('lang_code');
 		$translates = new Registry();
 
 		// Get data
@@ -254,9 +227,9 @@ class SWJProjectsModelProject extends AdminModel
 			throw new RuntimeException('Could not load translate form file', 500);
 		}
 
-		foreach ($languages as $code => $language)
+		foreach (SWJProjectsHelperTranslation::getCodes() as $code)
 		{
-			$default = ($code == $this->translate);
+			$default = ($code == SWJProjectsHelperTranslation::getDefault());
 			$source  = $name . '_' . str_replace('-', '_', $code);
 			$options = array('control' => 'jform[translates][' . $code . ']');
 
@@ -390,7 +363,7 @@ class SWJProjectsModelProject extends AdminModel
 		$data['element'] = $element;
 
 		// Prepare alias field data
-		$alias = (!empty($data['alias'])) ? $data['alias'] : $data['translates'][$this->translate]['title'];
+		$alias = (!empty($data['alias'])) ? $data['alias'] : $data['translates'][SWJProjectsHelperTranslation::getDefault()]['title'];
 		if (Factory::getConfig()->get('unicodeslugs') == 1)
 		{
 			$alias = OutputFilter::stringURLUnicodeSlug($alias);

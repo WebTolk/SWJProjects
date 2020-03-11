@@ -10,20 +10,10 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Model\ListModel;
 
 class SWJProjectsModelCategories extends ListModel
 {
-	/**
-	 * Site default translate language.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $translate = null;
-
 	/**
 	 * Constructor.
 	 *
@@ -33,9 +23,6 @@ class SWJProjectsModelCategories extends ListModel
 	 */
 	public function __construct($config = array())
 	{
-		// Set translate
-		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
-
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
@@ -108,7 +95,7 @@ class SWJProjectsModelCategories extends ListModel
 			->where($db->quoteName('c.alias') . '!=' . $db->quote('root'));
 
 		// Join over translates
-		$translate = $this->translate;
+		$translate = SWJProjectsHelperTranslation::getDefault();
 		$query->select(array('t_c.title as title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 				. ' ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($translate));

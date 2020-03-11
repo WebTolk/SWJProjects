@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 JLoader::register('SWJProjectsHelperRoute', JPATH_SITE . '/components/com_swjprojects/helpers/route.php');
 JLoader::register('SWJProjectsHelperImages', JPATH_SITE . '/components/com_swjprojects/helpers/images.php');
+JLoader::register('SWJProjectsHelperTranslation', JPATH_ADMINISTRATOR . '/components/com_swjprojects/helpers/translation.php');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;

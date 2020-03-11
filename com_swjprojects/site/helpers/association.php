@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\LanguageHelper;
 
 abstract class SWJProjectsHelperAssociation
 {
@@ -52,7 +51,7 @@ abstract class SWJProjectsHelperAssociation
 		if (!isset(self::$_associations[$hash]))
 		{
 			$associations = array();
-			foreach (array_keys(LanguageHelper::getLanguages('lang_code')) as $code)
+			foreach (SWJProjectsHelperTranslation::getCodes() as $code)
 			{
 				$link = false;
 				if ($view == 'version')
@@ -63,6 +62,16 @@ abstract class SWJProjectsHelperAssociation
 				if ($view == 'versions')
 				{
 					$link = SWJProjectsHelperRoute::getVersionsRoute($id, $catid);
+				}
+
+				if ($view == 'document')
+				{
+					$link = SWJProjectsHelperRoute::getDocumentRoute($id, $project_id, $catid);
+				}
+
+				if ($view == 'documentation')
+				{
+					$link = SWJProjectsHelperRoute::getDocumentationRoute($id, $catid);
 				}
 
 				if ($view == 'projects')

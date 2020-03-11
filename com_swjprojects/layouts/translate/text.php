@@ -11,11 +11,10 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 
 ?>
-<?php foreach (LanguageHelper::getLanguages('lang_code') as $code => $language): ?>
+<?php foreach (SWJProjectsHelperTranslation::getTranslations() as $code => $language): ?>
 	<span data-translate-text data-translate="<?php echo $code; ?>" style="display: none">
 		<?php echo Text::_($displayData); ?>
 		<sup>

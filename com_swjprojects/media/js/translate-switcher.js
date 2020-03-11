@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		buttons = document.querySelectorAll('[data-translate-switcher] [data-translate]');
 
 	// Set translate after DOM loaded
-	if (sessionStorage.getItem(storage)) {
+	if (sessionStorage.getItem(storage) && buttons.length > 1) {
 		translate = sessionStorage.getItem(storage);
 	}
 	switchTranslate(translate);

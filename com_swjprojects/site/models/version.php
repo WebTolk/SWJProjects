@@ -87,8 +87,8 @@ class SWJProjectsModelVersion extends ItemModel
 
 		// Set translates
 		$this->translates = array(
-			'current' => Factory::getLanguage()->getTag(),
-			'default' => ComponentHelper::getParams('com_languages')->get('site', 'en-GB'),
+			'current' => SWJProjectsHelperTranslation::getCurrent(),
+			'default' => SWJProjectsHelperTranslation::getDefault(),
 		);
 
 		parent::__construct($config);
