@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 
@@ -41,10 +40,9 @@ class SWJProjectsControllerVersion extends FormController
 		// Check for request forgeries
 		$this->checkToken();
 
-		$app       = Factory::getApplication();
-		$model     = $this->getModel();
-		$data      = $this->input->post->get('jform', array(), 'array');
-		$languages = LanguageHelper::getLanguages('lang_code');
+		$app   = Factory::getApplication();
+		$model = $this->getModel();
+		$data  = $this->input->post->get('jform', array(), 'array');
 
 		// Determine the name of the primary key for the data
 		if (empty($key))
@@ -97,11 +95,15 @@ class SWJProjectsControllerVersion extends FormController
 
 		// Filter translates data
 		$value['translates'] = array();
-		foreach ($languages as $code => $language)
+
+		foreach (SWJProjectsHelperTranslation::getCodes() as $code)
 		{
-			$translateForm              = $translateForms[$code];
-			$translate                  = $data['translates'][$code];
-			$value['translates'][$code] = $translateForm->filter($translate);
+			$translateForm = (!empty($translateForms[$code])) ? $translateForms[$code] : false;
+			if ($translateForm)
+			{
+				$translate                  = $data['translates'][$code];
+				$value['translates'][$code] = $translateForm->filter($translate);
+			}
 		}
 
 		// Save the value in the session
