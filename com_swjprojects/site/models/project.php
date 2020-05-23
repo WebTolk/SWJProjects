@@ -322,6 +322,9 @@ class SWJProjectsModelProject extends ItemModel
 				$data->download      = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $data->element));
 				$data->documentation = (!$data->documentation) ? false :
 					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
+				if (!empty($data->urls->get('documentation'))) {
+					$data->documentation = false;
+				}
 
 
 				// Set version

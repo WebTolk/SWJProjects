@@ -122,6 +122,7 @@
 			<field name="github" type="text" label="COM_SWJPROJECTS_URLS_GITHUB" class="input-xxlarge"/>
 			<field name="jed" type="text" label="COM_SWJPROJECTS_URLS_JED" class="input-xxlarge"/>
 			<field name="donate" type="text" label="COM_SWJPROJECTS_URLS_DONATE" class="input-xxlarge"/>
+			<field name="documentation" type="text" label="COM_SWJPROJECTS_URLS_DOCUMENTATION" class="input-xxlarge"/>
 		</fields>
 	</fieldset>
 	<fieldset name="relations" label="COM_SWJPROJECTS_RELATIONS">
