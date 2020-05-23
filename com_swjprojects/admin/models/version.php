@@ -70,7 +70,7 @@ class SWJProjectsModelVersion extends AdminModel
 						$translate->changelog = $registry->toArray();
 
 						// Convert the metadata field value to array
-						$registry             = new Registry($translate->metadata);
+						$registry            = new Registry($translate->metadata);
 						$translate->metadata = $registry->toArray();
 					}
 				}
@@ -287,17 +287,6 @@ class SWJProjectsModelVersion extends AdminModel
 	 */
 	public function validate($form, $data, $group = null)
 	{
-		// Unset joomla version
-		$project = $this->getProject($data['project_id']);
-		if ($project && !empty($project->joomla['type']))
-		{
-			$form->setFieldAttribute('joomla_version', 'required', 'true', '');
-		}
-		else
-		{
-			$data['joomla_version'] = '';
-		}
-
 		// Main validate
 		$translates = (!empty($data['translates'])) ? $data['translates'] : array();
 		if (!$data = parent::validate($form, $data, $group))
@@ -433,7 +422,7 @@ class SWJProjectsModelVersion extends AdminModel
 				// Prepare metadata field data
 				if (isset($translate['metadata']))
 				{
-					$registry               = new Registry($translate['metadata']);
+					$registry              = new Registry($translate['metadata']);
 					$translate['metadata'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
 				}
 
