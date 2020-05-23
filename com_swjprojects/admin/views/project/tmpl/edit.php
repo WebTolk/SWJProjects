@@ -26,10 +26,16 @@ HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto
 Factory::getDocument()->addScriptDeclaration('
 	Joomla.submitbutton = function (task) {
 		if (task == "project.cancel" || document.formvalidator.isValid(document.getElementById("item-form"))) {
-			if (document.querySelector("#jform_additional_categories").value === "") {
-				document.querySelector("#jform_remove_additional_categories").value = 1;
-			} else {
-				document.querySelector("#jform_remove_additional_categories").value = 0;
+		let form = document.querySelector("#item-form"),
+				mSelects = form.querySelectorAll("select[multiple]");
+			for (let i = 0; i < mSelects.length; i++) {
+				let item = mSelects[i];
+				if (item.value === "") {
+					let newInput = document.createElement("input");
+					newInput.setAttribute("name", item.getAttribute("name").replace("[]", ""));
+					newInput.setAttribute("type", "hidden");
+					form.append(newInput);
+				}
 			}
 			Joomla.submitform(task, document.getElementById("item-form"));
 		}

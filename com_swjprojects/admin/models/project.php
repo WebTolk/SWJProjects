@@ -385,17 +385,11 @@ class SWJProjectsModelProject extends AdminModel
 		$data['alias'] = $alias;
 
 		// Prepare additional_categories field data
-		$remove_additional_categories = false;
-		$additional_categories        = false;
+		$additional_categories = false;
 		if (isset($data['additional_categories']))
 		{
-			$additional_categories         = $data['additional_categories'];
+			$additional_categories         = (!empty($data['additional_categories'])) ? $data['additional_categories'] : array();
 			$data['additional_categories'] = implode(',', $additional_categories);
-		}
-		if (!empty($data['remove_additional_categories']))
-		{
-			$remove_additional_categories  = true;
-			$data['additional_categories'] = '';
 		}
 
 		// Prepare joomla field data
@@ -499,7 +493,7 @@ class SWJProjectsModelProject extends AdminModel
 			}
 
 			// Save additional categories
-			if ($additional_categories || $remove_additional_categories)
+			if ($additional_categories !== false)
 			{
 				$query = $db->getQuery(true)
 					->delete($db->quoteName('#__swjprojects_projects_categories'))
