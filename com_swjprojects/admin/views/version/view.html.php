@@ -92,11 +92,7 @@ class SWJProjectsViewVersion extends HtmlView
 		}
 
 		// Prepare form
-		if ($this->project && !empty($this->project->joomla['type']))
-		{
-			$this->form->setFieldAttribute('joomla_version', 'required', 'true', '');
-		}
-		else
+		if (!$this->project || empty($this->project->joomla['type']))
 		{
 			$this->form->removeField('joomla_version', '');
 		}
