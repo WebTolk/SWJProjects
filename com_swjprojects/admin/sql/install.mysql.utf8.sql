@@ -84,7 +84,6 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
 CREATE TABLE IF NOT EXISTS `#__swjprojects_documentation`
 (
     `id`         INT(11)                                                NOT NULL AUTO_INCREMENT,
-    `element`    VARCHAR(100)                                           NOT NULL DEFAULT '',
     `alias`      VARCHAR(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
     `state`      TINYINT(3)                                             NOT NULL DEFAULT 0,
     `project_id` INT(11)                                                NOT NULL DEFAULT 0,

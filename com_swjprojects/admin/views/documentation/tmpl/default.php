@@ -30,7 +30,7 @@ $saveOrder = ($listOrder == 'd.ordering' && strtolower($listDirn) == 'asc');
 
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=com_swjprojects&task=projects.saveOrderAjax&tmpl=component';
+	$saveOrderingUrl = 'index.php?option=com_swjprojects&task=documentation.saveOrderAjax&tmpl=component';
 	HTMLHelper::_('sortablelist.sortable', 'documentationList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 

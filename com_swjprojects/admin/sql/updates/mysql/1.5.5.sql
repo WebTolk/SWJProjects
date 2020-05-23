@@ -1,0 +1,1 @@
+alter table `#__swjprojects_documentation` drop column `element`;
