@@ -15,7 +15,8 @@
 			   class="span12"/>
 		<field name="fulltext" type="editor"
 			   label="COM_SWJPROJECTS_DOCUMENT_FULLTEXT"
-			   filter="JComponentHelper::filterText"/>
+			   filter="JComponentHelper::filterText"
+			   buttons="true"/>
 	</fieldset>
 	<fields name="metadata">
 		<fieldset name="metadata">

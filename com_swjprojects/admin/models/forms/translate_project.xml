@@ -15,7 +15,8 @@
 			   class="span12"/>
 		<field name="fulltext" type="editor"
 			   label="COM_SWJPROJECTS_PROJECT_FULLTEXT"
-			   filter="JComponentHelper::filterText"/>
+			   filter="JComponentHelper::filterText"
+			   buttons="true"/>
 	</fieldset>
 	<fieldset name="images" label="COM_SWJPROJECTS_IMAGES">
 		<field name="icon" type="image"
