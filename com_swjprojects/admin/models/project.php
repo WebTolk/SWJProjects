@@ -592,6 +592,8 @@ class SWJProjectsModelProject extends AdminModel
 			Factory::getApplication()->enqueueMessage(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_EMPTY'), 'warning');
 		}
 
+		if (empty($pks)) return false;
+
 		// Check documentation
 		$query = $db->getQuery(true)
 			->select('project_id')
@@ -606,6 +608,8 @@ class SWJProjectsModelProject extends AdminModel
 			$pks = array_diff($pks, $documentation);
 			Factory::getApplication()->enqueueMessage(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_EMPTY'), 'warning');
 		}
+
+		if (empty($pks)) return false;
 
 		if ($result = parent::delete($pks))
 		{
