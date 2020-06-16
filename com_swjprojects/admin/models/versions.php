@@ -154,7 +154,7 @@ class SWJProjectsModelVersions extends ListModel
 			else
 			{
 				$sql     = array();
-				$columns = array('version', 'v.joomla_version', 'v.tag', 'p.element', 't_p.title', 'ta_v.changelog');
+				$columns = array('v.tag', 'p.element', 't_p.title', 'ta_v.changelog');
 
 				foreach ($columns as $column)
 				{
