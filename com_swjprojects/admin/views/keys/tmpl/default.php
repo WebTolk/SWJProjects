@@ -89,7 +89,7 @@ $columns = 9;
 						</td>
 						<td class="center nowrap">
 							<div class="btn-group">
-								<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'versions.', $canChange); ?>
+								<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'keys.', $canChange); ?>
 							</div>
 						</td>
 						<td class="nowrap">
