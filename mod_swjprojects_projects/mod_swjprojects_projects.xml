@@ -36,7 +36,6 @@
 						default="list.ordering"
 						validate="options"
 				>
-					<option value="id">JGRID_HEADING_ID</option>
 					<option value="download_type">MOD_SWJPROJECTS_DOWNLOAD_TYPE</option>
 					<option value="ordering">MOD_SWJPROJECTS_FIELD_ORDERING_ORDERING</option>
 					<option value="hits">MOD_SWJPROJECTS_STATISTICS_HITS</option>
