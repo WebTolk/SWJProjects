@@ -32,6 +32,19 @@ $model->setState('filter.published', 1);
 $model->setState('list.limit', $params->get('limit', 5));
 $model->setState('list.start', 0);
 
+$ordering = $params->get('ordering');
+
+if ($ordering === 'rand()')
+{
+	$model->setState('list.ordering', Factory::getDbo()->getQuery(true)->Rand());
+}
+else
+{
+	$direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
+	$model->setState('list.direction', $direction);
+	$model->setState('list.ordering', $ordering);
+}
+
 // Get items
 $items = $model->getItems();
 
