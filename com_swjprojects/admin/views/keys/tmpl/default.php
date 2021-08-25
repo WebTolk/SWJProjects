@@ -15,6 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\Utilities\ArrayHelper;
 
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('formbehavior.chosen', 'select');
@@ -55,8 +56,7 @@ $columns = 9;
 							$listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_PROJECT', 'project_title',
-							$listDirn, $listOrder); ?>
+						<?php echo Text::_('COM_SWJPROJECTS_PROJECTS'); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_DATE_START', 'k.date_start',
@@ -108,8 +108,8 @@ $columns = 9;
 						<td class="nowrap">
 							<?php echo $item->order; ?>
 						</td>
-						<td class="hidden-phone">
-							<?php echo $this->escape($item->project_title); ?>
+						<td class="hidden-phone nowrap">
+							<?php echo implode(', ', ArrayHelper::getColumn($item->projects, 'title')); ?>
 						</td>
 						<td class="hidden-phone">
 							<?php echo HTMLHelper::_('date', $item->date_start, Text::_('DATE_FORMAT_LC6')); ?>

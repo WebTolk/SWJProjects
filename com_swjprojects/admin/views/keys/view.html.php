@@ -179,7 +179,6 @@ class SWJProjectsViewKeys extends HtmlView
 			'k.email'      => Text::_('JGLOBAL_EMAIL'),
 			'k.date_start' => Text::_('COM_SWJPROJECTS_DATE_START'),
 			'k.date_end'   => Text::_('COM_SWJPROJECTS_DATE_END'),
-			'p.element'    => Text::_('COM_SWJPROJECTS_ELEMENT'),
 		];
 	}
 }

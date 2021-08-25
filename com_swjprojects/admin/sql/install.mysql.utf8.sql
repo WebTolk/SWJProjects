@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
     `note`        VARCHAR(255)        NOT NULL DEFAULT '',
     `email`       VARCHAR(100)        NOT NULL DEFAULT '',
     `order`       VARCHAR(100)        NOT NULL DEFAULT '',
-    `project_id`  INT(11)             NOT NULL DEFAULT 0,
+    `user`        int(10) unsigned    NOT NULL DEFAULT 0,
+    `projects`    VARCHAR(100)        NOT NULL DEFAULT '',
     `date_start`  DATETIME            NOT NULL DEFAULT '0000-00-00 00:00:00',
     `date_end`    DATETIME            NOT NULL DEFAULT '0000-00-00 00:00:00',
     `limit`       TINYINT(3)          NOT NULL DEFAULT 0,
@@ -73,7 +74,8 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
     KEY `idx_key` (`key`(100)),
     KEY `idx_email` (`email`(100)),
     KEY `idx_order` (`order`(100)),
-    KEY `idx_project_id` (`project_id`),
+    KEY `idx_user` (`user`),
+    KEY `idx_projects` (`projects`),
     KEY `idx_state` (`state`)
 )
     ENGINE = InnoDB

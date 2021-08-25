@@ -65,18 +65,14 @@ class SWJProjectsHelperKeys
 				$nowDate  = $db->quote(JFactory::getDate()->toSql());
 
 				// Define  projects
-				$projects = array($db->quote(-1));
-				if (!empty($project_id))
-				{
-					$projects[] = $project_id;
-				}
-				$projects = implode(',', $projects);
+				$projects = array('FIND_IN_SET(-1, projects)');
+				if (!empty($project_id)) $projects[] = 'FIND_IN_SET(' . $project_id . ', projects)';
 
 				// Build query
 				$query  = $db->getQuery(true)
 					->select(array('id'))
 					->from($db->quoteName('#__swjprojects_keys'))
-					->where($db->quoteName('project_id') . ' IN (' . $projects . ')')
+					->where('(' . implode(' OR ', $projects) . ')')
 					->where($db->quoteName('key') . ' = ' . $db->quote($key))
 					->where('state = 1')
 					->where('(date_start = ' . $nullDate . ' OR date_start <= ' . $nowDate . ')')

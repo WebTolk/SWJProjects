@@ -31,6 +31,9 @@ class SWJProjectsModelKey extends AdminModel
 	{
 		if ($item = parent::getItem($pk))
 		{
+			// Convert the projects field value to array
+			$item->projects = explode(',', $item->projects);
+
 			// Convert the params field value to array
 			$registry      = new Registry($item->plugins);
 			$item->plugins = $registry->toArray();
@@ -133,12 +136,16 @@ class SWJProjectsModelKey extends AdminModel
 			$isNew = false;
 		}
 
+		// Prepare projects field data
+		if (isset($data['projects'])) $data['projects'] = implode(',', $data['projects']);
+
 		// Prepare key field data
 		if ($isNew || $data['key_regenerate'] || empty($data['key']))
 		{
 			$data['key'] = $this->generateNewKey();
 		}
-		else {
+		else
+		{
 			unset($data['key']);
 		}
 

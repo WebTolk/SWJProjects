@@ -22,11 +22,10 @@
 			   size="10"
 			   default="0"
 			   readonly="true"/>
-		<field name="project_id" type="projects"
-			   label="COM_SWJPROJECTS_PROJECT"
+		<field name="projects" type="projects"
+			   label="COM_SWJPROJECTS_PROJECTS"
 			   required="true"
-			   onchange="projectHasChanged(this)">
-			<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
+			   multiple="true">
 			<option value="-1">JALL</option>
 		</field>
 		<field name="order" type="text"
@@ -39,6 +38,8 @@
 			   size="30"
 			   validate="email"
 			   validDomains="com_users.domains"/>
+		<field name="user" type="user"
+			   label="COM_SWJPROJECTS_USER"/>
 		<field name="date_start" type="calendar"
 			   label="COM_SWJPROJECTS_DATE_START"
 			   translateformat="true"

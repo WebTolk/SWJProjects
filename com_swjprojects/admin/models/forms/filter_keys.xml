@@ -20,10 +20,6 @@
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="k.id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="k.id DESC">JGRID_HEADING_ID_DESC</option>
-			<option value="k.order ASC">COM_SWJPROJECTS_ORDER_ASC</option>
-			<option value="k.order DESC">COM_SWJPROJECTS_ORDER_DESC</option>
-			<option value="project_title ASC">COM_SWJPROJECTS_PROJECT_ASC</option>
-			<option value="project_title DESC">COM_SWJPROJECTS_PROJECT_DESC</option>
 			<option value="k.state ASC">JSTATUS_ASC</option>
 			<option value="k.state DESC">JSTATUS_DESC</option>
 			<option value="k.date_start ASC">COM_SWJPROJECTS_DATE_START_ASC</option>

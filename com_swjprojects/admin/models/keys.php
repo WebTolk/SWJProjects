@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Utilities\ArrayHelper;
 
 class SWJProjectsModelKeys extends ListModel
 {
@@ -24,6 +25,24 @@ class SWJProjectsModelKeys extends ListModel
 	 * @since  1.3.0
 	 */
 	protected $translate = null;
+
+	/**
+	 * Users array.
+	 *
+	 * @var  array
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $_users = null;
+
+	/**
+	 * Keys projects array.
+	 *
+	 * @var  array
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	protected $_projects = null;
 
 	/**
 	 * Constructor.
@@ -44,8 +63,6 @@ class SWJProjectsModelKeys extends ListModel
 				'id', 'v.id',
 				'published', 'state', 'k.state',
 				'project', 'project_id', 'k.project_id', 'p.id',
-				'project_title', 'pl.title',
-				'element', 'p.element',
 			);
 		}
 
@@ -113,16 +130,6 @@ class SWJProjectsModelKeys extends ListModel
 			->select(array('k.*'))
 			->from($db->quoteName('#__swjprojects_keys', 'k'));
 
-		// Join over the projects
-		$query->select(array('k.project_id as project_id', 'p.element as project_element'))
-			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = k.project_id');
-
-		// Join over translates
-		$translate = $this->translate;
-		$query->select(array('t_p.title as project_title'))
-			->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
-				. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));
-
 		// Filter by published state
 		$published = $this->getState('filter.published');
 		if (is_numeric($published))
@@ -138,7 +145,9 @@ class SWJProjectsModelKeys extends ListModel
 		$project = $this->getState('filter.project');
 		if (is_numeric($project))
 		{
-			$query->where('k.project_id = ' . (int) $project);
+			$project = (int) $project;
+			$sql     = array('FIND_IN_SET(' . $project . ', k.projects)');
+			$query->where('(' . implode(' OR ', $sql) . ')');
 		}
 
 		// Filter by search
@@ -152,7 +161,7 @@ class SWJProjectsModelKeys extends ListModel
 			else
 			{
 				$sql     = array();
-				$columns = array('k.key', 'k.note', 'p.element', 't_p.title');
+				$columns = array('k.key', 'k.note');
 
 				foreach ($columns as $column)
 				{
@@ -186,14 +195,30 @@ class SWJProjectsModelKeys extends ListModel
 	{
 		if ($items = parent::getItems())
 		{
+			$projects = $this->getProjects(implode(',',
+				array_merge(ArrayHelper::getColumn($items, 'projects'))));
+			$users    = $this->getUsers(ArrayHelper::getColumn($items, 'user'));
 			foreach ($items as &$item)
 			{
-				// Set project title
-				$item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
-				if ($item->project_id == -1)
+				// Set projects
+				if (!empty($item->projects))
 				{
-					$item->project_title = Text::_('JALL');
+					$ids            = explode(',', $item->projects);
+					$item->projects = array();
+					foreach ($ids as $id)
+					{
+						$id = (int) $id;
+						if (!empty($projects[$id]))
+						{
+							$item->projects[$id] = $projects[$id];
+						}
+					}
+					$item->projects = ArrayHelper::sortObjects($item->projects, 'ordering');
 				}
+				else $item->projects = false;
+
+				// Set user
+				$item->user = (!empty($users[$item->user])) ? $users[$item->user] : false;
 
 				// Mask key
 				$item->key = SWJProjectsHelperKeys::maskKey($item->key);
@@ -201,5 +226,121 @@ class SWJProjectsModelKeys extends ListModel
 		}
 
 		return $items;
+	}
+
+
+	/**
+	 * Method to get categories.
+	 *
+	 * @param   string|array  $pks  The id of the categories.
+	 *
+	 * @return  object[] Categories array.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getProjects($pks = null)
+	{
+		if ($this->_projects === null)
+		{
+			$this->_projects = array();
+
+			$all                 = new stdClass();
+			$all->id             = -1;
+			$all->title          = Text::_('JALL');
+			$all->element        = '';
+			$all->ordering       = 0;
+			$this->_projects[-1] = $all;
+		}
+
+		// Prepare ids
+		$projects = array();
+		if (!is_array($pks)) $pks = array_unique(ArrayHelper::toInteger(explode(',', $pks)));
+		if (empty($pks)) return $projects;
+
+		// Check loaded categories
+		$get = array();
+		foreach ($pks as $pk)
+		{
+			if (isset($this->_projects[$pk])) $projects[$pk] = $this->_projects[$pk];
+			else $get[] = $pk;
+		}
+
+		// Get projects
+		if (!empty($get))
+		{
+			$db    = $this->getDbo();
+			$query = $db->getQuery(true)
+				->select(array('p.id', 'p.element', 'p.ordering'))
+				->from($db->quoteName('#__swjprojects_projects', 'p'))
+				->where('p.id  IN (' . implode(',', $get) . ')');
+
+			// Join over translates
+			$translate = $this->translate;
+			$query->select(array('t_p.title as title'))
+				->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
+					. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));
+
+			if ($rows = $db->setQuery($query)->loadObjectList())
+			{
+				foreach ($rows as $row)
+				{
+					// Set project title
+					$row->title = (empty($row->title)) ? $row->element : $row->title;
+
+					$this->_projects[$row->id] = $row;
+					$projects[$row->id]        = $row;
+				}
+			}
+		}
+
+		return $projects;
+	}
+
+	/**
+	 * Method to get users.
+	 *
+	 * @param   string|array  $pks  The id of the users.
+	 *
+	 * @return  object[] Users array.
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function getUsers($pks = null)
+	{
+		if ($this->_users === null) $this->_users = array();
+
+		// Prepare ids
+		$users = array();
+		if (!is_array($pks)) $pks = array_unique(ArrayHelper::toInteger(explode(',', $pks)));
+		if (empty($pks)) return $users;
+
+		// Check loaded users
+		$get = array();
+		foreach ($pks as $pk)
+		{
+			if (isset($this->_users[$pk])) $users[$pk] = $this->_users[$pk];
+			else $get[] = $pk;
+		}
+
+		// Get users
+		if (!empty($get))
+		{
+			$db    = $this->getDbo();
+			$query = $db->getQuery(true)
+				->select(array('u.id', 'u.name', 'u.username'))
+				->from($db->quoteName('#__users', 'u'))
+				->where('u.id  IN (' . implode(',', $get) . ')');
+
+			if ($rows = $db->setQuery($query)->loadObjectList())
+			{
+				foreach ($rows as $row)
+				{
+					$this->_users[$row->id] = $row;
+					$users[$row->id]        = $row;
+				}
+			}
+		}
+
+		return $users;
 	}
 }
