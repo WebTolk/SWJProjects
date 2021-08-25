@@ -28,6 +28,33 @@
 					   default="1">
 					<option value="1">JGLOBAL_ROOT</option>
 				</field>
+				<field
+						name="ordering"
+						type="list"
+						label="MOD_SWJPROJECTS_FIELD_ORDERING_LABEL"
+						description="MOD_SWJPROJECTS_FIELD_ORDERING_DESC"
+						default="list.ordering"
+						validate="options"
+				>
+					<option value="download_type">MOD_SWJPROJECTS_DOWNLOAD_TYPE</option>
+					<option value="ordering">MOD_SWJPROJECTS_FIELD_ORDERING_ORDERING</option>
+					<option value="hits">MOD_SWJPROJECTS_STATISTICS_HITS</option>
+					<option value="downloads">MOD_SWJPROJECTS_STATISTICS_DOWNLOADS</option>
+					<option value="rand()">MOD_SWJPROJECTS_NEWS_FIELD_ORDERING_RANDOM</option>
+				</field>
+
+				<field
+						name="direction"
+						type="list"
+						label="JGLOBAL_ORDER_DIRECTION_LABEL"
+						description="JGLOBAL_ORDER_DIRECTION_DESC"
+						default="1"
+						filter="integer"
+						showon="ordering:id,download_type,hits,downloads,ordering"
+				>
+					<option value="0">JGLOBAL_ORDER_ASCENDING</option>
+					<option value="1">JGLOBAL_ORDER_DESCENDING</option>
+				</field>
 			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout" type="modulelayout"
