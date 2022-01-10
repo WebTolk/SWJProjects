@@ -55,6 +55,9 @@ $columns = 9;
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_ORDER', 'k.order',
 							$listDirn, $listOrder); ?>
 					</th>
+					<th class="nowrap">
+						<?php echo Text::_('COM_SWJPROJECTS_USER'); ?>
+					</th>
 					<th width="10%" class="nowrap hidden-phone">
 						<?php echo Text::_('COM_SWJPROJECTS_PROJECTS'); ?>
 					</th>
@@ -107,6 +110,9 @@ $columns = 9;
 						</td>
 						<td class="nowrap">
 							<?php echo $item->order; ?>
+						</td>
+						<td class="nowrap">
+							<?php if (!empty($item->user)) echo $item->user->name . ' (' . $item->user->email . ')'; ?>
 						</td>
 						<td class="hidden-phone nowrap">
 							<?php echo implode(', ', ArrayHelper::getColumn($item->projects, 'title')); ?>

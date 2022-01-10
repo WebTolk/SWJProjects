@@ -327,7 +327,7 @@ class SWJProjectsModelKeys extends ListModel
 		{
 			$db    = $this->getDbo();
 			$query = $db->getQuery(true)
-				->select(array('u.id', 'u.name', 'u.username'))
+				->select(array('u.id', 'u.name', 'u.username', 'u.email'))
 				->from($db->quoteName('#__users', 'u'))
 				->where('u.id  IN (' . implode(',', $get) . ')');
 
