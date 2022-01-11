@@ -1,0 +1,32 @@
+/*
+ * @package    SW JProjects Component
+ * @version    __DEPLOY_VERSION__
+ * @author     Septdir Workshop - www.septdir.com
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @link       https://www.septdir.com/
+ */
+
+#toolbar.btn-toolbar .btn.btn-small {
+	margin: 0 5px;
+}
+
+#toolbar.btn-toolbar .btn.btn-small:before {
+	content: '';
+}
+
+#toolbar.btn-toolbar .btn-group {
+	margin-left: auto !important;
+}
+
+#toolbar.btn-toolbar .btn-group .active {
+	background-color: var(--subhead-btn-accent);
+	border-color: var(--subhead-btn-accent);
+	color: hsla(0, 0%, 100%, .9);
+}
+
+[input-image="container"] .btn[class*="icon"] {
+	font-weight: 900 !important;
+}
+
+

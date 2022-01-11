@@ -26,7 +26,7 @@ extract($displayData);
  *
  */
 
-$loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-loader.gif');
+$loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/images/ajax-loader.gif');
 ?>
 <div class="images">
 	<?php foreach ($images as $key => $image) : ?>

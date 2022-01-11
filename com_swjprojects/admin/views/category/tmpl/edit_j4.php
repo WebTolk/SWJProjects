@@ -18,9 +18,18 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
-HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
+
+Factory::getDocument()->getWebAssetManager()
+	->usePreset('choicesjs')
+	->useScript('webcomponent.field-fancy-select');
 
 Factory::getDocument()->addScriptDeclaration('
+	document.addEventListener("DOMContentLoaded", function () {
+		document.querySelectorAll("select").forEach(function (element) {
+			new Choices(element);
+		});
+	});
 	Joomla.submitbutton = function(task)
 	{
 		if (task == "category.cancel" || document.formvalidator.isValid(document.getElementById("item-form")))
@@ -32,38 +41,41 @@ Factory::getDocument()->addScriptDeclaration('
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=category&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">
-	<fieldset class="form-inline form-inline-header">
-		<?php echo LayoutHelper::render('components.swjprojects.translate.field', array(
-			'forms' => $this->translateForms, 'name' => 'title')); ?>
-		<?php echo $this->form->renderField('alias'); ?>
-	</fieldset>
-	<div class="row-fluid">
-		<div class="span9">
-			<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'general', 'class')); ?>
-			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
-			<fieldset class="form-horizontal">
-				<div class="control-group">
-					<p class="lead">
-						<?php echo LayoutHelper::render('components.swjprojects.translate.text',
-							'JGLOBAL_DESCRIPTION'); ?>
-					</p>
-					<?php echo LayoutHelper::render('components.swjprojects.translate.input', array(
-						'forms' => $this->translateForms, 'name' => 'description')); ?>
-				</div>
-			</fieldset>
-			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'metadata', Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS')); ?>
-			<fieldset class="form-horizontal">
-				<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
-					'forms' => $this->translateForms, 'name' => 'metadata')); ?>
-			</fieldset>
-			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-			<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+	<div class="row title-alias form-vertical mb-3">
+		<div class="col-12 col-md-6">
+			<?php echo LayoutHelper::render('components.swjprojects.translate.field', array(
+				'forms' => $this->translateForms, 'name' => 'title')); ?>
 		</div>
-		<div class="span3">
-			<fieldset class="well form-horizontal form-horizontal-desktop">
-				<?php echo $this->form->renderFieldset('global'); ?>
-			</fieldset>
+		<div class="col-12 col-md-6">
+			<?php echo $this->form->renderField('alias'); ?>
+		</div>
+	</div>
+	<div class="main-card">
+		<div class="row">
+			<div class="col-lg-9">
+				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
+				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
+				<fieldset class="form-vertical">
+					<?php echo LayoutHelper::render('components.swjprojects.translate.field', array(
+						'forms' => $this->translateForms, 'name' => 'description')); ?>
+				</fieldset>
+				<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'metadata', Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS')); ?>
+				<fieldset>
+					<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
+						'forms' => $this->translateForms, 'name' => 'metadata')); ?>
+				</fieldset>
+				<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+			</div>
+			<div class="col-lg-3">
+				<fieldset class="form-vertical p-3">
+					<?php echo $this->form->renderFieldset('global'); ?>
+				</fieldset>
+
+			</div>
 		</div>
 	</div>
 	<input type="hidden" name="task" value=""/>

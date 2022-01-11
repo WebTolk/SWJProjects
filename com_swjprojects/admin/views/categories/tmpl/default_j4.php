@@ -17,7 +17,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.multiselect');
-HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
 
 $user      = Factory::getUser();
 $listOrder = $this->escape($this->state->get('list.ordering'));

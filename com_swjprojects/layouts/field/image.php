@@ -37,7 +37,7 @@ HTMLHelper::stylesheet('com_swjprojects/field-image.min.css', array('version' =>
 HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'relative' => true));
 HTMLHelper::script('com_swjprojects/field-image.min.js', array('version' => 'auto', 'relative' => true));
 
-$loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-loader.gif');
+$loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/images/ajax-loader.gif');
 ?>
 <div id="<?php echo $id; ?>" class="<?php echo $class; ?>" input-image="container"
 	 data-controller="<?php echo Route::_('index.php?option=com_swjprojects'); ?>"
@@ -53,11 +53,11 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-load
 				array('input-image' => 'preview', 'data-loading' => $loading), true); ?>
 		</div>
 		<div input-image="actions" class="btn-group">
-			<a class=" btn btn-small btn-inverse icon-eye hasTooltip" input-image="view"
+			<a class=" btn btn-small btn-inverse btn-dark icon-eye hasTooltip" input-image="view"
 			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"></a>
 			<label class="btn btn-small btn-success icon-upload hasTooltip" for="<?php echo $id; ?>_field"
 				   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_UPLOAD'); ?>"></label>
-			<a class="btn btn-small btn-danger icon-remove hasTooltip" input-image="delete"
+			<a class="btn btn-small btn-danger icon-remove  hasTooltip" input-image="delete"
 			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_DELETE'); ?>"></a>
 		</div>
 		<input id="<?php echo $id; ?>_field" type="file" accept="image/*" input-image="field"/>

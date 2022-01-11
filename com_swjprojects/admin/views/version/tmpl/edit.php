@@ -23,7 +23,7 @@ HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('behavior.tabstate');
 HTMLHelper::_('formbehavior.chosen', '#jform_joomla_version', null, array('disable_search_threshold' => 0));
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::stylesheet('com_swjprojects/admin-j3.min.css', array('version' => 'auto', 'relative' => true));
 
 Factory::getDocument()->addScriptDeclaration('
 	Joomla.submitbutton = function(task)

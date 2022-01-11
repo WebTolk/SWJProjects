@@ -21,7 +21,7 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('behavior.tabstate');
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::stylesheet('com_swjprojects/admin.min.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::stylesheet('com_swjprojects/admin-j3.min.css', array('version' => 'auto', 'relative' => true));
 
 $user      = Factory::getUser();
 $listOrder = $this->escape($this->state->get('list.ordering'));
