@@ -22,17 +22,17 @@ HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'a
 $user      = Factory::getUser();
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$saveOrder = ($listOrder == 'c.lft' && strtolower($listDirn) == 'asc');
+$saveOrder = ($listOrder == 'p.ordering' && strtolower($listDirn) == 'asc');
 
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=com_swjprojects&task=categories.saveOrderAjax&tmpl=component';
-	HTMLHelper::_('sortablelist.sortable', 'categoriesList', 'adminForm', strtolower($listDirn), $saveOrderingUrl, false, true);
+	$saveOrderingUrl = 'index.php?option=com_swjprojects&task=projects.saveOrderAjax&tmpl=component';
+	HTMLHelper::_('sortablelist.sortable', 'projectsList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 
-$columns = 5;
+$columns = 8;
 ?>
-<form action="<?php echo Route::_('index.php?option=com_swjprojects&view=categories'); ?>" method="post"
+<form action="<?php echo Route::_('index.php?option=com_swjprojects&view=projects'); ?>" method="post"
 	  name="adminForm" id="adminForm">
 	<div class="row">
 		<div class="col-md-12">
@@ -43,24 +43,40 @@ $columns = 5;
 						<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 					</div>
 				<?php else : ?>
-					<table id="categoriesList" class="table table-striped">
+					<table id="projectsList" class="table table-striped">
 						<thead>
 						<tr>
 							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('searchtools.sort', '', 'c.lft', $listDirn, $listOrder, null, 'asc',
-									'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
+								<?php echo HTMLHelper::_('searchtools.sort', '', 'p.ordering', $listDirn, $listOrder, null,
+									'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
 							</th>
 							<th width="1%" class="center">
 								<?php echo HTMLHelper::_('grid.checkall'); ?>
 							</th>
 							<th width="2%" style="min-width:100px" class="center">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'c.state', $listDirn, $listOrder); ?>
+								<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'p.state', $listDirn, $listOrder); ?>
 							</th>
 							<th class="nowrap">
 								<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'title', $listDirn, $listOrder); ?>
 							</th>
+							<th width="10%" class="nowrap hidden-phone">
+								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_CATEGORY', 'category_title',
+									$listDirn, $listOrder); ?>
+							</th>
+							<th width="10%" class="nowrap hidden-phone center">
+								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_DOWNLOAD_TYPE', 'p.download_type',
+									$listDirn, $listOrder); ?>
+							</th>
+							<th width="10%" class="nowrap hidden-phone center">
+								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_STATISTICS_DOWNLOADS', 'downloads',
+									$listDirn, $listOrder); ?>
+							</th>
+							<th width="10%" class="nowrap hidden-phone center">
+								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_STATISTICS_HITS', 'p.hits',
+									$listDirn, $listOrder); ?>
+							</th>
 							<th width="1%" class="nowrap hidden-phone center">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'c.id', $listDirn, $listOrder); ?>
+								<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'p.id', $listDirn, $listOrder); ?>
 							</th>
 						</tr>
 						</thead>
@@ -73,39 +89,10 @@ $columns = 5;
 						</tfoot>
 						<tbody>
 						<?php foreach ($this->items as $i => $item) :
-							$orderKey = array_search($item->id, $this->ordering[$item->parent_id]);
-							$canEdit = $user->authorise('core.edit', 'com_swjprojects.category.' . $item->id);
-							$canChange = $user->authorise('core.edit.state', 'com_swjprojects.category.' . $item->id);
-
-							// Get the parents of item for sorting
-							if ($item->level > 0)
-							{
-								$parentsStr       = '';
-								$_currentParentId = $item->parent_id;
-								$parentsStr       = ' ' . $_currentParentId;
-								for ($i2 = 0; $i2 < $item->level; $i2++)
-								{
-									foreach ($this->ordering as $k => $v)
-									{
-										$v = implode('-', $v);
-										$v = '-' . $v . '-';
-										if (strpos($v, '-' . $_currentParentId . '-') !== false)
-										{
-											$parentsStr       .= ' ' . $k;
-											$_currentParentId = $k;
-											break;
-										}
-									}
-								}
-							}
-							else
-							{
-								$parentsStr = '';
-							}
+							$canEdit = $user->authorise('core.edit', 'com_swjprojects.project.' . $item->id);
+							$canChange = $user->authorise('core.edit.state', 'com_swjprojects.project.' . $item->id);
 							?>
-							<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->parent_id; ?>"
-								item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>"
-								level="<?php echo $item->level ?>">
+							<tr class="row<?php echo $i % 2; ?>" item-id="<?php echo $item->id ?>">
 								<td class="order nowrap center hidden-phone">
 									<?php
 									$iconClass = '';
@@ -122,8 +109,8 @@ $columns = 5;
 									<span class="sortable-handler<?php echo $iconClass ?>"><span
 												class="icon-menu"></span></span>
 									<?php if ($canChange && $saveOrder) : ?>
-										<input type="text" name="order[]" size="5" value="<?php echo $orderKey + 1; ?>"
-											   style="display:none"/>
+										<input type="text" name="order[]" value="<?php echo $item->ordering; ?>"
+											   class="width-20 text-area-order" style="display:none"/>
 									<?php endif; ?>
 								</td>
 								<td class="center">
@@ -131,20 +118,35 @@ $columns = 5;
 								</td>
 								<td class="center nowrap">
 									<div class="btn-group">
-										<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'categories.', $canChange); ?>
+										<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'projects.', $canChange); ?>
 									</div>
 								</td>
 								<td class="nowrap">
-									<?php echo LayoutHelper::render('joomla.html.treeprefix', array('level' => $item->level)); ?>
 									<?php if ($canEdit) : ?>
 										<a class="hasTooltip" title="<?php echo Text::_('JACTION_EDIT'); ?>"
-										   href="<?php echo Route::_('index.php?option=com_swjprojects&task=category.edit&id='
+										   href="<?php echo Route::_('index.php?option=com_swjprojects&task=project.edit&id='
 											   . $item->id); ?>">
 											<?php echo $this->escape($item->title); ?>
 										</a>
 									<?php else : ?>
 										<?php echo $this->escape($item->title); ?>
 									<?php endif; ?>
+								</td>
+								<td class="small hidden-phone">
+									<?php echo Text::_($this->escape($item->category_title)); ?>
+								</td>
+								<td class="hidden-phone center">
+									<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $item->download_type); ?>
+								</td>
+								<td class="hidden-phone center">
+									<span class="badge badge-info">
+										<?php echo (int) $item->downloads; ?>
+									</span>
+								</td>
+								<td class="hidden-phone center">
+									<span class="badge badge-info">
+										<?php echo (int) $item->hits; ?>
+									</span>
 								</td>
 								<td class="hidden-phone center">
 									<?php echo $item->id; ?>

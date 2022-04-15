@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_projects`
     `title`     VARCHAR(255) NOT NULL DEFAULT '',
     `introtext` TEXT         NOT NULL,
     `fulltext`  MEDIUMTEXT   NOT NULL,
-    `gallery`   MEDIUMTEXT   NOT NULL,
+    `gallery`   MEDIUMTEXT,
     `payment`   MEDIUMTEXT   NOT NULL,
     `metadata`  TEXT         NOT NULL,
     PRIMARY KEY (`id`, `language`)
