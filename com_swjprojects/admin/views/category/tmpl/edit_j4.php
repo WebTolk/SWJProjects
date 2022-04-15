@@ -70,7 +70,7 @@ Factory::getDocument()->addScriptDeclaration('
 
 				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 			</div>
-			<div class="col-lg-3 bg-light">
+			<div class="col-lg-3 bg-light border border-left">
 				<fieldset class="form-vertical p-3">
 					<?php echo $this->form->renderFieldset('global'); ?>
 				</fieldset>

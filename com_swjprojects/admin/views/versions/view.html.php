@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Version;
 
 class SWJProjectsViewVersions extends HtmlView
 {
@@ -118,6 +119,7 @@ class SWJProjectsViewVersions extends HtmlView
 	{
 		$canDo = SWJProjectsHelper::getActions('com_swjprojects', 'versions');
 		$toolbar = Toolbar::getInstance('toolbar');
+		$isJoomla4 = (new Version())->isCompatible('4.0');
 
 		// Set page title
 		ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . Text::_('COM_SWJPROJECTS_VERSIONS'), 'cube');
@@ -152,16 +154,36 @@ class SWJProjectsViewVersions extends HtmlView
 		}
 
 		// Add support button
-		$link = 'https://www.septdir.com/support#solution=SWJProjects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'support');
+		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
+		if ($isJoomla4 == true)
+		{
+			$toolbar->linkButton('support')
+				->url($link)
+				->buttonClass('btn')
+				->icon('icon-support')
+				->attributes(['target' => '_blank'])
+				->text(Text::_('COM_SWJPROJECTS_SUPPORT'));
+		} else {
+			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+			$toolbar->appendButton('Custom', $download, 'support');
+		}
 
 		// Add donate button
-		$link = 'https://www.septdir.com/donate#solution=swjprojects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'donate');
+		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
+		if ($isJoomla4 == true)
+		{
+			$toolbar->linkButton('donate')
+				->url($link)
+				->buttonClass('btn')
+				->icon('icon-heart')
+				->attributes(['target' => '_blank'])
+				->text(Text::_('COM_SWJPROJECTS_DONATE'));
+		} else {
+			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+			$toolbar->appendButton('Custom', $download, 'donate');
+		}
 	}
 
 	/**

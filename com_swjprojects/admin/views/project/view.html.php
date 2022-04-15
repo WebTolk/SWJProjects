@@ -191,8 +191,6 @@ class SWJProjectsViewProject extends HtmlView
 			$toolbar->appendButton('Custom', $download, 'support');
 		}
 
-
-
 		// Add donate button
 		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
 		if ($isJoomla4 == true)
@@ -208,7 +206,5 @@ class SWJProjectsViewProject extends HtmlView
 				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
 			$toolbar->appendButton('Custom', $download, 'donate');
 		}
-
-
 	}
 }
