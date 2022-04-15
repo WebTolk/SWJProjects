@@ -29,4 +29,6 @@
 	font-weight: 900 !important;
 }
 
-
+.subhead #toolbar.btn-toolbar a[target=_blank]:before {
+	content: '';
+}
