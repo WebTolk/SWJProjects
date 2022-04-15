@@ -1,34 +1,18 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
  * @version    __DEPLOY_VERSION__
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Version;
 
-extract($displayData);
+$version = (((new Version())->isCompatible('4.0'))) ? 'joomla4' : 'joomla3';
 
-/**
- * Layout variables
- * -----------------
- *
- * @var  string  $link Button link
- * @var  string  $text Button text
- * @var  string  $icon Button icon
- * @var  boolean $new  Button target
- *
- */
-
-$new = (isset($new)) ? $new : true;
-?>
-<a href="<?php echo Route::_($link); ?>" class="btn btn-small"<?php echo ($new) ? ' target="_blank"' : ''; ?>>
-	<span aria-hidden="true" class="icon-<?php echo $icon; ?>"></span>
-	<?php echo Text::_($text); ?>
-</a>
+echo LayoutHelper::render('components.swjprojects.toolbar.link.' . $version, $displayData);
