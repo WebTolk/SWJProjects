@@ -58,24 +58,20 @@ Factory::getDocument()->addScriptDeclaration('
 			<div class="col-lg-9">
 				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'general', 'class')); ?>
 				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
-				<fieldset>
-					<div class="w-100">
-						<h3 class="mb-3">
-							<?php echo LayoutHelper::render('components.swjprojects.translate.text',
-								'COM_SWJPROJECTS_PROJECT_INTROTEXT'); ?>
-						</h3>
-						<?php echo LayoutHelper::render('components.swjprojects.translate.input', array(
-							'forms' => $this->translateForms, 'name' => 'introtext')); ?>
-					</div>
+				<fieldset class="w-100">
+					<h3 class="mb-3">
+						<?php echo LayoutHelper::render('components.swjprojects.translate.text',
+							'COM_SWJPROJECTS_PROJECT_INTROTEXT'); ?>
+					</h3>
+					<?php echo LayoutHelper::render('components.swjprojects.translate.input', array(
+						'forms' => $this->translateForms, 'name' => 'introtext')); ?>
 					<hr>
-					<div class="w-100">
-						<h3 class="mb-3">
-							<?php echo LayoutHelper::render('components.swjprojects.translate.text',
-								'COM_SWJPROJECTS_PROJECT_FULLTEXT'); ?>
-						</h3>
-						<?php echo LayoutHelper::render('components.swjprojects.translate.input', array(
-							'forms' => $this->translateForms, 'name' => 'fulltext')); ?>
-					</div>
+					<h3 class="mb-3">
+						<?php echo LayoutHelper::render('components.swjprojects.translate.text',
+							'COM_SWJPROJECTS_PROJECT_FULLTEXT'); ?>
+					</h3>
+					<?php echo LayoutHelper::render('components.swjprojects.translate.input', array(
+						'forms' => $this->translateForms, 'name' => 'fulltext')); ?>
 				</fieldset>
 				<?php echo HTMLHelper::_('uitab.endTab'); ?>
 				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'payment', Text::_('COM_SWJPROJECTS_PAYMENT')); ?>

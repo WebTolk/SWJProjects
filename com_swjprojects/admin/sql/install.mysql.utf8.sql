@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
     `limit`       TINYINT(3)          NOT NULL DEFAULT 0,
     `limit_count` INT(11)             NOT NULL DEFAULT 0,
     `state`       TINYINT(3)          NOT NULL DEFAULT 0,
-    `plugins`     MEDIUMTEXT          NOT NULL,
+    `plugins`     MEDIUMTEXT,
     PRIMARY KEY `id` (`id`),
     KEY `idx_key` (`key`(100)),
     KEY `idx_email` (`email`(100)),
