@@ -12,8 +12,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.formvalidator');
@@ -39,42 +37,23 @@ Factory::getDocument()->addScriptDeclaration('
 	};
 ');
 ?>
-<form action="<?php echo Route::_('index.php?option=com_swjprojects&view=category&id=' . $this->item->id); ?>"
+<form action="<?php echo Route::_('index.php?option=com_swjprojects&view=key&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">
-	<div class="row title-alias form-vertical mb-3">
-		<div class="col-12 col-md-6">
-			<?php echo LayoutHelper::render('components.swjprojects.translate.field', array(
-				'forms' => $this->translateForms, 'name' => 'title')); ?>
-		</div>
-		<div class="col-12 col-md-6">
-			<?php echo $this->form->renderField('alias'); ?>
-		</div>
-	</div>
 	<div class="main-card">
-		<div class="row">
-			<div class="col-lg-9">
-				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
-				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
-				<fieldset class="form-vertical p-3">
-					<?php echo LayoutHelper::render('components.swjprojects.translate.field', array(
-						'forms' => $this->translateForms, 'name' => 'description')); ?>
+		<div class="row title-alias form-vertical mb-3">
+			<div class="col-12 col-lg-9">
+				<fieldset class="ps-4">
+					<?php echo $this->form->renderFieldset('key'); ?>
 				</fieldset>
-				<?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'metadata', Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS')); ?>
-				<fieldset>
-					<?php echo LayoutHelper::render('components.swjprojects.translate.fieldset', array(
-						'forms' => $this->translateForms, 'name' => 'metadata')); ?>
+				<hr>
+				<fieldset class="form-horizontal">
+					<?php echo $this->form->renderFieldset('plugins'); ?>
 				</fieldset>
-				<?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 			</div>
-			<div class="col-lg-3 bg-light border border-left">
-				<fieldset class="form-vertical p-3">
+			<div class="col-12 col-lg-3">
+				<fieldset class="bg-light border border-left p-3">
 					<?php echo $this->form->renderFieldset('global'); ?>
 				</fieldset>
-
 			</div>
 		</div>
 	</div>
