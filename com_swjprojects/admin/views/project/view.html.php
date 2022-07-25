@@ -99,8 +99,7 @@ class SWJProjectsViewProject extends HtmlView
 	{
 		$isNew     = ($this->item->id == 0);
 		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'project', $this->item->id);
-		$toolbar   = Toolbar::getInstance('toolbar');
-		$isJoomla4 = (new Version())->isCompatible('4.0');
+		$toolbar   = Toolbar::getInstance();
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);
@@ -134,21 +133,9 @@ class SWJProjectsViewProject extends HtmlView
 			{
 				$link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
 			}
-			if ($isJoomla4 == true)
-			{
-				$toolbar->linkButton('joomla')
-					->url($link)
-					->buttonClass('btn')
-					->icon('icon-joomla')
-					->attributes(['target' => '_blank'])
-					->text(Text::_('COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER'));
-			}
-			else
-			{
-				$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
-					array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
-				$toolbar->appendButton('Custom', $jupdate, 'joomla');
-			}
+			$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
+				array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
+			$toolbar->appendButton('Custom', $jupdate, 'joomla');
 		}
 
 		// Add translate switcher

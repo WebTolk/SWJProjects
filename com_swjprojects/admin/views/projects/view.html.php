@@ -119,8 +119,7 @@ class SWJProjectsViewProjects extends HtmlView
 	protected function addToolbar()
 	{
 		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'projects');
-		$toolbar   = Toolbar::getInstance('toolbar');
-		$isJoomla4 = (new Version())->isCompatible('4.0');
+		$toolbar   = Toolbar::getInstance();
 
 		// Set page title
 		ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . Text::_('COM_SWJPROJECTS_PROJECTS'), 'cube');

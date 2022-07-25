@@ -118,7 +118,7 @@ class SWJProjectsViewKeys extends HtmlView
 	protected function addToolbar()
 	{
 		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'keys');
-		$toolbar   = Toolbar::getInstance('toolbar');
+		$toolbar   = Toolbar::getInstance();
 		$isJoomla4 = (new Version())->isCompatible('4.0');
 
 		// Set page title

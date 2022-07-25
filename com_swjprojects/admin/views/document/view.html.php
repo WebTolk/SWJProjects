@@ -121,7 +121,7 @@ class SWJProjectsViewDocument extends HtmlView
 	{
 		$isNew   = ($this->item->id == 0);
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'document', $this->item->id);
-		$toolbar = Toolbar::getInstance('toolbar');
+		$toolbar = Toolbar::getInstance();
 		$isJoomla4 = (new Version())->isCompatible('4.0');
 
 		// Disable menu

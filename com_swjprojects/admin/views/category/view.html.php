@@ -98,8 +98,7 @@ class SWJProjectsViewCategory extends HtmlView
 	{
 		$isNew   = ($this->item->id == 0);
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'category', $this->item->id);
-		$toolbar = Toolbar::getInstance('toolbar');
-		$isJoomla4 = (new Version())->isCompatible('4.0');
+		$toolbar = Toolbar::getInstance();
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);
@@ -144,18 +143,9 @@ class SWJProjectsViewCategory extends HtmlView
 		if ($this->item->id)
 		{
 			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=projects&debug=1&id=' . $this->item->id;
-			if ($isJoomla4 == true){
-				$toolbar->linkButton('preview')
-					->url($link)
-					->buttonClass('btn')
-					->icon('icon-eye')
-					->attributes(['target' => '_blank'])
-					->text(Text::_('JGLOBAL_PREVIEW'));
-			}else {
-				$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
-					array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
-				$toolbar->appendButton('Custom', $preview, 'preview');
-			}
+			$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
+				array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
+			$toolbar->appendButton('Custom', $preview, 'preview');
 		}
 	}
 }
