@@ -34,8 +34,8 @@ HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'a
 		</div>
 	</div>
 	<div class="main-card">
-		<div class="row">
-			<div class="col-lg-9">
+		<div class="row п-0">
+			<div class="col-lg-8">
 				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
 				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
 				<fieldset class="form-vertical p-3">
@@ -53,11 +53,12 @@ HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'a
 
 				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 			</div>
-			<div class="col-lg-3 bg-light border border-left">
-				<fieldset class="form-vertical p-3">
-					<?php echo $this->form->renderFieldset('global'); ?>
-				</fieldset>
-
+			<div class="col-lg-4">
+				<div class="form-vertical p-3">
+					<div class="options-form">
+						<?php echo $this->form->renderFieldset('global'); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

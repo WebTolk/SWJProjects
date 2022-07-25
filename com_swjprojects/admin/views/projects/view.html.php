@@ -118,8 +118,8 @@ class SWJProjectsViewProjects extends HtmlView
 	 */
 	protected function addToolbar()
 	{
-		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'projects');
-		$toolbar = Toolbar::getInstance('toolbar');
+		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'projects');
+		$toolbar   = Toolbar::getInstance('toolbar');
 		$isJoomla4 = (new Version())->isCompatible('4.0');
 
 		// Set page title
@@ -151,19 +151,9 @@ class SWJProjectsViewProjects extends HtmlView
 		// Add joomla update server button
 		$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=jupdate&debug=1&download_key='
 			. ComponentHelper::getParams('com_swjprojects')->get('key_master');
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('joomla')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-joomla')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER'));
-		}else{
-			$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
-			$toolbar->appendButton('Custom', $jupdate, 'joomla');
-		}
+		$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
+		$toolbar->appendButton('Custom', $jupdate, 'joomla');
 
 
 		// Add preferences button
@@ -173,38 +163,16 @@ class SWJProjectsViewProjects extends HtmlView
 		}
 
 		// Add support button
-		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('support')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-support')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_SUPPORT'));
-		} else {
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'support');
-		}
-
-
+		$link    = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $support, 'support');
 
 		// Add donate button
-		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('donate')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-heart')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_DONATE'));
-		} else {
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'donate');
-		}
+		$link   = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $donate, 'donate');
 	}
 
 	/**

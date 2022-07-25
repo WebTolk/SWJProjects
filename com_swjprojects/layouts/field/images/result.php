@@ -39,7 +39,7 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/imag
 				<?php echo HTMLHelper::image('com_swjprojects/no-image.svg', '',
 					array('input-images' => 'noimage', 'style' => (empty($image->src)) ? '' : 'display: none;'), true); ?>
 				<div input-images="actions" class="btn-group">
-					<a class=" btn btn-small btn-inverse icon-eye hasTooltip" input-images="view"
+					<a class="btn btn-small btn-inverse btn-dark icon-eye hasTooltip" input-images="view"
 					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"></a>
 					<label class="btn btn-small btn-success icon-upload hasTooltip"
 						   for="<?php echo $id . '_' . $image->name . '_field'; ?>"
@@ -53,7 +53,7 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/imag
 				<label for="<?php echo $id . '_' . $image->name . '_field'; ?>"></label>
 			</div>
 			<textarea name="<?php echo $name . '[' . $image->name . '][text]'; ?>" input-images="text" rows="3"
-					  class="span12" data-key="<?php echo $image->name; ?>"
+					  class="span12 form-control" data-key="<?php echo $image->name; ?>"
 					  data-type="text"><?php echo $image->text; ?></textarea>
 			<input type="hidden" name="<?php echo $name . '[' . $image->name . '][ordering]'; ?>"
 				   input-images="ordering" value="<?php echo $image->ordering; ?>"

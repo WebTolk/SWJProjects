@@ -12,32 +12,14 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Language\Text;
 
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('behavior.keepalive');
+$this->document->getWebAssetManager()
+	->useScript('keepalive')
+	->useScript('form.validate');
 HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
-
-Factory::getDocument()->getWebAssetManager()
-	->usePreset('choicesjs')
-	->useScript('webcomponent.field-fancy-select');
-
-Factory::getDocument()->addScriptDeclaration('
-	document.addEventListener("DOMContentLoaded", function () {
-		document.querySelectorAll("select").forEach(function (element) {
-			new Choices(element);
-		});
-	});
-	Joomla.submitbutton = function(task)
-	{
-		if (task == "category.cancel" || document.formvalidator.isValid(document.getElementById("item-form")))
-		{
-			Joomla.submitform(task, document.getElementById("item-form"));
-		}
-	};
-');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=project&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">
@@ -54,8 +36,8 @@ Factory::getDocument()->addScriptDeclaration('
 		</div>
 	</fieldset>
 	<div class="main-card">
-		<div class="row">
-			<div class="col-lg-9">
+		<div class="row п-0">
+			<div class="col-lg-8">
 				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'general', 'class')); ?>
 				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
 				<fieldset class="w-100">
@@ -144,16 +126,16 @@ Factory::getDocument()->addScriptDeclaration('
 				<?php echo HTMLHelper::_('uitab.endTab'); ?>
 				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 			</div>
-			<div class="col-lg-3 bg-light border border-left">
-				<fieldset class="p-3">
-					<?php echo $this->form->renderFieldset('global'); ?>
-				</fieldset>
-				<fieldset class="border-1 p-3">
-					<p class="lead">
-						<?php echo Text::_('COM_SWJPROJECTS_STATISTICS'); ?>
-					</p>
-					<?php echo $this->form->renderFieldset('statistics'); ?>
-				</fieldset>
+			<div class="col-lg-4">
+				<div class="form-vertical p-3">
+					<div class="options-form">
+						<?php echo $this->form->renderFieldset('global'); ?>
+					</div>
+					<div class="options-form">
+						<legend><?php echo Text::_('COM_SWJPROJECTS_STATISTICS'); ?></legend>
+						<?php echo $this->form->renderFieldset('statistics'); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
