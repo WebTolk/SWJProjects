@@ -98,12 +98,24 @@ class SWJProjectsViewVersion extends HtmlView
 			$this->form->removeField('joomla_version', '');
 		}
 
-		Factory::getDocument()->addScriptDeclaration("function projectHasChanged(element) {
-			var cat = jQuery(element);
-			Joomla.loadingLayer('show');
-			jQuery('input[name=task]').val('version.reload');
-			element.form.submit();
-		}");
+		if ((new Version())->isCompatible('4.0'))
+		{
+			Factory::getDocument()->addScriptDeclaration("function projectHasChanged(element) {
+				document.body.appendChild(document.createElement('joomla-core-loader'));
+				document.querySelector('input[name=task]').value = 'version.reload';
+				element.form.submit();
+			}");
+		}
+		else
+		{
+			Factory::getDocument()->addScriptDeclaration("function projectHasChanged(element) {
+				var cat = jQuery(element);
+				Joomla.loadingLayer('show');
+				jQuery('input[name=task]').val('version.reload');
+				element.form.submit();
+			}");
+		}
+
 
 		// Add title and toolbar
 		$this->addToolbar();
@@ -120,9 +132,9 @@ class SWJProjectsViewVersion extends HtmlView
 	 */
 	protected function addToolbar()
 	{
-		$isNew   = ($this->item->id == 0);
-		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
-		$toolbar = Toolbar::getInstance('toolbar');
+		$isNew     = ($this->item->id == 0);
+		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
+		$toolbar   = Toolbar::getInstance('toolbar');
 		$isJoomla4 = (new Version())->isCompatible('4.0');
 
 		// Disable menu
@@ -152,7 +164,7 @@ class SWJProjectsViewVersion extends HtmlView
 		if ($this->item->id)
 		{
 			// Preview button
-			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
+			$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
 				. '&project_id=' . $this->project->id . '&catid=' . $this->project->catid;
 
 
@@ -164,7 +176,9 @@ class SWJProjectsViewVersion extends HtmlView
 					->icon('icon-eye')
 					->attributes(['target' => '_blank'])
 					->text(Text::_('JGLOBAL_PREVIEW'));
-			} else {
+			}
+			else
+			{
 				$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
 					array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
 				$toolbar->appendButton('Custom', $preview, 'preview');
@@ -188,7 +202,9 @@ class SWJProjectsViewVersion extends HtmlView
 						->icon('icon-download')
 						->attributes(['target' => '_blank'])
 						->text(Text::_('COM_SWJPROJECTS_FILE_DOWNLOAD'));
-				} else {
+				}
+				else
+				{
 					$download = LayoutHelper::render('components.swjprojects.toolbar.link',
 						array('link' => $link, 'text' => 'COM_SWJPROJECTS_FILE_DOWNLOAD', 'icon' => 'download', 'new' => false));
 					$toolbar->appendButton('Custom', $download, 'download');
@@ -202,7 +218,7 @@ class SWJProjectsViewVersion extends HtmlView
 		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
 
 		// Add support button
-		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
+		$link = 'https://www.septdir.com/support#solution=SWJProjects';
 		if ($isJoomla4 == true)
 		{
 			$toolbar->linkButton('support')
@@ -211,14 +227,16 @@ class SWJProjectsViewVersion extends HtmlView
 				->icon('icon-support')
 				->attributes(['target' => '_blank'])
 				->text(Text::_('COM_SWJPROJECTS_SUPPORT'));
-		} else {
+		}
+		else
+		{
 			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
 				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
 			$toolbar->appendButton('Custom', $download, 'support');
 		}
 
 		// Add donate button
-		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
+		$link = 'https://www.septdir.com/donate#solution=swjprojects';
 		if ($isJoomla4 == true)
 		{
 			$toolbar->linkButton('donate')
@@ -227,7 +245,9 @@ class SWJProjectsViewVersion extends HtmlView
 				->icon('icon-heart')
 				->attributes(['target' => '_blank'])
 				->text(Text::_('COM_SWJPROJECTS_DONATE'));
-		} else {
+		}
+		else
+		{
 			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
 				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
 			$toolbar->appendButton('Custom', $download, 'donate');

@@ -19,6 +19,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Version;
 use Joomla\Registry\Registry;
 
 class SWJProjectsModelVersion extends AdminModel
@@ -158,6 +159,11 @@ class SWJProjectsModelVersion extends AdminModel
 		{
 			$form->setFieldAttribute('state', 'disabled', 'true');
 			$form->setFieldAttribute('state', 'filter', 'unset');
+		}
+
+		if ((new Version())->isCompatible('4.0'))
+		{
+			$form->setFieldAttribute('joomla_version', 'type', 'text');
 		}
 
 		return $form;

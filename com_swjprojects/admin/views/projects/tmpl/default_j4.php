@@ -100,12 +100,10 @@ $columns = 9;
 						</tfoot>
 						<tbody <?php if ($saveOrder) : ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>"
 							data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true"<?php endif; ?>>
-						<?php $imgHeight = ComponentHelper::getParams('com_swjprojects')->get('admin_project_image_height', 40);
-						$imgStyle        = 'height:' . $imgHeight . 'px; width:auto;';
-						foreach ($this->items as $i => $item) :
+						<?php foreach ($this->items as $i => $item) :
 							$canEdit = $user->authorise('core.edit', 'com_swjprojects.project.' . $item->id);
-							$canChange   = $user->authorise('core.edit.state', 'com_swjprojects.project.' . $item->id);
-							$link        = ($canEdit) ? Route::_('index.php?option=com_swjprojects&task=project.edit&id='
+							$canChange = $user->authorise('core.edit.state', 'com_swjprojects.project.' . $item->id);
+							$link = ($canEdit) ? Route::_('index.php?option=com_swjprojects&task=project.edit&id='
 								. $item->id) : '';
 							?>
 							<tr class="row<?php echo $i % 2; ?>" data-draggable-group="1">
