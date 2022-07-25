@@ -16,28 +16,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('behavior.keepalive');
+$this->document->getWebAssetManager()
+	->useScript('keepalive')
+	->useScript('form.validate');
 HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
 
-Factory::getDocument()->getWebAssetManager()
-	->usePreset('choicesjs')
-	->useScript('webcomponent.field-fancy-select');
-
-Factory::getDocument()->addScriptDeclaration('
-	document.addEventListener("DOMContentLoaded", function () {
-		document.querySelectorAll("select").forEach(function (element) {
-			new Choices(element);
-		});
-	});
-	Joomla.submitbutton = function(task)
-	{
-		if (task == "category.cancel" || document.formvalidator.isValid(document.getElementById("item-form")))
-		{
-			Joomla.submitform(task, document.getElementById("item-form"));
-		}
-	};
-');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=category&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">

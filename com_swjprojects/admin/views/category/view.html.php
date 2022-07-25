@@ -124,6 +124,22 @@ class SWJProjectsViewCategory extends HtmlView
 		// Add cancel button
 		ToolbarHelper::cancel('category.cancel', 'JTOOLBAR_CLOSE');
 
+		// Add translate switcher
+		$switcher = LayoutHelper::render('components.swjprojects.translate.switcher');
+		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
+
+		// Add support button
+		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $support, 'support');
+
+		// Add donate button
+		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $donate, 'donate');
+
 		// Add preview button
 		if ($this->item->id)
 		{
@@ -140,42 +156,6 @@ class SWJProjectsViewCategory extends HtmlView
 					array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
 				$toolbar->appendButton('Custom', $preview, 'preview');
 			}
-		}
-
-		// Add translate switcher
-		$switcher = LayoutHelper::render('components.swjprojects.translate.switcher');
-		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
-
-		// Add support button
-		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('support')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-support')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_SUPPORT'));
-		} else {
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'support');
-		}
-
-		// Add donate button
-		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('donate')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-heart')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_DONATE'));
-		} else {
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'donate');
 		}
 	}
 }
