@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
  * @version    __DEPLOY_VERSION__
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -46,5 +46,8 @@ class SWJProjectsHelper extends ContentHelper
 		JHtmlSidebar::addEntry(Text::_('COM_SWJPROJECTS_CATEGORIES'),
 			'index.php?option=com_swjprojects&view=categories',
 			$vName == 'categories');
+
+		JHtmlSidebar::addEntry(Text::_('COM_SWJPROJECTS_CONFIG'),
+			'index.php?option=com_config&view=component&component=com_swjprojects');
 	}
 }

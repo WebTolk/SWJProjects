@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
  * @version    __DEPLOY_VERSION__
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @package    SW JProjects Component
  * @version    __DEPLOY_VERSION__
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -131,7 +131,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	{
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'documentation');
 		$toolbar = Toolbar::getInstance();
-		$isJoomla4 = (new Version())->isCompatible('4.0');
+
 		// Set page title
 		ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . Text::_('COM_SWJPROJECTS_DOCUMENTATION'), 'cube');
 
@@ -165,36 +165,16 @@ class SWJProjectsViewDocumentation extends HtmlView
 		}
 
 		// Add support button
-		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('support')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-support')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_SUPPORT'));
-		} else {
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'support');
-		}
+		$link    = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $support, 'support');
 
 		// Add donate button
-		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('donate')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-heart')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_DONATE'));
-		} else {
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'donate');
-		}
+		$link   = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $donate, 'donate');
 	}
 
 	/**
@@ -207,11 +187,11 @@ class SWJProjectsViewDocumentation extends HtmlView
 	protected function getSortFields()
 	{
 		return [
-			'd.state'         => Text::_('JSTATUS'),
-			'd.id'            => Text::_('JGRID_HEADING_ID'),
-			'd.title'         => Text::_('JGLOBAL_TITLE'),
-			'project_title'  => Text::_('COM_SWJPROJECTS_PROJECT'),
-			'd.ordering'      => Text::_('JGRID_HEADING_ORDERING')
+			'd.state'       => Text::_('JSTATUS'),
+			'd.id'          => Text::_('JGRID_HEADING_ID'),
+			'd.title'       => Text::_('JGLOBAL_TITLE'),
+			'project_title' => Text::_('COM_SWJPROJECTS_PROJECT'),
+			'd.ordering'    => Text::_('JGRID_HEADING_ORDERING')
 		];
 	}
 }

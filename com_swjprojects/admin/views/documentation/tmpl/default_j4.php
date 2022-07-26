@@ -1,22 +1,25 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
  * @version    __DEPLOY_VERSION__
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Button\PublishedButton;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
-HTMLHelper::_('behavior.multiselect');
 HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
 
 $user      = Factory::getUser();
@@ -26,112 +29,110 @@ $saveOrder = ($listOrder == 'd.ordering' && strtolower($listDirn) == 'asc');
 
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=com_swjprojects&task=documentation.saveOrderAjax&tmpl=component';
-	HTMLHelper::_('sortablelist.sortable', 'documentationList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+	$saveOrderingUrl = 'index.php?option=com_swjprojects&task=documentation.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
+	HTMLHelper::_('draggablelist.draggable');
 }
 
-$columns = 6;
+$columns = 8;
 ?>
+
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=documentation'); ?>" method="post"
-	  name="adminForm"
-	  id="adminForm">
+	  name="adminForm" id="adminForm" class="clearfix">
 	<div class="row">
 		<div class="col-md-12">
 			<div id="j-main-container" class="j-main-container">
 				<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 				<?php if (empty($this->items)) : ?>
-					<div class="alert alert-warning alert-no-items">
+					<div class="alert alert-info">
+						<span class="icon-info-circle" aria-hidden="true"></span><span
+								class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
 						<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 					</div>
 				<?php else : ?>
-					<table id="documentationList" class="table table-striped">
+					<table id="documentationList" class="table itemList">
 						<thead>
 						<tr>
-							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_('searchtools.sort', '', 'd.ordering', $listDirn, $listOrder, null,
-									'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
-							</th>
-							<th width="1%" class="center">
+							<td class="w-1 text-center">
 								<?php echo HTMLHelper::_('grid.checkall'); ?>
+							</td>
+							<th scope="col" class="w-1 text-center d-none d-md-table-cell">
+								<?php echo HTMLHelper::_('searchtools.sort', '',
+									'd.ordering', $listDirn, $listOrder, null, 'asc',
+									'JGRID_HEADING_ORDERING', 'icon-sort'); ?>
 							</th>
-							<th width="2%" style="min-width:100px" class="center">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'd.state', $listDirn, $listOrder); ?>
+							<th scope="col" class="w-1 text-center">
+								<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS',
+									'd.state', $listDirn, $listOrder); ?>
 							</th>
-							<th class="nowrap">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'title', $listDirn, $listOrder); ?>
+							<th scope="col">
+								<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE',
+									'title', $listDirn, $listOrder); ?>
 							</th>
-							<th width="20%" class="nowrap hidden-phone">
-								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_PROJECT', 'project_title',
-									$listDirn, $listOrder); ?>
+							<th scope="col" class="w-10 d-none d-md-table-cell">
+								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_PROJECT',
+									'project_title', $listDirn, $listOrder); ?>
 							</th>
-							<th width="1%" class="nowrap hidden-phone center">
-								<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'p.id', $listDirn, $listOrder); ?>
+							<th scope="col" class="w-5 d-none d-md-table-cell">
+								<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID',
+									'd.id', $listDirn, $listOrder); ?>
 							</th>
 						</tr>
 						</thead>
 						<tfoot>
 						<tr>
-							<td colspan="<?php echo $columns; ?>">
-								<?php echo $this->pagination->getListFooter(); ?>
+							<td colspan="<?php echo $columns; ?>" class="text-end">
+								<?php echo $this->pagination->getResultsCounter(); ?>
 							</td>
 						</tr>
 						</tfoot>
-						<tbody>
+						<tbody <?php if ($saveOrder) : ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>"
+							data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true"<?php endif; ?>>
 						<?php foreach ($this->items as $i => $item) :
 							$canEdit = $user->authorise('core.edit', 'com_swjprojects.document.' . $item->id);
 							$canChange = $user->authorise('core.edit.state', 'com_swjprojects.document.' . $item->id);
+							$link = ($canEdit) ? Route::_('index.php?option=com_swjprojects&task=document.edit&id='
+								. $item->id) : '';
 							?>
-							<tr class="row<?php echo $i % 2; ?>" item-id="<?php echo $item->id ?>"
-								sortable-group-id="<?php echo $item->project_id; ?>">
-								<td class="order nowrap center hidden-phone">
+							<tr class="row<?php echo $i % 2; ?>" data-draggable-group="1">
+								<td class="text-center">
+									<?php echo HTMLHelper::_('grid.id', $i, $item->id, false, 'cid', 'cb', $item->title); ?>
+								</td>
+								<td class="text-center d-none d-md-table-cell">
 									<?php
 									$iconClass = '';
-									if (!$canChange)
-									{
-										$iconClass = ' inactive';
-									}
-									elseif (!$saveOrder)
-									{
-										$iconClass = ' inactive tip-top hasTooltip" title="' .
-											HTMLHelper::_('tooltipText', 'JORDERINGDISABLED');
-									}
+									if (!$canChange) $iconClass = ' inactive';
+									elseif (!$saveOrder) $iconClass = ' inactive" title="' . Text::_('JORDERINGDISABLED');
 									?>
-									<span class="sortable-handler<?php echo $iconClass ?>"><span
-												class="icon-menu"></span></span>
+									<span class="sortable-handler<?php echo $iconClass ?>">
+										<span class="icon-ellipsis-v"></span>
+									</span>
 									<?php if ($canChange && $saveOrder) : ?>
-										<input type="text" name="order[]" value="<?php echo $item->ordering; ?>"
-											   class="width-20 text-area-order" style="display:none"/>
+										<input type="text" name="order[]" size="5"
+											   value="<?php echo $item->ordering; ?>"
+											   class="width-20 text-area-order hidden">
 									<?php endif; ?>
 								</td>
-								<td class="center">
-									<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+								<td class="text-center">
+									<?php echo (new PublishedButton)->render((int) $item->state, $i, [
+										'task_prefix' => 'documentation.',
+										'disabled'    => !$canChange,
+										'id'          => 'state-' . $item->id
+									]); ?>
 								</td>
-								<td class="center nowrap">
-									<div class="btn-group">
-										<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'documentation.', $canChange); ?>
-									</div>
+								<td>
+									<a <?php echo ($link) ? 'href="' . $link . '"' : 'disable'; ?>>
+										<strong><?php echo $item->title; ?></strong>
+									</a>
 								</td>
-								<td class="nowrap">
-									<?php if ($canEdit) : ?>
-										<a class="hasTooltip" title="<?php echo Text::_('JACTION_EDIT'); ?>"
-										   href="<?php echo Route::_('index.php?option=com_swjprojects&task=document.edit&id='
-											   . $item->id); ?>">
-											<?php echo $this->escape($item->title); ?>
-										</a>
-									<?php else : ?>
-										<?php echo $this->escape($item->title); ?>
-									<?php endif; ?>
-								</td>
-								<td class="small hidden-phone">
+								<td class="d-none d-md-table-cell">
 									<?php echo $this->escape($item->project_title); ?>
 								</td>
-								<td class="hidden-phone center">
-									<?php echo $item->id; ?>
-								</td>
+								<td class="d-none d-md-table-cell"><?php echo $item->id; ?></td>
 							</tr>
 						<?php endforeach; ?>
 						</tbody>
 					</table>
+					<?php echo $this->pagination->getListFooter(); ?>
 				<?php endif; ?>
 				<input type="hidden" name="task" value=""/>
 				<input type="hidden" name="boxchecked" value="0"/>

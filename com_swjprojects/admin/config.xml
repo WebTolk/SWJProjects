@@ -27,11 +27,13 @@
 		<field name="projects_layout" type="componentlayout"
 			   label="COM_SWJPROJECTS_PARAMS_PROJECTS_LAYOUT"
 			   extension="com_swjprojects"
-			   view="projects"/>
+			   view="projects"
+			   class="form-select"/>
 		<field name="project_layout" type="componentlayout"
 			   label="COM_SWJPROJECTS_PARAMS_PROJECT_LAYOUT"
 			   extension="com_swjprojects"
-			   view="project"/>
+			   view="project"
+			   class="form-select"/>
 		<field name="versions_limit" type="list"
 			   label="COM_SWJPROJECTS_PARAMS_VERSIONS_LIMIT"
 			   default="10">
@@ -48,19 +50,23 @@
 		<field name="versions_layout" type="componentlayout"
 			   label="COM_SWJPROJECTS_PARAMS_VERSIONS_LAYOUT"
 			   extension="com_swjprojects"
-			   view="versions"/>
+			   view="versions"
+			   class="form-select"/>
 		<field name="version_layout" type="componentlayout"
 			   label="COM_SWJPROJECTS_PARAMS_VERSION_LAYOUT"
 			   extension="com_swjprojects"
-			   view="version"/>
+			   view="version"
+			   class="form-select"/>
 		<field name="documentation_layout" type="componentlayout"
 			   label="com_swjprojects_params_documentation_layout"
 			   extension="com_swjprojects"
-			   view="documentation"/>
+			   view="documentation"
+			   class="form-select"/>
 		<field name="document_layout" type="componentlayout"
 			   label="COM_SWJPROJECTS_PARAMS_DOCUMENT_LAYOUT"
 			   extension="com_swjprojects"
-			   view="document"/>
+			   view="document"
+			   class="form-select"/>
 		<field name="documentation_limit" type="list"
 			   label="COM_SWJPROJECTS_PARAMS_DOCUMENTATION_LIMIT"
 			   default="10">
