@@ -25,7 +25,8 @@
 		<field name="projects" type="projects"
 			   label="COM_SWJPROJECTS_PROJECTS"
 			   required="true"
-			   multiple="true">
+			   multiple="true"
+			   layout="joomla.form.field.list-fancy-select">
 			<option value="-1">JALL</option>
 		</field>
 		<field name="order" type="text"

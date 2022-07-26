@@ -12,48 +12,35 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('behavior.keepalive');
+$this->document->getWebAssetManager()
+	->useScript('keepalive')
+	->useScript('form.validate');
 HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
-
-Factory::getDocument()->getWebAssetManager()
-	->usePreset('choicesjs')
-	->useScript('webcomponent.field-fancy-select');
-
-Factory::getDocument()->addScriptDeclaration('
-	document.addEventListener("DOMContentLoaded", function () {
-		document.querySelectorAll("select").forEach(function (element) {
-			new Choices(element);
-		});
-	});
-	Joomla.submitbutton = function(task)
-	{
-		if (task == "category.cancel" || document.formvalidator.isValid(document.getElementById("item-form")))
-		{
-			Joomla.submitform(task, document.getElementById("item-form"));
-		}
-	};
-');
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=key&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">
 	<div class="main-card">
-		<div class="row title-alias form-vertical mb-3">
-			<div class="col-12 col-lg-9">
-				<fieldset class="ps-4">
+		<div class="row п-0">
+			<div class="col-lg-8">
+				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general', 'recall' => true, 'breakpoint' => 768]); ?>
+				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JGLOBAL_FIELDSET_CONTENT')); ?>
+				<fieldset class="form-horizontal p-3">
 					<?php echo $this->form->renderFieldset('key'); ?>
-				</fieldset>
-				<hr>
-				<fieldset class="form-horizontal">
 					<?php echo $this->form->renderFieldset('plugins'); ?>
 				</fieldset>
+				<?php echo HTMLHelper::_('uitab.endTab'); ?>
+				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 			</div>
-			<div class="col-12 col-lg-3">
-				<fieldset class="bg-light border border-left p-3">
-					<?php echo $this->form->renderFieldset('global'); ?>
-				</fieldset>
+			<div class="col-lg-4">
+				<div class="form-vertical p-3">
+					<div class="options-form">
+						<?php echo $this->form->renderFieldset('global'); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

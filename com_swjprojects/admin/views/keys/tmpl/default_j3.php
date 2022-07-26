@@ -39,7 +39,7 @@ $columns = 9;
 				<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 			</div>
 		<?php else : ?>
-			<table id="versionsList" class="table table-striped">
+			<table id="keysList" class="table table-striped">
 				<thead>
 				<tr>
 					<th width="1%" class="center">

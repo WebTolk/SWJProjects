@@ -16,7 +16,7 @@ alter table `#__swjprojects_documentation` modify `params` text NULL;
 alter table `#__swjprojects_categories` modify `params` text NULL;
 
 alter table `#__swjprojects_translate_versions` modify `changelog` mediumtext NULL;
-alter table `#__swjprojects_translate_versions` modify `metadata` text NULL;\
+alter table `#__swjprojects_translate_versions` modify `metadata` text NULL;
 
 alter table `#__swjprojects_translate_projects` modify `introtext` text NULL;
 alter table `#__swjprojects_translate_projects` modify `fulltext` mediumtext NULL;

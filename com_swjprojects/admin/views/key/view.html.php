@@ -95,7 +95,6 @@ class SWJProjectsViewKey extends HtmlView
 		$isNew     = ($this->item->id == 0);
 		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'key', $this->item->id);
 		$toolbar   = Toolbar::getInstance();
-		$isJoomla4 = (new Version())->isCompatible('4.0');
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);
@@ -122,38 +121,14 @@ class SWJProjectsViewKey extends HtmlView
 
 		// Add support button
 		$link = 'https://www.septdir.com/support#solution=SWJProjects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('support')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-support')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_SUPPORT'));
-		}
-		else
-		{
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'support');
-		}
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $support, 'support');
 
 		// Add donate button
 		$link = 'https://www.septdir.com/donate#solution=swjprojects';
-		if ($isJoomla4 == true)
-		{
-			$toolbar->linkButton('donate')
-				->url($link)
-				->buttonClass('btn')
-				->icon('icon-heart')
-				->attributes(['target' => '_blank'])
-				->text(Text::_('COM_SWJPROJECTS_DONATE'));
-		}
-		else
-		{
-			$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-			$toolbar->appendButton('Custom', $download, 'donate');
-		}
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $donate, 'donate');
 	}
 }

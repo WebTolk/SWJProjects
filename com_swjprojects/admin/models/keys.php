@@ -198,6 +198,7 @@ class SWJProjectsModelKeys extends ListModel
 			$projects = $this->getProjects(implode(',',
 				array_merge(ArrayHelper::getColumn($items, 'projects'))));
 			$users    = $this->getUsers(ArrayHelper::getColumn($items, 'user'));
+			$nullDate = $this->getDbo()->getNullDate();
 			foreach ($items as &$item)
 			{
 				// Set projects
@@ -216,6 +217,9 @@ class SWJProjectsModelKeys extends ListModel
 					$item->projects = ArrayHelper::sortObjects($item->projects, 'ordering');
 				}
 				else $item->projects = false;
+
+				// Set date_end
+				if ($item->date_end === $nullDate) $item->date_end = false;
 
 				// Set user
 				$item->user = (!empty($users[$item->user])) ? $users[$item->user] : false;
