@@ -10,22 +10,24 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
+
+$title = ($this->category->id > 1) ? $this->category->title
+	: Factory::getApplication()->getMenu()->getActive()->title;
 ?>
 <div id="SWJProjects" class="projects">
-	<?php if ($this->category->id > 1): ?>
-		<div class="category info mb-3">
-			<h1><?php echo $this->category->title; ?></h1>
-			<?php if (!empty($this->category->description)): ?>
-				<div class="description">
-					<?php echo $this->category->description; ?>
-				</div>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
+	<div class="category info mb-3">
+		<h1><?php echo $title; ?></h1>
+		<?php if (!empty($this->category->description)): ?>
+			<div class="description">
+				<?php echo $this->category->description; ?>
+			</div>
+		<?php endif; ?>
+	</div>
 	<?php if (empty($this->items)) : ?>
 		<div class="alert alert-info">
 			<span class="icon-info-circle" aria-hidden="true"></span><span
@@ -40,11 +42,11 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 						<?php foreach ($row as $i => $item): ?>
 							<div class="col-md-4">
 								<div class="card">
-									<?php if ($icon = $item->images->get('icon')):?>
-									<a  href="<?php echo $item->link; ?>">
-										<?php echo HTMLHelper::image($icon, $item->title, array('class' => 'card-img-top'));?>
-									</a>
-									<?php endif;?>
+									<?php if ($icon = $item->images->get('icon')): ?>
+										<a href="<?php echo $item->link; ?>">
+											<?php echo HTMLHelper::image($icon, $item->title, array('class' => 'card-img-top')); ?>
+										</a>
+									<?php endif; ?>
 									<div class="card-body">
 										<h5 class="card-title">
 											<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
