@@ -16,18 +16,11 @@
 	</fields>
 	<fields name="params">
 		<fieldset name="settings" label="JFIELD_PARAMS_LABEL">
-			<field name="projects_limit" type="list"
+			<field name="projects_limit" type="integer"
 				   label="COM_SWJPROJECTS_PARAMS_PROJECTS_LIMIT"
+				   first="1" last="100" step="1"
 				   default=""
 				   useglobal="true">
-				<option value="5">J5</option>
-				<option value="10">J10</option>
-				<option value="15">J15</option>
-				<option value="20">J20</option>
-				<option value="25">J25</option>
-				<option value="30">J30</option>
-				<option value="50">J50</option>
-				<option value="100">J100</option>
 				<option value="0">JALL</option>
 			</field>
 		</fieldset>
