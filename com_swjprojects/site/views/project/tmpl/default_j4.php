@@ -18,17 +18,17 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 <div id="SWJProjects" class="project">
 	<div class="project info mb-3">
 		<h1><?php echo $this->project->title; ?></h1>
-		<?php if (!empty($this->project->categories)): ?>
 		<div>
-			<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORIES'); ?>: </strong>
-			<?php $i = 0;
-			foreach ($this->project->categories as $category)
-			{
-				if ($i > 0) echo ', ';
-				$i++;
-				echo '<a href="' . $category->link . '">' . $category->title . '</a>';
-			}
-			?>
+			<?php if (!empty($this->project->categories)): ?>
+				<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORIES'); ?>: </strong>
+				<?php $i = 0;
+				foreach ($this->project->categories as $category)
+				{
+					if ($i > 0) echo ', ';
+					$i++;
+					echo '<a href="' . $category->link . '">' . $category->title . '</a>';
+				}
+				?>
 			<?php else: ?>
 				<strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORY'); ?>: </strong>
 				<a href="<?php echo $this->category->link; ?>">
@@ -43,9 +43,9 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 				<?php if ($icon = $this->project->images->get('icon'))
 				{
 					echo HTMLHelper::image($icon, $this->project->title, array('class' => 'card-img-top'));
-				}; ?>
+				} ?>
 				<div class="card-body">
-					<ul class="list-unstyled">
+					<ul class="list-unstyled small">
 						<li>
 							<strong><?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE'); ?>: </strong>
 							<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $this->project->download_type); ?>
@@ -96,6 +96,31 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 			</div>
 		</div>
 		<div class="col-md-9">
+			<div class="mb-3">
+				<a href="<?php echo $this->project->link; ?>"
+				   class="btn btn-outline-primary btn-sm ms-1 mb-1">
+					<?php echo Text::_('COM_SWJPROJECTS_PROJECT'); ?>
+				</a>
+				<a href="<?php echo $this->project->versions; ?>"
+				   class="btn btn-outline-primary btn-sm ms-1 mb-1">
+					<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
+				</a>
+				<?php if ($this->project->documentation): ?>
+					<a href="<?php echo $this->project->documentation; ?>"
+					   class="btn btn-outline-primary btn-sm ms-1 mb-1">
+						<?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION'); ?>
+					</a>
+				<?php endif; ?>
+				<?php if ($urls = $this->project->urls->toArray()): ?>
+					<?php foreach ($urls as $txt => $url):
+						if (empty($url)) continue; ?>
+						<a href="<?php echo $url; ?>" target="_blank"
+						   class="btn btn-outline-primary btn-sm ms-1 mb-1">
+							<?php echo Text::_('COM_SWJPROJECTS_URLS_' . $txt); ?>
+						</a>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</div>
 			<div class="card mb-3">
 				<div class="card-body">
 					<?php if (!empty($this->project->introtext)): ?>
@@ -103,34 +128,38 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 							<?php echo $this->project->introtext; ?>
 						</p>
 					<?php endif; ?>
-					<a href="<?php echo $this->project->versions; ?>" class="btn btn-outline-primary btn-sm ms-1 mb-1">
-						<?php echo Text::_('COM_SWJPROJECTS_VERSIONS'); ?>
-					</a>
-					<?php if ($this->project->documentation): ?>
-						<a href="<?php echo $this->project->documentation; ?>"
-						   class="btn btn-outline-primary btn-sm ms-1 mb-1">
-							<?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION'); ?>
-						</a>
-					<?php endif; ?>
-					<?php if ($urls = $this->project->urls->toArray()): ?>
-						<?php foreach ($urls as $txt => $url):
-							if (empty($url)) continue; ?>
-							<a href="<?php echo $url; ?>" target="_blank"
-							   class="btn btn-outline-primary btn-sm ms-1 mb-1">
-								<?php echo Text::_('COM_SWJPROJECTS_URLS_' . $txt); ?>
-							</a>
-						<?php endforeach; ?>
+					<?php if (!empty($this->project->fulltext)): ?>
+						<div class="fulltext">
+							<?php echo $this->project->fulltext; ?>
+						</div>
 					<?php endif; ?>
 				</div>
 			</div>
-			<?php echo HTMLHelper::_('uitab.startTabSet', 'projectTab', array('active' => 'description', 'class')); ?>
-			<?php echo HTMLHelper::_('uitab.addTab', 'projectTab', 'description', Text::_('JGLOBAL_DESCRIPTION')); ?>
-			<?php if (!empty($this->project->fulltext)) echo $this->project->fulltext; ?>
+			<?php echo HTMLHelper::_('uitab.startTabSet', 'projectTab', array('active' => 'whats_new', 'class')); ?>
+			<?php echo HTMLHelper::_('uitab.addTab', 'projectTab', 'whats_new', Text::_('COM_SWJPROJECTS_WHATS_NEW')); ?>
+			<?php if ($this->version && !empty($this->version->changelog)): ?>
+				<?php foreach ($this->version->changelog as $item):
+					if (empty($item['title']) && empty($item['description'])) continue;
+					?>
+					<div class="item">
+						<?php if (!empty($item['title'])): ?>
+							<h3><?php echo $item['title']; ?></h3>
+						<?php endif; ?>
+						<?php if (!empty($item['description'])): ?>
+							<div class="description"><?php echo $item['description']; ?></div>
+						<?php endif; ?>
+					</div>
+					<hr>
+				<?php endforeach; ?>
+				<div class="text-right small muted">
+					<?php echo HTMLHelper::_('date', $this->version->date, Text::_('DATE_FORMAT_LC6')); ?>
+				</div>
+			<?php endif; ?>
 			<?php echo HTMLHelper::_('uitab.endTab'); ?>
 			<?php if ($this->project->joomla):
 				$type = $this->project->joomla->get('type'); ?>
 				<?php echo HTMLHelper::_('uitab.addTab', 'projectTab', 'joomla', Text::_('COM_SWJPROJECTS_JOOMLA')); ?>
-				<ul class="unstyled">
+				<ul class="list-unstyled">
 					<li>
 						<strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_TYPE'); ?>: </strong>
 						<?php echo Text::_('COM_SWJPROJECTS_JOOMLA_TYPE_' . $type); ?>
@@ -203,27 +232,6 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 						<?php endforeach; ?>
 					</div>
 				<?php endforeach; ?>
-				<?php echo HTMLHelper::_('uitab.endTab'); ?>
-			<?php endif; ?>
-
-			<?php if ($this->version && !empty($this->version->changelog)): ?>
-				<?php echo HTMLHelper::_('uitab.addTab', 'projectTab', 'whats_new', Text::_('COM_SWJPROJECTS_WHATS_NEW')); ?>
-				<?php foreach ($this->version->changelog as $item):
-					if (empty($item['title']) && empty($item['description'])) continue;
-					?>
-					<div class="item">
-						<?php if (!empty($item['title'])): ?>
-							<h3><?php echo $item['title']; ?></h3>
-						<?php endif; ?>
-						<?php if (!empty($item['description'])): ?>
-							<div class="description"><?php echo $item['description']; ?></div>
-						<?php endif; ?>
-					</div>
-					<hr>
-				<?php endforeach; ?>
-				<div class="text-right small muted">
-					<?php echo HTMLHelper::_('date', $this->version->date, Text::_('DATE_FORMAT_LC6')); ?>
-				</div>
 				<?php echo HTMLHelper::_('uitab.endTab'); ?>
 			<?php endif; ?>
 			<?php echo HTMLHelper::_('uitab.endTabSet'); ?>

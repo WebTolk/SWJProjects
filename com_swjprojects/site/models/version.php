@@ -216,6 +216,11 @@ class SWJProjectsModelVersion extends ItemModel
 						->where('c.state IN (' . $published . ')');
 				}
 
+				// Join over documentation for documentation link
+				$query->select(array('d.id as documentation'))
+					->leftJoin($db->quoteName('#__swjprojects_documentation', 'd') .
+						' ON d.project_id = p.id AND d.state = 1');
+
 				$data = $db->setQuery($query)->loadObject();
 
 				if (empty($data))
@@ -312,6 +317,11 @@ class SWJProjectsModelVersion extends ItemModel
 				$data->project->slug      = $data->pslug;
 				$data->project->link      = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->pslug, $data->cslug));
 				$data->project->versions  = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->pslug, $data->cslug));
+				$data->project->documentation = (!$data->documentation) ? false :
+					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
+				if (!empty($data->project->urls->get('documentation'))) {
+					$data->project->documentation = false;
+				}
 				$data->project->images    = new Registry();
 				$data->project->images->set('icon',
 					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'icon', $data->project_language));

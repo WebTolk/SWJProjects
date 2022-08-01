@@ -455,6 +455,11 @@ class SWJProjectsModelVersions extends ListModel
 						->where('c.state IN (' . $published . ')');
 				}
 
+				// Join over documentation for documentation link
+				$query->select(array('d.id as documentation'))
+					->leftJoin($db->quoteName('#__swjprojects_documentation', 'd') .
+						' ON d.project_id = p.id AND d.state = 1');
+
 				$data = $db->setQuery($query)->loadObject();
 
 				if (!$data->id)
@@ -520,11 +525,17 @@ class SWJProjectsModelVersions extends ListModel
 					SWJProjectsHelperImages::getImage('projects', $data->id, 'cover', $data->language));
 
 				// Set link
-				$data->slug     = $data->id . ':' . $data->alias;
-				$data->cslug    = ($data->category) ? $data->category->slug : $data->catid;
-				$data->link     = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
-				$data->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
-				$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->id));
+				$data->slug          = $data->id . ':' . $data->alias;
+				$data->cslug         = ($data->category) ? $data->category->slug : $data->catid;
+				$data->link          = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->slug, $data->cslug));
+				$data->versions      = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->slug, $data->cslug));
+				$data->download      = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->id));
+				$data->documentation = (!$data->documentation) ? false :
+					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
+				if (!empty($data->urls->get('documentation')))
+				{
+					$data->documentation = false;
+				}
 
 				// Set version
 				$data->version = false;
