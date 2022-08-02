@@ -318,7 +318,7 @@ class SWJProjectsModelVersion extends ItemModel
 				$data->project->link      = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->pslug, $data->cslug));
 				$data->project->versions  = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->pslug, $data->cslug));
 				$data->project->documentation = (!$data->documentation) ? false :
-					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
+					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->project->slug, $data->cslug));
 				if (!empty($data->project->urls->get('documentation'))) {
 					$data->project->documentation = false;
 				}
