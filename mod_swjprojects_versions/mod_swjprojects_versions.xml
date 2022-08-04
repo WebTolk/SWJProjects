@@ -2,12 +2,12 @@
 <extension version="3.9" type="module" client="site" method="upgrade">
 	<name>MOD_SWJPROJECTS_VERSIONS</name>
 	<author>Septdir Workshop</author>
-	<creationDate>July 2020</creationDate>
+	<creationDate>August 2022</creationDate>
 	<copyright>Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.5.6-dev</version>
+	<version>1.6.0</version>
 	<description>MOD_SWJPROJECTS_VERSIONS_DESCRIPTION</description>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_versions.ini</language>

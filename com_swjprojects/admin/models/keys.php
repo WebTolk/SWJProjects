@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -31,7 +31,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	protected $_users = null;
 
@@ -40,7 +40,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	protected $_projects = null;
 
@@ -240,7 +240,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  object[] Categories array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	public function getProjects($pks = null)
 	{
@@ -307,7 +307,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  object[] Users array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	public function getUsers($pks = null)
 	{
