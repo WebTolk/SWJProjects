@@ -9,7 +9,8 @@
 		<fieldset name="request">
 			<field name="id" type="projects"
 				   label="COM_SWJPROJECTS_PROJECT"
-				   required="true">
+				   required="true"
+				   layout="joomla.form.field.list-fancy-select">
 				<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
 			</field>
 		</fieldset>

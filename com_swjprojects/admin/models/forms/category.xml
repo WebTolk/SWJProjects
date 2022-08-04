@@ -17,7 +17,8 @@
 			   readonly="true"/>
 		<field name="parent_id" type="categories"
 			   label="COM_SWJPROJECTS_CATEGORY_PARENT"
-			   required="true">
+			   required="true"
+			   layout="joomla.form.field.list-fancy-select">
 			<option value="1">JGLOBAL_ROOT_PARENT</option>
 		</field>
 		<field name="state" type="list"
@@ -37,7 +38,8 @@
 				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
 				   useglobal="true"
 				   extension="com_swjprojects"
-				   view="projects"/>
+				   view="projects"
+				   class="form-select"/>
 		</fields>
 		<field name="lft" type="hidden" filter="unset"/>
 		<field name="rgt" type="hidden" filter="unset"/>

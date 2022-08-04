@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -13,9 +13,9 @@ defined('_JEXEC') or die;
 
 /**
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -29,6 +29,7 @@ use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Version;
 
 class SWJProjectsViewDocumentation extends HtmlView
 {
@@ -129,7 +130,7 @@ class SWJProjectsViewDocumentation extends HtmlView
 	protected function addToolbar()
 	{
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'documentation');
-		$toolbar = Toolbar::getInstance('toolbar');
+		$toolbar = Toolbar::getInstance();
 
 		// Set page title
 		ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . Text::_('COM_SWJPROJECTS_DOCUMENTATION'), 'cube');
@@ -164,16 +165,16 @@ class SWJProjectsViewDocumentation extends HtmlView
 		}
 
 		// Add support button
-		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+		$link    = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'support');
+		$toolbar->appendButton('Custom', $support, 'support');
 
 		// Add donate button
-		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+		$link   = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'donate');
+		$toolbar->appendButton('Custom', $donate, 'donate');
 	}
 
 	/**
@@ -186,11 +187,11 @@ class SWJProjectsViewDocumentation extends HtmlView
 	protected function getSortFields()
 	{
 		return [
-			'd.state'         => Text::_('JSTATUS'),
-			'd.id'            => Text::_('JGRID_HEADING_ID'),
-			'd.title'         => Text::_('JGLOBAL_TITLE'),
-			'project_title'  => Text::_('COM_SWJPROJECTS_PROJECT'),
-			'd.ordering'      => Text::_('JGRID_HEADING_ORDERING')
+			'd.state'       => Text::_('JSTATUS'),
+			'd.id'          => Text::_('JGRID_HEADING_ID'),
+			'd.title'       => Text::_('JGLOBAL_TITLE'),
+			'project_title' => Text::_('COM_SWJPROJECTS_PROJECT'),
+			'd.ordering'    => Text::_('JGRID_HEADING_ORDERING')
 		];
 	}
 }

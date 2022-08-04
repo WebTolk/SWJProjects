@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -18,6 +18,7 @@ use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Version;
 
 class SWJProjectsViewProjects extends HtmlView
 {
@@ -117,8 +118,8 @@ class SWJProjectsViewProjects extends HtmlView
 	 */
 	protected function addToolbar()
 	{
-		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'projects');
-		$toolbar = Toolbar::getInstance('toolbar');
+		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'projects');
+		$toolbar   = Toolbar::getInstance();
 
 		// Set page title
 		ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . Text::_('COM_SWJPROJECTS_PROJECTS'), 'cube');
@@ -153,6 +154,7 @@ class SWJProjectsViewProjects extends HtmlView
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
 		$toolbar->appendButton('Custom', $jupdate, 'joomla');
 
+
 		// Add preferences button
 		if ($canDo->get('core.admin') || $canDo->get('core.options'))
 		{
@@ -160,16 +162,16 @@ class SWJProjectsViewProjects extends HtmlView
 		}
 
 		// Add support button
-		$link = 'https://www.septdir.com/support#solution=SWJProjects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+		$link    = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'support');
+		$toolbar->appendButton('Custom', $support, 'support');
 
 		// Add donate button
-		$link = 'https://www.septdir.com/donate#solution=swjprojects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+		$link   = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'donate');
+		$toolbar->appendButton('Custom', $donate, 'donate');
 	}
 
 	/**

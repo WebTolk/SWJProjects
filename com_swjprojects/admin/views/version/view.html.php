@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -18,6 +18,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Version;
 
 class SWJProjectsViewVersion extends HtmlView
 {
@@ -97,12 +98,24 @@ class SWJProjectsViewVersion extends HtmlView
 			$this->form->removeField('joomla_version', '');
 		}
 
-		Factory::getDocument()->addScriptDeclaration("function projectHasChanged(element) {
-			var cat = jQuery(element);
-			Joomla.loadingLayer('show');
-			jQuery('input[name=task]').val('version.reload');
-			element.form.submit();
-		}");
+		if ((new Version())->isCompatible('4.0'))
+		{
+			Factory::getDocument()->addScriptDeclaration("function projectHasChanged(element) {
+				document.body.appendChild(document.createElement('joomla-core-loader'));
+				document.querySelector('input[name=task]').value = 'version.reload';
+				element.form.submit();
+			}");
+		}
+		else
+		{
+			Factory::getDocument()->addScriptDeclaration("function projectHasChanged(element) {
+				var cat = jQuery(element);
+				Joomla.loadingLayer('show');
+				jQuery('input[name=task]').val('version.reload');
+				element.form.submit();
+			}");
+		}
+
 
 		// Add title and toolbar
 		$this->addToolbar();
@@ -119,9 +132,9 @@ class SWJProjectsViewVersion extends HtmlView
 	 */
 	protected function addToolbar()
 	{
-		$isNew   = ($this->item->id == 0);
-		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
-		$toolbar = Toolbar::getInstance('toolbar');
+		$isNew     = ($this->item->id == 0);
+		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
+		$toolbar   = Toolbar::getInstance();
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);
@@ -149,13 +162,6 @@ class SWJProjectsViewVersion extends HtmlView
 		// Add preview & download buttons
 		if ($this->item->id)
 		{
-			// Preview button
-			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
-				. '&project_id=' . $this->project->id . '&catid=' . $this->project->catid;
-			$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
-			$toolbar->appendButton('Custom', $preview, 'preview');
-
 			// Download button
 			if ($this->item->file)
 			{
@@ -176,15 +182,26 @@ class SWJProjectsViewVersion extends HtmlView
 		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
 
 		// Add support button
-		$link = 'https://www.septdir.com/support#solution=SWJProjects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+		$link    = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'support');
+		$toolbar->appendButton('Custom', $support, 'support');
 
 		// Add donate button
-		$link = 'https://www.septdir.com/donate#solution=swjprojects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
+		$link   = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'donate');
+		$toolbar->appendButton('Custom', $donate, 'donate');
+
+		// Add preview button
+		if ($this->item->id)
+		{
+			// Preview button
+			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
+				. '&project_id=' . $this->project->id . '&catid=' . $this->project->catid;
+			$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
+				array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
+			$toolbar->appendButton('Custom', $preview, 'preview');
+		}
 	}
 }

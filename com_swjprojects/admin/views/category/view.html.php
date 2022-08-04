@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -17,6 +17,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Version;
 
 class SWJProjectsViewCategory extends HtmlView
 {
@@ -97,7 +98,7 @@ class SWJProjectsViewCategory extends HtmlView
 	{
 		$isNew   = ($this->item->id == 0);
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'category', $this->item->id);
-		$toolbar = Toolbar::getInstance('toolbar');
+		$toolbar = Toolbar::getInstance();
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);
@@ -122,6 +123,22 @@ class SWJProjectsViewCategory extends HtmlView
 		// Add cancel button
 		ToolbarHelper::cancel('category.cancel', 'JTOOLBAR_CLOSE');
 
+		// Add translate switcher
+		$switcher = LayoutHelper::render('components.swjprojects.translate.switcher');
+		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
+
+		// Add support button
+		$link     = 'https://www.septdir.com/support#solution=SWJProjects';
+		$support = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
+		$toolbar->appendButton('Custom', $support, 'support');
+
+		// Add donate button
+		$link     = 'https://www.septdir.com/donate#solution=swjprojects';
+		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
+		$toolbar->appendButton('Custom', $donate, 'donate');
+
 		// Add preview button
 		if ($this->item->id)
 		{
@@ -130,21 +147,5 @@ class SWJProjectsViewCategory extends HtmlView
 				array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
 			$toolbar->appendButton('Custom', $preview, 'preview');
 		}
-
-		// Add translate switcher
-		$switcher = LayoutHelper::render('components.swjprojects.translate.switcher');
-		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
-
-		// Add support button
-		$link = 'https://www.septdir.com/support#solution=SWJProjects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'support');
-
-		// Add donate button
-		$link = 'https://www.septdir.com/donate#solution=swjprojects';
-		$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-		$toolbar->appendButton('Custom', $download, 'donate');
 	}
 }

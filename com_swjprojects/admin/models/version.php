@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -19,6 +19,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Version;
 use Joomla\Registry\Registry;
 
 class SWJProjectsModelVersion extends AdminModel
@@ -158,6 +159,11 @@ class SWJProjectsModelVersion extends AdminModel
 		{
 			$form->setFieldAttribute('state', 'disabled', 'true');
 			$form->setFieldAttribute('state', 'filter', 'unset');
+		}
+
+		if ((new Version())->isCompatible('4.0'))
+		{
+			$form->setFieldAttribute('joomla_version', 'type', 'text');
 		}
 
 		return $form;

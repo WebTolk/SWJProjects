@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -155,8 +155,14 @@ class SWJProjectsModelKey extends AdminModel
 			$data['date_start'] = Factory::getDate()->toSql();
 		}
 
+		// Prepare date_end field data
+		if (isset($data['date_end']) && empty($data['date_end']))
+		{
+			$data['date_end'] = $this->getDbo()->getNullDate();
+		}
+
 		// Prepare plugins field data
-		if (isset($data['params']))
+		if (isset($data['plugins']))
 		{
 			$registry        = new Registry($data['plugins']);
 			$data['plugins'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));

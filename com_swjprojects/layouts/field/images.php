@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -39,7 +39,7 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 HTMLHelper::script('com_swjprojects/dragula.min.js', array('version' => 'auto', 'relative' => true));
 HTMLHelper::script('com_swjprojects/field-images.min.js', array('version' => 'auto', 'relative' => true));
 
-$loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-loader.gif');
+$loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/images/ajax-loader.gif');
 ?>
 <div id="<?php echo $id; ?>" class="<?php echo $class; ?>" input-images="container"
 	 data-controller="<?php echo Route::_('index.php?option=com_swjprojects'); ?>"

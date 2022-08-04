@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -37,7 +37,7 @@ HTMLHelper::stylesheet('com_swjprojects/field-image.min.css', array('version' =>
 HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'relative' => true));
 HTMLHelper::script('com_swjprojects/field-image.min.js', array('version' => 'auto', 'relative' => true));
 
-$loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-loader.gif');
+$loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/images/ajax-loader.gif');
 ?>
 <div id="<?php echo $id; ?>" class="<?php echo $class; ?>" input-image="container"
 	 data-controller="<?php echo Route::_('index.php?option=com_swjprojects'); ?>"
@@ -53,7 +53,7 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-load
 				array('input-image' => 'preview', 'data-loading' => $loading), true); ?>
 		</div>
 		<div input-image="actions" class="btn-group">
-			<a class=" btn btn-small btn-inverse icon-eye hasTooltip" input-image="view"
+			<a class="btn btn-small btn-inverse btn-dark icon-eye hasTooltip" input-image="view"
 			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"></a>
 			<label class="btn btn-small btn-success icon-upload hasTooltip" for="<?php echo $id; ?>_field"
 				   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_UPLOAD'); ?>"></label>

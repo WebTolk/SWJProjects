@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -31,7 +31,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	protected $_users = null;
 
@@ -40,7 +40,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @var  array
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	protected $_projects = null;
 
@@ -198,6 +198,7 @@ class SWJProjectsModelKeys extends ListModel
 			$projects = $this->getProjects(implode(',',
 				array_merge(ArrayHelper::getColumn($items, 'projects'))));
 			$users    = $this->getUsers(ArrayHelper::getColumn($items, 'user'));
+			$nullDate = $this->getDbo()->getNullDate();
 			foreach ($items as &$item)
 			{
 				// Set projects
@@ -216,6 +217,9 @@ class SWJProjectsModelKeys extends ListModel
 					$item->projects = ArrayHelper::sortObjects($item->projects, 'ordering');
 				}
 				else $item->projects = false;
+
+				// Set date_end
+				if ($item->date_end === $nullDate) $item->date_end = false;
 
 				// Set user
 				$item->user = (!empty($users[$item->user])) ? $users[$item->user] : false;
@@ -236,7 +240,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  object[] Categories array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	public function getProjects($pks = null)
 	{
@@ -303,7 +307,7 @@ class SWJProjectsModelKeys extends ListModel
 	 *
 	 * @return  object[] Users array.
 	 *
-	 * @since  __DEPLOY_VERSION__
+	 * @since  1.6.0
 	 */
 	public function getUsers($pks = null)
 	{
@@ -327,7 +331,7 @@ class SWJProjectsModelKeys extends ListModel
 		{
 			$db    = $this->getDbo();
 			$query = $db->getQuery(true)
-				->select(array('u.id', 'u.name', 'u.username'))
+				->select(array('u.id', 'u.name', 'u.username', 'u.email'))
 				->from($db->quoteName('#__users', 'u'))
 				->where('u.id  IN (' . implode(',', $get) . ')');
 

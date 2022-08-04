@@ -1,3 +1,12 @@
+/*
+ * @package    SW JProjects Component
+ * @version    1.6.0
+ * @author     Septdir Workshop - www.septdir.com
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @link       https://www.septdir.com/
+ */
+
 ALTER TABLE `#__swjprojects_projects` ADD `download_type` VARCHAR(100) NOT NULL DEFAULT 'free' AFTER `catid`;
 ALTER TABLE `#__swjprojects_projects` ADD INDEX `idx_download`(`download_type`(100));
 ALTER TABLE `#__swjprojects_translate_projects` ADD `payment` MEDIUMTEXT NOT NULL AFTER `fulltext`;

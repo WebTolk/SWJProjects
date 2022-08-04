@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -198,6 +198,24 @@ class SWJProjectsModelDocument extends ItemModel
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 				}
 
+				// Join over versions for last version
+				$subQuery = $db->getQuery(true)
+					->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
+					->from($db->quoteName('#__swjprojects_versions', 'lv'))
+					->where('lv.project_id = p.id')
+					->where('lv.state = 1')
+					->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
+					->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
+					->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
+					->order($db->escape('lv.micro') . ' ' . $db->escape('desc'))
+					->setLimit(1);
+				$query->select('(' . $subQuery->__toString() . ') as last_version');
+
+				// Join over versions for download counter
+				$query->select(array('SUM(dc.downloads) as downloads'))
+					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id'
+						. ' AND dc.state = 1');
+
 				// Filter by published state
 				$published = $this->getState('filter.published');
 				if (is_numeric($published))
@@ -266,6 +284,7 @@ class SWJProjectsModelDocument extends ItemModel
 				$data->project->alias         = $data->project_alias;
 				$data->project->elemet        = $data->project_element;
 				$data->project->introtext     = nl2br($data->project_introtext);
+				$data->project->downloads     = $data->downloads;
 				$data->project->urls          = new Registry($data->project_urls);
 				$data->project->slug          = $data->pslug;
 				$data->project->link          = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->pslug, $data->cslug));
@@ -276,6 +295,17 @@ class SWJProjectsModelDocument extends ItemModel
 					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'icon', $data->project_language));
 				$data->project->images->set('cover',
 					SWJProjectsHelperImages::getImage('projects', $data->project_id, 'cover', $data->project_language));
+
+				// Set version
+				$data->project->version = false;
+				if (!empty($data->last_version))
+				{
+					$data->project->version = new stdClass();
+					list($data->project->version->slug, $data->project->version->version) = explode('|', $data->last_version, 2);
+					list($data->project->version->id, $data->project->version->alias) = explode(':', $data->project->version->slug, 2);
+					$data->project->version->link = Route::_(SWJProjectsHelperRoute::getVersionRoute($data->project->version->slug,
+						$data->slug, $data->cslug));
+				}
 
 				// Set payment
 				$data->payment                = new Registry($data->payment);

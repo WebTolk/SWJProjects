@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.9" type="component" method="upgrade">
+<extension version="4.0" type="component" method="upgrade">
 	<name>COM_SWJPROJECTS</name>
 	<author>Septdir Workshop</author>
-	<creationDate>July 2020</creationDate>
-	<copyright>Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.</copyright>
+	<creationDate>August 2022</creationDate>
+	<copyright>Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.5.6-dev</version>
+	<version>1.6.0</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<install>
@@ -47,6 +47,9 @@
 			<menu option="com_swjprojects" view="keys">COM_SWJPROJECTS_KEYS</menu>
 			<menu option="com_swjprojects" view="documentation">COM_SWJPROJECTS_DOCUMENTATION</menu>
 			<menu option="com_swjprojects" view="categories">COM_SWJPROJECTS_CATEGORIES</menu>
+			<menu link="option=com_config&amp;view=component&amp;component=com_swjprojects">
+				COM_SWJPROJECTS_CONFIG
+			</menu>
 		</submenu>
 		<files folder="admin">
 			<folder>controllers</folder>

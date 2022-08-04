@@ -4,7 +4,8 @@
 		<field name="project_id" type="projects"
 			   label="COM_SWJPROJECTS_PROJECT"
 			   required="true"
-			   onchange="projectHasChanged(this)">
+			   onchange="projectHasChanged(this)"
+			   layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
 		</field>
 		<field name="major" type="text"
@@ -85,7 +86,8 @@
 				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
 				   useglobal="true"
 				   extension="com_swjprojects"
-				   view="version"/>
+				   view="version"
+				   class="form-select"/>
 		</fields>
 	</fieldset>
 	<fieldset name="statistics" label="COM_SWJPROJECTS_STATISTICS">

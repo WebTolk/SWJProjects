@@ -23,12 +23,14 @@
 			   readonly="true"/>
 		<field name="catid" type="categories"
 			   label="COM_SWJPROJECTS_CATEGORY"
-			   required="true">
+			   required="true"
+			   layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_SWJPROJECTS_CATEGORY_SELECT</option>
 		</field>
 		<field name="additional_categories" type="categories"
 			   label="COM_SWJPROJECTS_PROJECT_ADDITIONAL_CATEGORIES"
-			   multiple="true"/>
+			   multiple="true"
+			   layout="joomla.form.field.list-fancy-select"/>
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"
@@ -46,7 +48,8 @@
 				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
 				   useglobal="true"
 				   extension="com_swjprojects"
-				   view="project"/>
+				   view="project"
+				   class="form-select"/>
 		</fields>
 		<field name="ordering" type="hidden" filter="unset"/>
 	</fieldset>
@@ -131,7 +134,8 @@
 			<form>
 				<field name="project" type="projects"
 					   label="COM_SWJPROJECTS_RELATIONS_PROJECT"
-					   default="-1">
+					   default="-1"
+					   layout="joomla.form.field.list-fancy-select">
 					<option value="-1">COM_SWJPROJECTS_RELATIONS_EXTERNAL</option>
 				</field>
 				<field name="title" type="text"

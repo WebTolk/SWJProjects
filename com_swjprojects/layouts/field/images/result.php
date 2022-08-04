@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.0
  * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2020 Septdir Workshop. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://www.septdir.com/
  */
@@ -26,7 +26,7 @@ extract($displayData);
  *
  */
 
-$loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-loader.gif');
+$loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/images/ajax-loader.gif');
 ?>
 <div class="images">
 	<?php foreach ($images as $key => $image) : ?>
@@ -39,7 +39,7 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-load
 				<?php echo HTMLHelper::image('com_swjprojects/no-image.svg', '',
 					array('input-images' => 'noimage', 'style' => (empty($image->src)) ? '' : 'display: none;'), true); ?>
 				<div input-images="actions" class="btn-group">
-					<a class=" btn btn-small btn-inverse icon-eye hasTooltip" input-images="view"
+					<a class="btn btn-small btn-inverse btn-dark icon-eye hasTooltip" input-images="view"
 					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"></a>
 					<label class="btn btn-small btn-success icon-upload hasTooltip"
 						   for="<?php echo $id . '_' . $image->name . '_field'; ?>"
@@ -53,7 +53,7 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/jui/images/ajax-load
 				<label for="<?php echo $id . '_' . $image->name . '_field'; ?>"></label>
 			</div>
 			<textarea name="<?php echo $name . '[' . $image->name . '][text]'; ?>" input-images="text" rows="3"
-					  class="span12" data-key="<?php echo $image->name; ?>"
+					  class="span12 form-control" data-key="<?php echo $image->name; ?>"
 					  data-type="text"><?php echo $image->text; ?></textarea>
 			<input type="hidden" name="<?php echo $name . '[' . $image->name . '][ordering]'; ?>"
 				   input-images="ordering" value="<?php echo $image->ordering; ?>"

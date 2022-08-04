@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - @package    SW JProjects Component
+  - @version    1.6.0
+  - @author     Septdir Workshop - www.septdir.com
+  - @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+  - @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+  - @link       https://www.septdir.com/
+  -->
+
 <svg xmlns="http://www.w3.org/2000/svg" width="120px" height="120px" viewBox="0 0 512 512">
 	<path fill="#0071bc"
 		  d="M0,48v416h512V48H0z M480,432H32V80h448V432z M352,160c0,26.51,21.49,48,48,48s48-21.49,48-48 s-21.49-48-48-48S352,133.49,352,160z M448,400H64l96-256l128,160l64-48L448,400z"/>

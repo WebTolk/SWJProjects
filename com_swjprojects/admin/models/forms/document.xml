@@ -18,7 +18,8 @@
 		<field name="project_id" type="projects"
 			   label="COM_SWJPROJECTS_PROJECT"
 			   required="true"
-			   onchange="projectHasChanged(this)">
+			   onchange="projectHasChanged(this)"
+			   layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
 		</field>
 		<field name="state" type="list"
@@ -38,7 +39,8 @@
 				   description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
 				   useglobal="true"
 				   extension="com_swjprojects"
-				   view="project"/>
+				   view="document"
+				   class="form-select"/>
 		</fields>
 		<field name="ordering" type="hidden" filter="unset"/>
 	</fieldset>
