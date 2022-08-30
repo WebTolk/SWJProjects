@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
+ * @version    1.6.1
  * @author     Septdir Workshop - www.septdir.com
  * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -90,6 +90,7 @@ abstract class SWJProjectsHelperAssociation
 					{
 						$link .= '&debug=1';
 					}
+					$link                .= '&lang=' . $code;
 					$associations[$code] = $link;
 				}
 			}
