@@ -118,7 +118,7 @@ class pkg_swjprojectsInstallerScript
 		);
 		$new = 'https://www.septdir.com/solutions/joomla/update?element=pkg_swjprojects';
 
-		$db      = Factory::getDbo();
+		$db      = Factory::getContainer()->get('DatabaseDriver');
 		$query   = $db->getQuery(true)
 			->select(array('update_site_id', 'location'))
 			->from($db->quoteName('#__update_sites'))
@@ -142,7 +142,7 @@ class pkg_swjprojectsInstallerScript
 	public function update($parent)
 	{
 		// Unset package id for JLSitemap plugin
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->select('extension_id')
 			->from($db->quoteName('#__extensions'))

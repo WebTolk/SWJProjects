@@ -36,7 +36,7 @@ $ordering = $params->get('ordering');
 
 if ($ordering === 'rand()')
 {
-	$model->setState('list.ordering', Factory::getDbo()->getQuery(true)->Rand());
+	$model->setState('list.ordering', Factory::getContainer()->get('DatabaseDriver')->getQuery(true)->Rand());
 }
 else
 {

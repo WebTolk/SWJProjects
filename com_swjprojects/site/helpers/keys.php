@@ -58,7 +58,7 @@ class SWJProjectsHelperKeys
 			else
 			{
 				// Check database
-				$db = Factory::getDbo();
+				$db = Factory::getContainer()->get('DatabaseDriver');
 
 				// Define null and now dates
 				$nullDate = $db->quote($db->getNullDate());

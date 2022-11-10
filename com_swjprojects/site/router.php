@@ -118,7 +118,7 @@ class SWJProjectsRouter extends RouterView
 			$hash = md5('projects_' . $id);
 			if (!isset($this->_segments[$hash]))
 			{
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$dbquery = $db->getQuery(true)
 					->select(array('id', 'alias', 'parent_id'))
 					->from('#__swjprojects_categories')
@@ -159,7 +159,7 @@ class SWJProjectsRouter extends RouterView
 			$hash = md5('project_' . $id);
 			if (!isset($this->_segments[$hash]))
 			{
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$dbquery = $db->getQuery(true)
 					->select('alias')
 					->from('#__swjprojects_projects')
@@ -216,7 +216,7 @@ class SWJProjectsRouter extends RouterView
 				$hash = md5('version_' . $id);
 				if (!isset($this->_segments[$hash]))
 				{
-					$db      = Factory::getDbo();
+					$db      = Factory::getContainer()->get('DatabaseDriver');
 					$dbquery = $db->getQuery(true)
 						->select('alias')
 						->from('#__swjprojects_versions')
@@ -275,7 +275,7 @@ class SWJProjectsRouter extends RouterView
 				$hash = md5('version_' . $id);
 				if (!isset($this->_segments[$hash]))
 				{
-					$db      = Factory::getDbo();
+					$db      = Factory::getContainer()->get('DatabaseDriver');
 					$dbquery = $db->getQuery(true)
 						->select('alias')
 						->from('#__swjprojects_documentation')
@@ -342,7 +342,7 @@ class SWJProjectsRouter extends RouterView
 			$hash = md5('projects_' . $segment);
 			if (!isset($this->_ids[$hash]))
 			{
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$dbquery = $db->getQuery(true)
 					->select('id')
 					->from('#__swjprojects_categories')
@@ -376,7 +376,7 @@ class SWJProjectsRouter extends RouterView
 			$hash = md5('project_' . $segment);
 			if (!isset($this->_ids[$hash]))
 			{
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$dbquery = $db->getQuery(true)
 					->select('id')
 					->from('#__swjprojects_projects')
@@ -430,7 +430,7 @@ class SWJProjectsRouter extends RouterView
 			$hash = md5('version_' . $segment);
 			if (!isset($this->_ids[$hash]))
 			{
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$dbquery = $db->getQuery(true)
 					->select('id')
 					->from('#__swjprojects_versions')
@@ -484,7 +484,7 @@ class SWJProjectsRouter extends RouterView
 			$hash = md5('document_' . $segment);
 			if (!isset($this->_ids[$hash]))
 			{
-				$db      = Factory::getDbo();
+				$db      = Factory::getContainer()->get('DatabaseDriver');
 				$dbquery = $db->getQuery(true)
 					->select('id')
 					->from('#__swjprojects_documentation')

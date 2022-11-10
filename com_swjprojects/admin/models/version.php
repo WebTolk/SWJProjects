@@ -54,7 +54,7 @@ class SWJProjectsModelVersion extends AdminModel
 			$item->translates = array();
 			if (!empty($item->id))
 			{
-				$db    = Factory::getDbo();
+				$db    = Factory::getContainer()->get('DatabaseDriver');
 				$query = $db->getQuery(true)
 					->select('*')
 					->from('#__swjprojects_translate_versions')
@@ -404,7 +404,7 @@ class SWJProjectsModelVersion extends AdminModel
 			$id = $this->getState($this->getName() . '.id');
 
 			// Save translates
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__swjprojects_translate_versions'))
 				->where('id = ' . $id);
@@ -484,7 +484,7 @@ class SWJProjectsModelVersion extends AdminModel
 		if ($result = parent::delete($pks))
 		{
 			// Delete translates
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__swjprojects_translate_versions'))
 				->where('id IN (' . implode(',', $pks) . ')');

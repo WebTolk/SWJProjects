@@ -47,7 +47,7 @@ class JFormFieldVersions extends JFormFieldList
 	{
 		if ($this->_options === null)
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->select(array('v.id', 'v.major', 'v.minor', ' v.micro', 'v.tag', 'v.stage'))
 				->from($db->quoteName('#__swjprojects_versions', 'v'));

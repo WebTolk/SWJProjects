@@ -413,7 +413,7 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 			throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_VERSION_NOT_FOUND'), 404);
 		}
 
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Set statistic
 		$query = $db->getQuery(true)

@@ -48,7 +48,7 @@ class JFormFieldCategories extends JFormFieldList
 	{
 		if ($this->_options === null)
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->select(array('c.id', 'c.parent_id', 'c.level'))
 				->from($db->quoteName('#__swjprojects_categories', 'c'))

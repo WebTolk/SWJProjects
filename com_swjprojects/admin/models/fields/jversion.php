@@ -46,7 +46,7 @@ class JFormFieldJVersion extends JFormFieldList
 	{
 		if ($this->_options === null)
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->select(array('joomla_version'))
 				->from($db->quoteName('#__swjprojects_versions'));

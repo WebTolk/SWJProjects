@@ -132,7 +132,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function checkRootCategory($table = null)
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 
 		// Get base categories
 		$query = $db->getQuery(true)
@@ -171,7 +171,7 @@ class com_swjprojectsInstallerScript
 		if ($sql = file_get_contents($parent->getParent()->getPath('extension_administrator')
 			. '/sql/install.mysql.utf8.sql'))
 		{
-			$db = Factory::getDbo();
+			$db = Factory::getContainer()->get('DatabaseDriver');
 
 			foreach ($db->splitSql($sql) as $query)
 			{
@@ -232,7 +232,7 @@ class com_swjprojectsInstallerScript
 			$component->element = 'com_swjprojects';
 			$component->params  = $params->toString();
 
-			Factory::getDbo()->updateObject('#__extensions', $component, array('element'));
+			Factory::getContainer()->get('DatabaseDriver')->updateObject('#__extensions', $component, array('element'));
 		}
 	}
 
@@ -282,7 +282,7 @@ class com_swjprojectsInstallerScript
 			$component->element = 'com_swjprojects';
 			$component->params  = $params->toString();
 
-			Factory::getDbo()->updateObject('#__extensions', $component, array('element'));
+			Factory::getContainer()->get('DatabaseDriver')->updateObject('#__extensions', $component, array('element'));
 		}
 	}
 
@@ -328,7 +328,7 @@ class com_swjprojectsInstallerScript
 			$component->element = 'com_swjprojects';
 			$component->params  = $params->toString();
 
-			Factory::getDbo()->updateObject('#__extensions', $component, array('element'));
+			Factory::getContainer()->get('DatabaseDriver')->updateObject('#__extensions', $component, array('element'));
 		}
 	}
 
@@ -339,7 +339,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function checkHitsColumn()
 	{
-		$db      = Factory::getDbo();
+		$db      = Factory::getContainer()->get('DatabaseDriver');
 		$columns = $db->getTableColumns('#__swjprojects_projects');
 		if (!isset($columns['hits']))
 		{
@@ -360,7 +360,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function prepareImagesColumn()
 	{
-		$db      = Factory::getDbo();
+		$db      = Factory::getContainer()->get('DatabaseDriver');
 		$table   = '#__swjprojects_translate_projects';
 		$columns = $db->getTableColumns($table);
 
@@ -481,7 +481,7 @@ class com_swjprojectsInstallerScript
 	protected function removeRouterRudiments()
 	{
 		// Remove key
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->update($db->quoteName('#__menu'))
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote('%com_swjprojects%'))
@@ -567,7 +567,7 @@ class com_swjprojectsInstallerScript
 	 */
 	protected function getComponentParams()
 	{
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get('DatabaseDriver');
 		$query = $db->getQuery(true)
 			->select('params')
 			->from('#__extensions')

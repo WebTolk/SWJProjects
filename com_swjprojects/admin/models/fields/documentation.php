@@ -46,7 +46,7 @@ class JFormFieldDocumentation extends JFormFieldList
 	{
 		if ($this->_options === null)
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get('DatabaseDriver');
 			$query = $db->getQuery(true)
 				->select(array('d.id', 'd.alias'))
 				->from($db->quoteName('#__swjprojects_documentation', 'd'));

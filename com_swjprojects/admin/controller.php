@@ -101,7 +101,7 @@ class SWJProjectsController extends BaseController
 	protected function showDonateMessage()
 	{
 		// Get params
-		$db     = Factory::getDbo();
+		$db     = Factory::getContainer()->get('DatabaseDriver');
 		$query  = $db->getQuery(true)
 			->select('params')
 			->from($db->quoteName('#__extensions'))
