@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\MVC\View\HtmlView;
@@ -249,7 +250,7 @@ class SWJProjectsViewDocument extends HtmlView
 		}
 		elseif (!empty($item->introtext))
 		{
-			$this->document->setDescription(JHtmlString::truncate($item->introtext, 150, false, false));
+			$this->document->setDescription(StringHelper::truncate($item->introtext, 150, false, false));
 		}
 
 		// Set meta keywords

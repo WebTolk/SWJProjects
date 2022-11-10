@@ -14,6 +14,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
@@ -495,7 +496,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					}
 
 					// Set description
-					$item->description = JHtmlString::truncate($item->project_introtext, 150, false, false);
+					$item->description = StringHelper::truncate($item->project_introtext, 150, false, false);
 
 					// Set joomla
 					$item->project_joomla = new Registry($item->project_joomla);
@@ -545,6 +546,9 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 						$downloadurl = $downloads->addChild('downloadurl', $site_root . $item->download);
 						$downloadurl->addAttribute('type', 'full');
 						$downloadurl->addAttribute('format', File::getExt($item->file));
+						$update->addChild('sha256',hash_file('sha256',$site_root . $item->download));
+						$update->addChild('sha384',hash_file('sha384',$site_root . $item->download));
+						$update->addChild('sha512',hash_file('sha512',$site_root . $item->download));
 					}
 
 					$tags = $update->addChild('tags');
