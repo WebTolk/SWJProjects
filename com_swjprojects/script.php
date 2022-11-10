@@ -20,11 +20,29 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Version;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
 class com_swjprojectsInstallerScript
 {
+	/**
+	 * Runs before any installation action.
+	 *
+	 * @param   string            $type    Type of PostFlight action.
+	 * @param   InstallerAdapter  $installer  Parent object calling object.
+	 *
+	 * @throws  Exception
+	 *
+	 * @since  1.0.0
+	 */
+	function preflight($type, $installer){
+		if(!(new Version())->isCompatible('4.0')){
+			Factory::getApplication()->enqueueMessage('This SW JProjects version required Joomla 4.0 minimal version.','error');
+			return false;
+		}
+	}
+
 	/**
 	 * Runs right after any installation action.
 	 *
