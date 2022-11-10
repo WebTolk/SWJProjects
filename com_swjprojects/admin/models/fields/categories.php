@@ -72,9 +72,9 @@ class JFormFieldCategories extends JFormFieldList
 
 			// Check admin type view
 			$app       = Factory::getApplication();
-			$component = $app->input->get('option', 'com_swjprojects');
-			$view      = $app->input->get('view', 'category');
-			$id        = $app->input->getInt('id', 0);
+			$component = $app->getInput()->get('option', 'com_swjprojects');
+			$view      = $app->getInput()->get('view', 'category');
+			$id        = $app->getInput()->getInt('id', 0);
 			$sameView  = ($app->isClient('administrator') && $component == 'com_swjprojects' && $view == 'category');
 
 			// Prepare options

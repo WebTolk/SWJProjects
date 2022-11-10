@@ -106,9 +106,9 @@ class SWJProjectsModelDocument extends ItemModel
 		$app = Factory::getApplication('site');
 
 		// Set request states
-		$this->setState('document.id', $app->input->getInt('id', 0));
-		$this->setState('project.id', $app->input->getInt('project_id', 0));
-		$this->setState('category.id', $app->input->getInt('catid', 1));
+		$this->setState('document.id', $app->getInput()->getInt('id', 0));
+		$this->setState('project.id', $app->getInput()->getInt('project_id', 0));
+		$this->setState('category.id', $app->getInput()->getInt('catid', 1));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -125,7 +125,7 @@ class SWJProjectsModelDocument extends ItemModel
 		$this->setState('params', $mergedParams);
 
 		// Set published && debug state
-		if ($app->input->getInt('debug', 0))
+		if ($app->getInput()->getInt('debug', 0))
 		{
 			$this->setState('filter.published', array(0, 1));
 			$this->setState('debug', 1);

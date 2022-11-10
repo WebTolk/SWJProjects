@@ -118,7 +118,7 @@ class SWJProjectsModelProjects extends ListModel
 		$app = Factory::getApplication('site');
 
 		// Set request states
-		$this->setState('category.id', $app->input->getInt('id', 1));
+		$this->setState('category.id', $app->getInput()->getInt('id', 1));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -135,7 +135,7 @@ class SWJProjectsModelProjects extends ListModel
 		$this->setState('params', $mergedParams);
 
 		// Set published && debug state
-		if ($app->input->getInt('debug', 0))
+		if ($app->getInput()->getInt('debug', 0))
 		{
 			$this->setState('filter.published', array(0, 1));
 			$this->setState('debug', 1);
@@ -157,7 +157,7 @@ class SWJProjectsModelProjects extends ListModel
 
 		// Set limit & start for query
 		$this->setState('list.limit', $params->get('projects_limit', 10, 'uint'));
-		$this->setState('list.start', $app->input->get('start', 0, 'uint'));
+		$this->setState('list.start', $app->getInput()->get('start', 0, 'uint'));
 	}
 
 	/**

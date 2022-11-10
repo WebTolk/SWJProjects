@@ -71,9 +71,9 @@ class JFormFieldProjects extends JFormFieldList
 
 			// Check admin type view
 			$app       = Factory::getApplication();
-			$component = $app->input->get('option', 'com_swjprojects');
-			$view      = $app->input->get('view', 'project');
-			$id        = $app->input->getInt('id', 0);
+			$component = $app->getInput()->get('option', 'com_swjprojects');
+			$view      = $app->getInput()->get('view', 'project');
+			$id        = $app->getInput()->getInt('id', 0);
 			$sameView  = ($app->isClient('administrator') && $component == 'com_swjprojects' && $view == 'project');
 
 			// Prepare options

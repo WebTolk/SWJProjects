@@ -41,11 +41,11 @@ abstract class SWJProjectsHelperAssociation
 	public static function getAssociations($id = 0, $view = null, $catid = 0, $project_id = 0, $debug = 0)
 	{
 		$app        = Factory::getApplication();
-		$id         = (!empty($id)) ? $id : $app->input->getInt('id', 0);
-		$view       = (!empty($view)) ? $view : $app->input->getCmd('view', '');
-		$catid      = (!empty($catid)) ? $catid : $app->input->getInt('catid', 1);
-		$project_id = (!empty($project_id)) ? $project_id : $app->input->getInt('project_id', 0);
-		$debug      = (!empty($debug)) ? $debug : $app->input->getInt('debug', 0);
+		$id         = (!empty($id)) ? $id : $app->getInput()->getInt('id', 0);
+		$view       = (!empty($view)) ? $view : $app->getInput()->getCmd('view', '');
+		$catid      = (!empty($catid)) ? $catid : $app->getInput()->getInt('catid', 1);
+		$project_id = (!empty($project_id)) ? $project_id : $app->getInput()->getInt('project_id', 0);
+		$debug      = (!empty($debug)) ? $debug : $app->getInput()->getInt('debug', 0);
 		$hash       = md5(serialize(array($id, $view, $catid, $project_id)));
 
 		if (!isset(self::$_associations[$hash]))

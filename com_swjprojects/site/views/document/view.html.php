@@ -148,7 +148,7 @@ class SWJProjectsViewDocument extends HtmlView
 		// Process the content plugins
 		PluginHelper::importPlugin('content');
 		$app        = Factory::getApplication();
-		$offset     = $app->input->getUInt('limitstart');
+		$offset     = $app->getInput()->getUInt('limitstart');
 		$item->text = &$item->fulltext;
 		$app->triggerEvent('onContentPrepare', array('com_swjprojects.document', &$item, &$item->params, $offset));
 

@@ -150,9 +150,9 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 		$app = Factory::getApplication('site');
 
 		// Set request states
-		$this->setState('project.id', $app->input->getInt('project_id', 0));
-		$this->setState('project.element', $app->input->get('element', ''));
-		$this->setState('download.key', $app->input->getCmd('download_key', ''));
+		$this->setState('project.id', $app->getInput()->getInt('project_id', 0));
+		$this->setState('project.element', $app->getInput()->get('element', ''));
+		$this->setState('download.key', $app->getInput()->getCmd('download_key', ''));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -169,7 +169,7 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 		$this->setState('params', $mergedParams);
 
 		// Set published && debug state
-		if ($app->input->getInt('debug', 0))
+		if ($app->getInput()->getInt('debug', 0))
 		{
 			$this->setState('filter.published', array(0, 1));
 			$this->setState('debug', 1);
