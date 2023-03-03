@@ -545,6 +545,9 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 						$downloadurl = $downloads->addChild('downloadurl', $site_root . $item->download);
 						$downloadurl->addAttribute('type', 'full');
 						$downloadurl->addAttribute('format', File::getExt($item->file));
+						$update->addChild('sha256',hash_file('sha256',$site_root . $item->download));
+						$update->addChild('sha384',hash_file('sha384',$site_root . $item->download));
+						$update->addChild('sha512',hash_file('sha512',$site_root . $item->download));
 					}
 
 					$tags = $update->addChild('tags');
