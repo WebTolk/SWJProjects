@@ -32,7 +32,7 @@ class SWJProjectsModelKey extends AdminModel
 		if ($item = parent::getItem($pk))
 		{
 			// Convert the projects field value to array
-			$item->projects = explode(',', $item->projects);
+			$item->projects = !empty($item->projects) ? explode(',', $item->projects) : [];
 
 			// Convert the params field value to array
 			$registry      = new Registry($item->plugins);

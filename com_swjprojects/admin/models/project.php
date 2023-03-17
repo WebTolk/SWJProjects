@@ -53,7 +53,7 @@ class SWJProjectsModelProject extends AdminModel
 			$item->params = $registry->toArray();
 
 			// Convert the additional_categories field value to array
-			$item->additional_categories = explode(',', $item->additional_categories);
+			$item->additional_categories = !empty($item->additional_categories) ? explode(',', $item->additional_categories) : [];
 
 			// Default values
 			$item->translates = array();
