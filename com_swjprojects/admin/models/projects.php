@@ -144,8 +144,8 @@ class SWJProjectsModelProjects extends ListModel
 		}
 
 		// Filter by download_type state
-		$download_type = trim($this->getState('filter.download_type'));
-		if (!empty($download_type))
+		$download_type = $this->getState('filter.download_type');
+		if (!empty($download_type) && !empty($download_type = trim($download_type)))
 		{
 			$query->where($db->quoteName('p.download_type') . ' = ' . $db->quote($download_type));
 		}
