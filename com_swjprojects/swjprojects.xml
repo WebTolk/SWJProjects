@@ -2,7 +2,7 @@
 <extension version="4.0" type="component" method="upgrade">
 	<name>COM_SWJPROJECTS</name>
 	<author>Septdir Workshop</author>
-	<creationDate>31/03/2023</creationDate>
+	<creationDate>March 2023</creationDate>
 	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
