@@ -89,11 +89,11 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 						<?php endif; ?>
 					</ul>
 					<div class="buttons">
-						<?php if (($this->project->download_type === 'paid' && $this->project->payment->get('link'))): ?>
+						<?php if ($this->project->download_type === 'paid' && $this->project->payment->get('link') && !empty($item->version)): ?>
 							<a href="<?php echo $this->project->payment->get('link'); ?>" class="btn btn-success">
 								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 							</a>
-						<?php elseif ($this->project->download_type === 'free'): ?>
+						<?php elseif ($this->project->download_type === 'free' && !empty($item->version)): ?>
 							<a href="<?php echo $this->project->download; ?>" class="btn btn-primary"
 							   target="_blank">
 								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
