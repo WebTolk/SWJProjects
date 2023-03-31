@@ -103,11 +103,11 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 							<?php endif; ?>
 							<div class="clearfix">
 								<div class="btn-group pull-right">
-									<?php if (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
+									<?php if ($item->download_type === 'paid' && $item->payment->get('link') && !empty($item->version)): ?>
 										<a href="<?php echo $item->payment->get('link'); ?>" class="btn btn-success">
 											<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 										</a>
-									<?php elseif ($item->download_type === 'free'): ?>
+									<?php elseif ($item->download_type === 'free' && !empty($item->version)): ?>
 										<a href="<?php echo $item->download; ?>" class="btn btn-primary"
 										   target="_blank">
 											<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
