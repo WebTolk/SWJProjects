@@ -77,7 +77,7 @@ use Joomla\CMS\Language\Text;
 							   class="btn btn-success col-12">
 								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 							</a>
-						<?php elseif ($this->project->download_type === 'free' && !empty($item->version)): ?>
+						<?php elseif ($this->project->download_type === 'free' && !empty($this->project->version)): ?>
 							<a href="<?php echo $this->project->download; ?>" class="btn btn-primary col-12"
 							   target="_blank">
 								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
