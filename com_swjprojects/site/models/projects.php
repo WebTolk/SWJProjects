@@ -454,7 +454,7 @@ class SWJProjectsModelProjects extends ListModel
 				$data->title = (empty($data->title)) ? $data->alias : $data->title;
 
 				// Set description
-				$data->description = nl2br($data->description);
+				$data->description = (!empty($data->description) ? nl2br($data->description) : '');
 
 				// Set link
 				$data->slug = $data->id . ':' . $data->alias;
