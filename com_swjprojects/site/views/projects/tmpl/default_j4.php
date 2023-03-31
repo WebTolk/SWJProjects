@@ -108,12 +108,12 @@ $title = ($this->category->id > 1) ? $this->category->title
 												</li>
 											<?php endif; ?>
 										</ul>
-										<?php if (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
+										<?php if ($item->download_type === 'paid' && $item->payment->get('link') && !empty($item->version)): ?>
 											<a href="<?php echo $item->payment->get('link'); ?>"
 											   class="btn btn-success">
 												<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 											</a>
-										<?php elseif ($item->download_type === 'free'): ?>
+										<?php elseif ($item->download_type === 'free' && !empty($item->version)): ?>
 											<a href="<?php echo $item->download; ?>" class="btn btn-primary"
 											   target="_blank">
 												<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
