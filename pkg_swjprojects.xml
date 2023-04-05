@@ -3,12 +3,12 @@
 	<name>PKG_SWJPROJECTS</name>
 	<packagename>swjprojects</packagename>
 	<author>Septdir Workshop</author>
-	<creationDate>March 2023</creationDate>
+	<creationDate>April 2023</creationDate>
 	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>development@septdir.com</authorEmail>
 	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.6.2</version>
+	<version>1.6.3</version>
 	<description>PKG_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
