@@ -55,5 +55,4 @@ if (isset($class) && !empty($class)) {
     $css_class = $css_classes[$type];
 }
 ?>
-<span class="<?php echo $css_class; ?>"
-      title="<?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE'); ?>"><?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_' . strtoupper($type)); ?></span>
+<span class="<?php echo $css_class; ?>" title="<?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE'); ?>"><?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_' . strtoupper($type)); ?></span>

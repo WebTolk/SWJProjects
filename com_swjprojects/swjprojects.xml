@@ -5,8 +5,8 @@
 	<creationDate>April 2023</creationDate>
 	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<authorEmail>development@septdir.com</authorEmail>
-	<authorUrl>https://www.septdir.com/</authorUrl>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://septdir.com, https://web-tolk.ru</authorUrl>
 	<version>1.6.4</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
@@ -76,6 +76,7 @@
 		<folder>images</folder>
 	</media>
 	<layouts destination="components/swjprojects" folder="layouts">
+		<folder>changelog</folder>
 		<folder>field</folder>
 		<folder>toolbar</folder>
 		<folder>translate</folder>
