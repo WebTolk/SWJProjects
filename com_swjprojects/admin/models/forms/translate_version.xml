@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-		<field name="changelog" type="subform" label="COM_SWJPROJECTS_VERSION_CHANGELOG" multiple="true">
+		<field name="changelog"
+			   type="subform"
+			   label="COM_SWJPROJECTS_VERSION_CHANGELOG"
+			   multiple="true"
+			   class="stack">
 			<form>
-				<field name="title" type="text" label="JGLOBAL_TITLE" class="input-xxlarge"/>
-				<field name="description" type="textarea" label="JGLOBAL_DESCRIPTION" class="input-xxlarge" rows="3"/>
+				<field name="title"
+					   type="text"
+					   label="JGLOBAL_TITLE"
+					   class="input-xxlarge "
+					   parentclass="stack"/>
+				<field name="type"
+					   type="list"
+					   label="COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_LABEL"
+					   class="input-xxlarge"
+					   parentclass="stack">
+					<option value="addition">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_ADDITION</option>
+					<option value="change">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_CHANGE</option>
+					<option value="fix">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_FIX</option>
+					<option value="language">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_LANGUAGE</option>
+					<option value="note">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_NOTE</option>
+					<option value="remove">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_REMOVE</option>
+					<option value="security">COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_SECURITY</option>
+				</field>
+				<field name="description"
+					   type="textarea"
+					   label="JGLOBAL_DESCRIPTION"
+					   class="input-xxlarge"
+					   parentclass="stack"
+					   rows="3"/>
 			</form>
 		</field>
 	</fieldset>

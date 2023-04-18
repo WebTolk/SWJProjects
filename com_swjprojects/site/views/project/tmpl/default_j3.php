@@ -1,17 +1,18 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.6.3
- * @author     Septdir Workshop - www.septdir.com
- * @сopyright (c) 2018 - April 2023 Septdir Workshop. All rights reserved.
+ * @version    1.6.4
+ * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
+ * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
+ * @link https://septdir.com, https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'relative' => true));
@@ -216,9 +217,35 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 			if (empty($item['title']) && empty($item['description'])) continue;
 			?>
 			<div class="item">
-				<?php if (!empty($item['title'])): ?>
-					<h3><?php echo $item['title']; ?></h3>
-				<?php endif; ?>
+				<div style="display: flex; justify-content: space-between; align-items: center;">
+					<?php if (!empty($item['title'])): ?>
+						<h3><?php echo $item['title']; ?></h3>
+					<?php endif; ?>
+					<?php if (!empty($item['type'])) {
+						/**
+						 * params
+						 * - type - changelog item type - security, fix etc.
+						 * - class - badge css class, For ex. 'badge bg-danger'. If empty - default Bootstrap 5 classes used
+						 * - css_classes_array - associative array of css classes for badge For ex. 'fix' => 'badge bg-warning'. If empty - default Bootstrap 5 classes used
+						 */
+
+						$css_classes_array = [
+							'security' => 'label label-important',
+							'fix' => 'label label-inverse',
+							'language' => 'label label-info',
+							'addition' => 'label label-success',
+							'change' => 'label label-warning',
+							'remove' => 'label',
+							'note' => 'label label-info',
+						];
+						echo LayoutHelper::render('components.swjprojects.changelog.badge', [
+							'type' => $item['type'],
+							'class' => 'your_custom_css_class_for_fix_or_addition_or_any_other',
+							'css_classes_array' => $css_classes_array,
+						]);
+					}
+					?>
+				</div>
 				<?php if (!empty($item['description'])): ?>
 					<div class="description"><?php echo $item['description']; ?></div>
 				<?php endif; ?>
