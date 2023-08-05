@@ -1,9 +1,9 @@
 <?php
 /**
  * @package    SW JProjects - Projects Module
- * @version    1.6.4
+ * @version    1.6.5
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -20,7 +20,7 @@ JLoader::register('SWJProjectsHelperImages', JPATH_SITE . '/components/com_swjpr
 JLoader::register('SWJProjectsHelperTranslation', JPATH_ADMINISTRATOR . '/components/com_swjprojects/helpers/translation.php');
 
 // Load language
-$language = Factory::getLanguage();
+$language = Factory::getApplication()->getLanguage();
 $language->load('com_swjprojects', JPATH_SITE, $language->getTag(), true);
 
 // Prepare model

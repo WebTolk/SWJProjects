@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>mod_swjprojects_categories</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>August 2023</creationDate>
+	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
+	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru/</authorUrl>
+	<version>1.6.5</version>
+	<description>MOD_SWJPROJECTS_CATEGORIES_DESCRIPTION</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_categories.ini</language>
+		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_categories.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.mod_swjprojects_categories.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.mod_swjprojects_categories.sys.ini</language>
+	</languages>
+	<files>
+		<filename module="mod_swjprojects_categories">mod_swjprojects_categories.php</filename>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/administrator/components/com_swjprojects/models/fields">
+				<field name="limit" type="number" label="MOD_SWJPROJECTS_CATEGORIES_PARAMS_LIMIT" default="5"/>
+				<field
+						name="ordering"
+						type="list"
+						label="MOD_SWJPROJECTS_FIELD_ORDERING_LABEL"
+						description="MOD_SWJPROJECTS_FIELD_ORDERING_DESC"
+						default="list.ordering"
+						validate="options"
+				>
+					<option value="c.lft">MOD_SWJPROJECTS_FIELD_ORDERING_ORDERING</option>
+					<option value="rand()">MOD_SWJPROJECTS_NEWS_FIELD_ORDERING_RANDOM</option>
+				</field>
+
+				<field
+						name="direction"
+						type="list"
+						label="JGLOBAL_ORDER_DIRECTION_LABEL"
+						description="JGLOBAL_ORDER_DIRECTION_DESC"
+						default="1"
+						filter="integer"
+						showon="ordering:id,c.lft"
+				>
+					<option value="0">JGLOBAL_ORDER_ASCENDING</option>
+					<option value="1">JGLOBAL_ORDER_DESCENDING</option>
+				</field>
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="layout"
+					   class="form-select"
+					   type="modulelayout"
+					   label="JFIELD_ALT_LAYOUT_LABEL"
+					   description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+				<field name="moduleclass_sfx"
+					   type="textarea"
+					   label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					   description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
+					   rows="3"/>
+				<field name="cache"
+					   type="list"
+					   label="COM_MODULES_FIELD_CACHING_LABEL"
+					   description="COM_MODULES_FIELD_CACHING_DESC"
+					   default="1">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					   type="text"
+					   label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					   description="COM_MODULES_FIELD_CACHE_TIME_DESC"
+					   default="900"/>
+				<field name="cachemode"
+					   type="hidden"
+					   default="static">
+					<option value="static"/>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

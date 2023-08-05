@@ -2,12 +2,12 @@
 <extension version="4.0" type="component" method="upgrade">
 	<name>COM_SWJPROJECTS</name>
 	<author>Septdir Workshop</author>
-	<creationDate>April 2023</creationDate>
+	<creationDate>August 2023</creationDate>
 	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://septdir.com, https://web-tolk.ru</authorUrl>
-	<version>1.6.4</version>
+	<version>1.6.5</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<install>

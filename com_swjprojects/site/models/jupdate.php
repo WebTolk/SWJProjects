@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.6.4
+ * @version    1.6.5
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -518,7 +518,12 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					}
 
 					// Set client
-					$item->client = $item->project_joomla->get('client', 0);
+                    $client = (int) $item->project_joomla->get('client_id', 0);
+                    if($client === 0){
+                        $item->client = 'site';
+                    } elseif ($client === 1) {
+                        $item->client = 'administrator';
+                    }
 
 					// Set files format
 					$item->files = Folder::files($files_root . '/' . $item->id, 'download', false);
@@ -532,7 +537,9 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$update->addChild('description', $item->description);
 					$update->addChild('element', $item->element);
 					$update->addChild('type', $item->type);
-					$update->addChild('folder', $item->folder);
+					if($item->type == 'plugin'){
+                        $update->addChild('folder', $item->folder);
+                    }
 					$update->addChild('client', $item->client);
 					$update->addChild('version', $item->version);
 
@@ -665,8 +672,10 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					// Set type
 					$item->type = $item->joomla->get('type', 'file');
 
-					// Set folder
-					$item->folder = $item->joomla->get('folder', '');
+                    // Set folder only for plugins
+                    if($item->type == 'plugin') {
+                        $item->folder = $item->joomla->get('folder', '');
+                    }
 
 					// Set element
 					$item->element = $item->joomla->get('element', $item->element);
@@ -680,7 +689,12 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					}
 
 					// Set client
-					$item->client = $item->joomla->get('client', 0);
+                    $client = (int) $item->joomla->get('client_id', 0);
+                    if($client === 0){
+                        $item->client = 'site';
+                    } elseif ($client === 1) {
+                        $item->client = 'administrator';
+                    }
 
 					// Set link
 					$item->link = Route::_(SWJProjectsHelperRoute::getJUpdateRoute($item->id, null, $download_key));
@@ -690,7 +704,9 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 					$extension->addAttribute('name', $item->title);
 					$extension->addAttribute('element', $item->element);
 					$extension->addAttribute('type', $item->type);
-					$extension->addAttribute('folder', $item->folder);
+                    if($item->type == 'plugin') {
+                        $extension->addAttribute('folder', $item->folder);
+                    }
 					$extension->addAttribute('client', $item->client);
 					$extension->addAttribute('detailsurl', $site_root . $item->link);
 					$extension->addAttribute('version', $item->version);

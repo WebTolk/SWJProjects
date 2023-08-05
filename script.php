@@ -1,9 +1,9 @@
 <?php
 /**
  * @package    SW JProjects Package
- * @version    1.6.4
+ * @version    1.6.5
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -75,7 +75,7 @@ class pkg_swjprojectsInstallerScript
 		// Check old joomla
 		if (!class_exists('Joomla\CMS\Version'))
 		{
-			JFactory::getApplication()->enqueueMessage(JText::sprintf('PKG_SWJPROJECTS_ERROR_COMPATIBLE_JOOMLA',
+			Factory::getApplication()->enqueueMessage(Text::sprintf('PKG_SWJPROJECTS_ERROR_COMPATIBLE_JOOMLA',
 				$this->minimumJoomla), 'error');
 
 			return false;
@@ -154,4 +154,11 @@ class pkg_swjprojectsInstallerScript
 			$db->setQuery('UPDATE #__extensions SET package_id = 0 WHERE extension_id = ' . $plugin)->execute();
 		}
 	}
+
+    function postflight($type, $parent)
+    {
+
+       echo Text::_('PKG_SWJPROJECTS_WHATS_NEW');
+
+    }
 }
