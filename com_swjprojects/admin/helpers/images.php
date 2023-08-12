@@ -45,7 +45,7 @@ class SWJProjectsHelperImages
 	 *
 	 * @since 1.3.0
 	 */
-	public static $mime_types = array('image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg', 'image/svg+xml');
+	public static $mime_types = array('image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg', 'image/svg+xml','image/webp');
 
 	/**
 	 * Method to get the simple image.
