@@ -115,6 +115,11 @@
 				<option value="1">COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_ENABLE</option>
 				<option value="0">COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_DISABLE</option>
 			</field>
+			<field type="projectupdateserverurl" 
+			label="COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER" 
+			showon="update_server:1"/>
+			<field type="projectchangelogurl" 
+			label="COM_SWJPROJECTS_PARAMS_CHANGELOGURL"/>
 		</fields>
 	</fieldset>
 	<fieldset name="urls" label="COM_SWJPROJECTS_URLS">

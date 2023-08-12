@@ -124,7 +124,7 @@ class SWJProjectsViewProject extends HtmlView
 		// Add cancel button
 		ToolbarHelper::cancel('project.cancel', 'JTOOLBAR_CLOSE');
 
-		// Add лoomla update server buttons
+		// Add joomla update server buttons
 		if ($this->item->id)
 		{
 			// Joomla update server button
@@ -136,6 +136,13 @@ class SWJProjectsViewProject extends HtmlView
 			$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
 				array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
 			$toolbar->appendButton('Custom', $jupdate, 'joomla');
+
+			// Joomla changelog url button
+			$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=jchangelog&debug=1&element=' . $this->item->element;
+
+			$jchangelog = LayoutHelper::render('components.swjprojects.toolbar.link',
+				array('link' => $link, 'text' => 'COM_SWJPROJECTS_PARAMS_CHANGELOGURL', 'icon' => 'joomla'));
+			$toolbar->appendButton('Custom', $jchangelog, 'joomla');
 		}
 
 		// Add translate switcher

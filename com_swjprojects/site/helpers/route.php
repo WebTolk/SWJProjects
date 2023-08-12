@@ -48,6 +48,33 @@ class SWJProjectsHelperRoute extends RouteHelper
 	}
 
 	/**
+	 * Fetches jupdate route.
+	 *
+	 * @param   int     $project_id    The id of the project.
+	 * @param   string  $element       The element of the project.
+	 *
+	 * @return  string  Joomla changelog server view link.
+	 *
+	 * @since  1.7.0
+	 */
+	public static function getJChangelogRoute($project_id = null, $element = null)
+	{
+		$link = 'index.php?option=com_swjprojects&view=jchangelog';
+
+		if (!empty($project_id))
+		{
+			$link .= '&project_id=' . $project_id;
+		}
+
+		if (!empty($element))
+		{
+			$link .= '&element=' . $element;
+		}
+
+		return $link;
+	}
+
+	/**
 	 * Fetches download route.
 	 *
 	 * @param   int     $version_id    The id of the version.

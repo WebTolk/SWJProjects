@@ -44,9 +44,6 @@ class SWJProjectsController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
-		// Show donate message
-		$this->showDonatemessage();
-
 		return parent::display($cachable, $urlparams);
 	}
 
@@ -73,7 +70,8 @@ class SWJProjectsController extends BaseController
 			'versions' => SWJProjectsHelperRoute::getVersionsRoute($id, $catid),
 			'version'  => SWJProjectsHelperRoute::getVersionRoute($id, $project_id, $catid),
 			'download' => SWJProjectsHelperRoute::getDownloadRoute($version_id, $project_id, $element, $download_key),
-			'jupdate'  => SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element, $download_key)
+			'jupdate'  => SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element, $download_key),
+			'jchangelog'  => SWJProjectsHelperRoute::getJChangelogRoute($project_id, $element),
 		);
 
 		$redirect = (!empty($page) && !empty($redirects[$page])) ? $redirects[$page] : false;
@@ -81,7 +79,7 @@ class SWJProjectsController extends BaseController
 		if (!$redirect)
 		{
 			$this->setMessage(Text::_('COM_SWJPROJECTS_ERROR_PAGE_NOT_FOUND'), 'error');
-			$this->setRedirect(Route::_('index.php?option=com_centers&view=' . $this->input->get('view')));
+			$this->setRedirect(Route::_('index.php?option=com_swjprojects&view=' . $this->input->get('view')));
 			$this->redirect();
 		}
 
@@ -89,47 +87,5 @@ class SWJProjectsController extends BaseController
 		$debug = ($this->input->get('debug', false)) ? '&debug=1' : '';
 		$this->setRedirect(Uri::root() . $redirect . $debug);
 		$this->redirect();
-	}
-
-	/**
-	 * Method to show donate message by downloads counter.
-	 *
-	 * @throws  Exception
-	 *
-	 * @since  1.5.2
-	 */
-	protected function showDonateMessage()
-	{
-		// Get params
-		$db     = Factory::getDbo();
-		$query  = $db->getQuery(true)
-			->select('params')
-			->from($db->quoteName('#__extensions'))
-			->where($db->quoteName('element') . ' = ' . $db->quote('com_swjprojects'));
-		$params = new Registry($db->setQuery($query)->loadResult());
-		$config = $params->get('donate_counter', 0);
-
-		// Get current downloads
-		$query = $db->getQuery(true)
-			->select('SUM(downloads)')
-			->from('#__swjprojects_versions');
-		$db->setQuery($query);
-		$downloads = $db->loadResult();
-
-		// Set message
-		if (($downloads - $config) >= 10)
-		{
-			Factory::getApplication()->enqueueMessage(
-				LayoutHelper::render('components.swjprojects.message.donate'), '');
-
-			// Update params
-			$params->set('donate_counter', $downloads);
-
-			$component          = new stdClass();
-			$component->element = 'com_swjprojects';
-			$component->params  = $params->toString();
-
-			$db->updateObject('#__extensions', $component, array('element'));
-		}
 	}
 }

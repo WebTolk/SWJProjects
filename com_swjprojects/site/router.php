@@ -83,6 +83,10 @@ class SWJProjectsRouter extends RouterView
 		$jupdate = new RouterViewConfiguration('jupdate');
 		$this->registerView($jupdate);
 
+		// JChangelog route
+		$jchangelog = new RouterViewConfiguration('jchangelog');
+		$this->registerView($jchangelog);
+
 		// Download route
 		$download = new RouterViewConfiguration('download');
 		$this->registerView($download);
@@ -311,6 +315,21 @@ class SWJProjectsRouter extends RouterView
 	}
 
 	/**
+	 * Method to get the segment(s) for jchangelof.
+	 *
+	 * @param   string  $id     ID of the item to retrieve the segments.
+	 * @param   array   $query  The request that is built right now.
+	 *
+	 * @return  array|string  The segments of this item.
+	 *
+	 * @since  1.0.0
+	 */
+	public function getJChangelogSegment($id, $query)
+	{
+		return array(1 => 1);
+	}
+
+	/**
 	 * Method to get the segment(s) for download.
 	 *
 	 * @param   string  $id     ID of the item to retrieve the segments.
@@ -512,6 +531,21 @@ class SWJProjectsRouter extends RouterView
 	 * @since  1.0.0
 	 */
 	public function getJUpdateId($segment, $query)
+	{
+		return 1;
+	}
+
+	/**
+	 * Method to get the id for jchangelog.
+	 *
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
+	 *
+	 * @return  integer|false  The id of this item or false.
+	 *
+	 * @since  1.0.0
+	 */
+	public function getJChangelogId($segment, $query)
 	{
 		return 1;
 	}

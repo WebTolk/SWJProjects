@@ -67,8 +67,6 @@ class com_swjprojectsInstallerScript
 			$this->removeRouterRudiments();
 		}
 
-		// Donate message
-		Factory::getApplication()->enqueueMessage(LayoutHelper::render('components.swjprojects.message.donate'), '');
 	}
 
 	/**

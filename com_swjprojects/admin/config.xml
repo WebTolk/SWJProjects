@@ -104,6 +104,14 @@
 			   length="128"
 			   class="input-xxlarge"/>
 	</fieldset>
+	<fieldset name="changelogurl" label="COM_SWJPROJECTS_PARAMS_CHANGELOGURL">
+		<field name="changelogurl_language"
+			   type="language"
+			   client="site"
+			   default="en-GB"
+			   label="COM_SWJPROJECTS_PARAMS_CHANGELOGURL_LANGUAGE"
+			   description="COM_SWJPROJECTS_PARAMS_CHANGELOGURL_LANGUAGE_DESC" />
+	</fieldset>
 	<fieldset name="permissions"
 			  label="JCONFIG_PERMISSIONS_LABEL"
 			  description="JCONFIG_PERMISSIONS_DESC">

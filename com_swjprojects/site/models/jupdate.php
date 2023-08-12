@@ -557,6 +557,8 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 						$update->addChild('sha256',hash_file('sha256',$file_path_from_root));
 						$update->addChild('sha384',hash_file('sha384',$file_path_from_root));
 						$update->addChild('sha512',hash_file('sha512',$file_path_from_root));
+//						$changelog_url = Uri::root().
+						$update->addChild('changelogurl',$site_root.Route::_(SWJProjectsHelperRoute::getJChangelogRoute(null, $item->element)));
 					}
 
 					$tags = $update->addChild('tags');

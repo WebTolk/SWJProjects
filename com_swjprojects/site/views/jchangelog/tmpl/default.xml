@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SWJPROJECTS_VIEW_JCHANGELOG" option="COM_SWJPROJECTS_VIEW_JCHANGELOG_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_SWJPROJECTS_VIEW_JCHANGELOG_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldpath="/administrator/components/com_swjprojects/models/fields">
+		<fieldset name="request">
+			<fieldset name="request"/>
+		</fieldset>
+	</fields>
+</metadata>

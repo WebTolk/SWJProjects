@@ -40,10 +40,13 @@ class SWJProjectsController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
+
+		$view         = $this->input->get('view', $this->default_view);
+
 		// Duplicates protection
 		if (Factory::getApplication()->getParams()->get('duplicates_protection', 1))
 		{
-			$view         = $this->input->get('view', $this->default_view);
+
 			$id           = $this->input->get('id', 0, 'raw');
 			$catid        = $this->input->get('catid', 1, 'raw');
 			$project_id   = $this->input->get('project_id', 0, 'raw');
@@ -87,6 +90,11 @@ class SWJProjectsController extends BaseController
 				$link = SWJProjectsHelperRoute::getJUpdateRoute($project_id, $element, $download_key);
 			}
 
+			if ($view == 'jchangelog')
+			{
+				$link = SWJProjectsHelperRoute::getJChangelogRoute($project_id, $element);
+			}
+
 			if ($link)
 			{
 				$uri       = Uri::getInstance();
@@ -117,7 +125,7 @@ class SWJProjectsController extends BaseController
 		}
 
 		// Cache
-		if ($view !== 'jupdate' && $view !== 'download' && $this->input->get('task') !== 'download')
+		if ($view !== 'jchangelog' && $view !== 'jupdate' && $view !== 'download' && $this->input->get('task') !== 'download')
 		{
 			$cachable  = true;
 			$urlparams = array(
