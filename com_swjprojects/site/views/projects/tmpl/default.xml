@@ -27,12 +27,12 @@
 			<field
 					name="download_type_filter"
 					type="list"
-					label="COM_SWJPROJECTS_DOWNLOAD_TYPE"
+					label="COM_SWJPROJECTS_FIELD_DOWNLOAD_TYPE"
 					default="all"
 			>
-				<option value="all">Все</option>
-				<option value="paid">Только платные</option>
-				<option value="free">Только бесплатные</option>
+				<option value="all">COM_SWJPROJECTS_FIELD_DOWNLOAD_TYPE_PAID_ALL</option>
+				<option value="paid">COM_SWJPROJECTS_FIELD_DOWNLOAD_TYPE_PAID_ONLY</option>
+				<option value="free">COM_SWJPROJECTS_FIELD_DOWNLOAD_TYPE_FREE_ONLY</option>
 
 			</field>
 			<field
@@ -43,7 +43,7 @@
 					default="list.ordering"
 					validate="options"
 			>
-				<option value="p.id">COM_SWJPROJECTS_PROJECT_ID</option>
+				<option value="p.id">ID</option>
 				<option value="p.download_type">COM_SWJPROJECTS_DOWNLOAD_TYPE</option>
 				<option value="p.ordering">COM_SWJPROJECTS_FIELD_ORDERING_ORDERING</option>
 				<option value="p.hits">COM_SWJPROJECTS_STATISTICS_HITS</option>
@@ -56,7 +56,7 @@
 					description="JGLOBAL_ORDER_DIRECTION_DESC"
 					default="1"
 					filter="integer"
-					showon="ordering:p.id,p.hits,downloads,p.ordering"
+					showon="ordering:p.id,p.hits,downloads,p.ordering,p.download_type"
 			>
 				<option value="0">JGLOBAL_ORDER_ASCENDING</option>
 				<option value="1">JGLOBAL_ORDER_DESCENDING</option>
