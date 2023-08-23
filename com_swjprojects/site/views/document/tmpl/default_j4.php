@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
 ?>
 <div id="SWJProjects" class="document">
 	<div class="project info mb-3">
@@ -50,10 +49,10 @@ use Joomla\CMS\Language\Text;
 							<strong><?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE'); ?>: </strong>
 							<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $this->project->download_type); ?>
 						</li>
-						<?php if ($this->project->download_type === 'paid' && $this->project->payment->get('price')): ?>
+						<?php if ($this->project->download_type === 'paid' && $this->item->payment->get('price')): ?>
 							<li>
 								<strong><?php echo Text::_('COM_SWJPROJECTS_PRICE'); ?>: </strong>
-								<span class="text-success"><?php echo $this->project->payment->get('price'); ?></span>
+								<span class="text-success"><?php echo $this->item->payment->get('price'); ?></span>
 							</li>
 						<?php endif; ?>
 						<?php if ($this->project->version): ?>
@@ -72,7 +71,7 @@ use Joomla\CMS\Language\Text;
 						<?php endif; ?>
 					</ul>
 					<div class="text-center">
-						<?php if ($this->project->download_type === 'paid' && $this->project->payment->get('link') && !empty($this->project->version)): ?>
+						<?php if ($this->project->download_type === 'paid' && $this->item->payment->get('link') && !empty($this->project->version)): ?>
 							<a href="<?php echo $this->project->payment->get('link'); ?>"
 							   class="btn btn-success col-12">
 								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
