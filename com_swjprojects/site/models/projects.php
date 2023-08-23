@@ -285,7 +285,7 @@ class SWJProjectsModelProjects extends ListModel
 		$ordering  = $this->getState('list.ordering', 'p.ordering');
 		$direction = $this->getState('list.direction', 'ASC');
 		$query->order($db->escape($ordering) . ' ' . $db->escape($direction));
-echo $query->dump();
+
 		return $query;
 
 	}
