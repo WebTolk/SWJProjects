@@ -155,11 +155,11 @@ class SWJProjectsViewProject extends HtmlView
 			array('link' => $link, 'text' => 'COM_SWJPROJECTS_SUPPORT', 'icon' => 'support', 'new' => true));
 		$toolbar->appendButton('Custom', $support, 'support');
 
-		// Add donate button
-		$link   = 'https://www.septdir.com/donate#solution=swjprojects';
-		$donate = LayoutHelper::render('components.swjprojects.toolbar.link',
-			array('link' => $link, 'text' => 'COM_SWJPROJECTS_DONATE', 'icon' => 'heart', 'new' => true));
-		$toolbar->appendButton('Custom', $donate, 'donate');
+		// Add GitHub button
+		$link = 'https://github.com/SeptdirWorkshop/SWJProjects';
+		$github = LayoutHelper::render('components.swjprojects.toolbar.link',
+			array('link' => $link, 'text' => 'GitHub', 'icon' => ' fab fa-github', 'new' => true));
+		$toolbar->appendButton('Custom', $github, 'github');
 
 		// Add preview button
 		if ($this->item->id)
