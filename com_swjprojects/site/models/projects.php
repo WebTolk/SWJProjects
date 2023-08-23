@@ -162,7 +162,6 @@ class SWJProjectsModelProjects extends ListModel
 		$this->setState('list.limit', $params->get('projects_limit', 10));
 		$this->setState('list.start', $app->input->get('start', 0));
 
-		var_dump($mergedParams->get('download_type_filter','all'));
 		// Project types
 		$this->setState('download_type_filter', $mergedParams->get('download_type_filter','all'));
 	}
