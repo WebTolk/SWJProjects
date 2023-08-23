@@ -22,7 +22,7 @@
 		<folder type="module" id="mod_swjprojects_categories" client="site">mod_swjprojects_categories</folder>
 	</files>
 	<updateservers>
-		<server type="extension" priority="1" name="Web Tolk - SW JProjects">
+		<server type="extension" priority="1" name="WebTolk - SW JProjects">
 			https://web-tolk.ru/component/swjprojects/jupdate?element=pkg_swjprojects
 		</server>
 		<server type="extension" priority="2" name="SW JProjects">

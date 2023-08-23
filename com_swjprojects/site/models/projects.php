@@ -145,19 +145,26 @@ class SWJProjectsModelProjects extends ListModel
 			$this->setState('filter.published', 1);
 		}
 
-		// List state information
-		$ordering  = empty($ordering) ? 'p.ordering' : $ordering;
-		$direction = empty($direction) ? 'asc' : $direction;
-
 		parent::populateState($ordering, $direction);
+
+		// List state information
+
+		$ordering  = empty($ordering) ? $mergedParams->get('ordering','p.ordering') : $ordering;
+		$direction = empty($direction) ? $mergedParams->get('direction','1','uint') : $direction;
+		$direction = ($direction == 1) ? 'DESC' : 'ASC';
 
 		// Set ordering for query
 		$this->setState('list.ordering', $ordering);
+
 		$this->setState('list.direction', $direction);
 
 		// Set limit & start for query
-		$this->setState('list.limit', $params->get('projects_limit', 10, 'uint'));
-		$this->setState('list.start', $app->input->get('start', 0, 'uint'));
+		$this->setState('list.limit', $params->get('projects_limit', 10));
+		$this->setState('list.start', $app->input->get('start', 0));
+
+		var_dump($mergedParams->get('download_type_filter','all'));
+		// Project types
+		$this->setState('download_type_filter', $mergedParams->get('download_type_filter','all'));
 	}
 
 	/**
@@ -248,6 +255,13 @@ class SWJProjectsModelProjects extends ListModel
 				->where('c.state IN (' . $published . ')');
 		}
 
+		$download_type = $this->getState('download_type_filter','all');
+		if($download_type !== 'all')
+		{
+			$query->where($db->quoteName('p.download_type'). ' = ' . $db->quote($download_type));
+		}
+
+
 		// Filter by category state
 		$category = $this->getState('category.id');
 		if (is_numeric($category) && $category > 1)
@@ -269,11 +283,12 @@ class SWJProjectsModelProjects extends ListModel
 		$query->group(array('p.id'));
 
 		// Add the list ordering clause
-		$ordering  = $this->state->get('list.ordering', 'p.ordering');
-		$direction = $this->state->get('list.direction', 'asc');
+		$ordering  = $this->getState('list.ordering', 'p.ordering');
+		$direction = $this->getState('list.direction', 'ASC');
 		$query->order($db->escape($ordering) . ' ' . $db->escape($direction));
-
+echo $query->dump();
 		return $query;
+
 	}
 
 	/**

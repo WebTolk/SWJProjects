@@ -24,6 +24,44 @@
 				   useglobal="true">
 				<option value="0">JALL</option>
 			</field>
+			<field
+					name="download_type_filter"
+					type="list"
+					label="COM_SWJPROJECTS_DOWNLOAD_TYPE"
+					default="all"
+			>
+				<option value="all">Все</option>
+				<option value="paid">Только платные</option>
+				<option value="free">Только бесплатные</option>
+
+			</field>
+			<field
+					name="ordering"
+					type="list"
+					label="COM_SWJPROJECTS_FIELD_ORDERING_LABEL"
+					description="COM_SWJPROJECTS_FIELD_ORDERING_DESC"
+					default="list.ordering"
+					validate="options"
+			>
+				<option value="p.id">COM_SWJPROJECTS_PROJECT_ID</option>
+				<option value="p.download_type">COM_SWJPROJECTS_DOWNLOAD_TYPE</option>
+				<option value="p.ordering">COM_SWJPROJECTS_FIELD_ORDERING_ORDERING</option>
+				<option value="p.hits">COM_SWJPROJECTS_STATISTICS_HITS</option>
+				<option value="downloads">COM_SWJPROJECTS_STATISTICS_DOWNLOADS</option>
+			</field>
+			<field
+					name="direction"
+					type="list"
+					label="JGLOBAL_ORDER_DIRECTION_LABEL"
+					description="JGLOBAL_ORDER_DIRECTION_DESC"
+					default="1"
+					filter="integer"
+					showon="ordering:p.id,p.hits,downloads,p.ordering"
+			>
+				<option value="0">JGLOBAL_ORDER_ASCENDING</option>
+				<option value="1">JGLOBAL_ORDER_DESCENDING</option>
+			</field>
+
 		</fieldset>
 		<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 			<field name="menu-meta_image" type="media"

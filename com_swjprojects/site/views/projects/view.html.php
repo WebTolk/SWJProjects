@@ -104,6 +104,7 @@ class SWJProjectsViewProjects extends HtmlView
 		$this->menu       = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors
+//die();
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new Exception(implode('\n', $errors), 500);
