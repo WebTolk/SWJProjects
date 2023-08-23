@@ -297,7 +297,10 @@ class SWJProjectsModelProject extends ItemModel
 				}
 				else
 				{
-					$data->joomla->set('version', array_unique(explode(',', $data->joomla_versions)));
+					if(!empty($data->joomla_versions))
+					{
+						$data->joomla->set('version', array_unique(explode(',', $data->joomla_versions)));
+					}
 				}
 
 				// Set urls
