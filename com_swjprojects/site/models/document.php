@@ -274,7 +274,7 @@ class SWJProjectsModelDocument extends ItemModel
                 $data->project->link = Route::_(SWJProjectsHelperRoute::getProjectRoute($data->pslug, $data->cslug));
                 $data->project->versions = Route::_(SWJProjectsHelperRoute::getVersionsRoute($data->pslug, $data->cslug));
                 $data->project->documentation = Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->pslug, $data->cslug));
-                $data->project->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($data->project_id));
+                $data->project->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, $data->project_id));
                 $data->project->images = new Registry();
                 $data->project->images->set('icon',
                     SWJProjectsHelperImages::getImage('projects', $data->project_id, 'icon', $data->project_language));
