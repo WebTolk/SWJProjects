@@ -59,7 +59,10 @@ class JFormFieldProjectupdateserverurl extends JFormField
 
 			$component_params = ComponentHelper::getParams('com_swjprojects');
 			// Join over current translates
-			$lang         = $component_params->get('changelogurl_language', 'en-GB');
+			$lang         = $component_params->get('changelogurl_language');
+			if(empty($lang)){
+				$lang = Factory::getApplication()->getLanguage()->getTag();
+			}
 			$project_name = $project->translates[$lang]->title;
 			if (empty($project_name))
 			{
