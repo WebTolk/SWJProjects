@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_projects`
     `params`                text                                                   NULL,
     `ordering`              int(11)                                                NOT NULL DEFAULT 0,
     `hits`                  int(10)                                                NOT NULL DEFAULT 0,
+    `visible`               INT(1)                                                 NOT NULL DEFAULT 1 COMMENT 'Is project visible or not in frontend',
     PRIMARY KEY `id` (`id`),
     KEY `idx_element` (`element`(100)),
     KEY `idx_download` (`download_type`(100)),
@@ -57,7 +58,8 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_projects`
     KEY `idx_state` (`state`),
     KEY `idx_catid` (`catid`),
     KEY `idx_ordering` (`ordering`),
-    KEY `idx_hits` (`hits`)
+    KEY `idx_hits` (`hits`),
+    KEY `idx_visible` (`visible`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4

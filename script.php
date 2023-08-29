@@ -114,9 +114,10 @@ class pkg_swjprojectsInstallerScript
 	{
 		$old = array(
 			'https://www.septdir.com/jupdate?element=pkg_swjprojects',
-			'https://www.septdir.com/marketplace/joomla/update?element=pkg_swjprojects'
+			'https://www.septdir.com/marketplace/joomla/update?element=pkg_swjprojects',
+			'https://www.septdir.com/solutions/joomla/update?element=pkg_swjprojects'
 		);
-		$new = 'https://www.septdir.com/solutions/joomla/update?element=pkg_swjprojects';
+		$new = 'https://web-tolk.ru/component/swjprojects/jupdate?element=pkg_swjprojects';
 
 		$db      = Factory::getDbo();
 		$query   = $db->getQuery(true)
@@ -153,12 +154,23 @@ class pkg_swjprojectsInstallerScript
 		{
 			$db->setQuery('UPDATE #__extensions SET package_id = 0 WHERE extension_id = ' . $plugin)->execute();
 		}
+
+		echo Text::_('PKG_SWJPROJECTS_WHATS_NEW');
+	}
+
+	/**
+	 * This method is called when extension is updated.
+	 *
+	 * @param   InstallerAdapter  $parent  Parent object calling object.
+	 *
+	 * @since  1.8.0
+	 */
+	public function install ($parent){
+		echo Text::_('PKG_SWJPROJECTS_WHATS_NEW');
 	}
 
     function postflight($type, $parent)
     {
-
-       echo Text::_('PKG_SWJPROJECTS_WHATS_NEW');
 
     }
 }
