@@ -159,9 +159,9 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @param   integer  $pk  The id of the project.
 	 *
-	 * @throws  Exception
-	 *
 	 * @return  object|boolean|Exception  Project object on success, false or exception on failure.
+	 *
+	 * @throws  Exception
 	 *
 	 * @since  1.0.0
 	 */
@@ -223,8 +223,8 @@ class SWJProjectsModelProject extends ItemModel
 				$published = $this->getState('filter.published');
 				if (is_numeric($published))
 				{
-					$query->where('p.state = ' . (int) $published)
-						->where('c.state = ' . (int) $published);
+					$query->where($db->quoteName('p.state') . ' = ' . $db->quote((int) $published))
+						->where($db->quoteName('c.state') . ' = ' . $db->quote((int) $published));
 				}
 				elseif (is_array($published))
 				{
@@ -234,6 +234,8 @@ class SWJProjectsModelProject extends ItemModel
 					$query->where('p.state IN (' . $published . ')')
 						->where('c.state IN (' . $published . ')');
 				}
+				// Project visibility param
+				$query->where($db->quoteName('p.visible') . ' = ' . $db->quote(1));
 
 				$data = $db->setQuery($query)->loadObject();
 
@@ -297,7 +299,7 @@ class SWJProjectsModelProject extends ItemModel
 				}
 				else
 				{
-					if(!empty($data->joomla_versions))
+					if (!empty($data->joomla_versions))
 					{
 						$data->joomla->set('version', array_unique(explode(',', $data->joomla_versions)));
 					}
@@ -325,7 +327,8 @@ class SWJProjectsModelProject extends ItemModel
 				$data->download      = Route::_(SWJProjectsHelperRoute::getDownloadRoute(null, null, $data->element));
 				$data->documentation = (!$data->documentation) ? false :
 					Route::_(SWJProjectsHelperRoute::getDocumentationRoute($data->slug, $data->cslug));
-				if (!empty($data->urls->get('documentation'))) {
+				if (!empty($data->urls->get('documentation')))
+				{
 					$data->documentation = false;
 				}
 
@@ -367,9 +370,9 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @param   integer  $pk  The id of the category.
 	 *
-	 * @throws  Exception
-	 *
 	 * @return  object|boolean|Exception  Category object on success, false or exception on failure.
+	 *
+	 * @throws  Exception
 	 *
 	 * @since  1.0.0
 	 */
@@ -467,9 +470,9 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @param   integer  $pk  Optional primary key of the article to increment.
 	 *
-	 * @throws Exception
-	 *
 	 * @return  boolean  True if successful; false otherwise and internal error set.
+	 *
+	 * @throws Exception
 	 *
 	 * @since  1.1.0
 	 */
@@ -488,9 +491,9 @@ class SWJProjectsModelProject extends ItemModel
 	 *
 	 * @param   integer  $pk  The ids of the project.
 	 *
-	 * @throws  Exception
-	 *
 	 * @return  array|boolean|Exception  Relations array on success, false or exception on failure.
+	 *
+	 * @throws  Exception
 	 *
 	 * @since  1.1.0
 	 */

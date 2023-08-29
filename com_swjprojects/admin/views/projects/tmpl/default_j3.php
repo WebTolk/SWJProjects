@@ -136,6 +136,11 @@ $columns = 8;
 							<?php else : ?>
 								<?php echo $this->escape($item->title); ?>
 							<?php endif; ?>
+							<?php if (isset($item->visible) && $item->visible == 0):?>
+                                <span class="badge">
+                                    <?php echo Text::_('COM_SWJPROJECTS_PROJECT_HIDDEN'); ?>
+                                </span>
+							<?php endif; ?>
 						</td>
 						<td class="small hidden-phone">
 							<?php echo Text::_($this->escape($item->category_title)); ?>
