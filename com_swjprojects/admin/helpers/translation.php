@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @package    SW JProjects Component
  * @version    1.8.0
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
