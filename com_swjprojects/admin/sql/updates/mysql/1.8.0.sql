@@ -7,4 +7,4 @@
  * @link https://septdir.com, https://web-tolk.ru
  */
 
-ALTER TABLE `#__swjprojects_projects` ADD `visible` INT(1) NOT NULL DEFAULT 1 COMMENT 'Is project visible or not in frontend' AFTER `hits`;
+ALTER TABLE `#__swjprojects_projects` ADD `visible` INT(1) NOT NULL DEFAULT 1 COMMENT 'Is project visible or not in frontend' AFTER `hits`, ADD INDEX `idx_visible` (`visible`);
