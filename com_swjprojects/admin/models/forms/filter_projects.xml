@@ -8,6 +8,11 @@
 			<option value="0">JUNPUBLISHED</option>
 			<option value="-2">JTRASHED</option>
 		</field>
+		<field name="visible" type="list" onchange="this.form.submit();">
+			<option value="">COM_SWJPROJECTS_PROJECT_VISIBILITY_FILTER</option>
+			<option value="1">COM_SWJPROJECTS_PROJECT_VISIBLE</option>
+			<option value="0">COM_SWJPROJECTS_PROJECT_HIDDEN</option>
+		</field>
 		<field name="category" type="categories" onchange="this.form.submit();"
 			   layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_SWJPROJECTS_CATEGORY_SELECT</option>

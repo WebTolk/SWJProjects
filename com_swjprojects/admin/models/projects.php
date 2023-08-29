@@ -29,7 +29,7 @@ class SWJProjectsModelProjects extends ListModel
 			$config['filter_fields'] = array(
 				'id', 'p.id',
 				'title', 'p.title',
-				'published', 'state', 'p.state',
+				'published', 'state', 'p.state','p.visible',
 				'category', 'category_id', 'c.id', 'p.catid', 'catid', 'category_title', 'cl.title',
 				'download_type', 'p.download_type',
 				'downloads', 'p.downloads',
@@ -57,6 +57,10 @@ class SWJProjectsModelProjects extends ListModel
 		// Set published filter state
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
+
+		// Set project vislble filter state
+		$project_visible = $this->getUserStateFromRequest($this->context . '.filter.visible', 'filter_visible', '');
+		$this->setState('filter.visible', $project_visible);
 
 		// Set category filter state
 		$category = $this->getUserStateFromRequest($this->context . '.filter.category  ', 'filter_category', '');
@@ -134,6 +138,16 @@ class SWJProjectsModelProjects extends ListModel
 		elseif ($published === '')
 		{
 			$query->where('(p.state = 0 OR p.state = 1)');
+		}
+
+		$project_visible = $this->getState('filter.visible');
+		if (is_numeric($project_visible))
+		{
+			$query->where('p.visible = ' . (int) $project_visible);
+		}
+		elseif ($project_visible === '')
+		{
+			$query->where('(p.visible = 0 OR p.visible = 1)');
 		}
 
 		// Filter by category state

@@ -146,6 +146,11 @@ $columns = 9;
 											</div>
 										<?php endif; ?>
 									</a>
+                                    <?php if (isset($item->visible) && $item->visible == 0):?>
+                                        <span class="badge bg-secondary">
+                                            <?php echo Text::_('COM_SWJPROJECTS_PROJECT_HIDDEN'); ?>
+                                        </span>
+                                    <?php endif; ?>
 								</td>
 								<td class="d-none d-md-table-cell">
 									<?php echo Text::_($this->escape($item->category_title)); ?>

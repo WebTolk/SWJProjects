@@ -220,7 +220,7 @@ class SWJProjectsModelProjects extends ListModel
 			->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
 			->from($db->quoteName('#__swjprojects_versions', 'lv'))
 			->where('lv.project_id = p.id')
-			->where('state = 1')
+			->where($db->quoteName('state') .' = '. $db->quote(1))
 			->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
 			->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
 			->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
@@ -259,6 +259,10 @@ class SWJProjectsModelProjects extends ListModel
 		{
 			$query->where($db->quoteName('p.download_type'). ' = ' . $db->quote($download_type));
 		}
+
+
+		$query->where($db->quoteName('p.visible'). ' = ' . $db->quote(1));
+
 
 
 		// Filter by category state

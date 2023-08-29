@@ -14,7 +14,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
+HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'relative' => true));
+
 ?>
 <div id="SWJProjects" class="project">
 	<div class="project info mb-3">
