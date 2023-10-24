@@ -28,7 +28,7 @@ class SWJProjectsModelProjects extends ListModel
 		{
 			$config['filter_fields'] = array(
 				'id', 'p.id',
-				'title', 'p.title',
+				'title',
 				'published', 'state', 'p.state','p.visible',
 				'category', 'category_id', 'c.id', 'p.catid', 'catid', 'category_title', 'cl.title',
 				'download_type', 'p.download_type',
