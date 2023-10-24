@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_versions`
     `major`          int(10)                                                NOT NULL DEFAULT 0,
     `minor`          int(10)                                                NOT NULL DEFAULT 0,
     `patch`          int(10)                                                NOT NULL DEFAULT 0,
-    `hotfix`       int(10)                                                NOT NULL DEFAULT 0,
+    `hotfix`         int(10)                                                NOT NULL DEFAULT 0,
     `tag`            varchar(100)                                           NOT NULL DEFAULT '',
     `stability`      int(10)                                                NOT NULL DEFAULT 0,
     `alias`          varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
