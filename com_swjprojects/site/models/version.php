@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -270,10 +270,14 @@ class SWJProjectsModelVersion extends ItemModel
 				$data->version->id      = $data->id;
 				$data->version->major   = $data->major;
 				$data->version->minor   = $data->minor;
-				$data->version->micro   = $data->micro;
+				$data->version->patch   = $data->patch;
+				$data->version->hotfix  = $data->hotfix;
 				$data->version->tag     = $data->tag_key;
 				$data->version->stage   = $data->stage;
-				$data->version->version = $data->major . '.' . $data->minor . '.' . $data->micro;
+				$data->version->version = $data->major . '.' . $data->minor . '.' . $data->patch;
+				if($data->hotfix > 0){
+					$data->version->version .= '.'.$data->hotfix;
+				}
 				$data->version->title   = $data->project_title . ' ' . $data->version->version;
 				if ($data->tag_key !== 'stable')
 				{

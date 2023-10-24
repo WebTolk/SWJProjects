@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -75,7 +75,10 @@ class SWJProjectsModelVersion extends AdminModel
 						$translate->metadata = $registry->toArray();
 					}
 				}
-
+                // Remove hotfix = 0
+                if($item->hotfix == 0){
+                    unset($item->hotfix);
+                }
 				// Check file
 				$path       = ComponentHelper::getParams('com_swjprojects')->get('files_folder') .
 					'/versions/' . $item->id;
@@ -349,7 +352,8 @@ class SWJProjectsModelVersion extends AdminModel
 			'project_id' => $data['project_id'],
 			'major'      => $data['major'],
 			'minor'      => $data['minor'],
-			'micro'      => $data['micro'],
+			'patch'      => $data['patch'],
+			'hotfix'     => $data['hotfix'],
 			'tag'        => $data['tag'],
 			'stage'      => $data['stage'],
 		));
@@ -365,9 +369,17 @@ class SWJProjectsModelVersion extends AdminModel
 
 		// Prepare stage field data
 		$data['stage'] = ($data['tag'] !== 'stable' && $data['tag'] !== 'dev') ? $data['stage'] : 0;
+        $data['major'] = (int) $data['major'];
+        $data['minor'] = (int) $data['minor'];
+        $data['patch'] = (int) $data['patch'];
+        $data['hotfix'] = (!empty($data['hotfix'])) ? (int) $data['hotfix'] : 0;
 
 		// Prepare alias field data
-		$alias = $data['major'] . '-' . $data['minor'] . '-' . $data['micro'];
+		$alias = $data['major'] . '-' . $data['minor'] . '-' . $data['patch'];
+		if($data['hotfix'] > 0) {
+            $alias .=  '-' . $data['hotfix'];
+        }
+
 		if ($data['tag'] !== 'stable')
 		{
 			$alias .= '-' . $data['tag'];

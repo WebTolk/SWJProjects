@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -172,7 +172,10 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_VERSION_NOT_FOUND'), 404);
 				}
 
-				$data->filename = $data->element . '_' . $data->major . '.' . $data->minor . '.' . $data->micro;
+				$data->filename = $data->element . '_' . $data->major . '.' . $data->minor . '.' . $data->patch;
+				if(property_exists($data, 'hotfix') && !empty($data->hotfix)){
+					$data->filename .= '.'.$data->hotfix;
+				}
 				if ($data->tag !== 'stable')
 				{
 					$data->filename .= '-' . $data->tag;
@@ -236,7 +239,8 @@ class SWJProjectsModelDownload extends BaseDatabaseModel
 						->where($db->quoteName('v.tag') . ' = ' . $db->quote($tag))
 						->order($db->escape('v.major') . ' ' . $db->escape('desc'))
 						->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
-						->order($db->escape('v.micro') . ' ' . $db->escape('desc'));
+						->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
+						->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
 
 					// Set stage ordering
 					if (in_array($tag, array('rc', 'beta', 'alpha')))

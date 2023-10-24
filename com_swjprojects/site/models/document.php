@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -192,14 +192,15 @@ class SWJProjectsModelDocument extends ItemModel
 
                 // Join over versions for last version
                 $subQuery = $db->getQuery(true)
-                    ->select(array('CONCAT(lv.id, ":", lv.alias, "|", lv.major, ".", lv.minor, ".", lv.micro)'))
+                    ->select(array('CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)'))
                     ->from($db->quoteName('#__swjprojects_versions', 'lv'))
                     ->where('lv.project_id = p.id')
                     ->where('lv.state = 1')
                     ->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
                     ->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
                     ->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
-                    ->order($db->escape('lv.micro') . ' ' . $db->escape('desc'))
+                    ->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
+                    ->order($db->escape('lv.hotfix') . ' ' . $db->escape('desc'))
                     ->setLimit(1);
                 $query->select('(' . $subQuery->__toString() . ') as last_version');
 
@@ -288,7 +289,7 @@ class SWJProjectsModelDocument extends ItemModel
                     list($data->project->version->slug, $data->project->version->version) = explode('|', $data->last_version, 2);
                     list($data->project->version->id, $data->project->version->alias) = explode(':', $data->project->version->slug, 2);
                     $data->project->version->link = Route::_(SWJProjectsHelperRoute::getVersionRoute($data->project->version->slug,
-                        $data->slug, $data->cslug));
+                        $data->pslug, $data->cslug));
                 }
 
                 // Set payment

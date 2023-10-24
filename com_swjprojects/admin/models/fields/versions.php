@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -49,7 +49,7 @@ class JFormFieldVersions extends JFormFieldList
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
-				->select(array('v.id', 'v.major', 'v.minor', ' v.micro', 'v.tag', 'v.stage'))
+				->select(array('v.id', 'v.major', 'v.minor', ' v.patch', 'v.tag', 'v.stage'))
 				->from($db->quoteName('#__swjprojects_versions', 'v'));
 
 			// Join over the projects
@@ -81,13 +81,13 @@ class JFormFieldVersions extends JFormFieldList
 
 				// Set version & name
 				$item->title = $item->project_title . ' ' . $item->major;
-				if (!empty($item->minor) || !empty($item->micro))
+				if (!empty($item->minor) || !empty($item->patch))
 				{
 					$item->title .= '.' . $item->minor;
 				}
-				if (!empty($item->micro))
+				if (!empty($item->patch))
 				{
-					$item->title .= '.' . $item->micro;
+					$item->title .= '.' . $item->patch;
 				}
 				if ($item->tag !== 'stable')
 				{

@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -105,7 +105,7 @@ class SWJProjectsModelVersions extends ListModel
 	{
 		$db    = $this->getDbo();
 		$query = $db->getQuery(true)
-			->select(array('v.*', 'CONCAT(v.major, ".", v.minor, ".", v.micro) as version'))
+			->select(array('v.*', 'CONCAT(v.major, ".", v.minor, ".", v.patch) as version'))
 			->from($db->quoteName('#__swjprojects_versions', 'v'));
 
 		// Join over the projects
@@ -179,7 +179,8 @@ class SWJProjectsModelVersions extends ListModel
 			$query->order($db->escape('project_title') . ' ' . $db->escape($direction))
 				->order($db->escape('major') . ' ' . $db->escape($direction))
 				->order($db->escape('minor') . ' ' . $db->escape($direction))
-				->order($db->escape('micro') . ' ' . $db->escape($direction))
+				->order($db->escape('patch') . ' ' . $db->escape($direction))
+				->order($db->escape('hotfix') . ' ' . $db->escape($direction))
 				->order($db->escape('stability') . ' ' . $db->escape($direction))
 				->order($db->escape('stage') . ' ' . $db->escape($direction));
 		}
@@ -187,7 +188,8 @@ class SWJProjectsModelVersions extends ListModel
 		{
 			$query->order($db->escape('major') . ' ' . $db->escape($direction))
 				->order($db->escape('minor') . ' ' . $db->escape($direction))
-				->order($db->escape('micro') . ' ' . $db->escape($direction))
+				->order($db->escape('patch') . ' ' . $db->escape($direction))
+				->order($db->escape('hotfix') . ' ' . $db->escape($direction))
 				->order($db->escape('stability') . ' ' . $db->escape($direction))
 				->order($db->escape('stage') . ' ' . $db->escape($direction));
 		}
@@ -216,7 +218,10 @@ class SWJProjectsModelVersions extends ListModel
 				$item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
 
 				// Set version & title
-				$item->version = $item->major . '.' . $item->minor . '.' . $item->micro;
+				$item->version = $item->major . '.' . $item->minor . '.' . $item->patch;
+                if(property_exists($item, 'hotfix') && !empty($item->hotfix)){
+                    $item->version .= '.'.$item->hotfix;
+                }
 				$item->title   = $item->project_title . ' ' . $item->version;
 				if ($item->tag !== 'stable')
 				{

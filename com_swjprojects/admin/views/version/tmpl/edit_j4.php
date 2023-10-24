@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -45,7 +45,10 @@ HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'a
 						<?php echo $this->form->getInput('minor'); ?>
 					</div>
 					<div class="col-1">
-						<?php echo $this->form->getInput('micro'); ?>
+						<?php echo $this->form->getInput('patch'); ?>
+					</div>
+                    <div class="col-1">
+						<?php echo $this->form->getInput('hotfix'); ?>
 					</div>
 					<div class="col-3">
 						<?php echo $this->form->getInput('tag'); ?>

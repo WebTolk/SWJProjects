@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -321,8 +321,9 @@ class SWJProjectsModelJchangelog extends BaseDatabaseModel
 						'v.id',
 						'v.major',
 						'v.minor',
-						'v.micro',
-							'v_t.changelog',
+						'v.patch',
+						'v.hotfix',
+						'v_t.changelog',
 						'v_t.language',
 						'p.joomla as project_joomla',
 					])
@@ -349,7 +350,8 @@ class SWJProjectsModelJchangelog extends BaseDatabaseModel
 				// Add the list ordering clause
 				$query->order($db->escape('major') . ' ' . $db->escape('desc'))
 					->order($db->escape('minor') . ' ' . $db->escape('desc'))
-					->order($db->escape('micro') . ' ' . $db->escape('desc'));
+					->order($db->escape('patch') . ' ' . $db->escape('desc'))
+					->order($db->escape('hotfix') . ' ' . $db->escape('desc'));
 
 				$db->setQuery($query);
 
@@ -361,8 +363,10 @@ class SWJProjectsModelJchangelog extends BaseDatabaseModel
 				{
 
 					// Set version & name
-					$item->version = $item->major . '.' . $item->minor . '.' . $item->micro;
-
+					$item->version = $item->major . '.' . $item->minor . '.' . $item->patch;
+					if(property_exists($item, 'hotfix') && !empty($item->hotfix)){
+						$item->version .= '.'.$item->hotfix;
+					}
 
 					// Set joomla
 					$item->project_joomla = new Registry($item->project_joomla);

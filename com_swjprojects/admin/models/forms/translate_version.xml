@@ -10,7 +10,7 @@
 				<field name="title"
 					   type="text"
 					   label="JGLOBAL_TITLE"
-					   class="input-xxlarge "
+					   class="input-xxlarge"
 					   parentclass="stack"/>
 				<field name="type"
 					   type="list"

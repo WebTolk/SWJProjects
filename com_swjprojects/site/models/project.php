@@ -1,9 +1,9 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -734,7 +734,8 @@ class SWJProjectsModelProject extends ItemModel
 				// Set ordering
 				$query->order($db->escape('v.major') . ' ' . $db->escape('desc'))
 					->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
-					->order($db->escape('v.micro') . ' ' . $db->escape('desc'));
+					->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
+					->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
 
 				$data = $db->setQuery($query)->loadObject();
 				if ((empty($data) || empty($data->id)) && $stable)
@@ -762,7 +763,10 @@ class SWJProjectsModelProject extends ItemModel
 					$data->download = Route::_(SWJProjectsHelperRoute::getDownloadRoute($data->id));
 
 					// Set version
-					$data->version = $data->major . '.' . $data->minor . '.' . $data->micro;
+					$data->version = $data->major . '.' . $data->minor . '.' . $data->patch;
+					if(property_exists($data, 'hotfix') && !empty($data->hotfix)){
+						$data->version .= '.'.$data->hotfix;
+					}
 					if ($data->tag_key !== 'stable')
 					{
 						$data->version .= ' ' . $data->tag_key;

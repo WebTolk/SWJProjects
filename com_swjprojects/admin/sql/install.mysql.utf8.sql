@@ -1,8 +1,8 @@
 /*
  * @package    SW JProjects Component
- * @version    1.8.0
+ * @version    1.9.0-alpha
  * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - August 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link https://septdir.com, https://web-tolk.ru
  */
@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_versions`
     `id`             int(11)                                                NOT NULL AUTO_INCREMENT,
     `major`          int(10)                                                NOT NULL DEFAULT 0,
     `minor`          int(10)                                                NOT NULL DEFAULT 0,
-    `micro`          int(10)                                                NOT NULL DEFAULT 0,
+    `patch`          int(10)                                                NOT NULL DEFAULT 0,
+    `hotfix`       int(10)                                                NOT NULL DEFAULT 0,
     `tag`            varchar(100)                                           NOT NULL DEFAULT '',
     `stability`      int(10)                                                NOT NULL DEFAULT 0,
     `alias`          varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_versions`
     `params`         text                                                   NULL,
     `downloads`      int(10)                                                NOT NULL DEFAULT 0,
     PRIMARY KEY `id` (`id`),
-    KEY `idx_version` (`major`, `minor`, `micro`, `stability`, `stage`),
+    KEY `idx_version` (`major`, `minor`, `patch`, `stability`, `stage`),
     KEY `idx_alias` (`alias`(191)),
     KEY `idx_state` (`state`),
     KEY `idx_project_id` (`project_id`),

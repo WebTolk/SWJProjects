@@ -8,21 +8,33 @@
 			   layout="joomla.form.field.list-fancy-select">
 			<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
 		</field>
-		<field name="major" type="text"
+		<field name="major" type="number"
 			   label="COM_SWJPROJECTS_VERSION_MAJOR"
 			   required="true"
+			   hint="major"
+			   min="0"
 			   class="input-mini"
-			   pattern="^[0-9]+$"/>
-		<field name="minor" type="text"
+			   filter="^[0-9]+$"/>
+		<field name="minor" type="number"
 			   label="COM_SWJPROJECTS_VERSION_MINOR"
+			   hint="minor"
 			   required="true"
+			   min="0"
 			   class="input-mini"
 			   pattern="^[0-9]+$"/>
-		<field name="micro" type="text"
-			   label="COM_SWJPROJECTS_VERSION_MICRO"
+		<field name="patch" type="number"
+			   label="COM_SWJPROJECTS_VERSION_PATCH"
+			   hint="patch"
 			   required="true"
+			   min="0"
 			   class="input-mini"
 			   pattern="^[0-9]+$"/>
+		<field name="hotfix" type="number"
+			   label="COM_SWJPROJECTS_VERSION_HOTFIX"
+			   hint="hotfix"
+			   min="0"
+			   filter="integer"
+			   class="input-mini"/>
 		<field name="tag" type="list"
 			   label="COM_SWJPROJECTS_VERSION_TAG"
 			   default="stable"

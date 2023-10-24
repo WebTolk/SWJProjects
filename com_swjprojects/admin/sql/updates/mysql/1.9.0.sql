@@ -7,4 +7,5 @@
  * @link https://septdir.com, https://web-tolk.ru
  */
 
-alter table `#__swjprojects_documentation` drop column `element`;
+ALTER TABLE `#__swjprojects_versions` CHANGE `micro` `patch` int(10) NOT NULL DEFAULT '0' AFTER `minor`;
+ALTER TABLE `#__swjprojects_versions` ADD `hotfix` int(10) NOT NULL DEFAULT '0' AFTER `patch`;
