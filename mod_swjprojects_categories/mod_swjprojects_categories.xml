@@ -7,7 +7,7 @@
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru/</authorUrl>
-	<version>1.9.0-alpha</version>
+	<version>1.9.0</version>
 	<description>MOD_SWJPROJECTS_CATEGORIES_DESCRIPTION</description>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_categories.ini</language>

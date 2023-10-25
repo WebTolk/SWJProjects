@@ -7,7 +7,7 @@
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://septdir.com, https://web-tolk.ru</authorUrl>
-	<version>1.9.0-alpha</version>
+	<version>1.9.0</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<install>
