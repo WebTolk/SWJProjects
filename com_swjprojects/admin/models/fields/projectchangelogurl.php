@@ -55,9 +55,11 @@ class JFormFieldProjectchangelogurl extends JFormField
 			BaseDatabaseModel::addIncludePath(JPATH_SITE . '/components/com_swjprojects/models');
 			$model = BaseDatabaseModel::getInstance('Project', 'SWJProjectsModel', array('ignore_request' => false));
 			$project = $model->getItem();
-			$url = Uri::getInstance(Uri::root());
-			$url->setPath(Route::link('site', SWJProjectsHelperRoute::getJChangelogRoute('', $project->element)));
-			
+			$url = Uri::getInstance(Route::link('site', SWJProjectsHelperRoute::getJChangelogRoute('', $project->element),false,'',true));
+
+            if(!empty($url->getVar('Itemid'))){
+                $url->delVar('Itemid');
+            }
 						
 			return $html = '</div>
 			<div class="col-12 alert alert-info mt-4">

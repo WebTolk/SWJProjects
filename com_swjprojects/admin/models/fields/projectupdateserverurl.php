@@ -55,7 +55,7 @@ class JFormFieldProjectupdateserverurl extends JFormField
 			BaseDatabaseModel::addIncludePath(JPATH_SITE . '/components/com_swjprojects/models');
 			$model   = BaseDatabaseModel::getInstance('Project', 'SWJProjectsModel', array('ignore_request' => false));
 			$project = $model->getItem();
-			$url     = Uri::getInstance(Uri::root());
+			$url     = Uri::getInstance(Route::link('site', SWJProjectsHelperRoute::getJUpdateRoute('', $project->element),false,'',true));
 
 			$component_params = ComponentHelper::getParams('com_swjprojects');
 			// Join over current translates
@@ -68,8 +68,10 @@ class JFormFieldProjectupdateserverurl extends JFormField
 			{
 				$project_name = 'Your extension name';
 			}
-			$url->setPath(Route::link('site', SWJProjectsHelperRoute::getJUpdateRoute('', $project->element)));
 
+            if(!empty($url->getVar('Itemid'))){
+                $url->delVar('Itemid');
+            }
 
 			return $html = '</div>
 				<div class="col-12 alert alert-info mt-4">
