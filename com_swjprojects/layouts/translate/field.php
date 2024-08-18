@@ -1,17 +1,18 @@
 <?php
 /*
- * @package    SW JProjects Component
- * @version    1.9.0
- * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @package    SW JProjects
+ * @version    2.0.0-alpha3
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link https://septdir.com, https://web-tolk.ru
+ * @link       https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 
 extract($displayData);
 
@@ -25,7 +26,7 @@ extract($displayData);
  */
 
 $group        = (isset($group)) ? $group : '';
-$languages    = SWJProjectsHelperTranslation::getTranslations();
+$languages    = TranslationHelper::getTranslations();
 ?>
 <?php foreach ($forms as $code => $form):
 	$field = (!empty($form->getField($name, $group))) ? $form->getField($name, $group) : false;

@@ -1,11 +1,11 @@
 <?php
 /*
- * @package    SW JProjects Component
- * @version    1.9.0
- * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @package    SW JProjects
+ * @version    2.0.0-alpha3
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link https://septdir.com, https://web-tolk.ru
+ * @link       https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -53,12 +53,12 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/imag
 				array('input-image' => 'preview', 'data-loading' => $loading), true); ?>
 		</div>
 		<div input-image="actions" class="btn-group">
-			<a class="btn btn-small btn-inverse btn-dark icon-eye hasTooltip" input-image="view"
-			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"></a>
-			<label class="btn btn-small btn-success icon-upload hasTooltip" for="<?php echo $id; ?>_field"
-				   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_UPLOAD'); ?>"></label>
-			<a class="btn btn-small btn-danger icon-remove hasTooltip" input-image="delete"
-			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_DELETE'); ?>"></a>
+			<a class="btn btn-sm btn-dark btn-dark hasTooltip" input-image="view"
+			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"><i class="icon icon-eye"></i></a>
+			<label class="btn btn-sm btn-success hasTooltip" for="<?php echo $id; ?>_field"
+				   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_UPLOAD'); ?>"><i class="icon icon-upload"></i></label>
+			<a class="btn btn-sm btn-danger hasTooltip" input-image="delete"
+			   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_DELETE'); ?>"><i class="icon icon-remove"></i></a>
 		</div>
 		<input id="<?php echo $id; ?>_field" type="file" accept="image/*" input-image="field"/>
 		<label for="<?php echo $id; ?>_field" input-image="drag"></label>

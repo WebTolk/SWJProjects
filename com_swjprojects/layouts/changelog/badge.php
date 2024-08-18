@@ -1,11 +1,11 @@
 <?php
 /*
- * @package    SW JProjects Component
- * @version    1.9.0
- * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @package    SW JProjects
+ * @version    2.0.0-alpha3
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link https://septdir.com, https://web-tolk.ru
+ * @link       https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -21,25 +21,26 @@ extract($displayData);
  * Layout variables
  * -----------------
  *
- * @var  string $type Changelog item type
- * @var  string $class CSS class for badge
- * @var  array $css_classes_array CSS class for badge
+ * @var  string $type              Changelog item type
+ * @var  string $class             CSS class for badge
+ * @var  array  $css_classes_array CSS class for badge
  *
  */
 
 $css_classes = [
-    'security' => 'badge bg-danger',
-    'fix' => 'badge bg-dark',
-    'language' => 'badge bg-primary',
-    'addition' => 'badge bg-success',
-    'change' => 'badge bg-warning',
-    'remove' => 'badge bg-secondary',
-    'note' => 'badge bg-info',
+	'security' => 'badge bg-danger',
+	'fix'      => 'badge bg-dark',
+	'language' => 'badge bg-primary',
+	'addition' => 'badge bg-success',
+	'change'   => 'badge bg-warning',
+	'remove'   => 'badge bg-secondary',
+	'note'     => 'badge bg-info',
 ];
 
-if (isset($css_classes_array) && !empty($css_classes_array)) {
+if (!empty($css_classes_array))
+{
 
-    $css_classes = array_merge($css_classes, $css_classes_array);
+	$css_classes = array_merge($css_classes, $css_classes_array);
 
 }
 
@@ -47,12 +48,16 @@ if (isset($css_classes_array) && !empty($css_classes_array)) {
 /**
  * $class string has a higher priority
  */
-if (isset($class) && !empty($class)) {
+if (!empty($class))
+{
 
-    $css_class = $class;
+	$css_class = $class;
 
-} else {
-    $css_class = $css_classes[$type];
+}
+else
+{
+	$css_class = $css_classes[$type];
 }
 ?>
-<span class="<?php echo $css_class; ?>" title="<?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE'); ?>"><?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_' . strtoupper($type)); ?></span>
+<span class="<?php echo $css_class; ?>"
+      title="<?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE'); ?>"><?php echo Text::_('COM_SWJPROJECTS_VERSION_CHANGELOG_ITEM_TYPE_' . strtoupper($type)); ?></span>

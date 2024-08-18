@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade">
 	<name>MOD_SWJPROJECTS_VERSIONS</name>
-	<author>Septdir Workshop</author>
-	<creationDate>October 2023</creationDate>
-	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>18.08.2024</creationDate>
+	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-	<authorEmail>development@septdir.com</authorEmail>
-	<authorUrl>https://www.septdir.com/</authorUrl>
-	<version>1.9.0</version>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.0.0-alpha3</version>
 	<description>MOD_SWJPROJECTS_VERSIONS_DESCRIPTION</description>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_versions.ini</language>

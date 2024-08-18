@@ -1,11 +1,11 @@
 <?php
 /*
- * @package    SW JProjects Component
- * @version    1.9.0
- * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
- * @сopyright (c) 2018 - October 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
+ * @package    SW JProjects
+ * @version    2.0.0-alpha3
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link https://septdir.com, https://web-tolk.ru
+ * @link       https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -39,21 +39,21 @@ $loading = str_replace('//', '/', Uri::root(true) . '/media/com_swjprojects/imag
 				<?php echo HTMLHelper::image('com_swjprojects/no-image.svg', '',
 					array('input-images' => 'noimage', 'style' => (empty($image->src)) ? '' : 'display: none;'), true); ?>
 				<div input-images="actions" class="btn-group">
-					<a class="btn btn-small btn-inverse btn-dark icon-eye hasTooltip" input-images="view"
-					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"></a>
-					<label class="btn btn-small btn-success icon-upload hasTooltip"
+					<a class="btn btn-sm btn-inverse btn-dark  hasTooltip" input-images="view"
+					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_VIEW'); ?>"><i class="icon icon-eye"></i></a>
+					<label class="btn btn-sm btn-success  hasTooltip"
 						   for="<?php echo $id . '_' . $image->name . '_field'; ?>"
-						   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_UPLOAD'); ?>"></label>
-					<a class="btn btn-small btn-primary icon-move hasTooltip" input-images="move"
-					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_MOVE'); ?>"></a>
-					<a class="btn btn-small btn-danger icon-remove hasTooltip" input-images="delete"
+						   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_UPLOAD'); ?>"><i class="icon icon-upload"></i></label>
+					<a class="btn btn-sm btn-primary  hasTooltip" input-images="move"
+					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_MOVE'); ?>"><i class="icon icon-move"></i></a>
+					<a class="btn btn-sm btn-danger  hasTooltip" input-images="delete"
 					   data-key="<?php echo $image->name; ?>"
-					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_DELETE'); ?>"></a>
+					   title="<?php echo Text::_('COM_SWJPROJECTS_IMAGES_DELETE'); ?>"><i class="icon icon-remove"></i></a>
 				</div>
 				<label for="<?php echo $id . '_' . $image->name . '_field'; ?>"></label>
 			</div>
 			<textarea name="<?php echo $name . '[' . $image->name . '][text]'; ?>" input-images="text" rows="3"
-					  class="span12 form-control" data-key="<?php echo $image->name; ?>"
+					  class="col-12 form-control" data-key="<?php echo $image->name; ?>"
 					  data-type="text"><?php echo $image->text; ?></textarea>
 			<input type="hidden" name="<?php echo $name . '[' . $image->name . '][ordering]'; ?>"
 				   input-images="ordering" value="<?php echo $image->ordering; ?>"

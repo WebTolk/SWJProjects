@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="4.0" type="component" method="upgrade">
 	<name>COM_SWJPROJECTS</name>
-	<author>Septdir Workshop</author>
-	<creationDate>October 2023</creationDate>
-	<copyright>Copyright (c) 2018 - 2023 Septdir Workshop. All rights reserved.</copyright>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>18.08.2024</creationDate>
+	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
-	<authorUrl>https://septdir.com, https://web-tolk.ru</authorUrl>
-	<version>1.9.0</version>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.0.0-alpha3</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
-	<scriptfile>script.php</scriptfile>
+	<namespace path="src">Joomla\Component\SWJProjects</namespace>
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -26,18 +26,14 @@
 		</schemas>
 	</update>
 	<files folder="site">
-		<folder>helpers</folder>
-		<folder>models</folder>
-		<folder>views</folder>
-		<filename>controller.php</filename>
-		<filename>router.php</filename>
-		<filename>swjprojects.php</filename>
+		<folder>src</folder>
+		<folder>tmpl</folder>
 	</files>
 	<languages folder="site">
-		<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.sys.ini</language>
-		<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.ini</language>
-		<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.sys.ini</language>
+		<language tag="en-GB">language/en-GB/com_swjprojects.ini</language>
+		<language tag="en-GB">language/en-GB/com_swjprojects.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/com_swjprojects.ini</language>
+		<language tag="ru-RU">language/ru-RU/com_swjprojects.sys.ini</language>
 	</languages>
 	<administration>
 		<menu>COM_SWJPROJECTS</menu>
@@ -52,22 +48,19 @@
 			</menu>
 		</submenu>
 		<files folder="admin">
-			<folder>controllers</folder>
-			<folder>helpers</folder>
-			<folder>models</folder>
+			<folder>forms</folder>
+			<folder>services</folder>
 			<folder>sql</folder>
-			<folder>tables</folder>
-			<folder>views</folder>
+			<folder>src</folder>
+			<folder>tmpl</folder>
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
-			<filename>controller.php</filename>
-			<filename>swjprojects.php</filename>
 		</files>
 		<languages folder="admin">
-			<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.ini</language>
-			<language tag="en-GB">language/en-GB/en-GB.com_swjprojects.sys.ini</language>
-			<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.ini</language>
-			<language tag="ru-RU">language/ru-RU/ru-RU.com_swjprojects.sys.ini</language>
+			<language tag="en-GB">language/en-GB/com_swjprojects.ini</language>
+			<language tag="en-GB">language/en-GB/com_swjprojects.sys.ini</language>
+			<language tag="ru-RU">language/ru-RU/com_swjprojects.ini</language>
+			<language tag="ru-RU">language/ru-RU/com_swjprojects.sys.ini</language>
 		</languages>
 	</administration>
 	<media destination="com_swjprojects" folder="media">
@@ -80,6 +73,5 @@
 		<folder>field</folder>
 		<folder>toolbar</folder>
 		<folder>translate</folder>
-		<folder>message</folder>
 	</layouts>
 </extension>
