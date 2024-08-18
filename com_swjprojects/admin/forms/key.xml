@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
+	<fieldset name="key">
+		<field name="key" type="text"
+			   label="COM_SWJPROJECTS_KEY"
+			   class="input-xxlarge"
+			   size="40"
+			   readonly="true"/>
+		<field name="key_regenerate" type="radio"
+			   label="COM_SWJPROJECTS_KEY_REGENERATE"
+			   default="0"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
+	<fieldset name="global">
+		<field name="id" type="text"
+			   label="JGLOBAL_FIELD_ID_LABEL"
+			   description="JGLOBAL_FIELD_ID_DESC"
+			   class="readonly"
+			   size="10"
+			   default="0"
+			   readonly="true"/>
+		<field name="projects" type="projects"
+			   label="COM_SWJPROJECTS_PROJECTS"
+			   required="true"
+			   multiple="true"
+			   layout="joomla.form.field.list-fancy-select">
+			<option value="-1">JALL</option>
+		</field>
+		<field name="order" type="text"
+			   label="COM_SWJPROJECTS_ORDER"
+			   maxlength="100"
+			   size="40"
+			   class="span12"/>
+		<field name="email" type="email"
+			   label="JGLOBAL_EMAIL"
+			   size="30"
+			   validate="email"
+			   validDomains="com_users.domains"/>
+		<field name="user" type="user"
+			   label="COM_SWJPROJECTS_USER"/>
+		<field name="date_start" type="calendar"
+			   label="COM_SWJPROJECTS_DATE_START"
+			   translateformat="true"
+			   showtime="true"
+			   size="22"
+			   filter="user_utc"
+			   class="input-medium"/>
+		<field name="date_end" type="calendar"
+			   label="COM_SWJPROJECTS_DATE_END"
+			   translateformat="true"
+			   showtime="true"
+			   size="22"
+			   filter="user_utc"
+			   class="input-medium"/>
+		<field name="limit" type="radio"
+			   label="COM_SWJPROJECTS_KEY_LIMIT"
+			   class="btn-group btn-group-yesno"
+			   default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="limit_count" type="number"
+			   label="COM_SWJPROJECTS_KEY_LIMIT_COUNT"
+			   showon="limit:1"/>
+		<field name="state" type="list"
+			   label="JSTATUS"
+			   description="JFIELD_PUBLISHED_DESC"
+			   class="chzn-color-state"
+			   filter="intval"
+			   size="1"
+			   default="1">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+		<field name="note" type="text"
+			   label="JFIELD_NOTE_LABEL"
+			   description="JFIELD_NOTE_DESC"
+			   maxlength="255"
+			   size="40"
+			   class="span12"/>
+	</fieldset>
+	<fieldset name="plugins">
+		<fields name="plugins"/>
+	</fieldset>
+</form>

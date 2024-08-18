@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SWJPROJECTS_VIEW_VERSIONS" option="COM_SWJPROJECTS_VIEW_VERSIONS_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_SWJPROJECTS_VIEW_VERSIONS_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
+		<fieldset name="request">
+			<field name="id" type="projects"
+				   label="COM_SWJPROJECTS_PROJECT"
+				   required="true"
+				   layout="joomla.form.field.list-fancy-select">
+				<option value="">COM_SWJPROJECTS_PROJECT_SELECT</option>
+			</field>
+		</fieldset>
+	</fields>
+	<fields name="params">
+		<fieldset name="settings" label="JFIELD_PARAMS_LABEL">
+			<field name="versions_limit" type="integer"
+				   label="COM_SWJPROJECTS_PARAMS_VERSIONS_LIMIT"
+				   first="1" last="100" step="1"
+				   default=""
+				   useglobal="true">
+				<option value="0">JALL</option>
+			</field>
+		</fieldset>
+		<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field name="menu-meta_image" type="media"
+				   label="JFIELD_META_IMAGE_LABEL"
+				   description="JFIELD_META_IMAGE_DESC"/>
+		</fieldset>
+	</fields>
+</metadata>

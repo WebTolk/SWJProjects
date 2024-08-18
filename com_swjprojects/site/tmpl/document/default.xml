@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SWJPROJECTS_VIEW_DOCUMENT" option="COM_SWJPROJECTS_VIEW_DOCUMENT_DEFAULT_OPTION">
+		<message>
+			<![CDATA[COM_SWJPROJECTS_VIEW_DOCUMENT_DESCRIPTION]]>
+		</message>
+	</layout>
+	<fields name="request" addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
+		<fieldset name="request">
+			<field name="id" type="documentation"
+				   label="COM_SWJPROJECTS_DOCUMENT"
+				   required="true"
+				   layout="joomla.form.field.list-fancy-select">
+				<option value="">COM_SWJPROJECTS_DOCUMENT_SELECT</option>
+			</field>
+		</fieldset>
+	</fields>
+	<fields name="params">
+		<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field name="menu-meta_image" type="media"
+				   label="JFIELD_META_IMAGE_LABEL"
+				   description="JFIELD_META_IMAGE_DESC"/>
+		</fieldset>
+	</fields>
+</metadata>

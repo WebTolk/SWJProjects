@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
+	<fieldset>
+		<field name="title" type="text"
+			   label="JGLOBAL_TITLE"
+			   description="JFIELD_TITLE_DESC"
+			   class="input-xxlarge input-large-text"
+			   size="40"
+			   translate_required="true"/>
+		<field name="introtext" type="textarea"
+			   label="COM_SWJPROJECTS_PROJECT_INTROTEXT"
+			   hint="COM_SWJPROJECTS_PROJECT_INTROTEXT"
+			   filter="JComponentHelper::filterText"
+			   rows="5"
+			   class="span12"/>
+		<field name="fulltext" type="editor"
+			   label="COM_SWJPROJECTS_PROJECT_FULLTEXT"
+			   filter="JComponentHelper::filterText"
+			   buttons="true"/>
+	</fieldset>
+	<fieldset name="images" label="COM_SWJPROJECTS_IMAGES">
+		<field name="icon" type="image"
+			   label="COM_SWJPROJECTS_IMAGES_ICON"
+			   section="projects"
+			   pk="jform[id]"
+			   filename="icon"
+			   language="[translate]"/>
+		<field name="cover" type="image"
+			   label="COM_SWJPROJECTS_IMAGES_COVER"
+			   section="projects"
+			   pk="jform[id]"
+			   filename="cover"
+			   language="[translate]"/>
+		<field name="gallery" type="images"
+			   label="COM_SWJPROJECTS_IMAGES_GALLERY"
+			   section="projects"
+			   pk="jform[id]"
+			   folder="gallery"
+			   language="[translate]"/>
+	</fieldset>
+	<fieldset name="payment" label="COM_SWJPROJECTS_PAYMENT">
+		<fields name="payment">
+			<field name="link" type="text"
+				   label="COM_SWJPROJECTS_PAYMENT_LINK"
+				   class="input-xxlarge"/>
+			<field name="price" type="text"
+				   label="COM_SWJPROJECTS_PAYMENT_price"
+				   class="input-xlarge input-large-text"/>
+		</fields>
+	</fieldset>
+	<fields name="metadata">
+		<fieldset name="metadata_project">
+			<field name="title" type="text" label="COM_SWJPROJECTS_META_TITLE"/>
+			<field name="description" type="textarea"
+				   label="COM_SWJPROJECTS_META_DESCRIPTION"
+				   rows="3"
+				   cols="30"/>
+			<field name="keywords" type="textarea"
+				   label="COM_SWJPROJECTS_META_KEYWORDS"
+				   description="JFIELD_META_KEYWORDS_DESC"
+				   rows="3"
+				   cols="30"/>
+			<field name="robots" type="list" label="COM_SWJPROJECTS_META_ROBOTS">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+			<field name="image" type="image"
+				   label="COM_SWJPROJECTS_META_IMAGE"
+				   section="projects"
+				   pk="jform[id]"
+				   filename="meta"
+				   language="[translate]"/>
+		</fieldset>
+		<fieldset name="metadata_versions">
+			<field name="versions_title" type="text" label="COM_SWJPROJECTS_META_TITLE"/>
+			<field name="versions_description" type="textarea"
+				   label="COM_SWJPROJECTS_META_DESCRIPTION"
+				   rows="3"
+				   cols="30"/>
+			<field name="versions_keywords" type="textarea"
+				   label="COM_SWJPROJECTS_META_KEYWORDS"
+				   description="JFIELD_META_KEYWORDS_DESC"
+				   rows="3"
+				   cols="30"/>
+			<field name="versions_robots" type="list" label="COM_SWJPROJECTS_META_ROBOTS">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+			<field name="versions_image" type="image"
+				   label="COM_SWJPROJECTS_META_IMAGE"
+				   section="projects"
+				   pk="jform[id]"
+				   filename="meta_versions"
+				   language="[translate]"/>
+		</fieldset>
+		<fieldset name="metadata_documentation">
+			<field name="documentation_title" type="text" label="COM_SWJPROJECTS_META_TITLE"/>
+			<field name="documentation_description" type="textarea"
+				   label="COM_SWJPROJECTS_META_DESCRIPTION"
+				   rows="3"
+				   cols="30"/>
+			<field name="documentation_keywords" type="textarea"
+				   label="COM_SWJPROJECTS_META_KEYWORDS"
+				   description="JFIELD_META_KEYWORDS_DESC"
+				   rows="3"
+				   cols="30"/>
+			<field name="documentation_robots" type="list" label="COM_SWJPROJECTS_META_ROBOTS">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+			<field name="documentation_image" type="image"
+				   label="COM_SWJPROJECTS_META_IMAGE"
+				   section="projects"
+				   pk="jform[id]"
+				   filename="meta_documentation"
+				   language="[translate]"/>
+		</fieldset>
+	</fields>
+</form>
