@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Event\AbstractEvent;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -93,13 +94,13 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state    = $this->get('State');
-		$this->params   = $this->state->get('params');
-		$this->item     = $this->get('Item');
-		$this->documentation_items     = $this->item->documentation_items;
-		$this->project  = $this->item->project;
-		$this->category = $this->item->category;
-		$this->menu     = Factory::getApplication()->getMenu()->getActive();
+		$this->state               = $this->get('State');
+		$this->params              = $this->state->get('params');
+		$this->item                = $this->get('Item');
+		$this->documentation_items = $this->item->documentation_items;
+		$this->project             = $this->item->project;
+		$this->category            = $this->item->category;
+		$this->menu                = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors
 		if (count($errors = $this->get('Errors')))
@@ -148,7 +149,7 @@ class HtmlView extends BaseHtmlView
 		$item->text = &$item->fulltext;
 
 		// Extra content from events for document
-		$item->event   = new \stdClass();
+		$item->event = new \stdClass();
 
 		$contentEventArguments = [
 			'context' => 'com_swjprojects.document',
@@ -161,11 +162,13 @@ class HtmlView extends BaseHtmlView
 			'afterDisplayTitle'    => AbstractEvent::create('onContentAfterTitle', $contentEventArguments),
 			'beforeDisplayContent' => AbstractEvent::create('onContentBeforeDisplay', $contentEventArguments),
 			'afterDisplayContent'  => AbstractEvent::create('onContentAfterDisplay', $contentEventArguments),
-			'beforeProjectButtons'  => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
+			'beforeProjectButtons' => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
 			'afterProjectButtons'  => AbstractEvent::create('afterProjectButtons', $contentEventArguments),
+			'onContentPrepare'     => AbstractEvent::create('onContentPrepare', $contentEventArguments),
 		];
 
-		foreach ($contentEvents as $resultKey => $event) {
+		foreach ($contentEvents as $resultKey => $event)
+		{
 			$results = $dispatcher->dispatch($event->getName(), $event)->getArgument('result', []);
 
 			$item->event->{$resultKey} = $results ? trim(implode("\n", $results)) : '';
@@ -173,8 +176,8 @@ class HtmlView extends BaseHtmlView
 
 
 		// Extra content from events for project
-		$project = &$this->project;
-		$project->event   = new \stdClass();
+		$project        = &$this->project;
+		$project->event = new \stdClass();
 
 		$contentEventArguments = [
 			'context' => 'com_swjprojects.document',
@@ -187,11 +190,12 @@ class HtmlView extends BaseHtmlView
 			'afterDisplayTitle'    => AbstractEvent::create('onContentAfterTitle', $contentEventArguments),
 			'beforeDisplayContent' => AbstractEvent::create('onContentBeforeDisplay', $contentEventArguments),
 			'afterDisplayContent'  => AbstractEvent::create('onContentAfterDisplay', $contentEventArguments),
-			'beforeProjectButtons'  => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
+			'beforeProjectButtons' => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
 			'afterProjectButtons'  => AbstractEvent::create('afterProjectButtons', $contentEventArguments),
 		];
 
-		foreach ($contentEvents as $resultKey => $event) {
+		foreach ($contentEvents as $resultKey => $event)
+		{
 			$results = $dispatcher->dispatch($event->getName(), $event)->getArgument('result', []);
 
 			$project->event->{$resultKey} = $results ? trim(implode("\n", $results)) : '';
@@ -296,7 +300,7 @@ class HtmlView extends BaseHtmlView
 		}
 		elseif (!empty($item->introtext))
 		{
-			$doc->setDescription(JHtmlString::truncate($item->introtext, 150, false, false));
+			$doc->setDescription(StringHelper::truncate($item->introtext, 150, false, false));
 		}
 
 		// Set meta keywords
