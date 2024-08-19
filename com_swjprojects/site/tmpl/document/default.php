@@ -61,8 +61,8 @@ $isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
         <div class="col-lg-3 mb-3">
             <div class="card">
                 <nav class="navbar navbar-expand-lg">
-                    <div class="container-fluid">
-                        <h2 class="d-lg-none"><?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION_TOC'); ?></h2>
+                    <div class="container-fluid d-flex flex-lg-column align-items-start">
+                        <h2 class="h5 ms-3"><?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION_TOC'); ?></h2>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbaDocumentationTableOfContents" aria-controls="navbarDocumentationTableOfContents"
                                 aria-expanded="false" aria-label="Toggle navigation">
