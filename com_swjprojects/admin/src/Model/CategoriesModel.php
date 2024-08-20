@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.0.0-alpha3
+ * @version    2.0.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -85,7 +85,7 @@ class CategoriesModel extends ListModel
 	/**
 	 * Build an sql query to load categories list.
 	 *
-	 * @return  JDatabaseQuery  Database query to load categories list.
+	 * @return  DatabaseQuery  Database query to load categories list.
 	 *
 	 * @since  1.0.0
 	 */
@@ -98,7 +98,7 @@ class CategoriesModel extends ListModel
 			->where($db->quoteName('c.alias') . '!=' . $db->quote('root'));
 
 		// Join over translates
-		$translate = TranslationHelper::getDefault();
+		$translate = TranslationHelper::getCurrent();
 		$query->select(array('t_c.title as title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 				. ' ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($translate));

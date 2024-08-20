@@ -3,30 +3,29 @@
 	<name>PKG_SWJPROJECTS</name>
 	<packagename>swjprojects</packagename>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>18.08.2024</creationDate>
+	<creationDate>20.08.2024</creationDate>
 	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.0.0-alpha3</version>
-	<description>PKG_SWJPROJECTS_DESCRIPTION</description>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<version>2.0.0</version>
+	<description>PKG_SWJPROJECTS_DESC</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.pkg_swjprojects.sys.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.pkg_swjprojects.sys.ini</language>
+		<language tag="en-GB">en-GB/pkg_swjprojects.sys.ini</language>
+		<language tag="ru-RU">ru-RU/pkg_swjprojects.sys.ini</language>
 	</languages>
 	<files>
 		<folder type="component" id="com_swjprojects">com_swjprojects</folder>
-<!--		<folder type="module" id="mod_swjprojects_projects" client="site">mod_swjprojects_projects</folder>-->
-<!--		<folder type="module" id="mod_swjprojects_versions" client="site">mod_swjprojects_versions</folder>-->
-<!--		<folder type="module" id="mod_swjprojects_categories" client="site">mod_swjprojects_categories</folder>-->
+		<folder type="module" id="mod_swjprojects_projects" client="site">mod_swjprojects_projects</folder>
+		<folder type="module" id="mod_swjprojects_versions" client="site">mod_swjprojects_versions</folder>
+		<folder type="module" id="mod_swjprojects_categories" client="site">mod_swjprojects_categories</folder>
+		<folder type="plugin" group="editors-xtd" method="upgrade" id="swjprojectseditorxtd">plg_editors-xtd_swjprojectseditorxtd</folder>
+		<folder type="plugin" group="content" method="upgrade" id="swjprojects">plg_content_swjprojects</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="WebTolk - SW JProjects">
 			https://web-tolk.ru/component/swjprojects/jupdate?element=pkg_swjprojects
-		</server>
-		<server type="extension" priority="2" name="SW JProjects">
-			https://www.septdir.com/solutions/joomla/update?element=pkg_swjprojects
 		</server>
 	</updateservers>
 	<changelogurl>https://web-tolk.ru/jchangelog?element=pkg_swjprojects</changelogurl>

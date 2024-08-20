@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="editors-xtd" method="upgrade">
+	<name>PLG_SWJPROJECTSEDITORXTD</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>20.08.2024</creationDate>
+	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
+	<license>GNU General Public License version 3</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.0.0</version>
+	<description>PLG_SWJPROJECTSEDITORXTD_DESC</description>
+	<namespace path="src">Joomla\Plugin\EditorsXtd\Swjprojectseditorxtd</namespace>
+	<scriptfile>script.php</scriptfile>
+	<media folder="media" destination="plg_editors-xtd_swjprojectseditorxtd">
+		<folder>js</folder>
+	</media>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_editors-xtd_swjprojectseditorxtd.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_editors-xtd_swjprojectseditorxtd.sys.ini</language>
+	</languages>
+	<files>
+		<folder plugin="swjprojectseditorxtd">src</folder>
+		<folder>services</folder>
+		<folder>language</folder>
+		<filename>swjprojectseditorxtd.xml</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field addfieldprefix="Joomla\Plugin\EditorsXtd\Swjprojectseditorxtd\Fields"
+					   type="plugininfo" name="plugininfo"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

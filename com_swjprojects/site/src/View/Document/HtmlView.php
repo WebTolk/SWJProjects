@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.0.0-alpha3
+ * @version    2.0.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -94,13 +94,13 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state               = $this->get('State');
-		$this->params              = $this->state->get('params');
-		$this->item                = $this->get('Item');
-		$this->documentation_items = $this->item->documentation_items;
-		$this->project             = $this->item->project;
-		$this->category            = $this->item->category;
-		$this->menu                = Factory::getApplication()->getMenu()->getActive();
+		$this->state    = $this->get('State');
+		$this->params   = $this->state->get('params');
+		$this->item     = $this->get('Item');
+		$this->documentation_items     = $this->item->documentation_items;
+		$this->project  = $this->item->project;
+		$this->category = $this->item->category;
+		$this->menu     = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors
 		if (count($errors = $this->get('Errors')))
@@ -149,7 +149,7 @@ class HtmlView extends BaseHtmlView
 		$item->text = &$item->fulltext;
 
 		// Extra content from events for document
-		$item->event = new \stdClass();
+		$item->event   = new \stdClass();
 
 		$contentEventArguments = [
 			'context' => 'com_swjprojects.document',
@@ -162,13 +162,12 @@ class HtmlView extends BaseHtmlView
 			'afterDisplayTitle'    => AbstractEvent::create('onContentAfterTitle', $contentEventArguments),
 			'beforeDisplayContent' => AbstractEvent::create('onContentBeforeDisplay', $contentEventArguments),
 			'afterDisplayContent'  => AbstractEvent::create('onContentAfterDisplay', $contentEventArguments),
-			'beforeProjectButtons' => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
+			'beforeProjectButtons'  => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
 			'afterProjectButtons'  => AbstractEvent::create('afterProjectButtons', $contentEventArguments),
-			'onContentPrepare'     => AbstractEvent::create('onContentPrepare', $contentEventArguments),
+			'onContentPrepare'  => AbstractEvent::create('onContentPrepare', $contentEventArguments),
 		];
 
-		foreach ($contentEvents as $resultKey => $event)
-		{
+		foreach ($contentEvents as $resultKey => $event) {
 			$results = $dispatcher->dispatch($event->getName(), $event)->getArgument('result', []);
 
 			$item->event->{$resultKey} = $results ? trim(implode("\n", $results)) : '';
@@ -176,8 +175,8 @@ class HtmlView extends BaseHtmlView
 
 
 		// Extra content from events for project
-		$project        = &$this->project;
-		$project->event = new \stdClass();
+		$project = &$this->project;
+		$project->event   = new \stdClass();
 
 		$contentEventArguments = [
 			'context' => 'com_swjprojects.document',
@@ -190,12 +189,11 @@ class HtmlView extends BaseHtmlView
 			'afterDisplayTitle'    => AbstractEvent::create('onContentAfterTitle', $contentEventArguments),
 			'beforeDisplayContent' => AbstractEvent::create('onContentBeforeDisplay', $contentEventArguments),
 			'afterDisplayContent'  => AbstractEvent::create('onContentAfterDisplay', $contentEventArguments),
-			'beforeProjectButtons' => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
+			'beforeProjectButtons'  => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
 			'afterProjectButtons'  => AbstractEvent::create('afterProjectButtons', $contentEventArguments),
 		];
 
-		foreach ($contentEvents as $resultKey => $event)
-		{
+		foreach ($contentEvents as $resultKey => $event) {
 			$results = $dispatcher->dispatch($event->getName(), $event)->getArgument('result', []);
 
 			$project->event->{$resultKey} = $results ? trim(implode("\n", $results)) : '';

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version    2.0.0-alpha3
+ * @version    2.0.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -19,16 +19,16 @@ use Joomla\CMS\Language\Text;
 		echo ($i > 0) ? '<hr>' : ''; ?>
 		<div class="row-fluid item-<?php echo $item->id; ?>">
 			<?php if ($icon = $item->images->get('icon')): ?>
-				<div class="span3"><?php echo HTMLHelper::image($icon, $item->title); ?></div>
+				<div class="col-3"><?php echo HTMLHelper::image($icon, $item->title); ?></div>
 			<?php endif; ?>
-			<div class="<?php echo ($icon) ? 'span9' : ''; ?>">
+			<div class="<?php echo ($icon) ? 'col-9' : ''; ?>">
 				<h2 class="title">
 					<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
 				</h2>
 				<ul class="meta inline">
 					<li>
 						<strong><?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE'); ?>: </strong>
-						<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $item->download_type); ?>
+						<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . \strtoupper($item->download_type)); ?>
 					</li>
 					<?php if ($item->download_type === 'paid' && $item->payment->get('price')): ?>
 						<li>

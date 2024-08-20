@@ -2,26 +2,28 @@
 <extension type="module" client="site" method="upgrade">
 	<name>MOD_SWJPROJECTS_VERSIONS</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>18.08.2024</creationDate>
+	<creationDate>20.08.2024</creationDate>
 	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.0.0-alpha3</version>
+	<version>2.0.0</version>
 	<description>MOD_SWJPROJECTS_VERSIONS_DESCRIPTION</description>
+	<namespace path="src">Joomla\Module\Swjprojectsversions</namespace>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_versions.ini</language>
-		<language tag="en-GB">en-GB/en-GB.mod_swjprojects_versions.sys.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.mod_swjprojects_versions.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.mod_swjprojects_versions.sys.ini</language>
+		<language tag="en-GB">en-GB/mod_swjprojects_versions.ini</language>
+		<language tag="en-GB">en-GB/mod_swjprojects_versions.sys.ini</language>
+		<language tag="ru-RU">ru-RU/mod_swjprojects_versions.ini</language>
+		<language tag="ru-RU">ru-RU/mod_swjprojects_versions.sys.ini</language>
 	</languages>
 	<files>
-		<filename module="mod_swjprojects_versions">mod_swjprojects_versions.php</filename>
+		<folder module="mod_swjprojects_versions">src</folder>
+		<folder>services</folder>
 		<folder>tmpl</folder>
 	</files>
 	<config>
 		<fields name="params">
-			<fieldset name="basic" addfieldpath="/administrator/components/com_swjprojects/models/fields">
+			<fieldset name="basic" addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
 				<field name="limit" type="number" label="MOD_SWJPROJECTS_VERSIONS_PARAMS_LIMIT" default="5"/>
 				<field name="project" type="projects"
 					   label="MOD_SWJPROJECTS_VERSIONS_PARAMS_PROJECT"

@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.0.0-alpha3
+ * @version    2.0.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,22 +25,6 @@ use Joomla\Registry\Registry;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * Application params.
-	 *
-	 * @var  Registry;
-	 *
-	 * @since  1.0.0
-	 */
-	public $params;
-	/**
-	 * Page class suffix from params.
-	 *
-	 * @var  string
-	 *
-	 * @since  1.0.0
-	 */
-	public $pageclass_sfx;
-	/**
 	 * Model state variables.
 	 *
 	 * @var  Joomla\CMS\Object\CMSObject
@@ -48,6 +32,16 @@ class HtmlView extends BaseHtmlView
 	 * @since  1.0.0
 	 */
 	protected $state;
+
+	/**
+	 * Application params.
+	 *
+	 * @var  Registry;
+	 *
+	 * @since  1.0.0
+	 */
+	public $params;
+
 	/**
 	 * Project object.
 	 *
@@ -56,6 +50,7 @@ class HtmlView extends BaseHtmlView
 	 * @since  1.0.0
 	 */
 	protected $project;
+
 	/**
 	 * Category object.
 	 *
@@ -64,6 +59,7 @@ class HtmlView extends BaseHtmlView
 	 * @since  1.0.0
 	 */
 	protected $category;
+
 	/**
 	 * Relations array.
 	 *
@@ -72,6 +68,7 @@ class HtmlView extends BaseHtmlView
 	 * @since  1.1.0
 	 */
 	protected $relations;
+
 	/**
 	 * Last version object.
 	 *
@@ -80,6 +77,7 @@ class HtmlView extends BaseHtmlView
 	 * @since  1.3.0
 	 */
 	protected $version;
+
 	/**
 	 * Active menu item.
 	 *
@@ -90,13 +88,22 @@ class HtmlView extends BaseHtmlView
 	protected $menu;
 
 	/**
+	 * Page class suffix from params.
+	 *
+	 * @var  string
+	 *
+	 * @since  1.0.0
+	 */
+	public $pageclass_sfx;
+
+	/**
 	 * Display the view.
 	 *
 	 * @param   string  $tpl  The name of the template file to parse.
 	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 *
 	 * @throws  \Exception
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
 	 *
 	 * @since  1.0.0
 	 */
@@ -159,7 +166,7 @@ class HtmlView extends BaseHtmlView
 
 		$dispatcher = $this->getDispatcher();
 		// Extra content from events
-		$project->event = new \stdClass();
+		$project->event   = new \stdClass();
 
 		$contentEventArguments = [
 			'context' => 'com_swjprojects.project',
@@ -172,13 +179,12 @@ class HtmlView extends BaseHtmlView
 			'afterDisplayTitle'    => AbstractEvent::create('onContentAfterTitle', $contentEventArguments),
 			'beforeDisplayContent' => AbstractEvent::create('onContentBeforeDisplay', $contentEventArguments),
 			'afterDisplayContent'  => AbstractEvent::create('onContentAfterDisplay', $contentEventArguments),
-			'beforeProjectButtons' => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
+			'beforeProjectButtons'  => AbstractEvent::create('beforeProjectButtons', $contentEventArguments),
 			'afterProjectButtons'  => AbstractEvent::create('afterProjectButtons', $contentEventArguments),
-			'onContentPrepare'     => AbstractEvent::create('onContentPrepare', $contentEventArguments),
+			'onContentPrepare'  => AbstractEvent::create('onContentPrepare', $contentEventArguments),
 		];
 
-		foreach ($contentEvents as $resultKey => $event)
-		{
+		foreach ($contentEvents as $resultKey => $event) {
 			$results = $dispatcher->dispatch($event->getName(), $event)->getArgument('result', []);
 
 			$project->event->{$resultKey} = $results ? trim(implode("\n", $results)) : '';
@@ -209,7 +215,7 @@ class HtmlView extends BaseHtmlView
 		$app     = Factory::getApplication();
 		$project = $this->project;
 		$menu    = $this->menu;
-		$doc     = $this->getDocument();
+		$doc = $this->getDocument();
 		$current = ($menu
 			&& $menu->query['option'] === 'com_swjprojects'
 			&& $menu->query['view'] === 'project'
@@ -241,7 +247,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Set meta title
-		$title = $project->title;
+		$title    = $project->title;
 		if ($current && $this->params->get('page_title'))
 		{
 			$title = $this->params->get('page_title');
@@ -288,7 +294,7 @@ class HtmlView extends BaseHtmlView
 		// Set meta image
 		if ($current && $this->params->get('menu-meta_image'))
 		{
-			$doc->setMetadata('image', Uri::root() . $this->params->get('menu-meta_image'));
+			$doc->setMetadata('image',Uri::root() .$this->params->get('menu-meta_image'));
 		}
 		elseif ($project->metadata->get('image'))
 		{

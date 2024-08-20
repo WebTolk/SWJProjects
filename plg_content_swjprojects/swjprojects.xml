@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+  <name>PLG_SWJPROJECTS</name>
+  <author>Sergey Tolkachyov</author>
+  <creationDate>20.08.2024</creationDate>
+  <copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
+  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+  <authorEmail>info@web-tolk.ru</authorEmail>
+  <authorUrl>https://web-tolk.ru</authorUrl>
+  <version>2.0.0</version>
+  <description>PLG_SWJPROJECTS_DESC</description>
+  <namespace path="src">Joomla\Plugin\Content\Swjprojects</namespace>
+  <scriptfile>script.php</scriptfile>
+  <files>
+    <folder>language</folder>
+    <folder>services</folder>
+    <folder plugin="swjprojects">src</folder>
+    <folder>tmpl</folder>
+    <filename>swjprojects.xml</filename>
+  </files>
+  <languages folder="language" client="administrator">
+    <language tag="en-GB">en-GB/plg_content_swjprojects.sys.ini</language>
+    <language tag="ru-RU">ru-RU/plg_content_swjprojects.sys.ini</language>
+  </languages>
+  <config>
+    <fields name="params">
+      <fieldset name="basic">
+        <field
+                addfieldprefix="Joomla\Plugin\Content\Swjprojects\Fields"
+                type="plugininfo"
+                name="plugininfo"/>
+      </fieldset>
+    </fields>
+  </config>
+</extension>

@@ -2,14 +2,15 @@
 <extension version="4.0" type="component" method="upgrade">
 	<name>COM_SWJPROJECTS</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>18.08.2024</creationDate>
+	<creationDate>20.08.2024</creationDate>
 	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.0.0-alpha3</version>
+	<version>2.0.0</version>
 	<description>COM_SWJPROJECTS_DESCRIPTION</description>
 	<namespace path="src">Joomla\Component\SWJProjects</namespace>
+	<scriptfile>script.php</scriptfile>
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -71,6 +72,7 @@
 	<layouts destination="components/swjprojects" folder="layouts">
 		<folder>changelog</folder>
 		<folder>field</folder>
+		<folder>project</folder>
 		<folder>toolbar</folder>
 		<folder>translate</folder>
 	</layouts>
