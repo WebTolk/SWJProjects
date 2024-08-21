@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version    2.0.0
+ * @version    2.0.1
  * @author     Sergey Tolkachyov
  * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html

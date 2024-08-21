@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.0.0
+ * @version    2.0.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -133,7 +133,7 @@ class DownloadModel extends BaseDatabaseModel
 
 		if ($this->_version === null)
 		{
-			$this->_version = array();
+			$this->_version = [];
 		}
 
 		if (!isset($this->_version[$pk]))
@@ -220,7 +220,7 @@ class DownloadModel extends BaseDatabaseModel
 
 		if ($this->_versionID === null)
 		{
-			$this->_versionID = array();
+			$this->_versionID = [];
 		}
 
 		if (!isset($this->_versionID[$pk]))
@@ -311,7 +311,7 @@ class DownloadModel extends BaseDatabaseModel
 
 		if ($this->_projectID === null)
 		{
-			$this->_projectID = array();
+			$this->_projectID = [];
 		}
 
 		if (empty($pk))

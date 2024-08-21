@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.0.0
+ * @version    2.0.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -444,10 +444,14 @@ class VersionsModel extends ListModel
 					->setLimit(1);
 				$query->select('(' . $subQuery->__toString() . ') as last_version');
 
-				// Join over versions for download counter
-				$query->select(array('SUM(dc.downloads) as downloads'))
-					->leftJoin($db->quoteName('#__swjprojects_versions', 'dc') . ' ON dc.project_id = p.id'
-						. ' AND dc.state = 1');
+				// Count over versions for download counter
+				$subQuerySumDownloads = $db->getQuery(true);
+				$subQuerySumDownloads
+					->select('SUM(' . $db->quoteName('dc.downloads') . ')')
+					->from($db->quoteName('#__swjprojects_versions', 'dc'))
+					->where($db->quoteName('dc.project_id') . ' = ' . $db->quoteName('p.id'))
+					->where($db->quoteName('dc.state') . ' = ' . $db->quote('1'));
+				$query->select('(' . (string) $subQuerySumDownloads . ') AS ' . $db->quoteName('downloads'));
 
 				// Filter by published state
 				$published = $this->getState('filter.published');
