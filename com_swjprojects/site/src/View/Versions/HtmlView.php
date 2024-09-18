@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.0.1
+ * @version    2.1.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -109,13 +109,35 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		$app = Factory::getApplication();
 		$this->state      = $this->get('State');
 		$this->params     = $this->state->get('params');
 		$this->items      = $this->get('Items');
 		$this->pagination = $this->get('Pagination');
+		// Flag indicates to not add limitstart=0 to URL
+		$this->pagination->hideEmptyLimitstart = true;
+		// Add additional parameters
+		$queryParameterList = [
+			'catid'      => 'int',
+			'project_id' => 'int',
+			'language'   => 'string',
+		];
+
+		foreach ($queryParameterList as $parameter => $filter)
+		{
+			$value = $app->getInput()->get($parameter, null, $filter);
+
+			if (is_null($value))
+			{
+				continue;
+			}
+
+			$this->pagination->setAdditionalUrlParam($parameter, $value);
+		}
+
 		$this->project    = $this->get('Item');
 		$this->category   = $this->project->category;
-		$this->menu       = Factory::getApplication()->getMenu()->getActive();
+		$this->menu       = $app->getMenu()->getActive();
 
 		// Check for errors
 		if (count($errors = $this->get('Errors')))

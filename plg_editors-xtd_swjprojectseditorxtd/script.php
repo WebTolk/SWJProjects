@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version    2.0.1
+ * @version    2.1.0
  * @author     Sergey Tolkachyov
  * @copyright  Copyright (c) 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU General Public License v3.0

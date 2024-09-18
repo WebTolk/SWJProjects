@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade">
 	<name>MOD_SWJPROJECTS_PROJECTS</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>21.08.2024</creationDate>
+	<creationDate>18.09.2024</creationDate>
 	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.0.1</version>
+	<version>2.1.0</version>
 	<description>MOD_SWJPROJECTS_PROJECTS_DESCRIPTION</description>
 	<namespace path="src">Joomla\Module\Swjprojectsprojects</namespace>
 	<languages folder="language">

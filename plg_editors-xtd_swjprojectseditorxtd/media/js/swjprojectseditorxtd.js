@@ -1,6 +1,6 @@
 /**
  * @package    SW JProjects
- * @version       2.0.1
+ * @version       2.1.0
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
