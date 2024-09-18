@@ -2,8 +2,8 @@
 [![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/solutions/joomla/components/swjprojects)
 [![Support](https://img.shields.io/badge/support--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/support#solution=swjprojects)
 [![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://joomla.septdir.com/swjprojects)
-[![Download](https://img.shields.io/github/release/SeptdirWorkshop/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://www.septdir.com/solutions/download?element=pkg_swjprojects)
-![GitHub all releases](https://img.shields.io/github/downloads/SeptdirWorkshop/SWJProjects/total?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)  
+[![Download](https://img.shields.io/github/release/WebTolk/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://www.septdir.com/solutions/download?element=pkg_swjprojects)
+![GitHub all releases](https://img.shields.io/github/downloads/WebTolk/SWJProjects/total?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)  
 
 ## Features
 ### Digital Projects Catalog
