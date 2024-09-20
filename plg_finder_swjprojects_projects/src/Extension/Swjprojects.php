@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version    2.1.0
+ * @version    2.1.0.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -118,11 +118,11 @@ final class Swjprojects extends Adapter implements SubscriberInterface
 	 */
 	public function onFinderCategoryChangeState(FinderEvent\AfterCategoryChangeStateEvent $event)
 	{
-		// Make sure we're handling com_swjprojects categories.
-		if ($event->getExtension() === 'com_swjprojects')
-		{
-			$this->categoryStateChange($event->getPks(), $event->getValue());
-		}
+//		// Make sure we're handling com_swjprojects categories.
+//		if ($event->getExtension() === 'com_swjprojects')
+//		{
+//			$this->categoryStateChange($event->getPks(), $event->getValue());
+//		}
 	}
 
 	/**
@@ -137,24 +137,24 @@ final class Swjprojects extends Adapter implements SubscriberInterface
 	 */
 	public function onFinderAfterDelete(FinderEvent\AfterDeleteEvent $event): void
 	{
-		$context = $event->getContext();
-		$table   = $event->getItem();
-
-		if ($context === 'com_swjprojects.project')
-		{
-			$id = $table->id;
-		}
-		elseif ($context === 'com_finder.index')
-		{
-			$id = $table->link_id;
-		}
-		else
-		{
-			return;
-		}
-
-		// Remove item from the index.
-		$this->remove($id);
+//		$context = $event->getContext();
+//		$table   = $event->getItem();
+//
+//		if ($context === 'com_swjprojects.project')
+//		{
+//			$id = $table->id;
+//		}
+//		elseif ($context === 'com_finder.index')
+//		{
+//			$id = $table->link_id;
+//		}
+//		else
+//		{
+//			return;
+//		}
+//
+//		// Remove item from the index.
+//		$this->remove($id);
 	}
 
 	/**
@@ -172,33 +172,33 @@ final class Swjprojects extends Adapter implements SubscriberInterface
 	 */
 	public function onFinderAfterSave(FinderEvent\AfterSaveEvent $event): void
 	{
-		$context = $event->getContext();
-		$row     = $event->getItem();
-		$isNew   = $event->getIsNew();
-
-		// We only want to handle projects here.
-		if ($context === 'com_swjprojects.project' || $context === 'com_swjprojects.form')
-		{
-			// Check if the access levels are different.
-			if (!$isNew && $this->old_access != $row->access)
-			{
-				// Process the change.
-				$this->itemAccessChange($row);
-			}
-
-			// Reindex the item.
-			$this->reindex($row->id);
-		}
-
-		// Check for access changes in the category.
-		if ($context === 'com_swjprojects.category')
-		{
-			// Check if the access levels are different.
-			if (!$isNew && $this->old_cataccess != $row->access)
-			{
-				$this->categoryAccessChange($row);
-			}
-		}
+//		$context = $event->getContext();
+//		$row     = $event->getItem();
+//		$isNew   = $event->getIsNew();
+//
+//		// We only want to handle projects here.
+//		if ($context === 'com_swjprojects.project' || $context === 'com_swjprojects.form')
+//		{
+//			// Check if the access levels are different.
+//			if (!$isNew && $this->old_access != $row->access)
+//			{
+//				// Process the change.
+//				$this->itemAccessChange($row);
+//			}
+//
+//			// Reindex the item.
+//			$this->reindex($row->id);
+//		}
+//
+//		// Check for access changes in the category.
+//		if ($context === 'com_swjprojects.category')
+//		{
+//			// Check if the access levels are different.
+//			if (!$isNew && $this->old_cataccess != $row->access)
+//			{
+//				$this->categoryAccessChange($row);
+//			}
+//		}
 	}
 
 	/**
@@ -214,31 +214,31 @@ final class Swjprojects extends Adapter implements SubscriberInterface
 	 */
 	public function onFinderBeforeSave(FinderEvent\BeforeSaveEvent $event)
 	{
-		$context = $event->getContext();
-		$row     = $event->getItem();
-		$isNew   = $event->getIsNew();
-
-		// We only want to handle projects here.
-		if ($context === 'com_swjprojects.project' || $context === 'com_swjprojects.form')
-		{
-			// Query the database for the old access level if the item isn't new.
-			if (!$isNew)
-			{
-				$this->checkItemAccess($row);
-			}
-		}
-
-		// Check for access levels from the category.
-		if ($context === 'com_categories.category')
-		{
-			// Query the database for the old access level if the item isn't new.
-			if (!$isNew)
-			{
-				$this->checkCategoryAccess($row);
-			}
-		}
-
-		return true;
+//		$context = $event->getContext();
+//		$row     = $event->getItem();
+//		$isNew   = $event->getIsNew();
+//
+//		// We only want to handle projects here.
+//		if ($context === 'com_swjprojects.project' || $context === 'com_swjprojects.form')
+//		{
+//			// Query the database for the old access level if the item isn't new.
+//			if (!$isNew)
+//			{
+//				$this->checkItemAccess($row);
+//			}
+//		}
+//
+//		// Check for access levels from the category.
+//		if ($context === 'com_categories.category')
+//		{
+//			// Query the database for the old access level if the item isn't new.
+//			if (!$isNew)
+//			{
+//				$this->checkCategoryAccess($row);
+//			}
+//		}
+//
+//		return true;
 	}
 
 	/**
@@ -254,21 +254,21 @@ final class Swjprojects extends Adapter implements SubscriberInterface
 	 */
 	public function onFinderChangeState(FinderEvent\AfterChangeStateEvent $event)
 	{
-		$context = $event->getContext();
-		$pks     = $event->getPks();
-		$value   = $event->getValue();
-
-		// We only want to handle projects here.
-		if ($context === 'com_swjprojects.project' || $context === 'com_swjprojects.form')
-		{
-			$this->itemStateChange($pks, $value);
-		}
-
-		// Handle when the plugin is disabled.
-		if ($context === 'com_plugins.plugin' && $value === 0)
-		{
-			$this->pluginDisable($pks);
-		}
+//		$context = $event->getContext();
+//		$pks     = $event->getPks();
+//		$value   = $event->getValue();
+//
+//		// We only want to handle projects here.
+//		if ($context === 'com_swjprojects.project' || $context === 'com_swjprojects.form')
+//		{
+//			$this->itemStateChange($pks, $value);
+//		}
+//
+//		// Handle when the plugin is disabled.
+//		if ($context === 'com_plugins.plugin' && $value === 0)
+//		{
+//			$this->pluginDisable($pks);
+//		}
 	}
 
 	/**

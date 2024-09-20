@@ -2,12 +2,12 @@
 <extension type="plugin" group="editors-xtd" method="upgrade">
 	<name>PLG_SWJPROJECTSEDITORXTD</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>18.09.2024</creationDate>
+	<creationDate>20.09.2024</creationDate>
 	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>GNU General Public License version 3</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.1.0</version>
+	<version>2.1.0.1</version>
 	<description>PLG_SWJPROJECTSEDITORXTD_DESC</description>
 	<namespace path="src">Joomla\Plugin\EditorsXtd\Swjprojectseditorxtd</namespace>
 	<scriptfile>script.php</scriptfile>

@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.1.0
+ * @version    2.1.0.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -27,7 +27,7 @@ if ($item->versions)
 	$link         = $item->versions;
 	$title        = '<i class="fas fa-tag"></i> ' . Text::_('COM_SWJPROJECTS_VERSIONS');
 	$link_attribs = [
-		'class' => 'btn btn-outline-secondary me-2'
+		'class' => 'btn btn-outline-secondary me-2 mb-2'
 	];
 
 	echo HTMLHelper::link($link, $title, $link_attribs);

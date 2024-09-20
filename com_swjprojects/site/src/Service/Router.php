@@ -2,7 +2,7 @@
 
 /*
  * @package    SW JProjects
- * @version    2.1.0
+ * @version    2.1.0.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
