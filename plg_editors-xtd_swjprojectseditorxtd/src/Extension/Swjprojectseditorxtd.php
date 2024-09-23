@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version       2.1.0.1
+ * @version       2.1.1
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -226,7 +226,7 @@ final class Swjprojectseditorxtd extends CMSPlugin
                             <h3 class="h5"><?php echo $project->title; ?></h3>
                         </div>
                         <div class="card-footer bg-transparent d-flex justify-content-between">
-                            <a href="#" data-project-id="<?php echo $project->id; ?>" class="stretched-link" data-project-title="<?php echo \htmlspecialchars($project->title); ?>"><?php echo Text::_('JSELECT'); ?></a>
+                            <a href="#" data-project-id="<?php echo $project->id; ?>" data-project-cat-id="<?php echo $project->catid; ?>" class="stretched-link" data-project-title="<?php echo \htmlspecialchars($project->title); ?>"><?php echo Text::_('JSELECT'); ?></a>
                             <span class="text-muted">#<?php echo $project->id; ?></span>
                         </div>
                     </div>

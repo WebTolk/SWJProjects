@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version       2.1.0.1
+ * @version       2.1.1
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -200,7 +200,7 @@ final class Swjprojects extends CMSPlugin implements SubscriberInterface
 		if (strpos($project->text, 'href="' . $prefix . 'index.php?option=com_swjprojects') !== false)
 		{
 			preg_match_all('#href="' . $prefix . 'index.php\?option=com_swjprojects([^"]+)"#m', $project->text, $matches);
-
+			$i = 0;
 			foreach ($matches[1] as $urlQueryString)
 			{
 				$uri  = new Uri(Uri::root() . '/index.php?option=com_swjprojects' . $urlQueryString);
@@ -224,7 +224,7 @@ final class Swjprojects extends CMSPlugin implements SubscriberInterface
 					}
 
 					$project->text = str_replace(
-						$matches[0],
+						$matches[0][$i],
 						'href="' . $prefix . Route::_(RouteHelper::getProjectRoute($project_id,$cat_id)) . '"',
 						$project->text
 					);

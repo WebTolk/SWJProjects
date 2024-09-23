@@ -1,6 +1,6 @@
 /**
  * @package    SW JProjects
- * @version       2.1.0.1
+ * @version       2.1.1
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,6 +21,7 @@
                 } = event;
 
                 const project_id = target.getAttribute('data-project-id');
+                const cat_id = target.getAttribute('data-project-cat-id');
                 const project_title = target.getAttribute('data-project-title');
                 const tmpl = document.getElementById('swjprojectseditorxtd_layout').value;
 
@@ -36,7 +37,7 @@
 
                 let linkString = '';
                 if (tmpl === '--none--') {
-                    linkString = '<a href="index.php?option=com_swjprojects&view=project&id=' + project_id + '">' + project_title + '</a>';
+                    linkString = '<a href="index.php?option=com_swjprojects&view=project&id=' + project_id + '&catid=' + cat_id + '">' + project_title + '</a>';
                 } else {
                     linkString = "{swjprojects project_id=" + project_id + " tmpl=" + tmpl + "}";
                 }

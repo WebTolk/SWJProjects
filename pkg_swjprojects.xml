@@ -3,12 +3,12 @@
 	<name>PKG_SWJPROJECTS</name>
 	<packagename>swjprojects</packagename>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>20.09.2024</creationDate>
+	<creationDate>23.09.2024</creationDate>
 	<copyright>Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorUrl>https://web-tolk.ru</authorUrl>
 	<authorEmail>info@web-tolk.ru</authorEmail>
-	<version>2.1.0.1</version>
+	<version>2.1.1</version>
 	<description>PKG_SWJPROJECTS_DESC</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
