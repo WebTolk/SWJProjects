@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.1.1
+ * @version    2.1.2
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2024 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -101,6 +101,8 @@ $link_attribs = [
 
 if ($urls = $item->urls->toArray())
 {
+	// We are displaying a documentation link from urls in documentation sublayout
+	unset($urls['documentation']);
 	foreach ($urls as $txt => $url)
 	{
 		if (empty($url) || !$buttons[$txt])

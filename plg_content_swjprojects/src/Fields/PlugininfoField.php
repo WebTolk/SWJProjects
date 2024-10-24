@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version       2.1.1
+ * @version       2.1.2
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @copyright     Copyright (C) 2024 Sergey Tolkachyov
  * @license       GNU/GPL http://www.gnu.org/licenses/gpl-3.0.html
