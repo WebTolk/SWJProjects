@@ -101,11 +101,9 @@ $link_attribs = [
 
 if ($urls = $item->urls->toArray())
 {
-	// We are displaying a documentation link from urls in documentation sublayout
-	unset($urls['documentation']);
 	foreach ($urls as $txt => $url)
 	{
-		if (empty($url) || !$buttons[$txt])
+		if (empty($url) || !$url_texts[$txt])
 		{
 			continue;
 		}
