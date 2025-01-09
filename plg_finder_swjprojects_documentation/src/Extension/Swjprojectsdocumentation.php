@@ -313,7 +313,7 @@ final class Swjprojectsdocumentation extends Adapter implements SubscriberInterf
 		$translates = $this->getTranslateDocumentation($item->id);
 
 		// Translate the state. projects should only be published if the category is published.
-		$item->state = $this->translateState($item->state, $item->cat_state);
+		$item->state = $this->translateState($item->document_state, $item->project_state);
 
 		// Get taxonomies to display
 		$taxonomies = $this->params->get('taxonomies', ['type', 'category', 'language']);
@@ -356,7 +356,7 @@ final class Swjprojectsdocumentation extends Adapter implements SubscriberInterf
 			$item->url = $this->getUrl($item->id, $this->extension, $this->layout, $lang);
 
 			// Build the necessary route and path information.
-			$item->route = RouteHelper::getDocumentRoute($item->id, $item->project_id);
+			$item->route = RouteHelper::getDocumentRoute($item->id, $item->project_id, $item->catid);
 
 			// Get the menu title if it exists.
 			$title = $this->getItemMenuTitle($item->route);
@@ -367,7 +367,7 @@ final class Swjprojectsdocumentation extends Adapter implements SubscriberInterf
 				$item->title = $title;
 			}
 
-						// Add the language taxonomy data.
+			// Add the language taxonomy data.
 			if (\in_array('language', $taxonomies))
 			{
 				$item->addTaxonomy('Language', $item->language, 1, 1, $item->language);
@@ -470,10 +470,10 @@ final class Swjprojectsdocumentation extends Adapter implements SubscriberInterf
 						'a.state',
 						'p.state',
 						'c.state',
-					],[
-						'document_state',
-						'project_state',
-						'category_state',
+					], [
+					'document_state',
+					'project_state',
+					'category_state',
 				])
 			)
 			->from($db->quoteName('#__swjprojects_documentation', 'a'))
