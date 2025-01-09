@@ -25,7 +25,7 @@ extract($displayData);
 
 if ($item->documentation || $item->urls->get('documentation'))
 {
-	$link         = ($item->documentation ? $item->documentation : $item->urls->get('documentation'));
+	$link         = ($item->documentation ?? $item->urls->get('documentation'));
 	$title        = '<i class="fas fa-file-alt"></i> '.Text::_('COM_SWJPROJECTS_DOCUMENTATION');
 	$link_attribs = [
 		'class' => 'btn btn-outline-info me-2 mb-2'
