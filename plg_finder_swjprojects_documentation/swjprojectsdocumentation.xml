@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="finder" method="upgrade">
+	<name>plg_finder_swjprojectsdocumentation</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>09.01.2025</creationDate>
+	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.2.0</version>
+	<description>PLG_FINDER_SWJPROJECTSDOCUMENTATION_DESC</description>
+	<namespace path="src">Joomla\Plugin\Finder\Swjprojectsdocumentation</namespace>
+	<files>
+		<folder>services</folder>
+		<folder plugin="swjprojectsdocumentation">src</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_finder_swjprojectsdocumentation.ini</language>
+		<language tag="en-GB">language/en-GB/plg_finder_swjprojectsdocumentation.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/plg_finder_swjprojectsdocumentation.ini</language>
+		<language tag="ru-RU">language/ru-RU/plg_finder_swjprojectsdocumentation.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldprefix="Joomla\Component\Finder\Administrator\Field">
+				<field
+					name="taxonomies"
+					type="taxonomytypes"
+					label="PLG_FINDER_SWJPROJECTSDOCUMENTATION_TAXONOMIES_LABEL"
+					multiple="true"
+					>
+					<option value="language">PLG_FINDER_SWJPROJECTSDOCUMENTATION_TAXONOMIES_LANGUAGE</option>
+					<option value="type">PLG_FINDER_SWJPROJECTSDOCUMENTATION_TAXONOMIES_TYPE</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
