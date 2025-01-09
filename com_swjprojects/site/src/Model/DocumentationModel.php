@@ -364,7 +364,7 @@ class DocumentationModel extends ListModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('p.*'))
+					->select(['p.*'])
 					->from($db->quoteName('#__swjprojects_projects', 'p'))
 					->where('p.id = ' . (int) $pk);
 
@@ -373,8 +373,8 @@ class DocumentationModel extends ListModel
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_p.title as title', 't_p.introtext as introtext', 't_p.language', 't_p.payment',
-					't_p.metadata', 'p.id as id'))
+				$query->select(['t_p.title as title', 't_p.introtext as introtext', 't_p.language', 't_p.payment',
+					't_p.metadata', 'p.id as id'])
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -382,14 +382,14 @@ class DocumentationModel extends ListModel
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_p.title as default_title', 'td_p.payment as default_payment'))
+					$query->select(['td_p.title as default_title', 'td_p.payment as default_payment'])
 						->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 				}
 
 				// Join over versions for last version
 				$subQuery = $db->getQuery(true)
-					->select(array('CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)'))
+					->select(['CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)'])
 					->from($db->quoteName('#__swjprojects_versions', 'lv'))
 					->where('lv.project_id = p.id')
 					->where('lv.state = 1')
@@ -444,13 +444,13 @@ class DocumentationModel extends ListModel
 
 				// Set categories
 				$categories     = !empty($data->additional_categories) ?
-					explode(',', $data->additional_categories) : array();
+					explode(',', $data->additional_categories) : [];
 				$categories[]   = $data->catid;
 				$categories     = $this->getCategories(implode(',', $categories));
 				$data->category = (!empty($categories[$data->catid])) ? $categories[$data->catid] : false;
 				if (!empty($data->additional_categories))
 				{
-					$data->categories = array($data->catid => $data->category);
+					$data->categories = [$data->catid => $data->category];
 					foreach (explode(',', $data->additional_categories) as $catid)
 					{
 						if (!empty($categories[$catid]))
@@ -564,14 +564,14 @@ class DocumentationModel extends ListModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('c.id', 'c.alias'))
+					->select(['c.id', 'c.alias'])
 					->from($db->quoteName('#__swjprojects_categories', 'child'))
 					->innerJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = child.parent_id')
 					->where('child.id = ' . (int) $pk);
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_c.title as title'))
+				$query->select(['t_c.title as title'])
 					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 						. '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current));
 
@@ -579,7 +579,7 @@ class DocumentationModel extends ListModel
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_c.title as default_title'))
+					$query->select(['td_c.title as default_title'])
 						->leftJoin($db->quoteName('#__swjprojects_translate_categories', 'td_c')
 							. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
 				}
@@ -681,13 +681,13 @@ class DocumentationModel extends ListModel
 		{
 			$db    = $this->getDatabase();
 			$query = $db->getQuery(true)
-				->select(array('c.id', 'c.alias', 'c.lft'))
+				->select(['c.id', 'c.alias', 'c.lft'])
 				->from($db->quoteName('#__swjprojects_categories', 'c'))
 				->where('c.id  IN (' . implode(',', $get) . ')');
 
 			// Join over current translates
 			$current = $this->translates['current'];
-			$query->select(array('t_c.title'))
+			$query->select(['t_c.title'])
 				->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 					. '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current));
 
@@ -695,7 +695,7 @@ class DocumentationModel extends ListModel
 			$default = $this->translates['default'];
 			if ($current != $default)
 			{
-				$query->select(array('td_c.title as default_title'))
+				$query->select(['td_c.title as default_title'])
 					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 'td_c')
 						. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
 			}
@@ -715,7 +715,7 @@ class DocumentationModel extends ListModel
 			}
 
 			// Group by
-			$query->group(array('c.id'));
+			$query->group(['c.id']);
 
 			if ($rows = $db->setQuery($query)->loadObjectList())
 			{
