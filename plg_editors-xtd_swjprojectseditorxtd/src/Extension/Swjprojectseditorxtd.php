@@ -85,7 +85,8 @@ final class Swjprojectseditorxtd extends CMSPlugin
 			$button->class   = 'btn';
 			$button->link    = $link;
 			$button->text    = '{SW JProjects}';
-			$button->name    = 'file-add';
+			$button->icon    = 'file-add';
+			$button->name    = $this->_type . '_' . $this->_name;
 			$button->options = [
 				'height'     => '400px',
 				'width'      => '800px',
