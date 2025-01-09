@@ -40,7 +40,7 @@ class ProjectchangelogurlField extends FormField
 		{
 			$model   = $app->bootComponent('com_swjprojects')->getMVCFactory()->createModel('Project', 'Administrator', ['ignore_request' => false]);
 			$project = $model->getItem();
-			$url     = Uri::getInstance(Route::link('site', RouteHelper::getJChangelogRoute($project->id, $project->element), false, '', true));
+			$url     = Uri::getInstance(Route::link('site', RouteHelper::getJChangelogRoute(null, $project->element), false, '', true));
 
 			if (!empty($url->getVar('Itemid')))
 			{
