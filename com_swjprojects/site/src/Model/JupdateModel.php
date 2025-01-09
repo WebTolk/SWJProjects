@@ -403,22 +403,22 @@ class JUpdateModel extends BaseDatabaseModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('v.*'))
+					->select(['v.*'])
 					->from($db->quoteName('#__swjprojects_versions', 'v'))
 					->where('v.project_id = ' . (int) $pk);
 
 				// Join over the projects
-				$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element',
-					'p.joomla as project_joomla'))
+				$query->select(['p.id as project_id', 'p.alias as project_alias', 'p.element as project_element',
+					'p.joomla as project_joomla'])
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 				// Join over the categories
-				$query->select(array('c.id as category_id', 'c.alias as category_alias'))
+				$query->select(['c.id as category_id', 'c.alias as category_alias'])
 					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_p.title as project_title', 't_p.introtext as project_introtext'))
+				$query->select(['t_p.title as project_title', 't_p.introtext as project_introtext'])
 					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
 
@@ -426,7 +426,7 @@ class JUpdateModel extends BaseDatabaseModel
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_p.title as default_project_title', 'td_p.introtext as default_project_introtext'))
+					$query->select(['td_p.title as default_project_title', 'td_p.introtext as default_project_introtext'])
 						->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 				}
@@ -633,7 +633,7 @@ class JUpdateModel extends BaseDatabaseModel
 
 				// Join over versions for last version
 				$subQuery = $db->getQuery(true)
-					->select(array('CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)'))
+					->select(['CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END'])
 					->from($db->quoteName('#__swjprojects_versions', 'lv'))
 					->where('lv.project_id = p.id')
 					->where('lv.state = 1')
