@@ -1,8 +1,7 @@
-[![SW JProjects](https://www.septdir.com/images/solutions/projects/1/en-GB/cover.jpg)](https://www.septdir.com/solutions/joomla/components/swjprojects)  
-[![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/solutions/joomla/components/swjprojects)
-[![Support](https://img.shields.io/badge/support--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://www.septdir.com/support#solution=swjprojects)
-[![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://joomla.septdir.com/swjprojects)
-[![Download](https://img.shields.io/github/release/WebTolk/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://www.septdir.com/solutions/download?element=pkg_swjprojects)
+[![SW JProjects](https://www.septdir.com/images/solutions/projects/1/en-GB/cover.jpg)](https://web-tolk.ru/en/dev/components/sw-jprojects)  
+[![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://web-tolk.ru/en/dev/components/sw-jprojects)
+[![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://web-tolk.ru/en/dev/components/sw-jprojects)
+[![Download](https://img.shields.io/github/release/WebTolk/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://web-tolk.ru/en/get?element=pkg_swjprojects)
 ![GitHub all releases](https://img.shields.io/github/downloads/WebTolk/SWJProjects/total?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)  
 
 ## Features
