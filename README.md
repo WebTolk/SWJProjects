@@ -31,10 +31,12 @@ Developers who create extensions for Joomla! CMS are provided with additional fu
 * Caching Joomla! Extensions Server Update Manifest
 
 ## Additional extensions
-* **Version Module**  
-*Included in package*
-* **Projects Module**  
-*Included in package*
-* [JLSitemap integration plugin](https://www.septdir.com/solutions/joomla/plugins/jlsitemap-swjprojects)  
-*Downloaded separately*
+- **Version Module**  
+- **Projects Module**  
+- **Categories Module**  
+- **Smart search plugin for projects**  
+- **Smart search plugin for documentation**  
+- [JLSitemap integration plugin](https://www.septdir.com/solutions/joomla/plugins/jlsitemap-swjprojects) **Download separately**
+- [JoomShopping integration plugin](https://web-tolk.ru/en/dev/joomla-plugins/wt-jshopping-sw-jprojects) **Download separately**
+- [WT Telegram bot - SW JProjects plugin](https://web-tolk.ru/en/dev/joomla-plugins/wt-telegram-bot-sw-jprojects) **Download separately**
 
