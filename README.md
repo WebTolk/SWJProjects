@@ -1,4 +1,3 @@
-[![SW JProjects](https://www.septdir.com/images/solutions/projects/1/en-GB/cover.jpg)](https://web-tolk.ru/en/dev/components/sw-jprojects)  
 [![Information](https://img.shields.io/badge/information--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://web-tolk.ru/en/dev/components/sw-jprojects)
 [![Demo](https://img.shields.io/badge/demo--0.svg?style=for-the-badge&colorA=555&colorB=555&logoWidth=20)](https://web-tolk.ru/en/dev/components/sw-jprojects)
 [![Download](https://img.shields.io/github/release/WebTolk/SWJProjects.svg?style=for-the-badge&colorA=555&colorB=1e87f0&label=download)](https://web-tolk.ru/en/get?element=pkg_swjprojects)
