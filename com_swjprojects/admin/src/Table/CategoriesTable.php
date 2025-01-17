@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Nested;
 use Joomla\Database\DatabaseDriver;
+use function defined;
 
 class CategoriesTable extends Nested
 {

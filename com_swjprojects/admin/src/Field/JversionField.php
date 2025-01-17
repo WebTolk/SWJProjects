@@ -15,6 +15,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Database\DatabaseInterface;
+use function array_unique;
+use function defined;
 
 class JVersionField extends ListField
 {

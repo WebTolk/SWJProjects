@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use function defined;
 
 class VersionsController extends AdminController
 {

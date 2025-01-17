@@ -107,4 +107,3 @@ $isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
         </div>
     </div>
 </div>
-

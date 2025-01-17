@@ -16,6 +16,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Database\DatabaseInterface;
+use function defined;
+use function str_repeat;
 
 class CategoriesField extends ListField
 {

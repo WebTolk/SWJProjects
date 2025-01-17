@@ -14,6 +14,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use function defined;
+use function file_get_contents;
+use function implode;
+use function ob_end_clean;
 
 class HtmlView extends BaseHtmlView
 {

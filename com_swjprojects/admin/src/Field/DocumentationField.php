@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Database\DatabaseInterface;
+use function defined;
 
 
 class DocumentationField extends ListField
@@ -51,16 +52,16 @@ class DocumentationField extends ListField
 		{
 			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
-				->select(array('d.id', 'd.alias'))
+				->select(['d.id', 'd.alias'])
 				->from($db->quoteName('#__swjprojects_documentation', 'd'));
 
 			// Join over translates
 			$translate = TranslationHelper::getDefault();
-			$query->select(array('t_d.title as title'))
+			$query->select(['t_d.title as title'])
 				->leftJoin($db->quoteName('#__swjprojects_translate_documentation', 't_d')
 					. ' ON t_d.id = d.id AND ' . $db->quoteName('t_d.language') . ' = ' . $db->quote($translate));
 			// Group by
-			$query->group(array('d.id'));
+			$query->group(['d.id']);
 
 			// Add the list ordering clause
 			$query->order($db->escape('d.ordering') . ' ' . $db->escape('asc'));
@@ -71,10 +72,6 @@ class DocumentationField extends ListField
 			$options = parent::getOptions();
 			foreach ($items as $i => $item)
 			{
-				$option        = new \stdClass();
-				$option->value = $item->id;
-				$option->text  = (!empty($item->title)) ? $item->title : $item->alias;
-
 				// Add option
 				$option        = new \stdClass();
 				$option->value = $item->id;

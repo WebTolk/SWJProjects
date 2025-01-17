@@ -21,6 +21,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
+use function defined;
 
 class DisplayController extends BaseController
 {

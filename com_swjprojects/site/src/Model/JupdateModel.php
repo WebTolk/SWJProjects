@@ -24,6 +24,16 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use function defined;
+use function file_get_contents;
+use function hash_file;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function md5;
+use function property_exists;
+use function stat;
+use function str_replace;
 
 class JUpdateModel extends BaseDatabaseModel
 {
@@ -526,12 +536,12 @@ class JUpdateModel extends BaseDatabaseModel
 					}
 
 					// Set client
-                    $client = (int) $item->project_joomla->get('client_id', 0);
-                    if($client === 0){
-                        $item->client = 'site';
-                    } elseif ($client === 1) {
-                        $item->client = 'administrator';
-                    }
+					$client = (int) $item->project_joomla->get('client_id', 0);
+					if($client === 0){
+						$item->client = 'site';
+					} elseif ($client === 1) {
+						$item->client = 'administrator';
+					}
 
 					// Set files format
 					$item->files = Folder::files($files_root . '/' . $item->id, 'download', false);
@@ -546,8 +556,8 @@ class JUpdateModel extends BaseDatabaseModel
 					$update->addChild('element', $item->element);
 					$update->addChild('type', $item->type);
 					if($item->type == 'plugin'){
-                        $update->addChild('folder', $item->folder);
-                    }
+						$update->addChild('folder', $item->folder);
+					}
 					$update->addChild('client', $item->client);
 					$update->addChild('version', $item->version);
 
@@ -683,10 +693,10 @@ class JUpdateModel extends BaseDatabaseModel
 					// Set type
 					$item->type = $item->joomla->get('type', 'file');
 
-                    // Set folder only for plugins
-                    if($item->type == 'plugin') {
-                        $item->folder = $item->joomla->get('folder', '');
-                    }
+					// Set folder only for plugins
+					if($item->type == 'plugin') {
+						$item->folder = $item->joomla->get('folder', '');
+					}
 
 					// Set element
 					$item->element = $item->joomla->get('element', $item->element);
@@ -700,12 +710,12 @@ class JUpdateModel extends BaseDatabaseModel
 					}
 
 					// Set client
-                    $client = (int) $item->joomla->get('client_id', 0);
-                    if($client === 0){
-                        $item->client = 'site';
-                    } elseif ($client === 1) {
-                        $item->client = 'administrator';
-                    }
+					$client = (int) $item->joomla->get('client_id', 0);
+					if($client === 0){
+						$item->client = 'site';
+					} elseif ($client === 1) {
+						$item->client = 'administrator';
+					}
 
 					// Set link
 					$item->link = Route::_(RouteHelper::getJUpdateRoute($item->id, null, $download_key));
@@ -715,9 +725,9 @@ class JUpdateModel extends BaseDatabaseModel
 					$extension->addAttribute('name', $item->title);
 					$extension->addAttribute('element', $item->element);
 					$extension->addAttribute('type', $item->type);
-                    if($item->type == 'plugin') {
-                        $extension->addAttribute('folder', $item->folder);
-                    }
+					if($item->type == 'plugin') {
+						$extension->addAttribute('folder', $item->folder);
+					}
 					$extension->addAttribute('client', $item->client);
 					$extension->addAttribute('detailsurl', $site_root . $item->link);
 					$extension->addAttribute('version', $item->version);

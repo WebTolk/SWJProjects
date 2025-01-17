@@ -17,6 +17,9 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
+use function defined;
+use function preg_match;
+use function urldecode;
 
 class DisplayController extends BaseController
 {
@@ -43,7 +46,7 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = array())
 	{
-        $cachable = true;
+		$cachable = true;
 
 		$view         = $this->input->get('view', $this->default_view);
 		// Duplicates protection

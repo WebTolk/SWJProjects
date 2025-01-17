@@ -33,110 +33,110 @@ use Psr\Container\ContainerInterface;
  * @since  4.0.0
  */
 class SWJProjectsComponent extends MVCComponent implements
-    BootableExtensionInterface,
-    RouterServiceInterface
+	BootableExtensionInterface,
+	RouterServiceInterface
 {
-    use RouterServiceTrait;
-    use HTMLRegistryAwareTrait;
+	use RouterServiceTrait;
+	use HTMLRegistryAwareTrait;
 
-    /** @var array Supported functionality */
-    protected $supportedFunctionality = [
-        'core.featured' => true,
-        'core.state'    => true,
-    ];
+	/** @var array Supported functionality */
+	protected $supportedFunctionality = [
+		'core.featured' => true,
+		'core.state'    => true,
+	];
 
-    /**
-     * The trashed condition
-     *
-     * @since   4.0.0
-     */
-    public const CONDITION_NAMES = [
-        self::CONDITION_PUBLISHED   => 'JPUBLISHED',
-        self::CONDITION_UNPUBLISHED => 'JUNPUBLISHED',
-        self::CONDITION_ARCHIVED    => 'JARCHIVED',
-        self::CONDITION_TRASHED     => 'JTRASHED',
-    ];
+	/**
+	 * The trashed condition
+	 *
+	 * @since   4.0.0
+	 */
+	public const CONDITION_NAMES = [
+		self::CONDITION_PUBLISHED   => 'JPUBLISHED',
+		self::CONDITION_UNPUBLISHED => 'JUNPUBLISHED',
+		self::CONDITION_ARCHIVED    => 'JARCHIVED',
+		self::CONDITION_TRASHED     => 'JTRASHED',
+	];
 
-    /**
-     * The archived condition
-     *
-     * @since   4.0.0
-     */
-    public const CONDITION_ARCHIVED = 2;
+	/**
+	 * The archived condition
+	 *
+	 * @since   4.0.0
+	 */
+	public const CONDITION_ARCHIVED = 2;
 
-    /**
-     * The published condition
-     *
-     * @since   4.0.0
-     */
-    public const CONDITION_PUBLISHED = 1;
+	/**
+	 * The published condition
+	 *
+	 * @since   4.0.0
+	 */
+	public const CONDITION_PUBLISHED = 1;
 
-    /**
-     * The unpublished condition
-     *
-     * @since   4.0.0
-     */
-    public const CONDITION_UNPUBLISHED = 0;
+	/**
+	 * The unpublished condition
+	 *
+	 * @since   4.0.0
+	 */
+	public const CONDITION_UNPUBLISHED = 0;
 
-    /**
-     * The trashed condition
-     *
-     * @since   4.0.0
-     */
-    public const CONDITION_TRASHED = -2;
+	/**
+	 * The trashed condition
+	 *
+	 * @since   4.0.0
+	 */
+	public const CONDITION_TRASHED = -2;
 
-    /**
-     * Booting the extension. This is the function to set up the environment of the extension like
-     * registering new class loaders, etc.
-     *
-     * If required, some initial set up can be done from services of the container, eg.
-     * registering HTML services.
-     *
-     * @param   ContainerInterface  $container  The container
-     *
-     * @return  void
-     *
-     * @since   4.0.0
-     */
-    public function boot(ContainerInterface $container)
-    {
+	/**
+	 * Booting the extension. This is the function to set up the environment of the extension like
+	 * registering new class loaders, etc.
+	 *
+	 * If required, some initial set up can be done from services of the container, eg.
+	 * registering HTML services.
+	 *
+	 * @param   ContainerInterface  $container  The container
+	 *
+	 * @return  void
+	 *
+	 * @since   4.0.0
+	 */
+	public function boot(ContainerInterface $container)
+	{
 //        $this->getRegistry()->register('SWJProjectsicon', new Icon());
 
-        // The layout joomla.SWJProjects.icons does need a general icon service
+		// The layout joomla.SWJProjects.icons does need a general icon service
 //        $this->getRegistry()->register('icon', $this->getRegistry()->getService('SWJProjectsicon'));
-    }
+	}
 
 
-    /**
-     * Returns valid contexts
-     *
-     * @return  array
-     *
-     * @since   4.0.0
-     */
-    public function getContexts(): array
-    {
-        Factory::getApplication()->getLanguage()->load('com_swjprojects', JPATH_ADMINISTRATOR);
+	/**
+	 * Returns valid contexts
+	 *
+	 * @return  array
+	 *
+	 * @since   4.0.0
+	 */
+	public function getContexts(): array
+	{
+		Factory::getApplication()->getLanguage()->load('com_swjprojects', JPATH_ADMINISTRATOR);
 
-        $contexts = [
-            'com_swjprojects.project'    => Text::_('com_swjprojects'),
-            'com_swjprojects.categories' => Text::_('JCATEGORY'),
-        ];
+		$contexts = [
+			'com_swjprojects.project'    => Text::_('com_swjprojects'),
+			'com_swjprojects.categories' => Text::_('JCATEGORY'),
+		];
 
-        return $contexts;
-    }
+		return $contexts;
+	}
 
 
-    /**
-     * Prepares the category form
-     *
-     * @param   Form          $form  The form to prepare
-     * @param   array|object  $data  The form data
-     *
-     * @return void
-     */
-    public function prepareForm(Form $form, $data)
-    {
-        SWJProjectsHelper::onPrepareForm($form, $data);
-    }
+	/**
+	 * Prepares the category form
+	 *
+	 * @param   Form          $form  The form to prepare
+	 * @param   array|object  $data  The form data
+	 *
+	 * @return void
+	 */
+	public function prepareForm(Form $form, $data)
+	{
+		SWJProjectsHelper::onPrepareForm($form, $data);
+	}
 }

@@ -16,6 +16,10 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Multilanguage;
+use function array_keys;
+use function defined;
+use function str_replace;
+use function strtolower;
 
 class TranslationHelper
 {

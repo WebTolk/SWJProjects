@@ -13,6 +13,14 @@ namespace Joomla\Component\SWJProjects\Administrator\Helper;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use function array_filter;
+use function array_map;
+use function array_unique;
+use function count;
+use function defined;
+use function explode;
+use function rand;
+use function str_replace;
 
 class KeysHelper
 {

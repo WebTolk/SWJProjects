@@ -17,6 +17,17 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
 use Joomla\Utilities\ArrayHelper;
+use function array_merge;
+use function array_unique;
+use function defined;
+use function explode;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function str_replace;
+use function stripos;
+use function substr;
+use function trim;
 
 class KeysModel extends ListModel
 {

@@ -18,6 +18,9 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
 use Joomla\Registry\Registry;
+use function defined;
+use function explode;
+use function implode;
 
 class KeyModel extends AdminModel
 {

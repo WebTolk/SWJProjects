@@ -19,6 +19,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
+use function defined;
 
 
 class ProjectupdateserverurlField extends FormField

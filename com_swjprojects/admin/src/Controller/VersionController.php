@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
+use function defined;
 
 class VersionController extends FormController
 {

@@ -21,6 +21,12 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use function array_reverse;
+use function count;
+use function defined;
+use function htmlspecialchars;
+use function implode;
+use function trim;
 
 class HtmlView extends BaseHtmlView
 {

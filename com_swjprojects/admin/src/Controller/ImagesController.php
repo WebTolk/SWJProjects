@@ -20,6 +20,7 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\Component\SWJProjects\Administrator\Helper\ImagesHelper;
 use Joomla\Registry\Registry;
+use function defined;
 
 class ImagesController extends BaseController
 {

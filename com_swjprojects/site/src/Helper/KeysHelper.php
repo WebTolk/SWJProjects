@@ -14,6 +14,10 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use function defined;
+use function implode;
+use function md5;
+use function strlen;
 
 class KeysHelper
 {

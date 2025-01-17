@@ -13,6 +13,7 @@ namespace Joomla\Component\SWJProjects\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
+use function defined;
 
 class CategoryController extends FormController
 {

@@ -22,6 +22,15 @@ use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use function array_merge;
+use function array_unique;
+use function defined;
+use function explode;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function nl2br;
+use function serialize;
 
 class ProjectsModel extends ListModel
 {
@@ -221,18 +230,18 @@ class ProjectsModel extends ListModel
 		}
 
 		// Join over versions for last version
-        $subQuery = $db->getQuery(true)
-            ->select(array('CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)'))
+		$subQuery = $db->getQuery(true)
+			->select(array('CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)'))
 //	        ->select('SUM(' . $db->quoteName('lv.downloads') . ') AS ' . $db->quoteName('downloads'))
-            ->from($db->quoteName('#__swjprojects_versions', 'lv'))
-            ->where('lv.project_id = p.id')
-            ->where($db->quoteName('state') .' = '. $db->quote(1))
-            ->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
-            ->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
-            ->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
-            ->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
-            ->order($db->escape('lv.hotfix') . ' ' . $db->escape('desc'))
-            ->setLimit(1);
+			->from($db->quoteName('#__swjprojects_versions', 'lv'))
+			->where('lv.project_id = p.id')
+			->where($db->quoteName('state') .' = '. $db->quote(1))
+			->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
+			->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
+			->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
+			->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
+			->order($db->escape('lv.hotfix') . ' ' . $db->escape('desc'))
+			->setLimit(1);
 		$query->select('(' . $subQuery->__toString() . ') as last_version');
 
 		// Count over versions for download counter

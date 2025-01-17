@@ -24,6 +24,9 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\Event\Event;
+use function explode;
+use function md5;
+use function strpos;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -60,6 +63,15 @@ class Router extends RouterView
 	 * @since  4.0.0
 	 */
 	private $categoryCache = [];
+
+	/**
+	 * The segments cache
+	 *
+	 * @var  array
+	 *
+	 * @since  4.0.0
+	 */
+	private $_segments = [];
 
 	/**
 	 * The db

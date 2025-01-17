@@ -23,6 +23,17 @@ use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use function array_diff;
+use function array_filter;
+use function array_intersect;
+use function defined;
+use function explode;
+use function file_get_contents;
+use function implode;
+use function is_file;
+use function md5;
+use function serialize;
+use function str_replace;
 
 class ProjectModel extends AdminModel
 {

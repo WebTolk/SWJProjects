@@ -21,6 +21,13 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use function array_reverse;
+use function count;
+use function defined;
+use function htmlspecialchars;
+use function implode;
+use function is_null;
+use function trim;
 
 class HtmlView extends BaseHtmlView
 {
@@ -209,7 +216,7 @@ class HtmlView extends BaseHtmlView
 
 		// Escape strings for html output
 		$this->pageclass_sfx = (!empty($this->params->get('pageclass_sfx')) ? htmlspecialchars($this->params->get('pageclass_sfx')) : '');
-		
+
 
 		// Prepare the document
 		$this->_prepareDocument();

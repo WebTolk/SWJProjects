@@ -15,6 +15,10 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Form\FormField;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use function defined;
+use function is_array;
+use function is_object;
+use function is_string;
 
 class ImagesField extends FormField
 {

@@ -16,6 +16,8 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use function defined;
+use function jexit;
 
 class CategoriesController extends AdminController
 {

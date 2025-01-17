@@ -13,6 +13,7 @@ namespace Joomla\Component\SWJProjects\Administrator\Field;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\FormField;
+use function defined;
 
 class ImageField extends FormField
 {

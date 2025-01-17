@@ -13,6 +13,7 @@ namespace Joomla\Component\SWJProjects\Site\Helper;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\RouteHelper as CMSRouteHelper;
+use function defined;
 
 class RouteHelper extends CMSRouteHelper
 {

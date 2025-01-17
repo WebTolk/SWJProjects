@@ -16,6 +16,11 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Form\FormField;
 use Joomla\Registry\Registry;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
+use function array_filter;
+use function array_map;
+use function defined;
+use function explode;
+use function implode;
 
 class KeyField extends FormField
 {

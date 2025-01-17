@@ -22,6 +22,9 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Version;
 use Joomla\Component\SWJProjects\Administrator\Helper\SWJProjectsHelper;
+use function count;
+use function defined;
+use function implode;
 
 class HtmlView extends BaseHtmlView
 {

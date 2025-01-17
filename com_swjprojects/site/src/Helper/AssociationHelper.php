@@ -14,6 +14,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
+use function defined;
+use function md5;
+use function serialize;
 
 abstract class AssociationHelper
 {

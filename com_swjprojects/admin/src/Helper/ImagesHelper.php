@@ -19,6 +19,19 @@ use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use function basename;
+use function count;
+use function defined;
+use function finfo_close;
+use function finfo_file;
+use function finfo_open;
+use function function_exists;
+use function in_array;
+use function md5;
+use function mime_content_type;
+use function rand;
+use function rtrim;
+use function time;
 
 class ImagesHelper
 {

@@ -20,6 +20,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Component\SWJProjects\Site\Helper\KeysHelper;
+use function defined;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function mime_content_type;
+use function property_exists;
+use function strlen;
 
 class DownloadModel extends BaseDatabaseModel
 {

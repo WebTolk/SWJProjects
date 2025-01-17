@@ -22,6 +22,14 @@ use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use function array_unique;
+use function defined;
+use function explode;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function nl2br;
+use function serialize;
 
 class VersionsModel extends ListModel
 {

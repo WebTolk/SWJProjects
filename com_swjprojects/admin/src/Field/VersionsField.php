@@ -17,6 +17,7 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Database\DatabaseInterface;
+use function defined;
 
 class VersionsField extends ListField
 {

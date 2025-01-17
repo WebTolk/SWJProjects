@@ -19,6 +19,15 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use function defined;
+use function file_get_contents;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function md5;
+use function property_exists;
+use function stat;
+use function str_replace;
 
 class JchangelogModel extends BaseDatabaseModel
 {
