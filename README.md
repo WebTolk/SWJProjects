@@ -33,6 +33,8 @@ Developers who create extensions for Joomla! CMS are provided with additional fu
 - **Version Module**  
 - **Projects Module**  
 - **Categories Module**  
+- **Content plugin for handling SW JProjects short-codes**  
+- **Editor-xtd plugin for inserting link to project or project data with custom HTML layout**  
 - **Smart search plugin for projects**  
 - **Smart search plugin for documentation**  
 - [JLSitemap integration plugin](https://www.septdir.com/solutions/joomla/plugins/jlsitemap-swjprojects) **Download separately**

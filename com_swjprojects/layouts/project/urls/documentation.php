@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.0
+ * @version    2.2.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -25,7 +25,7 @@ extract($displayData);
 
 if ($item->documentation || $item->urls->get('documentation'))
 {
-	$link         = ($item->documentation ?? $item->urls->get('documentation'));
+	$link         = $item->documentation ? $item->documentation : $item->urls->get('documentation');
 	$title        = '<i class="fas fa-file-alt"></i> '.Text::_('COM_SWJPROJECTS_DOCUMENTATION');
 	$link_attribs = [
 		'class' => 'btn btn-outline-info me-2 mb-2'

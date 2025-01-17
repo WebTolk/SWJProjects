@@ -2,7 +2,7 @@
 
 /*
  * @package    SW JProjects
- * @version    2.2.0
+ * @version    2.2.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -72,6 +72,15 @@ class Router extends RouterView
 	 * @since  4.0.0
 	 */
 	private $_segments = [];
+
+	/**
+	 * The ids cache
+	 *
+	 * @var  array
+	 *
+	 * @since  4.0.0
+	 */
+	private $_ids = [];
 
 	/**
 	 * The db
