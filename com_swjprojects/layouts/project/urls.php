@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.0
+ * @version    2.2.1
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -103,12 +103,10 @@ if ($urls = $item->urls->toArray())
 {
 	foreach ($urls as $txt => $url)
 	{
-		if (empty($url) || !$url_texts[$txt])
+		if (empty($url) || $txt == 'documentation' || !$url_texts[$txt])
 		{
 			continue;
 		}
 		echo HTMLHelper::link($url, $url_texts[$txt], $link_attribs);
 	}
 }
-
-
