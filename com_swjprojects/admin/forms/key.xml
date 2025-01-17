@@ -33,7 +33,7 @@
 			   label="COM_SWJPROJECTS_ORDER"
 			   maxlength="100"
 			   size="40"
-			   class="span12"/>
+			   class="col-12"/>
 		<field name="email" type="email"
 			   label="JGLOBAL_EMAIL"
 			   size="30"
@@ -81,7 +81,7 @@
 			   description="JFIELD_NOTE_DESC"
 			   maxlength="255"
 			   size="40"
-			   class="span12"/>
+			   class="col-12"/>
 	</fieldset>
 	<fieldset name="plugins">
 		<fields name="plugins"/>

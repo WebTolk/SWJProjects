@@ -9,9 +9,9 @@
 			   translate_required="true"/>
 		<field name="description" type="textarea"
 			   label="JGLOBAL_DESCRIPTION"
-			   filter="JComponentHelper::filterText"
+			   filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 			   rows="5"
-			   class="span12"/>
+			   class="col-12"/>
 	</fieldset>
 	<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 		<fields name="metadata">

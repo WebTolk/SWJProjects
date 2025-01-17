@@ -10,12 +10,12 @@
 		<field name="introtext" type="textarea"
 			   label="COM_SWJPROJECTS_DOCUMENT_INTROTEXT"
 			   hint="COM_SWJPROJECTS_DOCUMENT_INTROTEXT"
-			   filter="JComponentHelper::filterText"
+			   filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 			   rows="5"
-			   class="span12"/>
+			   class="col-12"/>
 		<field name="fulltext" type="editor"
 			   label="COM_SWJPROJECTS_DOCUMENT_FULLTEXT"
-			   filter="JComponentHelper::filterText"
+			   filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 			   buttons="true"/>
 	</fieldset>
 	<fields name="metadata">

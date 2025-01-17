@@ -56,7 +56,7 @@
 	<fieldset name="file">
 		<field name="file_upload" type="file"
 			   label="COM_SWJPROJECTS_FILE_UPLOAD"
-			   class="span12"/>
+			   class="col-12"/>
 		<field name="file_delete" type="checkbox"
 			   label="COM_SWJPROJECTS_FILE_DELETE"
 			   value="1"/>
