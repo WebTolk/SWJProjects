@@ -1,21 +1,19 @@
 <?php
-
 /**
  * @package    SW JProjects
- * @subpackage  mod_footer
- *
- * @copyright   (C) 2023 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @version    2.2.0
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @link       https://web-tolk.ru
  */
-
-\defined('_JEXEC') or die;
 
 use Joomla\CMS\Extension\Service\Provider\HelperFactory;
 use Joomla\CMS\Extension\Service\Provider\Module;
 use Joomla\CMS\Extension\Service\Provider\ModuleDispatcherFactory;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
-
+\defined('_JEXEC') or die;
 /**
  * The footer module service provider.
  *

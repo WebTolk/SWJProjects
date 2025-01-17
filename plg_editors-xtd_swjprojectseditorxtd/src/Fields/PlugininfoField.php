@@ -12,6 +12,9 @@ namespace Joomla\Plugin\EditorsXtd\Swjprojectseditorxtd\Fields;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\NoteField;
 use Joomla\CMS\Language\Text;
+use function defined;
+use function simplexml_load_file;
+use function strtoupper;
 
 defined('_JEXEC') or die;
 
@@ -70,23 +73,23 @@ class PlugininfoField extends NoteField
 
 
 		?>
-		<div class="wt-b24-plugin-info">
-			<div class="plugin-info-img span2 col-2">
-				<a href="https://web-tolk.ru" target="_blank">
-					<svg width="200" height="50" xmlns="http://www.w3.org/2000/svg">
-						<g>
-							<title>Go to https://web-tolk.ru</title>
-							<text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="32" id="svg_3" y="36.085949" x="8.152073" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#0fa2e6">Web</text>
-							<text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="32" id="svg_4" y="36.081862" x="74.239105" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#384148">Tolk</text>
-						</g>
-					</svg>
-				</a>
-			</div>
-			<div style="padding: 0px 15px;" class="span10 col-10">
-				<span class="badge badge-success bg-success">v.<?php echo $wt_plugin_info->version; ?></span>
+        <div class="wt-b24-plugin-info">
+            <div class="plugin-info-img span2 col-2">
+                <a href="https://web-tolk.ru" target="_blank">
+                    <svg width="200" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <title>Go to https://web-tolk.ru</title>
+                            <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="32" id="svg_3" y="36.085949" x="8.152073" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#0fa2e6">Web</text>
+                            <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="32" id="svg_4" y="36.081862" x="74.239105" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#384148">Tolk</text>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div style="padding: 0px 15px;" class="span10 col-10">
+                <span class="badge badge-success bg-success">v.<?php echo $wt_plugin_info->version; ?></span>
 				<?php echo Text::_("PLG_".strtoupper($element)."_DESC"); ?>
-			</div>
-		</div>
+            </div>
+        </div>
 		<?php
 
 	}
@@ -104,5 +107,3 @@ class PlugininfoField extends NoteField
 	}
 
 }
-
-?>

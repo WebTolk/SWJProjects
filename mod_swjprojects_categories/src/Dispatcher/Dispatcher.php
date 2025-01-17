@@ -9,10 +9,11 @@
 
 namespace Joomla\Module\Swjprojectscategories\Site\Dispatcher;
 
-\defined('JPATH_PLATFORM') or die;
-
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Joomla\Module\Swjprojectscategories\Site\Helper\SwjprojectscategoriesHelper;
+use function defined;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Dispatcher class for mod_wtyandexmapitems

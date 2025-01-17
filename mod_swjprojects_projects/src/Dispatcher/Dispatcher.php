@@ -1,15 +1,14 @@
 <?php
 /**
  * @package    SW JProjects
- *
- * @copyright   (C) 2022 Sergey Tolkachyov
+ * @version    2.2.0
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://web-tolk.ru
- * @license     GNU General Public License version 2 or later
  */
 
 namespace Joomla\Module\Swjprojectsprojects\Site\Dispatcher;
-
-\defined('JPATH_PLATFORM') or die;
 
 use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
@@ -17,9 +16,12 @@ use Joomla\CMS\Extension\ModuleInterface;
 use Joomla\Input\Input;
 use Joomla\Module\Swjprojectsprojects\Site\Helper\SwjprojectsprojectsHelper;
 use Joomla\Registry\Registry;
+use function defined;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
- * Dispatcher class for mod_wtyandexmapitems
+ * Dispatcher class for mod_swjprojects_projects
  *
  * @since  1.0.0
  */

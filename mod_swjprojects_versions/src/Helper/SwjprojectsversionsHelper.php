@@ -1,33 +1,23 @@
 <?php
 /**
  * @package    SW JProjects
- *
- * @copyright   (C) 2022 Sergey Tolkachyov
+ * @version    2.2.0
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://web-tolk.ru
- * @license         GNU General Public License version 2 or later
  */
 
 namespace Joomla\Module\Swjprojectsversions\Site\Helper;
 
-use Joomla\CMS\Access\Access;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
-use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Registry\Registry;
+use function defined;
 
-\defined('_JEXEC') or die;
-
+defined('_JEXEC') or die;
 
 /**
- * Helper for mod_Swjprojectsversions
+ * Helper for mod_swjprojects_versions
  *
  * @since  1.0
  */

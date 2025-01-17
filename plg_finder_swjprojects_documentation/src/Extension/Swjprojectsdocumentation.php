@@ -12,7 +12,6 @@ namespace Joomla\Plugin\Finder\Swjprojectsdocumentation\Extension;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Finder as FinderEvent;
-
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\Component\Finder\Administrator\Indexer\Adapter;
@@ -24,9 +23,11 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseQuery;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
+use function array_merge;
+use function defined;
 
 // phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**

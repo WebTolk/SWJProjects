@@ -8,8 +8,6 @@
  * @since         1.0.0
  */
 
-defined('_JEXEC') || die;
-
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -19,6 +17,8 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Plugin\Content\Swjprojects\Extension\Swjprojects;
+
+defined('_JEXEC') || die;
 
 return new class () implements ServiceProviderInterface {
 

@@ -10,8 +10,6 @@
 
 namespace Joomla\Plugin\Content\Swjprojects\Extension;
 
-defined('_JEXEC') or die('Restricted access');
-
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
@@ -25,7 +23,17 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\ParameterType;
+use function defined;
+use function explode;
+use function file_exists;
+use function ob_get_clean;
+use function ob_start;
+use function preg_match_all;
+use function property_exists;
+use function str_replace;
+use function strpos;
 
+defined('_JEXEC') or die('Restricted access');
 
 final class Swjprojects extends CMSPlugin implements SubscriberInterface
 {

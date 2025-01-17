@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @package    SW JProjects
  * @version    2.2.0
  * @author     Sergey Tolkachyov

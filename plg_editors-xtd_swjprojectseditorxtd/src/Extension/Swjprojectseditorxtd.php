@@ -10,8 +10,6 @@
 
 namespace Joomla\Plugin\EditorsXtd\Swjprojectseditorxtd\Extension;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -24,7 +22,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
+use function count;
+use function defined;
 
+defined('_JEXEC') or die;
 /**
  * Editor Article button
  *
@@ -123,8 +124,8 @@ final class Swjprojectseditorxtd extends CMSPlugin
 		$editor               = $app->getInput()->get('editor', '');
 		$swjprojectseditorxtd = Folder::files(JPATH_SITE . "/plugins/content/swjprojects/tmpl");
 		$layout_options       = [
-                0 => HTMLHelper::_('select.option', '--none--', Text::_('JNONE'))
-        ];
+			0 => HTMLHelper::_('select.option', '--none--', Text::_('JNONE'))
+		];
 		foreach ($swjprojectseditorxtd as $file)
 		{
 			if (File::getExt($file) == "php")
@@ -200,7 +201,7 @@ final class Swjprojectseditorxtd extends CMSPlugin
 
                 </div>
                 <div class="col-2">
-		            <?php echo $projects_model->getPagination()->getLimitBox(); ?>
+					<?php echo $projects_model->getPagination()->getLimitBox(); ?>
                 </div>
                 <div class="col-6 col-md-4">
                     <div class="input-group mb-3">
@@ -220,22 +221,22 @@ final class Swjprojectseditorxtd extends CMSPlugin
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
-                <?php foreach ($projects as $project) :?>
+				<?php foreach ($projects as $project) :?>
                     <div class="col mb-3">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="h5"><?php echo $project->title; ?></h3>
-                        </div>
-                        <div class="card-footer bg-transparent d-flex justify-content-between">
-                            <a href="#" data-project-id="<?php echo $project->id; ?>" data-project-cat-id="<?php echo $project->catid; ?>" class="stretched-link" data-project-title="<?php echo \htmlspecialchars($project->title); ?>"><?php echo Text::_('JSELECT'); ?></a>
-                            <span class="text-muted">#<?php echo $project->id; ?></span>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h5"><?php echo $project->title; ?></h3>
+                            </div>
+                            <div class="card-footer bg-transparent d-flex justify-content-between">
+                                <a href="#" data-project-id="<?php echo $project->id; ?>" data-project-cat-id="<?php echo $project->catid; ?>" class="stretched-link" data-project-title="<?php echo \htmlspecialchars($project->title); ?>"><?php echo Text::_('JSELECT'); ?></a>
+                                <span class="text-muted">#<?php echo $project->id; ?></span>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                <?php endforeach;?>
+				<?php endforeach;?>
             </div>
             <div class="border-top mt-3">
-		        <?php echo $projects_model->getPagination()->getListFooter(); ?>
+				<?php echo $projects_model->getPagination()->getListFooter(); ?>
             </div>
         </form>
         <div class="fixed-bottom bg-white shadow-sm border-top">

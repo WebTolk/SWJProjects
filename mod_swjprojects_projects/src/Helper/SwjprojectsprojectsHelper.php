@@ -1,20 +1,20 @@
 <?php
 /**
  * @package    SW JProjects
- *
- * @copyright   (C) 2022 Sergey Tolkachyov
+ * @version    2.2.0
+ * @author     Sergey Tolkachyov
+ * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://web-tolk.ru
- * @license         GNU General Public License version 2 or later
  */
 
 namespace Joomla\Module\Swjprojectsprojects\Site\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use function defined;
 
-
-\defined('_JEXEC') or die;
-
+defined('_JEXEC') or die;
 
 /**
  * Helper for mod_Swjprojectsprojects

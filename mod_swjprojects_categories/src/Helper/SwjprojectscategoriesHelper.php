@@ -9,22 +9,11 @@
 
 namespace Joomla\Module\Swjprojectscategories\Site\Helper;
 
-use Joomla\CMS\Access\Access;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
-use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Registry\Registry;
+use function defined;
 
-\defined('_JEXEC') or die;
-
+defined('_JEXEC') or die;
 
 /**
  * Helper for mod_Swjprojectscategories
