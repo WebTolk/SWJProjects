@@ -19,7 +19,10 @@ $isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
 ?>
 <div id="SWJProjects" class="document">
     <div class="project info mb-3">
-        <div class="h1"><?php echo $this->project->title . ' - ' . Text::_('COM_SWJPROJECTS_DOCUMENTATION'); ?></div>
+        <hgroup class="mb-5">
+            <h1><?php echo $this->item->title; ?></h1>
+            <div class="h3"><?php echo $this->project->title . ' - ' . Text::_('COM_SWJPROJECTS_DOCUMENTATION'); ?></div>
+        </hgroup>
         <div class="mb-3">
 			<?php if (!empty($this->project->categories)): ?>
                 <strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORIES'); ?>: </strong>
@@ -93,9 +96,6 @@ $isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
         <div class="<?php echo $isSingleDocument ? 'col-12' : 'col-lg-9'; ?>">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="h2">
-						<?php echo $this->item->title; ?>
-                    </h1>
 					<?php if (!empty($this->item->introtext)): ?>
                         <p><?php echo nl2br($this->item->introtext); ?></p>
 					<?php endif; ?>
