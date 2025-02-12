@@ -82,6 +82,12 @@
 			   maxlength="255"
 			   size="40"
 			   class="col-12"/>
+		<field name="domain" type="url"
+			   label="COM_SWJPROJECTS_DOMAIN"
+			   description="COM_SWJPROJECTS_DOMAIN_DESC"
+			   filter="url"
+			   validate="url"
+			   />
 	</fieldset>
 	<fieldset name="plugins">
 		<fields name="plugins"/>

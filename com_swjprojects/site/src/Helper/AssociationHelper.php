@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -10,13 +10,13 @@
 
 namespace Joomla\Component\SWJProjects\Site\Helper;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use function defined;
 use function md5;
 use function serialize;
+
+defined('_JEXEC') or die;
 
 abstract class AssociationHelper
 {
@@ -52,11 +52,11 @@ abstract class AssociationHelper
 		$catid      = (!empty($catid)) ? $catid : $app->getInput()->getInt('catid', 1);
 		$project_id = (!empty($project_id)) ? $project_id : $app->getInput()->getInt('project_id', 0);
 		$debug      = (!empty($debug)) ? $debug : $app->getInput()->getInt('debug', 0);
-		$hash       = md5(serialize(array($id, $view, $catid, $project_id)));
+		$hash       = md5(serialize([$id, $view, $catid, $project_id]));
 
 		if (!isset(self::$_associations[$hash]))
 		{
-			$associations = array();
+			$associations = [];
 			foreach (TranslationHelper::getCodes() as $code)
 			{
 				$link = false;

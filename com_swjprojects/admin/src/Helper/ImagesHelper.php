@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -9,8 +9,6 @@
  */
 
 namespace Joomla\Component\SWJProjects\Administrator\Helper;
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\File;
@@ -32,6 +30,8 @@ use function mime_content_type;
 use function rand;
 use function rtrim;
 use function time;
+
+defined('_JEXEC') or die;
 
 class ImagesHelper
 {
@@ -142,7 +142,7 @@ class ImagesHelper
 	 *
 	 * @since  1.3.0
 	 */
-	public static function uploadImage($section = null, $pk = null, $name = null, $language = null, $image = array())
+	public static function uploadImage($section = null, $pk = null, $name = null, $language = null, $image = [])
 	{
 		if (empty($section) || empty($pk) || empty($name) || empty($language)) return false;
 
@@ -291,7 +291,7 @@ class ImagesHelper
 	 *
 	 * @since  1.3.0
 	 */
-	public static function uploadImages($section = null, $pk = null, $folder = null, $values = null, $language = null, $upload = array())
+	public static function uploadImages($section = null, $pk = null, $folder = null, $values = null, $language = null, $upload = [])
 	{
 		if (empty($section) || empty($pk) || empty($folder) || empty($language) || empty($upload)) return false;
 
@@ -358,7 +358,7 @@ class ImagesHelper
 	 *
 	 * @since  1.3.0
 	 */
-	public static function changeImages($section = null, $pk = null, $folder = null, $language = null, $name = null, $image = array())
+	public static function changeImages($section = null, $pk = null, $folder = null, $language = null, $name = null, $image = [])
 	{
 		if (empty($section) || empty($pk) || empty($folder) || empty($language) || empty($name) || empty($image)) return false;
 
@@ -489,9 +489,9 @@ class ImagesHelper
 	public static function generateName($length = 11)
 	{
 		$secret = '';
-		$chars  = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's',
+		$chars  = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's',
 			't', 'u', 'v', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-			'P', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+			'P', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 		for ($i = 0; $i < $length; $i++)
 		{
 			$key    = rand(0, count($chars) - 1);

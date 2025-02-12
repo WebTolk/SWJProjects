@@ -1,6 +1,6 @@
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_keys`
     `limit_count` int(11)             NOT NULL DEFAULT 0,
     `state`       tinyint(3)          NOT NULL DEFAULT 0,
     `plugins`     mediumtext,
+    `domain`      text                         DEFAULT NULl,
     PRIMARY KEY `id` (`id`),
     KEY `idx_key` (`key`(100)),
     KEY `idx_email` (`email`(100)),

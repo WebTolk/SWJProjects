@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -53,8 +53,8 @@ class RouteHelper extends CMSRouteHelper
 	/**
 	 * Fetches jupdate route.
 	 *
-	 * @param   int     $project_id    The id of the project.
-	 * @param   string  $element       The element of the project.
+	 * @param   int     $project_id  The id of the project.
+	 * @param   string  $element     The element of the project.
 	 *
 	 * @return  string  Joomla changelog server view link.
 	 *
@@ -89,7 +89,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getDownloadRoute($version_id = null, $project_id = null, $element = null, $download_key = null)
+	public static function getDownloadRoute($version_id = null, $project_id = null, $element = null, $download_key = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=download';
 
@@ -127,7 +127,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getVersionRoute($id = null, $project_id = null, $catid = null)
+	public static function getVersionRoute($id = null, $project_id = null, $catid = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=version';
 
@@ -159,7 +159,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getVersionsRoute($id = null, $catid = null)
+	public static function getVersionsRoute($id = null, $catid = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=versions';
 
@@ -187,7 +187,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.4.0
 	 */
-	public static function getDocumentRoute($id = null, $project_id = null, $catid = null)
+	public static function getDocumentRoute($id = null, $project_id = null, $catid = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=document';
 
@@ -219,7 +219,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.4.0
 	 */
-	public static function getDocumentationRoute($id = null, $catid = null)
+	public static function getDocumentationRoute($id = null, $catid = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=documentation';
 
@@ -246,7 +246,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getProjectRoute($id = null, $catid = null)
+	public static function getProjectRoute($id = null, $catid = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=project';
 
@@ -272,7 +272,7 @@ class RouteHelper extends CMSRouteHelper
 	 *
 	 * @since  1.0.0
 	 */
-	public static function getProjectsRoute($id = null)
+	public static function getProjectsRoute($id = null): string
 	{
 		$link = 'index.php?option=com_swjprojects&view=projects';
 
@@ -282,5 +282,18 @@ class RouteHelper extends CMSRouteHelper
 		}
 
 		return $link;
+	}
+
+	/**
+	 * Fetches user keys list route.
+	 *
+	 *
+	 * @return  string  User keys view link.
+	 *
+	 * @since  2.3.0
+	 */
+	public static function getUserkeysRoute(): string
+	{
+		return 'index.php?option=com_swjprojects&view=userkeys';
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -9,8 +9,6 @@
  */
 
 namespace Joomla\Component\SWJProjects\Site\Controller;
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -20,6 +18,8 @@ use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use function defined;
 use function preg_match;
 use function urldecode;
+
+defined('_JEXEC') or die;
 
 class DisplayController extends BaseController
 {
@@ -99,6 +99,11 @@ class DisplayController extends BaseController
 			if ($view == 'jchangelog')
 			{
 				$link = RouteHelper::getJChangelogRoute($project_id, $element);
+			}
+
+			if ($view == 'userkeys')
+			{
+				$link = RouteHelper::getUserkeysRoute();
 			}
 
 			if ($link)

@@ -1,21 +1,21 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://web-tolk.ru
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
+defined('_JEXEC') or die;
+
 // Check if we have only 1 document for extension
-$isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
+$isSingleDocument = (count($this->documentation_items) == 1) ? true : false;
 ?>
 <div id="SWJProjects" class="document">
     <div class="project info mb-3">
@@ -34,7 +34,7 @@ $isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
 					{
 						$links[] = HTMLHelper::link($category->link, $category->title);
 					}
-					echo !empty($links) ? implode(', ',$links) : '';
+					echo !empty($links) ? implode(', ', $links) : '';
 				}
 				?>
 			<?php else: ?>
@@ -69,13 +69,15 @@ $isSingleDocument = (\count($this->documentation_items) == 1) ? true : false;
                 <div class="card">
                     <nav class="navbar navbar-expand-lg">
                         <div class="container-fluid d-flex flex-lg-column align-items-start">
-                            <h2 class="h5 ms-3"><?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION_TOC'); ?></h2>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#navbaDocumentationTableOfContents"
-                                    aria-controls="navbarDocumentationTableOfContents"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h2 class="h5"><?php echo Text::_('COM_SWJPROJECTS_DOCUMENTATION_TOC'); ?></h2>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#navbaDocumentationTableOfContents"
+                                        aria-controls="navbarDocumentationTableOfContents"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon fas fa-bars"></span>
+                                </button>
+                            </div>
                             <div class="collapse navbar-collapse" id="navbaDocumentationTableOfContents">
                                 <div class="list-group list-group-flush">
 									<?php foreach ($this->documentation_items as $documentationItem)

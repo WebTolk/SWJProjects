@@ -1,15 +1,13 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://web-tolk.ru
  */
 namespace Joomla\Component\SWJProjects\Site\Helper;
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -18,6 +16,8 @@ use function defined;
 use function implode;
 use function md5;
 use function strlen;
+
+defined('_JEXEC') or die;
 
 class KeysHelper
 {
@@ -28,7 +28,7 @@ class KeysHelper
 	 *
 	 * @since  1.3.0
 	 */
-	protected static $checkResults = array();
+	protected static $checkResults = [];
 
 	/**
 	 * Method to check key.
@@ -71,12 +71,12 @@ class KeysHelper
 				$nowDate  = $db->quote(Factory::getDate()->toSql());
 
 				// Define  projects
-				$projects = array('FIND_IN_SET(-1, projects)');
+				$projects = ['FIND_IN_SET(-1, projects)'];
 				if (!empty($project_id)) $projects[] = 'FIND_IN_SET(' . $project_id . ', projects)';
 
 				// Build query
 				$query  = $db->getQuery(true)
-					->select(array('id'))
+					->select(['id'])
 					->from($db->quoteName('#__swjprojects_keys'))
 					->where('(' . implode(' OR ', $projects) . ')')
 					->where($db->quoteName('key') . ' = ' . $db->quote($key))

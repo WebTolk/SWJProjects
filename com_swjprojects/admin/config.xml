@@ -65,6 +65,11 @@
 			<option value="100">J100</option>
 			<option value="0">JALL</option>
 		</field>
+		<field name="userkeys_layout" type="componentlayout"
+			   label="COM_SWJPROJECTS_PARAMS_USERKEYS_LAYOUT"
+			   extension="com_swjprojects"
+			   view="userkeys"
+			   class="form-select"/>
 		<field name="jupdate_cachetimeout" type="integer"
 			   label="COM_SWJPROJECTS_PARAMS_JUPDATE_CACHETIMEOUT"
 			   description="COM_SWJPROJECTS_PARAMS_JUPDATE_CACHETIMEOUT_DESC"

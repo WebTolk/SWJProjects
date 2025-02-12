@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -9,15 +9,15 @@
  */
 namespace Joomla\Component\SWJProjects\Administrator\Controller;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\Component\SWJProjects\Administrator\Model\CategoryModel;
 use function defined;
 use function jexit;
+
+defined('_JEXEC') or die;
 
 class CategoriesController extends AdminController
 {
@@ -64,7 +64,7 @@ class CategoriesController extends AdminController
 	 * @param   string  $prefix  The class prefix.
 	 * @param   array   $config  The array of possible config values.
 	 *
-	 * @return  BaseDatabaseModel|SWJProjectsModelCategory  A model object.
+	 * @return  CategoryModel  A model object.
 	 *
 	 * @since  1.0.0
 	 */

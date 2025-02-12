@@ -22,9 +22,10 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\SWJProjectsHelper;
 use Joomla\Component\SWJProjects\Administrator\Service\HTML\Icon;
 use Psr\Container\ContainerInterface;
+use function defined;
 
 // phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**

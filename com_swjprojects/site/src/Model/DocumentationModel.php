@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -9,8 +9,6 @@
  */
 
 namespace Joomla\Component\SWJProjects\Site\Model;
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -30,6 +28,8 @@ use function is_array;
 use function is_numeric;
 use function nl2br;
 use function serialize;
+
+defined('_JEXEC') or die;
 
 class DocumentationModel extends ListModel
 {

@@ -2,7 +2,7 @@
 
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -18,12 +18,9 @@ use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
-use Joomla\CMS\Event\AbstractEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Database\ParameterType;
-use Joomla\Event\Event;
 use function explode;
 use function md5;
 use function strpos;
@@ -143,6 +140,10 @@ class Router extends RouterView
 		$download = new RouterViewConfiguration('download');
 		$this->registerView($download);
 
+		// Userkeys route
+		$userkeys = new RouterViewConfiguration('userkeys');
+		$this->registerView($userkeys);
+
 		parent::__construct($app, $menu);
 
 		$this->attachRule(new MenuRules($this));
@@ -230,7 +231,7 @@ class Router extends RouterView
 
 		list($void, $segment) = explode(':', $id, 2);
 
-		return array($void => $segment);
+		return [$void => $segment];
 	}
 
 	/**
@@ -250,7 +251,7 @@ class Router extends RouterView
 			$id = explode(':', $id, 2)[0];
 		}
 
-		return array($id => 'versions');
+		return [$id => 'versions'];
 	}
 
 	/**
@@ -286,7 +287,7 @@ class Router extends RouterView
 
 			list($void, $segment) = explode(':', $id, 2);
 
-			return array($void => $segment);
+			return [$void => $segment];
 		}
 
 		return false;
@@ -309,7 +310,7 @@ class Router extends RouterView
 			$id = explode(':', $id, 2)[0];
 		}
 
-		return array($id => 'documentation');
+		return [$id => 'documentation'];
 	}
 
 	/**
@@ -345,7 +346,7 @@ class Router extends RouterView
 
 			list($void, $segment) = explode(':', $id, 2);
 
-			return array($void => $segment);
+			return [$void => $segment];
 		}
 
 		return false;
@@ -363,7 +364,7 @@ class Router extends RouterView
 	 */
 	public function getJUpdateSegment($id, $query)
 	{
-		return array(1 => 1);
+		return [1 => 1];
 	}
 
 	/**
@@ -393,7 +394,7 @@ class Router extends RouterView
 	 */
 	public function getDownloadSegment($id, $query)
 	{
-		return array(1 => 1);
+		return [1 => 1];
 	}
 
 	/**
@@ -613,6 +614,21 @@ class Router extends RouterView
 	 * @since  1.2.0
 	 */
 	public function getDownloadId($segment, $query)
+	{
+		return 1;
+	}
+
+	/**
+	 * Method to get the id for user keys list.
+	 *
+	 * @param   string  $segment  Segment to retrieve the id.
+	 * @param   array   $query    The request that is parsed right now.
+	 *
+	 * @return  integer|false  The id of this item or false.
+	 *
+	 * @since  2.3.0
+	 */
+	public function getUserkeysId($segment, $query)
 	{
 		return 1;
 	}

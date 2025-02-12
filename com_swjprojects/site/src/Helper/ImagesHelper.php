@@ -1,15 +1,13 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
  * @link       https://web-tolk.ru
  */
 namespace Joomla\Component\SWJProjects\Site\Helper;
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -28,6 +26,8 @@ use function function_exists;
 use function in_array;
 use function md5;
 use function mime_content_type;
+
+defined('_JEXEC') or die;
 
 class ImagesHelper
 {
@@ -133,7 +133,7 @@ class ImagesHelper
 			if ($files)
 			{
 				$ordering = count($values);
-				$images   = array();
+				$images   = [];
 				foreach ($files as $file)
 				{
 					if (!self::checkImage($file)) continue;

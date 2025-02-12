@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.2.1
+ * @version    2.3.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -9,8 +9,6 @@
  */
 
 namespace Joomla\Component\SWJProjects\Administrator\Helper;
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use function array_filter;
@@ -21,6 +19,8 @@ use function defined;
 use function explode;
 use function rand;
 use function str_replace;
+
+defined('_JEXEC') or die;
 
 class KeysHelper
 {
@@ -42,7 +42,7 @@ class KeysHelper
 	 *
 	 * @since  1.3.0
 	 */
-	public static function generateKey($length = null)
+	public static function generateKey($length = null): string
 	{
 		$secret     = '';
 		$characters = self::getCharacters();
@@ -64,7 +64,7 @@ class KeysHelper
 	 *
 	 * @since  1.3.0
 	 */
-	public static function getCharacters()
+	public static function getCharacters(): array
 	{
 		if (self::$characters === null)
 		{
@@ -99,7 +99,7 @@ class KeysHelper
 	 *
 	 * @since  1.3.0
 	 */
-	public static function maskKey($key = null)
+	public static function maskKey($key = null): string
 	{
 		$length  = iconv_strlen($key);
 		$maskKey = '';
