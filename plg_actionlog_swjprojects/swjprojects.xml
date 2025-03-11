@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="actionlog" method="upgrade">
+	<name>PLG_ACTIONLOG_SWJPROJECTS</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>11.03.2025</creationDate>
+	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.4.0</version>
+	<description>PLG_ACTIONLOG_SWJPROJECTS_DESC</description>
+	<namespace path="src">Joomla\Plugin\Actionlog\Swjprojects</namespace>
+	<files>
+		<folder plugin="swjprojects">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_actionlog_swjprojects.ini</language>
+		<language tag="en-GB">en-GB/plg_actionlog_swjprojects.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_actionlog_swjprojects.ini</language>
+		<language tag="ru-RU">ru-RU/plg_actionlog_swjprojects.sys.ini</language>
+	</languages>
+</extension>

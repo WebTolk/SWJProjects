@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    SW JProjects
- * @version       2.3.0
+ * @version       2.4.0
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -90,6 +90,7 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function install(InstallerAdapter $adapter): bool
 			{
+				$this->enablePlugin($adapter);
 
 				return true;
 
@@ -198,6 +199,29 @@ return new class () implements ServiceProviderInterface {
 
 				$db->updateObject('#__extensions', $actionLogsParams, ['element']);
 			}
+
+			/**
+			 * Enable plugin after installation.
+			 *
+			 * @param   InstallerAdapter  $adapter  Parent object calling object.
+			 *
+			 * @return void
+			 *
+			 * @since  2.4.0
+			 */
+			protected function enablePlugin(InstallerAdapter $adapter): void
+			{
+				// Prepare plugin object
+				$plugin          = new \stdClass();
+				$plugin->type    = 'plugin';
+				$plugin->element = $adapter->getElement();
+				$plugin->folder  = (string) $adapter->getParent()->manifest->attributes()['group'];
+				$plugin->enabled = 1;
+
+				// Update record
+				$this->db->updateObject('#__extensions', $plugin, ['type', 'element', 'folder']);
+			}
+
 		});
 	}
 };

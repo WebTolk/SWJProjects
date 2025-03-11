@@ -1,7 +1,7 @@
 <?php
 /*
  * @package    SW JProjects
- * @version    2.3.0
+ * @version    2.4.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -125,7 +125,7 @@ class ProjectsModel extends ListModel
 			->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
 		// Join over translates
-		$translate = TranslationHelper::getDefault();
+		$translate = TranslationHelper::getCurrent();
 		$query->select(array('t_p.title as title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 				. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));

@@ -1,11 +1,11 @@
 <?php
-
 /**
- * @package         Joomla.Plugin
- * @subpackage      Actionlog.joomla
- *
- * @copyright   (C) 2018 Open Source Matters, Inc. <https://www.joomla.org>
- * @license         GNU General Public License version 2 or later; see LICENSE.txt
+ * @package    SW JProjects
+ * @version       2.4.0
+ * @Author        Sergey Tolkachyov, https://web-tolk.ru
+ * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @since         1.0.0
  */
 
 namespace Joomla\Plugin\Actionlog\Swjprojects\Extension;
@@ -19,7 +19,6 @@ use Joomla\Component\Actionlogs\Administrator\Plugin\ActionLogPlugin;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\DispatcherInterface;
-use Joomla\Event\Event;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 use stdClass;
@@ -69,7 +68,7 @@ final class Swjprojects extends ActionLogPlugin
 	 * @param   DispatcherInterface  $dispatcher  The dispatcher
 	 * @param   array                $config      An optional associative array of configuration settings
 	 *
-	 * @since   3.9.0
+	 * @since   2.4.0
 	 */
 	public function __construct(DispatcherInterface $dispatcher, array $config)
 	{
@@ -91,7 +90,7 @@ final class Swjprojects extends ActionLogPlugin
 	 *
 	 * @return array
 	 *
-	 * @since   5.2.0
+	 * @since   2.4.0
 	 */
 	public static function getSubscribedEvents(): array
 	{
@@ -112,7 +111,7 @@ final class Swjprojects extends ActionLogPlugin
 	 *
 	 * @return  void
 	 *
-	 * @since   3.9.0
+	 * @since   3.9.0 // $context, $item, $isNew, $data
 	 * @todo    use Model\AfterSaveEvent $event when Joomla 6 will be released
 	 */
 	public function onContentAfterSave($context, $item, $isNew, $data): void
@@ -121,13 +120,14 @@ final class Swjprojects extends ActionLogPlugin
 //		$item = $event->getItem();
 //		$isNew = $event->getIsNew();
 //		$data = $event->getData();
+
 		if (!in_array($context, $this->contextList))
 		{
 			return;
 		}
 
 		$params = $this->getActionLogParams($context);
-
+		$params->type_title = strtoupper($params->type_title);
 		// Not found a valid content type, don't process further
 		if ($params === null)
 		{
@@ -143,20 +143,13 @@ final class Swjprojects extends ActionLogPlugin
 
 		if ($isNew)
 		{
-			$messageLanguageKey = $params->text_prefix . '_' . strtoupper($params->type_title) . '_ADDED';
-			$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_ADDED';
+			$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_ADDED';
 		}
 		else
 		{
-			$messageLanguageKey = $params->text_prefix . '_' . strtoupper($params->type_title) . '_UPDATED';
-			$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_UPDATED';
+			$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_UPDATED';
 		}
 
-		// If the content type doesn't have its own language key, use default language key
-		if (!$this->getApplication()->getLanguage()->hasKey($messageLanguageKey))
-		{
-			$messageLanguageKey = $defaultLanguageKey;
-		}
 
 		$id = empty($params->id_holder) ? 0 : $item->get($params->id_holder);
 
@@ -164,17 +157,28 @@ final class Swjprojects extends ActionLogPlugin
 
 		$message = [
 			'action'      => $isNew ? 'add' : 'update',
-			'type'        => $params->text_prefix . '_TYPE_' . strtoupper($params->type_title),
+			'type'        => $params->text_prefix . '_TYPE_' . $params->type_title,
 			'id'          => $id,
-			'title'       => $item->{$params->title_holder},
-			'accountlink' => 'index.php?option=com_users&task=user.edit&id=' . $this->getApplication()->getIdentity()->id,
+			'title'       => $item->title,
 			'itemlink'    => 'index.php?option=com_swjprojects&task=' . $contentType . '.edit&id=' . $id,
 		];
 
-		if (!in_array($contentType, ['project', 'category']))
+		if (!in_array($contentType, ['project', 'category', 'key']))
 		{
 			$message['projectTitle'] = $this->getProjectTitle($item->project_id);
 			$message['projectLink'] = 'index.php?option=com_swjprojects&task=project.edit&id=' . $item->project_id;
+		}
+
+		if($context == 'com_swjprojects.key')
+		{
+			$project_ids = explode(',', $data['projects']);
+			$projectTitles = [];
+			foreach ($project_ids as $projectId)
+			{
+				$projectTitles[] = $this->getProjectTitle((int)$projectId);
+			}
+
+			$message['projects'] = implode(', ', $projectTitles);
 		}
 
 		$this->addLog([$message], $messageLanguageKey, $context);
@@ -236,6 +240,9 @@ final class Swjprojects extends ActionLogPlugin
 					$title .= '.' . $data['hotfix'];
 				}
 				break;
+			case 'com_swjprojects.key':
+				$title = $data['id'];
+				break;
 			case 'com_swjprojects.document' :
 			case 'com_swjprojects.category' :
 			case 'com_swjprojects.project' :
@@ -265,9 +272,7 @@ final class Swjprojects extends ActionLogPlugin
 			->createModel('Project', 'Administrator', ['ignore_requets' => true])
 			->getItem($project_id);
 
-		$project_title = $project->translates[$this->langTag]->title;
-
-		return $project_title;
+		return $project->translates[$this->langTag]->title;
 	}
 
 	/**
@@ -366,11 +371,6 @@ final class Swjprojects extends ActionLogPlugin
 				$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_PUBLISHED';
 				$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_PUBLISHED';
 				$action             = 'publish';
-				break;
-			case 2:
-				$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_ARCHIVED';
-				$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_ARCHIVED';
-				$action             = 'archive';
 				break;
 			case -2:
 				$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_TRASHED';

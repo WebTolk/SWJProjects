@@ -1,6 +1,6 @@
 /*
  * @package    SW JProjects
- * @version    2.3.0
+ * @version    2.4.0
  * @author     Sergey Tolkachyov
  * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -16,3 +16,5 @@ DROP TABLE `#__swjprojects_translate_versions`;
 DROP TABLE `#__swjprojects_translate_projects`;
 DROP TABLE `#__swjprojects_translate_categories`;
 DROP TABLE `#__swjprojects_projects_categories`;
+DELETE FROM `#__action_logs_extensions` WHERE `extension` = 'com_swjprojects';
+DELETE FROM `#__action_logs_extensions` WHERE `type_alias` LIKE '%com_swjprojects%';
