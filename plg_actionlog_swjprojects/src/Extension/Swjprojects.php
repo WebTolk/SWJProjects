@@ -10,6 +10,7 @@
 
 namespace Joomla\Plugin\Actionlog\Swjprojects\Extension;
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Model;
 use Joomla\CMS\MVC\Factory\MVCFactoryServiceInterface;
@@ -20,6 +21,7 @@ use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use stdClass;
 use function defined;
@@ -30,7 +32,7 @@ use function strtoupper;
 defined('_JEXEC') or die;
 
 /**
- * Joomla! Users Actions Logging Plugin.
+ * SW JProjects User Actions Logging Plugin.
  *
  * @since  3.9.0
  * @todo   implements SubscriberInterface when Joomla 6 will be released.
@@ -41,7 +43,7 @@ final class Swjprojects extends ActionLogPlugin
 	use UserFactoryAwareTrait;
 
 	/**
-	 * Context aliases
+	 * Available contexts
 	 *
 	 * @var    array
 	 * @since  2.4.0
@@ -52,6 +54,25 @@ final class Swjprojects extends ActionLogPlugin
 		'com_swjprojects.key',
 		'com_swjprojects.version',
 		'com_swjprojects.category',
+	];
+
+	/**
+	 * Map context to database tables with translations
+	 *
+	 * @var array
+	 * @since 2.4.0
+	 */
+	protected $translateTables = [
+		'com_swjprojects.document' => '#__swjprojects_translate_documentation',
+		'com_swjprojects.documentation' => '#__swjprojects_translate_documentation',
+		'com_swjprojects.project' => '#__swjprojects_translate_projects',
+		'com_swjprojects.projects' => '#__swjprojects_translate_projects',
+		'com_swjprojects.key' => null,
+		'com_swjprojects.keys' => null,
+		'com_swjprojects.version' => '#__swjprojects_versions',
+		'com_swjprojects.versions' => '#__swjprojects_versions',
+		'com_swjprojects.category' => '#__swjprojects_translate_categories',
+		'com_swjprojects.categories' => '#__swjprojects_translate_categories',
 	];
 
 	/**
@@ -229,7 +250,6 @@ final class Swjprojects extends ActionLogPlugin
 	 */
 	protected function getItemTitle($context, $data): string
 	{
-		$title = '';
 		switch ($context)
 		{
 			case 'com_swjprojects.version' :
@@ -247,7 +267,7 @@ final class Swjprojects extends ActionLogPlugin
 			case 'com_swjprojects.category' :
 			case 'com_swjprojects.project' :
 			default:
-				$title = $data['translates'][$this->langTag]['title'];
+				$title = $data['translates'][$this->langTag]['title'] ?? '';
 
 				break;
 
@@ -285,44 +305,55 @@ final class Swjprojects extends ActionLogPlugin
 	 * @return  void
 	 *
 	 * @since   3.9.0
+	 * @todo    use Model\AfterDeleteEvent $event when Joomla 6 will be released
 	 */
-	public function onContentAfterDelete(Model\AfterDeleteEvent $event): void
+	public function onContentAfterDelete($context, $item): void
 	{
-		$context = $event->getContext();
-		$article = $event->getItem();
-		$option  = $this->getApplication()->getInput()->get('option');
+//		$context = $event->getContext();
+//		item = $event->getItem();
+		$option = $this->getApplication()->getInput()->get('option');
 
 		if (!$this->checkLoggable($option))
 		{
 			return;
 		}
 
-		$params = $this->getActionLogParams($context);
+		list(, $contentType) = explode('.', $context);
 
-		// Not found a valid content type, don't process further
-		if ($params === null)
-		{
-			return;
-		}
+		$messageLanguageKey = 'PLG_ACTIONLOG_SWJPROJECTS_' . strtoupper($contentType) . '_DELETED';
+		$data               = (new Registry($item))->toArray();
 
-		// If the content type has its own language key, use it, otherwise, use default language key
-		if ($this->getApplication()->getLanguage()->hasKey(strtoupper($params->text_prefix . '_' . $params->type_title . '_DELETED')))
-		{
-			$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_DELETED';
-		}
-		else
-		{
-			$messageLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_DELETED';
-		}
+		$db    = $this->getDatabase();
+		$query = $db->getQuery(true);
 
-		$id = empty($params->id_holder) ? 0 : $article->get($params->id_holder);
+		if (in_array($context, [
+			'com_swjprojects.document',
+			'com_swjprojects.documentation',
+			'com_swjprojects.project',
+			'com_swjprojects.projects',
+			'com_swjprojects.category',
+			'com_swjprojects.categories']))
+		{
+			$query->select($db->quoteName('title'))
+				->from($db->quoteName($this->translateTables[$context]))
+				->where($db->quoteName('id') . ' = ' . $db->quote($item->id))
+				->where($db->quoteName('language') . ' = ' . $db->quote($this->langTag));
+
+			$data['translates'][$this->langTag]['title'] = $db->setQuery($query)->loadResult();
+		}
 
 		$message = [
 			'action' => 'delete',
-			'type'   => $params->text_prefix . '_TYPE_' . $params->type_title,
-			'id'     => $id,
-			'title'  => $article->get($params->title_holder),
+			'type'   => 'PLG_ACTIONLOG_SWJPROJECTS_TYPE_' . $contentType,
+			'id'     => $item->id,
+			'title'  => $this->getItemTitle($context, $data),
 		];
+
+		if (!in_array($contentType, ['project', 'category', 'key']))
+		{
+			$message['projectTitle'] = $this->getProjectTitle($item->project_id);
+			$message['projectLink']  = 'index.php?option=com_swjprojects&task=project.edit&id=' . $item->project_id;
+		}
 
 		$this->addLog([$message], $messageLanguageKey, $context);
 	}
@@ -337,12 +368,14 @@ final class Swjprojects extends ActionLogPlugin
 	 * @return  void
 	 *
 	 * @since   3.9.0
+	 * @todo use Model\AfterChangeStateEvent $event when Joomla 6 will be released
 	 */
-	public function onContentChangeState(Model\AfterChangeStateEvent $event): void
+	public function onContentChangeState($context, $pks, $value): void
 	{
-		$context = $event->getContext();
-		$pks     = $event->getPks();
-		$value   = $event->getValue();
+
+//		$context = $event->getContext();
+//		$pks     = $event->getPks();
+//		$value   = $event->getValue();
 		$option  = $this->getApplication()->getInput()->getCmd('option');
 
 		if (!$this->checkLoggable($option))
@@ -350,60 +383,67 @@ final class Swjprojects extends ActionLogPlugin
 			return;
 		}
 
-		$params = $this->getActionLogParams($context);
-
-		// Not found a valid content type, don't process further
-		if ($params === null)
-		{
-			return;
-		}
-
-		list(, $contentType) = explode('.', $params->type_alias);
+		list(, $contentType) = explode('.', $context);
 
 		switch ($value)
 		{
 			case 0:
-				$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_UNPUBLISHED';
-				$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_UNPUBLISHED';
+				$messageLanguageKey = 'PLG_ACTIONLOG_SWJPROJECTS_' . strtoupper($contentType) . '_UNPUBLISHED';
 				$action             = 'unpublish';
 				break;
 			case 1:
-				$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_PUBLISHED';
-				$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_PUBLISHED';
+				$messageLanguageKey = 'PLG_ACTIONLOG_SWJPROJECTS_' . strtoupper($contentType) . '_PUBLISHED';
 				$action             = 'publish';
 				break;
 			case -2:
-				$messageLanguageKey = $params->text_prefix . '_' . $params->type_title . '_TRASHED';
-				$defaultLanguageKey = 'PLG_SYSTEM_ACTIONLOGS_CONTENT_TRASHED';
+				$messageLanguageKey = 'PLG_ACTIONLOG_SWJPROJECTS_' . strtoupper($contentType) . '_TRASHED';
 				$action             = 'trash';
 				break;
 			default:
 				$messageLanguageKey = '';
-				$defaultLanguageKey = '';
 				$action             = '';
 				break;
 		}
 
-		// If the content type doesn't have its own language key, use default language key
-		if (!$this->getApplication()->getLanguage()->hasKey($messageLanguageKey))
-		{
-			$messageLanguageKey = $defaultLanguageKey;
-		}
-
+		$items = [];
 		$db    = $this->getDatabase();
-		$query = $db->getQuery(true)
-			->select($db->quoteName([$params->title_holder, $params->id_holder]))
-			->from($db->quoteName($params->table_name))
-			->whereIn($db->quoteName($params->id_holder), ArrayHelper::toInteger($pks));
-		$db->setQuery($query);
+		$query = $db->getQuery(true);
+		if(in_array($context, ['com_swjprojects.key', 'com_swjprojects.keys']))
+		{
+			foreach ($pks as $pk)
+			{
+				$keyData = new \stdClass();
+				$keyData->id = $pk;
+				$keyData->title = $pk;
+				$items[$pk] = $keyData;
+			}
+		} else {
+			if(in_array($context, ['com_swjprojects.version', 'com_swjprojects.versions']))
+			{
+				$query->select(['CONCAT(CASE WHEN a.hotfix != 0 THEN CONCAT(a.major, ".", a.minor, ".", a.patch,".", a.hotfix) ELSE CONCAT(a.major, ".", a.minor, ".", a.patch) END) as title', 'a.id', 'a.project_id']);
+			} else {
+				$query->select($db->quoteName(['a.title', 'a.id']))
+					->where($db->quoteName('a.language').' = '.$db->quote($this->langTag));
+			}
 
-		try
-		{
-			$items = $db->loadObjectList($params->id_holder);
-		}
-		catch (RuntimeException $e)
-		{
-			$items = [];
+			if(in_array($context, ['com_swjprojects.document', 'com_swjprojects.documentation'])) {
+				$query->select($db->quoteName('doc.project_id','project_id'));
+				$query->leftJoin($db->quoteName('#__swjprojects_documentation', 'doc'),$db->quoteName('a.id').' = '.$db->quoteName('doc.id'));
+			}
+			$query->from($db->quoteName($this->translateTables[$context],'a'));
+
+			$query->whereIn($db->quoteName('a.id'), ArrayHelper::toInteger($pks));
+
+			$db->setQuery($query);
+
+			try
+			{
+				$items = $db->loadObjectList('id');
+			}
+			catch (Exception $e)
+			{
+				$items = [];
+			}
 		}
 
 		$messages = [];
@@ -412,11 +452,17 @@ final class Swjprojects extends ActionLogPlugin
 		{
 			$message = [
 				'action'   => $action,
-				'type'     => $params->text_prefix . '_TYPE_' . $params->type_title,
+				'type'     => 'PLG_ACTIONLOG_SWJPROJECTS_TYPE_' . $contentType,
 				'id'       => $pk,
-				'title'    => $items[$pk]->{$params->title_holder},
-				'itemlink' => ActionlogsHelper::getContentTypeLink($option, $contentType, $pk, $params->id_holder, null),
+				'title'    => $items[$pk]->title,
+				'itemlink' => ActionlogsHelper::getContentTypeLink($option, $contentType, $pk, 'id', null),
 			];
+
+			if (!in_array($contentType, ['project', 'category', 'key']))
+			{
+				$message['projectTitle'] = $this->getProjectTitle($items[$pk]->project_id);
+				$message['projectLink'] = 'index.php?option=com_swjprojects&task=project.edit&id=' . $items[$pk]->project_id;
+			}
 
 			$messages[] = $message;
 		}
