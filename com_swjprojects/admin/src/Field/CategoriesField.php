@@ -55,18 +55,18 @@ class CategoriesField extends ListField
 		{
 			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
-				->select(array('c.id', 'c.parent_id', 'c.level'))
+				->select(['c.id', 'c.parent_id', 'c.level'])
 				->from($db->quoteName('#__swjprojects_categories', 'c'))
 				->where($db->quoteName('c.alias') . '!=' . $db->quote('root'));
 
 			// Join over translates
-			$translate = TranslationHelper::getDefault();
-			$query->select(array('t_c.title as title'))
+			$translate = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+			$query->select(['t_c.title as title'])
 				->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 					. ' ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($translate));
 
 			// Group by
-			$query->group(array('c.id'));
+			$query->group(['c.id']);
 
 			// Add the list ordering clause
 			$query->order($db->escape('c.lft') . ' ' . $db->escape('asc'));

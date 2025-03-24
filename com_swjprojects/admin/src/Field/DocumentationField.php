@@ -57,7 +57,7 @@ class DocumentationField extends ListField
 				->from($db->quoteName('#__swjprojects_documentation', 'd'));
 
 			// Join over translates
-			$translate = TranslationHelper::getDefault();
+			$translate = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
 			$query->select(['t_d.title as title'])
 				->leftJoin($db->quoteName('#__swjprojects_translate_documentation', 't_d')
 					. ' ON t_d.id = d.id AND ' . $db->quoteName('t_d.language') . ' = ' . $db->quote($translate));

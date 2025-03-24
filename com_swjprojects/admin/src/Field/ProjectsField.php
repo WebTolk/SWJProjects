@@ -54,17 +54,17 @@ class ProjectsField extends ListField
 		{
 			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
-				->select(array('p.id', 'p.element'))
+				->select(['p.id', 'p.element'])
 				->from($db->quoteName('#__swjprojects_projects', 'p'));
 
 			// Join over translates
-			$translate = TranslationHelper::getDefault();
-			$query->select(array('t_p.title as title'))
+			$translate = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+			$query->select(['t_p.title as title'])
 				->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 					. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));
 
 			// Group by
-			$query->group(array('p.id'));
+			$query->group(['p.id']);
 
 			// Add the list ordering clause
 			$query->order($db->escape('p.ordering') . ' ' . $db->escape('asc'));

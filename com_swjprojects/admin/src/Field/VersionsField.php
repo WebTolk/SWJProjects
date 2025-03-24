@@ -53,16 +53,16 @@ class VersionsField extends ListField
 		{
 			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
-				->select(array('v.id', 'v.major', 'v.minor', ' v.patch', 'v.tag', 'v.stage'))
+				->select(['v.id', 'v.major', 'v.minor', ' v.patch', 'v.tag', 'v.stage'])
 				->from($db->quoteName('#__swjprojects_versions', 'v'));
 
 			// Join over the projects
-			$query->select(array('p.element as project_element'))
+			$query->select(['p.element as project_element'])
 				->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 			// Join over translates
-			$translate = TranslationHelper::getDefault();
-			$query->select(array('t_p.title as project_title'))
+			$translate = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+			$query->select(['t_p.title as project_title'])
 				->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
 					. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));
 
