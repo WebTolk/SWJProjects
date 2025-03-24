@@ -104,14 +104,6 @@ final class Swjprojects extends ActionLogPlugin
 	];
 
 	/**
-	 * Current lang tag for translates
-	 *
-	 * @var string|null
-	 * @since 2.4.0
-	 */
-	protected ?string $langTag;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param   DispatcherInterface  $dispatcher  The dispatcher
@@ -131,7 +123,6 @@ final class Swjprojects extends ActionLogPlugin
 
 		$this->loggableVerbs = $params->get('loggable_verbs', []);
 
-		$this->langTag = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
 	}
 
 	/**
@@ -242,6 +233,8 @@ final class Swjprojects extends ActionLogPlugin
 	 */
 	protected function getItemTitle(string $context, array $data): string
 	{
+		$langTag = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+
 		switch ($context)
 		{
 			case 'com_swjprojects.version' :
@@ -259,7 +252,7 @@ final class Swjprojects extends ActionLogPlugin
 			case 'com_swjprojects.category' :
 			case 'com_swjprojects.project' :
 			default:
-				$title = $data['translates'][$this->langTag]['title'];
+				$title = $data['translates'][$langTag]['title'];
 
 				break;
 
@@ -284,7 +277,9 @@ final class Swjprojects extends ActionLogPlugin
 			->createModel('Project', 'Administrator', ['ignore_requets' => true])
 			->getItem($project_id);
 
-		return $project->translates[$this->langTag]->title;
+		$langTag = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+
+		return $project->translates[$langTag]->title;
 	}
 
 	/**
@@ -319,6 +314,8 @@ final class Swjprojects extends ActionLogPlugin
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
+		$langTag = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+
 		if (in_array($context, [
 			'com_swjprojects.document',
 			'com_swjprojects.documentation',
@@ -330,9 +327,9 @@ final class Swjprojects extends ActionLogPlugin
 			$query->select($db->quoteName('title'))
 				->from($db->quoteName($this->translateTables[$context]))
 				->where($db->quoteName('id') . ' = ' . $db->quote($item->id))
-				->where($db->quoteName('language') . ' = ' . $db->quote($this->langTag));
+				->where($db->quoteName('language') . ' = ' . $db->quote($langTag));
 
-			$data['translates'][$this->langTag]['title'] = $db->setQuery($query)->loadResult();
+			$data['translates'][$langTag]['title'] = $db->setQuery($query)->loadResult();
 		}
 
 		$message = [
@@ -379,6 +376,8 @@ final class Swjprojects extends ActionLogPlugin
 
 		list(, $contentType) = explode('.', $context);
 
+		$langTag = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+
 		switch ($value)
 		{
 			case 0:
@@ -421,7 +420,7 @@ final class Swjprojects extends ActionLogPlugin
 			else
 			{
 				$query->select($db->quoteName(['a.title', 'a.id']))
-					->where($db->quoteName('a.language') . ' = ' . $db->quote($this->langTag));
+					->where($db->quoteName('a.language') . ' = ' . $db->quote($langTag));
 			}
 
 			if (in_array($context, ['com_swjprojects.document', 'com_swjprojects.documentation']))
