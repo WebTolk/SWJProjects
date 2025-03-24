@@ -23,7 +23,7 @@ extract($displayData);
  *
  */
 
-if (!empty($item->joomla->get('type'))): ?>
+if ($item->joomla && !empty($item->joomla->get('type'))): ?>
 	<?php if ($item->joomla->get('type') == "component"): ?>
         <span class="badge bg-light text-dark"
               title="Component">Comp</span>
