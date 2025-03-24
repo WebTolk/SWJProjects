@@ -1,20 +1,33 @@
 <?php
 /**
- * @package    SW JProjects
- * @version    2.4.0
- * @author     Sergey Tolkachyov
- * @copyright  Copyright (c) 2018 - 2019 Septdir Workshop. All rights reserved.
- * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @package       SW JProjects
+ * @version       2.4.0
+ * @Author        Sergey Tolkachyov
+ * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link       https://web-tolk.ru
+ * @since         1.0.0
  */
-
-defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
-$css="
+defined('_JEXEC') or die;
+
+/**
+ * You can use these variables here
+ *
+ * @var stdClass                               $module   The current module object
+ * @var \Joomla\CMS\Application\CMSApplication $app      The application like instead Factory::getApplication()
+ * @var \Joomla\Input\Input                    $input    The Joomla Input object
+ * @var \Joomla\Registry\Registry              $params   The current module params
+ * @var stdClass|string                        $template The current template params
+ *
+ * @var array                                  $items The projects list
+ */
+
+$css='
 .badge-comp {background-color:#28A745;}
 .badge-file {background-color:#c4c4c4;}
 .badge-lang {background-color:#FD7E14;}
@@ -23,19 +36,19 @@ $css="
 .badge-mod {background-color:#DC3545;}
 .badge-pack {background-color:#FFC107;}
 .badge-tpl {background-color:#0D6EFD;}
-";
-$doc = Factory::getDocument();
-$doc->addStyleDeclaration($css);
-
+';
 /**
  * @var $wa \Joomla\CMS\WebAsset\WebAssetManager
  */
-$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->addInlineStyle($css);
+
 /**
  * You can download swiper js for Joomla
  * @link       https://web-tolk.ru
  *       or include swiper.js from CDN or other way you want
  */
+
 $wa->useScript('swiper-bundle')->useStyle('swiper-bundle');
 
 $unique = 'mod_swjprojects_projects_'.$module->id;

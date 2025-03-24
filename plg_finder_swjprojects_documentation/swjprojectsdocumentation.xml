@@ -2,7 +2,7 @@
 <extension type="plugin" group="finder" method="upgrade">
 	<name>plg_finder_swjprojectsdocumentation</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>11.03.2025</creationDate>
+	<creationDate>24.03.2025</creationDate>
 	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>

@@ -1,11 +1,12 @@
 <?php
 /**
- * @package    SW JProjects
- * @version    2.4.0
- * @author     Sergey Tolkachyov
- * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
- * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
+ * @package       SW JProjects
+ * @version       2.4.0
+ * @Author        Sergey Tolkachyov
+ * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link       https://web-tolk.ru
+ * @since         1.0.0
  */
 
 use Joomla\CMS\Extension\Service\Provider\HelperFactory;
@@ -13,7 +14,9 @@ use Joomla\CMS\Extension\Service\Provider\Module;
 use Joomla\CMS\Extension\Service\Provider\ModuleDispatcherFactory;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+
 \defined('_JEXEC') or die;
+
 /**
  * The footer module service provider.
  *

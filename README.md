@@ -37,6 +37,7 @@ Developers who create extensions for Joomla! CMS are provided with additional fu
 - **Editor-xtd plugin for inserting link to project or project data with custom HTML layout**  
 - **Smart search plugin for projects**  
 - **Smart search plugin for documentation**  
+- **User actions log plugin**  
 - [JLSitemap integration plugin](https://www.septdir.com/solutions/joomla/plugins/jlsitemap-swjprojects) **Download separately**
 - [JoomShopping integration plugin](https://web-tolk.ru/en/dev/joomla-plugins/wt-jshopping-sw-jprojects) **Download separately**
 - [WT Telegram bot - SW JProjects plugin](https://web-tolk.ru/en/dev/joomla-plugins/wt-telegram-bot-sw-jprojects) **Download separately**

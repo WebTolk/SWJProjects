@@ -1,31 +1,25 @@
 <?php
 /**
- * @package    SW JProjects
+ * @package       SW JProjects
  * @version       2.4.0
- * @Author        Sergey Tolkachyov, https://web-tolk.ru
- * @сopyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @Author        Sergey Tolkachyov
+ * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link       https://web-tolk.ru
  * @since         1.0.0
  */
-\defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\AdministratorApplication;
-use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Helper\LibraryHelper;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
-use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\CMS\Version;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\Path;
 use Joomla\Registry\Registry;
+
+\defined('_JEXEC') or die;
 
 return new class () implements ServiceProviderInterface {
 	public function register(Container $container)

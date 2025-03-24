@@ -1,11 +1,12 @@
 <?php
-
 /**
- * @package    SW JProjects
- * @subpackage  com_swjprojects
- *
- * @copyright   (C) 2018 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @package       SW JProjects
+ * @version       2.4.0
+ * @Author        Sergey Tolkachyov
+ * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link       https://web-tolk.ru
+ * @since         1.0.0
  */
 
 namespace Joomla\Component\SWJProjects\Administrator\Extension;

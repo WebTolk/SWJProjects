@@ -1,12 +1,14 @@
 <?php
 /**
- * @package    SW JProjects
- * @version    2.4.0
- * @author     Sergey Tolkachyov
- * @copyright  Copyright (c) 2024 Sergey Tolkachyov. All rights reserved.
- * @license    GNU General Public License v3.0
+ * @package       SW JProjects
+ * @version       2.4.0
+ * @Author        Sergey Tolkachyov
+ * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link       https://web-tolk.ru
+ * @since         1.0.0
  */
+
 declare(strict_types=1);
 
 use Joomla\CMS\Application\AdministratorApplication;
