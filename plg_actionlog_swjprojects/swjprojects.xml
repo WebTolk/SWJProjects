@@ -10,6 +10,7 @@
 	<version>2.4.0</version>
 	<description>PLG_ACTIONLOG_SWJPROJECTS_DESC</description>
 	<namespace path="src">Joomla\Plugin\Actionlog\Swjprojects</namespace>
+	<scriptfile>script.php</scriptfile>
 	<files>
 		<folder plugin="swjprojects">services</folder>
 		<folder>src</folder>
