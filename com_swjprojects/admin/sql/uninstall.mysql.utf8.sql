@@ -17,4 +17,3 @@ DROP TABLE `#__swjprojects_translate_projects`;
 DROP TABLE `#__swjprojects_translate_categories`;
 DROP TABLE `#__swjprojects_projects_categories`;
 DELETE FROM `#__action_logs_extensions` WHERE `extension` = 'com_swjprojects';
-DELETE FROM `#__action_logs_extensions` WHERE `type_alias` LIKE '%com_swjprojects%';
