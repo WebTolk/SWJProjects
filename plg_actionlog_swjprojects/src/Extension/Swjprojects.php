@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0
+ * @version       2.4.0.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -306,6 +306,11 @@ final class Swjprojects extends ActionLogPlugin
 			return;
 		}
 
+		if (!in_array($context, $this->contextList))
+		{
+			return;
+		}
+
 		list(, $contentType) = explode('.', $context);
 
 		$messageLanguageKey = 'PLG_ACTIONLOG_SWJPROJECTS_' . strtoupper($contentType) . '_DELETED';
@@ -370,6 +375,11 @@ final class Swjprojects extends ActionLogPlugin
 		$option = $this->getApplication()->getInput()->getCmd('option');
 
 		if (!$this->checkLoggable($option))
+		{
+			return;
+		}
+
+		if (!in_array($context, $this->contextList))
 		{
 			return;
 		}
