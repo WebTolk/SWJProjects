@@ -61,7 +61,7 @@ $wa->registerAndUseScript('com_swjprojects.userkeys.copykey', 'com_swjprojects/c
                                 </div>
                             </div>
 
-                            <!-- Neo pedio gia domain -->
+                            <!-- NEW DOMAIN FIELD -->
                             <div class="mb-3">
                                 <label for="domain-<?php echo $item->id; ?>" class="form-label">
                                     <?php echo Text::_('COM_SWJPROJECTS_USER_KEYS_DOMAIN'); ?>
