@@ -1,4 +1,4 @@
-  <?php
+<?php
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -12,18 +12,18 @@ class PlgAjaxWt_license_checker extends CMSPlugin
     { 
         Factory::getApplication()->setHeader('Content-Type', 'application/json', true);
 
-        // Pairnoume to License Key kai to Domain apo to request
+        // Get license key and domain from the request
         $input = Factory::getApplication()->input;
         $licenseKey = $input->getString('key', '');
         $domain = $input->getString('domain', '');
 
-        // An den yparxei license key 'h domain, epistrefoume error
+        // Validate input
         if (empty($licenseKey) || empty($domain)) {
             echo json_encode(['error' => 'Missing license key or domain']);
             return;
         }
 
-        // Sindesi me thn vash dedomenwn
+        // Query license key from the database
         $db = Factory::getContainer()->get(DatabaseDriver::class);
         $query = $db->getQuery(true)
             ->select('*')
@@ -32,46 +32,37 @@ class PlgAjaxWt_license_checker extends CMSPlugin
         $db->setQuery($query);
         $result = $db->loadAssoc();
 
-        // An den yparxei to kleidi, epistrefoume error
+        // If license key not found
         if (!$result) {
             echo json_encode(['error' => 'Invalid license key']);
             return;
         }
 
         $dateEnd = $result['date_end'];
-
-        // Epitrepomena plugins
         $allowedPlugins = isset($result['allowed_plugins']) ? $result['allowed_plugins'] : '*';
-
-        // Kataxwrimeno domain sth vash
         $registeredDomain = $result['domain'];
 
-        // Elegxos an to trexon domain einai epitrepto
+        // Validate domain
         $isDomainValid = $this->isAllowedDomain($registeredDomain, $domain);
 
-        // An to domain den tairiazei , h adeia den einai egkyrh
-        if (!$isDomainValid) {
-            $isValid = false;
-        } else {
-            // An to domain tairiazei, elegxoume thn hmeromhnia lhkshs ths adeias
-            $isValid = ($dateEnd == '0000-00-00 00:00:00' || strtotime($dateEnd) > time());
-        }
+        // Check if license is still valid
+        $isValid = $isDomainValid && ($dateEnd == '0000-00-00 00:00:00' || strtotime($dateEnd) > time());
 
-        // Dhmiourgia apanthshs JSON
+        // Prepare response (fix it as you want)
         $data = [
-            'domain'          => $registeredDomain,
-            'date_start'      => $result['date_start'],
-            'date_end'        => $result['date_end'],
-            'project_id'      => $result['project_id'],
-            'state'           => $result['state'],
-            'license_name'    => 'Lifetime',
-            'expires'         => ($isValid ? 'never' : $result['date_end']),
-            'key_status'      => ($isValid ? 'Active' : 'Expired'),
-            'owner'           => 'Theodoropoulos',
-            'license_valid'   => ($isValid ? '1' : '0'),
-            'allows_plugins'  => ($isValid ? '1' : '0'),
-            'is_trial_license'=> '0',
-            'allowed_plugins' => ($isValid ? $allowedPlugins : '') // An h adeia exei lhksei, kenh lista plugins
+            'domain'           => $registeredDomain,
+            'date_start'       => $result['date_start'],
+            'date_end'         => $result['date_end'],
+            'project_id'       => $result['project_id'],
+            'state'            => $result['state'],
+            'license_name'     => $result['license_name'] ?? 'Standard',
+            'expires'          => ($isValid ? 'never' : $result['date_end']),
+            'key_status'       => ($isValid ? 'Active' : 'Expired'),
+            'owner'            => $result['owner'] ?? 'N/A',
+            'license_valid'    => ($isValid ? '1' : '0'),
+            'allows_plugins'   => ($isValid ? '1' : '0'),
+            'is_trial_license' => $result['is_trial_license'] ?? '0',
+            'allowed_plugins'  => ($isValid ? $allowedPlugins : '')
         ];
 
         echo json_encode($data);
@@ -79,25 +70,21 @@ class PlgAjaxWt_license_checker extends CMSPlugin
     }
 
     /**
-     * Elegxei an to domain (mazi me subdomains) epitrepetai
+     * Check if current domain is allowed (supports subdomains)
      */
     private function isAllowedDomain($registeredDomain, $currentDomain)
     {
-        // An den yparxei kataxwrimeno domain, epistrefoume false
         if (empty($registeredDomain)) {
             return false;
         }
 
-        // Metatrepoume to domain se kathari morfh (xwris http/https)
         $registeredDomain = parse_url('http://' . $registeredDomain, PHP_URL_HOST);
         $currentDomain = parse_url('http://' . $currentDomain, PHP_URL_HOST);
 
-        // An einai akrivws to idio, epitrepetai
         if ($registeredDomain === $currentDomain) {
             return true;
         }
 
-        // An to currentDomain einai subdomain tou registeredDomain, epitrepetai
         if (str_ends_with($currentDomain, '.' . $registeredDomain)) {
             return true;
         }
