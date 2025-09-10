@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -98,7 +98,7 @@ class ProjectModel extends AdminModel
 		// Translates validate
 		$forms = $this->getTranslateForms(false);
 
-		$data['translates'] = array();
+		$data['translates'] = [];
 		foreach ($forms as $code => $form)
 		{
 			$translate = (!empty($translates[$code])) ? $translates[$code] : array();
@@ -186,7 +186,7 @@ class ProjectModel extends AdminModel
 			}
 			else
 			{
-				$formData = array();
+				$formData = [];
 			}
 
 			// Allow for additional modification of the form, and events to be triggered
@@ -257,7 +257,7 @@ class ProjectModel extends AdminModel
 			$item->additional_categories = !empty($item->additional_categories) ? explode(',', $item->additional_categories) : [];
 
 			// Default values
-			$item->translates = array();
+			$item->translates = [];
 			$item->downloads  = 0;
 
 			// Set values

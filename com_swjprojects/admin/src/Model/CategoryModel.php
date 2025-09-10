@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -99,7 +99,7 @@ class CategoryModel extends AdminModel
 		// Translates validate
 		$forms = $this->getTranslateForms(false);
 
-		$data['translates'] = array();
+		$data['translates'] = [];
 		foreach ($forms as $code => $form)
 		{
 			$translate = (!empty($translates[$code])) ? $translates[$code] : array();
@@ -138,7 +138,7 @@ class CategoryModel extends AdminModel
 			$translates = new Registry($registry->get('translates'));
 		}
 
-		$forms = array();
+		$forms = [];
 		$name  = 'com_swjprojects.category';
 		$file  = JPATH_COMPONENT . '/forms/translate_category.xml';
 		if (!is_file($file))
@@ -242,7 +242,7 @@ class CategoryModel extends AdminModel
 			$registry     = new Registry($item->params);
 			$item->params = $registry->toArray();
 
-			$item->translates = array();
+			$item->translates = [];
 			if (!empty($item->id))
 			{
 				$db    = $this->getDatabase();

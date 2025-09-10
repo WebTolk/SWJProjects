@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -140,14 +140,14 @@ class HtmlView extends BaseHtmlView
 				$link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
 			}
 			$jupdate = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER', 'icon' => 'joomla'));
+				array('link' => $link, 'text' => 'COM_SWJPROJECTS_PROJECT_UPDATE_SERVER', 'icon' => 'joomla'));
 			$toolbar->appendButton('Custom', $jupdate, 'joomla');
 
 			// Joomla changelog url button
 			$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=jchangelog&debug=1&element=' . $this->item->element;
 
 			$jchangelog = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'COM_SWJPROJECTS_PARAMS_CHANGELOGURL', 'icon' => 'joomla'));
+				array('link' => $link, 'text' => 'COM_SWJPROJECTS_SERVER_PARAMS_CHANGELOGURL', 'icon' => 'joomla'));
 			$toolbar->appendButton('Custom', $jchangelog, 'joomla');
 		}
 

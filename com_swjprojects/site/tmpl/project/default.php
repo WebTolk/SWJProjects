@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -213,7 +213,7 @@ HTMLHelper::stylesheet('com_swjprojects/site.css', array('version' => 'auto', 'r
                             </dt>
                             <dd>
 								<?php
-								$compositions = array();
+								$compositions = [];
 								foreach ($this->project->joomla->get('package_composition') as $composition)
 								{
 									$compositions[] = Text::_('COM_SWJPROJECTS_JOOMLA_TYPE_' . $composition);

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,8 +12,8 @@
 namespace Joomla\Plugin\EditorsXtd\Swjprojectseditorxtd\Extension;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -82,7 +82,7 @@ final class Swjprojectseditorxtd extends CMSPlugin
 
 			$link = 'index.php?option=com_ajax&amp;plugin=swjprojectseditorxtd&amp;group=editors-xtd&amp;format=html&amp;tmpl=component&amp;' . Session::getFormToken() . '=1&amp;editor=' . $name;
 
-			$button          = new CMSObject;
+			$button          = new \stdClass();
 			$button->modal   = true;
 			$button->class   = 'btn';
 			$button->link    = $link;

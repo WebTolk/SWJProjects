@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -105,7 +105,7 @@ class KeysModel extends ListModel
 				if (!empty($item->projects))
 				{
 					$ids            = explode(',', $item->projects);
-					$item->projects = array();
+					$item->projects = [];
 					foreach ($ids as $id)
 					{
 						$id = (int) $id;
@@ -145,7 +145,7 @@ class KeysModel extends ListModel
 	{
 		if ($this->_projects === null)
 		{
-			$this->_projects = array();
+			$this->_projects = [];
 
 			$all                 = new \stdClass();
 			$all->id             = -1;
@@ -156,12 +156,12 @@ class KeysModel extends ListModel
 		}
 
 		// Prepare ids
-		$projects = array();
+		$projects = [];
 		if (!is_array($pks)) $pks = array_unique(ArrayHelper::toInteger(explode(',', $pks)));
 		if (empty($pks)) return $projects;
 
 		// Check loaded categories
-		$get = array();
+		$get = [];
 		foreach ($pks as $pk)
 		{
 			if (isset($this->_projects[$pk])) $projects[$pk] = $this->_projects[$pk];

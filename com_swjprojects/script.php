@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -25,8 +25,8 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\CMS\Version;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 
 return new class () implements ServiceProviderInterface {
@@ -208,7 +208,7 @@ return new class () implements ServiceProviderInterface {
 					$installer->getPath('source') . '/' . $folder : $installer->getPath('source');
 
 				// Prepare files
-				$copyFiles = array();
+				$copyFiles = [];
 				foreach ($element->children() as $file)
 				{
 					$path['src']  = Path::clean($source . '/' . $file);
@@ -314,7 +314,7 @@ return new class () implements ServiceProviderInterface {
 				$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
 
 				// Check folder exist
-				if (!Folder::exists($folder))
+				if (!\is_dir($folder))
 				{
 					// Set standard folder
 					if (!Folder::create($folder) && $folder !== $standardFolder)
@@ -326,7 +326,7 @@ return new class () implements ServiceProviderInterface {
 							Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_FILES_FOLDER', $folder), 'warning'
 						);
 
-						if (!Folder::exists($folder))
+						if (!\is_dir($folder))
 						{
 							Folder::create($folder);
 						}
@@ -363,7 +363,7 @@ return new class () implements ServiceProviderInterface {
 				$path           = Path::clean(JPATH_ROOT . '/' . $folder);
 
 				// Check folder exist
-				if (!Folder::exists($path))
+				if (!\is_dir($path))
 				{
 					// Set standard folder
 					if (!Folder::create($path) && $folder !== $standardFolder)
@@ -376,7 +376,7 @@ return new class () implements ServiceProviderInterface {
 							Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_IMAGES_FOLDER', $folder), 'warning'
 						);
 
-						if (!Folder::exists($path))
+						if (!\is_dir($path))
 						{
 							Folder::create($path);
 						}

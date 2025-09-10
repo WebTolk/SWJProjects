@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0-alhpa1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -11,23 +11,22 @@
 
 namespace Joomla\Component\SWJProjects\Site\View\JChangelog;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use function defined;
-use function implode;
+
+defined('_JEXEC') or die;
 
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * Update server xml string.
+	 * Update server data.
 	 *
 	 * @var  string
 	 *
 	 * @since  1.0.0
 	 */
-	protected $xml;
+	protected $data;
 
 	/**
 	 * Display the view.
@@ -40,22 +39,17 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->xml = $this->get('XML');
+        $model = $this->getModel();
+        $this->data = $model->getData();
 
-		// Check for errors
-		if ($errors = $this->get('Errors'))
-		{
-			throw new \Exception(implode('\n', $errors), 500);
-		}
+        // Set response
+        $app = Factory::getApplication();
+        $app->setHeader('Content-Type', $this->data['mimetype'].'; charset='.$this->data['charset'], true);
 
-		// Set xml response
-		$app = Factory::getApplication();
-		$app->setHeader('Content-Type', 'application/xml; charset=utf-8', true);
+        $app->sendHeaders();
 
-		$app->sendHeaders();
+        echo $this->data['data'] ?? '';
 
-		echo $this->xml;
-
-		$app->close();
+        $app->close();
 	}
 }
