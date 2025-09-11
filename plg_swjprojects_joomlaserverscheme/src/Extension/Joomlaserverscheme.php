@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -164,7 +164,7 @@ final class Joomlaserverscheme extends ServerschemePlugin implements SubscriberI
             $tags->addChild('tag', $item->tag);
             $targetPlatform = $update->addChild('targetPlatform');
             $targetPlatform->addAttribute('name', 'joomla');
-            $targetPlatform->addAttribute('version', trim($item->joomla_version));
+            $targetPlatform->addAttribute('version', '');
 
         }
 

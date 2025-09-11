@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -234,7 +234,7 @@ class HtmlView extends BaseHtmlView
 		// Add category pathway item if no current menu
 		if ($menu && !$current)
 		{
-			$paths = array(array('title' => $category->title, 'link' => ''));
+			$paths = [['title' => $category->title, 'link' => '']];
 
 			// Add parent categories pathway item if no current menu
 			$parent = $this->getModel()->getCategoryParent($category->id);
@@ -243,7 +243,7 @@ class HtmlView extends BaseHtmlView
 					|| $menu->query['view'] !== 'projects'
 					|| (int) @$menu->query['id'] !== (int) $parent->id))
 			{
-				$paths[] = array('title' => $parent->title, 'link' => $parent->link);
+				$paths[] = ['title' => $parent->title, 'link' => $parent->link];
 				$parent  = $this->getModel()->getCategoryParent($parent->id);
 			}
 

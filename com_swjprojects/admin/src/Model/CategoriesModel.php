@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -32,17 +32,17 @@ class CategoriesModel extends ListModel
 	 *
 	 * @since  1.0.0
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id', 'c.id',
 				'title', 'c.title',
 				'published', 'state', 'c.state',
 				'ordering', 'lft', 'c.lft',
-			);
+			];
 		}
 
 		parent::__construct($config);

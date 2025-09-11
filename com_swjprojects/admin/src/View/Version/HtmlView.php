@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -100,6 +100,8 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Prepare form
+        // @todo Change field name to `project_version` due project  may be not only Joomla extension since SW JProjects 2.5.0
+        //
 		if (!$this->project || empty($this->project->joomla['type']))
 		{
 			$this->form->removeField('joomla_version', '');

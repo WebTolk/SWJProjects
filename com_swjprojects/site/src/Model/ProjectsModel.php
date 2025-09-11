@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -104,16 +104,16 @@ class ProjectsModel extends ListModel
 
 		// Set files paths
 		$root            = $params->get('files_folder');
-		$this->filesPath = array(
+		$this->filesPath = [
 			'root'     => $root,
 			'versions' => $root . '/versions'
-		);
+		];
 
 		// Set translates
-		$this->translates = array(
+		$this->translates = [
 			'current' => TranslationHelper::getCurrent(),
 			'default' => TranslationHelper::getDefault(),
-		);
+		];
 
 		parent::__construct($config);
 	}
@@ -345,7 +345,7 @@ class ProjectsModel extends ListModel
 				$item->category = (!empty($categories[$item->catid])) ? $categories[$item->catid] : false;
 				if (!empty($item->additional_categories))
 				{
-					$item->categories = array($item->catid => $item->category);
+					$item->categories = [$item->catid => $item->category];
 					foreach (explode(',', $item->additional_categories) as $catid)
 					{
 						if (!empty($categories[$catid]))

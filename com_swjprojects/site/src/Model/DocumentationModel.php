@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -97,22 +97,22 @@ class DocumentationModel extends ListModel
 	 *
 	 * @since  1.4.0
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		$params = ComponentHelper::getParams('com_swjprojects');
 
 		// Set files paths
 		$root            = $params->get('files_folder');
-		$this->filesPath = array(
+		$this->filesPath = [
 			'root'          => $root,
 			'documentation' => $root . '/documentation'
-		);
+		];
 
 		// Set translates
-		$this->translates = array(
+		$this->translates = [
 			'current' => TranslationHelper::getCurrent(),
 			'default' => TranslationHelper::getDefault(),
-		);
+		];
 
 		parent::__construct($config);
 	}

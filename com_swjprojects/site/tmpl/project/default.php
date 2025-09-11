@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0-alhpa1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,9 +20,8 @@ HTMLHelper::_('bootstrap.carousel');
 $wa = Factory::getApplication()
 	->getDocument()
 	->getWebAssetManager()
-	->useScript('bootstrap.tab');
-
-HTMLHelper::stylesheet('com_swjprojects/site.css', array('version' => 'auto', 'relative' => true));
+	->useScript('bootstrap.tab')
+    ->registerAndUseStyle('com_swjprojects.site.css','com_swjprojects/site.css', ['version' => 'auto', 'relative' => true]);
 
 ?>
     <section id="SWJProjects" class="sw-jprojects-project">
@@ -193,7 +192,8 @@ HTMLHelper::stylesheet('com_swjprojects/site.css', array('version' => 'auto', 'r
                             <dt>
                                 <strong><?php echo Text::_('COM_SWJPROJECTS_JOOMLA_FOLDER'); ?>: </strong>
                             </dt>
-                            <dd><?php echo utf8_ucfirst($this->project->joomla->get('folder')); ?>
+                            <dd>
+                                <?php echo ucfirst($this->project->joomla->get('folder')); ?>
                             </dd>
 
 						<?php endif; ?>
