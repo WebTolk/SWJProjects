@@ -118,10 +118,11 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$app = Factory::getApplication();
-		$this->state      = $this->get('State');
+        $model = $this->getModel();
+		$this->state      = $model->getState();
 		$this->params     = $this->state->get('params');
-		$this->items      = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
+		$this->items      = $model->getItems();
+		$this->pagination = $model->getPagination();
 		// Flag indicates to not add limitstart=0 to URL
 		$this->pagination->hideEmptyLimitstart = true;
 		// Add additional parameters
@@ -143,12 +144,12 @@ class HtmlView extends BaseHtmlView
 			$this->pagination->setAdditionalUrlParam($parameter, $value);
 		}
 
-		$this->project    = $this->get('Item');
+		$this->project    = $model->getItem();
 		$this->category   = $this->project->category;
 		$this->menu       = $app->getMenu()->getActive();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -187,7 +188,7 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 		$this->params = $project->params;
-		$app           = Factory::getApplication();
+
 		$offset        = $app->getInput()->getUInt('limitstart');
 		$dispatcher = $this->getDispatcher();
 		// Extra content from events
@@ -353,7 +354,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Set meta url
-		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $project->versions;
+		$url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $project->versions;
 		$doc->setMetaData('url', $url);
 
 		// Set meta twitter

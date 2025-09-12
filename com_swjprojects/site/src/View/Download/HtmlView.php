@@ -42,10 +42,11 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->file = $this->get('File');
+        $model = $this->getModel();
+		$this->file = $model->getFile();
 
 		// Check for errors
-		if ($errors = $this->get('Errors'))
+		if ($errors = $model->getErrors())
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}

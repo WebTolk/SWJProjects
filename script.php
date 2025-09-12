@@ -300,7 +300,7 @@ return new class () implements ServiceProviderInterface {
 					$component->element = 'com_swjprojects';
 					$component->params  = $params->toString();
 
-					$this->db->updateObject('#__extensions', $component, array('element'));
+					$this->db->updateObject('#__extensions', $component, ['element']);
 				}
 			}
 

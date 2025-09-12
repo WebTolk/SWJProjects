@@ -102,15 +102,17 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state      = $this->get('State');
+        $app = Factory::getApplication();
+        $model = $this->getModel();
+		$this->state      = $model->getState();
 		$this->params     = $this->state->get('params');
-		$this->items      = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
-		$this->category   = $this->get('Item');
-		$this->menu       = Factory::getApplication()->getMenu()->getActive();
+		$this->items      = $model->getItems();
+		$this->pagination = $model->getPagination();
+		$this->category   = $model->getItem();
+		$this->menu       = $app->getMenu()->getActive();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -150,7 +152,7 @@ class HtmlView extends BaseHtmlView
 		}
 		$this->params = $category->params;
 
-		$app = Factory::getApplication();
+
 		$dispatcher = $this->getDispatcher();
 
 		$offset     = $app->getInput()->getUInt('limitstart');
@@ -325,7 +327,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Set meta url
-		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $category->link;
+		$url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $category->link;
 		$doc->setMetaData('url', $url);
 
 		// Set meta twitter

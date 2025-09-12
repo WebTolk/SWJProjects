@@ -110,7 +110,7 @@ class DisplayController extends BaseController
 			if ($link)
 			{
 				$uri       = Uri::getInstance();
-				$root      = $uri->toString(array('scheme', 'host', 'port'));
+				$root      = $uri->toString(['scheme', 'host', 'port']);
 				$canonical = Uri::getInstance(Route::_($link))->toString();
 				$current   = $uri->toString(array('path', 'query', 'fragment'));
 

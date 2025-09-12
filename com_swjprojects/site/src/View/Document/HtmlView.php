@@ -101,16 +101,17 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state    = $this->get('State');
+        $model = $this->getModel();
+		$this->state    = $model->getState();
 		$this->params   = $this->state->get('params');
-		$this->item     = $this->get('Item');
+		$this->item     = $model->getItem();
 		$this->documentation_items     = $this->item->documentation_items;
 		$this->project  = $this->item->project;
 		$this->category = $this->item->category;
 		$this->menu     = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -351,7 +352,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Set meta url
-		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $item->link;
+		$url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $item->link;
 		$doc->setMetaData('url', $url);
 
 		// Set meta twitter

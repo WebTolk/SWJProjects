@@ -103,15 +103,15 @@ class HtmlView extends BaseHtmlView
 			parent::display($tpl);
 			return $this;
 		}
-
-		$this->state      = $this->get('State');
+        $model = $this->getModel();
+		$this->state      = $model->getState();
 		$this->params     = $this->state->get('params');
-		$this->items      = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
+		$this->items      = $model->getItems();
+		$this->pagination = $model->getPagination();
 		$this->menu       = $app->getMenu()->getActive();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
