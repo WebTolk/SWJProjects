@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_categories`
     `path`      varchar(400)                                           NOT NULL DEFAULT '',
     `alias`     varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
     `state`     tinyint(3)                                             NOT NULL DEFAULT 0,
-    `params`    text                                                   NOT NULL,
+    `params`    text                                                   NULL,
     PRIMARY KEY `id` (`id`),
     KEY `idx_left_right` (`lft`, `rgt`),
     KEY `idx_path` (`path`(100)),

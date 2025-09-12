@@ -2,7 +2,7 @@
 <extension type="module" client="site" method="upgrade">
 	<name>MOD_SWJPROJECTS_VERSIONS</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>11.09.2025</creationDate>
+	<creationDate>12.09.2025</creationDate>
 	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
