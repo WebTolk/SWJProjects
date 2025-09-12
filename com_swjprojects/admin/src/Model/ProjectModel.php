@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -50,7 +50,7 @@ class ProjectModel extends AdminModel
 	 *
 	 * @since  1.0.0
 	 */
-	public function getForm($data = array(), $loadData = true)
+	public function getForm($data = [], $loadData = true)
 	{
 		$app  = Factory::getApplication();
 		$form = $this->loadForm('com_swjprojects.project', 'project', array('control' => 'jform', 'load_data' => $loadData));
@@ -98,7 +98,7 @@ class ProjectModel extends AdminModel
 		// Translates validate
 		$forms = $this->getTranslateForms(false);
 
-		$data['translates'] = array();
+		$data['translates'] = [];
 		foreach ($forms as $code => $form)
 		{
 			$translate = (!empty($translates[$code])) ? $translates[$code] : array();
@@ -149,7 +149,7 @@ class ProjectModel extends AdminModel
 		{
 			$default = ($code == TranslationHelper::getDefault());
 			$source  = $name . '_' . str_replace('-', '_', $code);
-			$options = array('control' => 'jform[translates][' . $code . ']');
+			$options = ['control' => 'jform[translates][' . $code . ']'];
 
 			// Create a signature hash
 			$hash = md5($source . serialize($options));
@@ -186,7 +186,7 @@ class ProjectModel extends AdminModel
 			}
 			else
 			{
-				$formData = array();
+				$formData = [];
 			}
 
 			// Allow for additional modification of the form, and events to be triggered
@@ -257,7 +257,7 @@ class ProjectModel extends AdminModel
 			$item->additional_categories = !empty($item->additional_categories) ? explode(',', $item->additional_categories) : [];
 
 			// Default values
-			$item->translates = array();
+			$item->translates = [];
 			$item->downloads  = 0;
 
 			// Set values

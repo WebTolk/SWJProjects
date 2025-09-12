@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,7 +66,7 @@ class KeysModel extends ListModel
 	 *
 	 * @since  1.3.0
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		// Set translate
 		$this->translate = ComponentHelper::getParams('com_languages')->get('site', 'en-GB');
@@ -74,11 +74,11 @@ class KeysModel extends ListModel
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id', 'v.id',
 				'published', 'state', 'k.state',
 				'project', 'project_id', 'k.project_id', 'p.id',
-			);
+			];
 		}
 
 		parent::__construct($config);
@@ -105,7 +105,7 @@ class KeysModel extends ListModel
 				if (!empty($item->projects))
 				{
 					$ids            = explode(',', $item->projects);
-					$item->projects = array();
+					$item->projects = [];
 					foreach ($ids as $id)
 					{
 						$id = (int) $id;
@@ -145,7 +145,7 @@ class KeysModel extends ListModel
 	{
 		if ($this->_projects === null)
 		{
-			$this->_projects = array();
+			$this->_projects = [];
 
 			$all                 = new \stdClass();
 			$all->id             = -1;
@@ -156,12 +156,12 @@ class KeysModel extends ListModel
 		}
 
 		// Prepare ids
-		$projects = array();
+		$projects = [];
 		if (!is_array($pks)) $pks = array_unique(ArrayHelper::toInteger(explode(',', $pks)));
 		if (empty($pks)) return $projects;
 
 		// Check loaded categories
-		$get = array();
+		$get = [];
 		foreach ($pks as $pk)
 		{
 			if (isset($this->_projects[$pk])) $projects[$pk] = $this->_projects[$pk];
@@ -324,7 +324,7 @@ class KeysModel extends ListModel
 		if (is_numeric($project))
 		{
 			$project = (int) $project;
-			$sql     = array('FIND_IN_SET(' . $project . ', k.projects)');
+			$sql     = ['FIND_IN_SET(' . $project . ', k.projects)'];
 			$query->where('(' . implode(' OR ', $sql) . ')');
 		}
 

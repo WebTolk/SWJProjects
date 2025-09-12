@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,9 +66,9 @@ class ProjectupdateserverurlField extends FormField
 
 			return '</div>
 				<div class="col-12 alert alert-info mt-4">
-				<h4>' . Text::_('COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER') . '</h4>
+				<h4>' . Text::_('COM_SWJPROJECTS_PROJECT_UPDATE_SERVER') . '</h4>
 				 <p><code>' . $url->toString() . '</code></p>
-				 <p>' . Text::sprintf('COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_URL_FIELD_DESC', $project_name, $url->toString()) . '</p>
+				 <p>' . Text::sprintf('COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_URL_FIELD_DESC', $project_name, $url->toString()) . '</p>
 				</div><div>
 			';
 		}

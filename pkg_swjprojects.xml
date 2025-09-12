@@ -3,12 +3,12 @@
 	<name>PKG_SWJPROJECTS</name>
 	<packagename>swjprojects</packagename>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>06.04.2025</creationDate>
+	<creationDate>12.09.2025</creationDate>
 	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorUrl>https://web-tolk.ru</authorUrl>
 	<authorEmail>info@web-tolk.ru</authorEmail>
-	<version>2.4.0.1</version>
+	<version>2.5.0</version>
 	<description>PKG_SWJPROJECTS_DESC</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
@@ -24,6 +24,7 @@
 		<folder type="plugin" group="content" method="upgrade" id="swjprojects">plg_content_swjprojects</folder>
 		<folder type="plugin" group="finder" method="upgrade" id="swjprojects">plg_finder_swjprojects_projects</folder>
 		<folder type="plugin" group="actionlog" method="upgrade" id="swjprojects">plg_actionlog_swjprojects</folder>
+		<folder type="plugin" group="swjprojects" method="upgrade" id="joomlaserverscheme">plg_swjprojects_joomlaserverscheme</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="WebTolk - SW JProjects">

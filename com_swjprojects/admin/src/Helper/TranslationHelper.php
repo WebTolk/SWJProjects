@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -76,8 +76,8 @@ class TranslationHelper
 			$current   = Factory::getApplication()->getLanguage()->getTag();
 			$multilang = Multilanguage::isEnabled();
 
-			$translations = array();
-			$first        = array();
+			$translations = [];
+			$first        = [];
 			foreach ($languages as $code => $language)
 			{
 				if (!$multilang && $code !== $default) continue;

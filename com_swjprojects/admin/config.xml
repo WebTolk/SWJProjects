@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<config>
+<config addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
 	<fieldset name="global" label="JGLOBAL_FIELDSET_OPTIONS">
 		<field name="sef_advanced" type="hidden" default="1"/>
 		<field name="donate_counter" type="hidden" default="0"/>
@@ -109,13 +109,20 @@
 			   length="128"
 			   class="input-xxlarge"/>
 	</fieldset>
-	<fieldset name="changelogurl" label="COM_SWJPROJECTS_PARAMS_CHANGELOGURL">
+	<fieldset name="server_params" label="COM_SWJPROJECTS_SERVER_PARAMS_FIELDSET_LABEL">
+		<field type="serverschemelist"
+			   name="server_scheme"
+			   label="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME"
+			   description="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME_DESC"
+			   default="joomla"
+			   class="form-select"
+		/>
 		<field name="changelogurl_language"
 			   type="language"
 			   client="site"
 			   default="en-GB"
-			   label="COM_SWJPROJECTS_PARAMS_CHANGELOGURL_LANGUAGE"
-			   description="COM_SWJPROJECTS_PARAMS_CHANGELOGURL_LANGUAGE_DESC" />
+			   label="COM_SWJPROJECTS_SERVER_PARAMS_CHANGELOGURL_LANGUAGE"
+			   description="COM_SWJPROJECTS_SERVER_PARAMS_CHANGELOGURL_LANGUAGE_DESC" />
 	</fieldset>
 	<fieldset name="permissions"
 			  label="JCONFIG_PERMISSIONS_LABEL"

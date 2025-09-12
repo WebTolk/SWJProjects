@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -101,16 +101,17 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state    = $this->get('State');
+        $model = $this->getModel();
+		$this->state    = $model->getState();
 		$this->params   = $this->state->get('params');
-		$this->item     = $this->get('Item');
+		$this->item     = $model->getItem();
 		$this->documentation_items     = $this->item->documentation_items;
 		$this->project  = $this->item->project;
 		$this->category = $this->item->category;
 		$this->menu     = Factory::getApplication()->getMenu()->getActive();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -235,7 +236,7 @@ class HtmlView extends BaseHtmlView
 		// Add document pathway item if no current menu
 		if ($menu && !$current)
 		{
-			$paths = array(array('title' => $item->title, 'link' => ''));
+			$paths = [['title' => $item->title, 'link' => '']];
 
 			// Add documentation pathway item if no current menu
 			$project = $this->project;
@@ -243,7 +244,7 @@ class HtmlView extends BaseHtmlView
 				|| $menu->query['view'] !== 'documentation'
 				|| (int) @$menu->query['project_id'] !== (int) $project->id)
 			{
-				$paths[] = array('title' => Text::_('COM_SWJPROJECTS_DOCUMENTATION'), 'link' => $project->documentation);
+				$paths[] = ['title' => Text::_('COM_SWJPROJECTS_DOCUMENTATION'), 'link' => $project->documentation];
 
 				// Add project pathway item if no current menu
 				if ($menu->query['option'] !== 'com_swjprojects'
@@ -351,7 +352,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Set meta url
-		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $item->link;
+		$url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $item->link;
 		$doc->setMetaData('url', $url);
 
 		// Set meta twitter

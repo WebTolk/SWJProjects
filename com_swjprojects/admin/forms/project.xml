@@ -59,6 +59,15 @@
 				   extension="com_swjprojects"
 				   view="project"
 				   class="form-select"/>
+			<field type="serverschemelist"
+				   name="server_scheme"
+				   label="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME"
+				   description="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME_DESC"
+				   default="component_default"
+				   class="form-select"
+				   useglobal="true"
+				   usecategory="true"
+			/>
 		</fields>
 		<field name="ordering" type="hidden" filter="unset"/>
 	</fieldset>
@@ -117,18 +126,18 @@
 				<option value="template">COM_SWJPROJECTS_JOOMLA_TYPE_TEMPLATE</option>
 			</field>
 			<field name="update_server" type="radio"
-				   label="COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER"
+				   label="COM_SWJPROJECTS_PROJECT_UPDATE_SERVER"
 				   class="btn-group btn-group-yesno"
 				   default="0"
 				   showon="type!:">
-				<option value="1">COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_ENABLE</option>
-				<option value="0">COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER_DISABLE</option>
+				<option value="1">COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_ENABLE</option>
+				<option value="0">COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_DISABLE</option>
 			</field>
 			<field type="projectupdateserverurl" 
-			label="COM_SWJPROJECTS_JOOMLA_UPDATE_SERVER" 
+			label="COM_SWJPROJECTS_PROJECT_UPDATE_SERVER"
 			showon="update_server:1"/>
 			<field type="projectchangelogurl" 
-			label="COM_SWJPROJECTS_PARAMS_CHANGELOGURL"/>
+			label="COM_SWJPROJECTS_SERVER_PARAMS_CHANGELOGURL"/>
 		</fields>
 	</fieldset>
 	<fieldset name="urls" label="COM_SWJPROJECTS_URLS">

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -33,18 +33,18 @@ class DocumentationModel extends ListModel
 	 *
 	 * @since  1.4.0
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = array(
+			$config['filter_fields'] = [
 				'id', 'd.id',
 				'published', 'state', 'd.state',
 				'title', 't_d.title' .
 				'project', 'project_id', 'd.project_id', 'p.id',
 				'project_title', 't_p.title',
-			);
+			];
 		}
 
 		parent::__construct($config);
@@ -178,7 +178,7 @@ class DocumentationModel extends ListModel
 			else
 			{
 				$sql     = [];
-				$columns = array('ta_d.title', 'ta_d.introtext', 'ta_d.fulltext', 'p.element', 't_p.title');
+				$columns = ['ta_d.title', 'ta_d.introtext', 'ta_d.fulltext', 'p.element', 't_p.title'];
 
 				foreach ($columns as $column)
 				{

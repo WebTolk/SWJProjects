@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -42,10 +42,11 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->file = $this->get('File');
+        $model = $this->getModel();
+		$this->file = $model->getFile();
 
 		// Check for errors
-		if ($errors = $this->get('Errors'))
+		if ($errors = $model->getErrors())
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}

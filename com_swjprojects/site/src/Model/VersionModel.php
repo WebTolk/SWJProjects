@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -87,22 +87,22 @@ class VersionModel extends ItemModel
 	 *
 	 * @since  1.0.0
 	 */
-	public function __construct($config = array())
+	public function __construct($config = [])
 	{
 		$params = ComponentHelper::getParams('com_swjprojects');
 
 		// Set files paths
 		$root            = $params->get('files_folder');
-		$this->filesPath = array(
+		$this->filesPath = [
 			'root'     => $root,
 			'versions' => $root . '/versions'
-		);
+		];
 
 		// Set translates
-		$this->translates = array(
+		$this->translates = [
 			'current' => TranslationHelper::getCurrent(),
 			'default' => TranslationHelper::getDefault(),
-		);
+		];
 
 		parent::__construct($config);
 	}
@@ -259,7 +259,7 @@ class VersionModel extends ItemModel
 				$data->category = (!empty($categories[$data->catid])) ? $categories[$data->catid] : false;
 				if (!empty($data->additional_categories))
 				{
-					$data->categories = array($data->catid => $data->category);
+					$data->categories = [$data->catid => $data->category];
 					foreach (explode(',', $data->additional_categories) as $catid)
 					{
 						if (!empty($categories[$catid]))

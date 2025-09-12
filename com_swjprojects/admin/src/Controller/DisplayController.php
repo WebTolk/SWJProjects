@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -47,7 +47,7 @@ class DisplayController extends BaseController
 	 *
 	 * @since   1.5.2
 	 */
-	public function display($cachable = false, $urlparams = array())
+	public function display($cachable = false, $urlparams = [])
 	{
 		return parent::display($cachable, $urlparams);
 	}
@@ -68,7 +68,7 @@ class DisplayController extends BaseController
 		$element      = $this->input->get('element');
 		$download_key = $this->input->get('download_key');
 
-		$redirects = array(
+		$redirects = [
 			'projects' => RouteHelper::getProjectsRoute($id),
 			'project'  => RouteHelper::getProjectRoute($id, $catid),
 			'versions' => RouteHelper::getVersionsRoute($id, $catid),
@@ -76,7 +76,7 @@ class DisplayController extends BaseController
 			'download' => RouteHelper::getDownloadRoute($version_id, $project_id, $element, $download_key),
 			'jupdate'  => RouteHelper::getJUpdateRoute($project_id, $element, $download_key),
 			'jchangelog'  => RouteHelper::getJChangelogRoute($project_id, $element),
-		);
+		];
 
 		$redirect = (!empty($page) && !empty($redirects[$page])) ? $redirects[$page] : false;
 

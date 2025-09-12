@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -118,10 +118,11 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$app = Factory::getApplication();
-		$this->state      = $this->get('State');
+        $model = $this->getModel();
+		$this->state      = $model->getState();
 		$this->params     = $this->state->get('params');
-		$this->items      = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
+		$this->items      = $model->getItems();
+		$this->pagination = $model->getPagination();
 		// Flag indicates to not add limitstart=0 to URL
 		$this->pagination->hideEmptyLimitstart = true;
 		// Add additional parameters
@@ -143,12 +144,12 @@ class HtmlView extends BaseHtmlView
 			$this->pagination->setAdditionalUrlParam($parameter, $value);
 		}
 
-		$this->project    = $this->get('Item');
+		$this->project    = $model->getItem();
 		$this->category   = $this->project->category;
 		$this->menu       = $app->getMenu()->getActive();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -187,7 +188,7 @@ class HtmlView extends BaseHtmlView
 			}
 		}
 		$this->params = $project->params;
-		$app           = Factory::getApplication();
+
 		$offset        = $app->getInput()->getUInt('limitstart');
 		$dispatcher = $this->getDispatcher();
 		// Extra content from events
@@ -246,14 +247,14 @@ class HtmlView extends BaseHtmlView
 		// Add versions pathway item if no current menu
 		if ($menu && !$current)
 		{
-			$paths = array(array('title' => Text::_('COM_SWJPROJECTS_VERSIONS'), 'link' => ''));
+			$paths = [['title' => Text::_('COM_SWJPROJECTS_VERSIONS'), 'link' => '']];
 
 			// Add project pathway item if no current menu
 			if ($menu->query['option'] !== 'com_swjprojects'
 				|| $menu->query['view'] !== 'project'
 				|| (int) @$menu->query['id'] !== (int) $project->id)
 			{
-				$paths[] = array('title' => $project->title, 'link' => $project->link);
+				$paths[] = ['title' => $project->title, 'link' => $project->link];
 
 				// Add categories pathway item if no current menu
 				$category = $this->category;
@@ -262,7 +263,7 @@ class HtmlView extends BaseHtmlView
 						|| $menu->query['view'] !== 'projects'
 						|| (int) @$menu->query['id'] !== (int) $category->id))
 				{
-					$paths[]  = array('title' => $category->title, 'link' => $category->link);
+					$paths[]  = ['title' => $category->title, 'link' => $category->link];
 					$category = $this->getModel()->getCategoryParent($category->id);
 				}
 			}
@@ -353,7 +354,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Set meta url
-		$url = Uri::getInstance()->toString(array('scheme', 'host', 'port')) . $project->versions;
+		$url = Uri::getInstance()->toString(['scheme', 'host', 'port']) . $project->versions;
 		$doc->setMetaData('url', $url);
 
 		// Set meta twitter

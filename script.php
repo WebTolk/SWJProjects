@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -54,7 +54,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumJoomla = '4.2.7';
+			protected string $minimumJoomla = '5.0.0';
 
 			/**
 			 * Minimum PHP version required to install the extension.
@@ -63,7 +63,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumPhp = '7.4';
+			protected string $minimumPhp = '8.1';
 
 			/**
 			 * Constructor.
@@ -300,7 +300,7 @@ return new class () implements ServiceProviderInterface {
 					$component->element = 'com_swjprojects';
 					$component->params  = $params->toString();
 
-					$this->db->updateObject('#__extensions', $component, array('element'));
+					$this->db->updateObject('#__extensions', $component, ['element']);
 				}
 			}
 

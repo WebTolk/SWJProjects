@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.4.0.1
+ * @version       2.5.0
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -15,8 +15,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
@@ -60,7 +60,7 @@ class VersionModel extends AdminModel
 
 		if ($this->_project === null)
 		{
-			$this->_project = array();
+			$this->_project = [];
 		}
 
 		if (!isset($this->_project[$pk]))
@@ -195,7 +195,7 @@ class VersionModel extends AdminModel
 		// Translates validate
 		$forms = $this->getTranslateForms(false);
 
-		$data['translates'] = array();
+		$data['translates'] = [];
 		foreach ($forms as $code => $form)
 		{
 			$translate = (!empty($translates[$code])) ? $translates[$code] : array();
@@ -246,7 +246,7 @@ class VersionModel extends AdminModel
 		{
 			$default = ($code == TranslationHelper::getDefault());
 			$source  = $name . '_' . str_replace('-', '_', $code);
-			$options = array('control' => 'jform[translates][' . $code . ']');
+			$options = ['control' => 'jform[translates][' . $code . ']'];
 
 			// Create a signature hash
 			$hash = md5($source . serialize($options));

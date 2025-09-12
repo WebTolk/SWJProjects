@@ -40,6 +40,14 @@
 				   extension="com_swjprojects"
 				   view="projects"
 				   class="form-select"/>
+			<field type="serverschemelist"
+				   name="server_scheme"
+				   label="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME"
+				   description="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME_DESC"
+				   default="joomla"
+				   class="form-select"
+				   useglobal="true"
+			/>
 		</fields>
 		<field name="lft" type="hidden" filter="unset"/>
 		<field name="rgt" type="hidden" filter="unset"/>
