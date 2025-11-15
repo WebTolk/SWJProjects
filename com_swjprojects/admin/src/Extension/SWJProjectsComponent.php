@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.0-alpha
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -20,6 +20,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Schemaorg\SchemaorgServiceInterface;
 use Joomla\Component\SWJProjects\Administrator\Helper\SWJProjectsHelper;
 use Joomla\Component\SWJProjects\Administrator\Service\HTML\Icon;
 use Psr\Container\ContainerInterface;
@@ -36,6 +37,7 @@ defined('_JEXEC') or die;
  */
 class SWJProjectsComponent extends MVCComponent implements
 	BootableExtensionInterface,
+    SchemaorgServiceInterface,
 	RouterServiceInterface
 {
 	use RouterServiceTrait;
@@ -141,4 +143,29 @@ class SWJProjectsComponent extends MVCComponent implements
 	{
 		SWJProjectsHelper::onPrepareForm($form, $data);
 	}
+
+    /**
+     * Returns valid contexts.
+     *
+     * @return  array
+     *
+     * @throws \Exception
+     * @since   5.0.0
+     */
+    public function getSchemaorgContexts(): array
+    {
+
+        Factory::getApplication()->getLanguage()->load('com_swjprojects', JPATH_ADMINISTRATOR);
+
+        $contexts = [
+            'com_swjprojects.projects' => Text::_('COM_SWJPROJECTS_PROJECTS'),
+            'com_swjprojects.project' => Text::_('COM_SWJPROJECTS_PROJECT'),
+            'com_swjprojects.versions' => Text::_('COM_SWJPROJECTS_VERSIONS'),
+            'com_swjprojects.version' => Text::_('COM_SWJPROJECTS_VERSION'),
+            'com_swjprojects.documentation' => Text::_('COM_SWJPROJECTS_DOCUMENTATION'),
+            'com_swjprojects.document' => Text::_('COM_SWJPROJECTS_DOCUMENT'),
+        ];
+
+        return $contexts;
+    }
 }
