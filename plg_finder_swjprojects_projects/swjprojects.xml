@@ -2,12 +2,12 @@
 <extension type="plugin" group="finder" method="upgrade">
 	<name>plg_finder_swjprojects</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>15.11.2025</creationDate>
+	<creationDate>18.11.2025</creationDate>
 	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.6.0-alpha</version>
+	<version>2.6.0</version>
 	<description>PLG_FINDER_SWJPROJECTS_DESC</description>
 	<namespace path="src">Joomla\Plugin\Finder\Swjprojects</namespace>
 	<files>
