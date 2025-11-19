@@ -190,7 +190,7 @@ class ProjectsModel extends ListModel
 			else
 			{
 				$sql     = [];
-				$columns = ['p.element', 'c.alias', 't_c.title', 'ta_p.title', 'ta_p.introtext', 'ta_p.fulltext'];
+				$columns = ['p.element', 'c.alias', 't_c.title', 'ta_p.title'];
 
 				foreach ($columns as $column)
 				{

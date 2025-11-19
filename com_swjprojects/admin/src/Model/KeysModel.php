@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
+use Joomla\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
 use function array_merge;
 use function array_unique;
@@ -74,11 +75,14 @@ class KeysModel extends ListModel
 		// Add the ordering filtering fields whitelist
 		if (empty($config['filter_fields']))
 		{
-			$config['filter_fields'] = [
-				'id', 'v.id',
-				'published', 'state', 'k.state',
-				'project', 'project_id', 'k.project_id', 'p.id',
-			];
+            $config['filter_fields'] = [
+                'id', 'k.id',
+                'published', 'state', 'k.state',
+                'project', 'project_id', 'k.project_id', 'p.id',
+                'email','k.email',
+                'domain','k.domain',
+                'order', 'k.order'
+            ];
 		}
 
 		parent::__construct($config);
@@ -208,7 +212,7 @@ class KeysModel extends ListModel
 	 *
 	 * @since  1.6.0
 	 */
-	public function getUsers($pks = null)
+	public function getUsers($pks = null):array
 	{
 		if ($this->_users === null) $this->_users = [];
 
@@ -295,7 +299,7 @@ class KeysModel extends ListModel
 	}
 
 	/**
-	 * Build an sql query to load versions list.
+	 * Build SQL query to load versions list.
 	 *
 	 * @return  DatabaseQuery  Database query to load versions list.
 	 *
@@ -305,14 +309,14 @@ class KeysModel extends ListModel
 	{
 		$db    = $this->getDatabase();
 		$query = $db->getQuery(true)
-			->select(array('k.*'))
+			->select(['k.*'])
 			->from($db->quoteName('#__swjprojects_keys', 'k'));
 
 		// Filter by published state
 		$published = $this->getState('filter.published');
 		if (is_numeric($published))
 		{
-			$query->where('k.state = ' . (int) $published);
+			$query->where($db->quoteName('k.state').' = ' . $db->quote((int) $published));
 		}
 		elseif ($published === '')
 		{
@@ -328,28 +332,46 @@ class KeysModel extends ListModel
 			$query->where('(' . implode(' OR ', $sql) . ')');
 		}
 
-		// Filter by search
-		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('k.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
-				$sql     = [];
-				$columns = ['k.key', 'k.note'];
+        // Filter by search
+        $search = $this->getState('filter.search');
+        if (!empty($search))
+        {
+            if (stripos($search, 'id:') === 0)
+            {
+                $query->where($db->quoteName('k.id').' = ' . $db->quote((int) substr($search, 3)));
+            }
+            elseif (stripos($search, 'd:') === 0)
+            {
+                $domain = (new Uri())->setHost(substr($search, 2))->getHost();
+                $query->where($db->quoteName('k.domain').' = ' . $db->quote($domain));
+                $query->where($db->quoteName('k.note').' LIKE ' . $db->quote('%' . str_replace(' ', '%', $db->escape(trim($domain), true) . '%')));
+            }
+            elseif (stripos($search, 'e:') === 0 || str_contains($search,'@'))
+            {
+                if(stripos($search, 'e:') === 0) {
+                    $search = substr($search, 2);
+                }
 
-				foreach ($columns as $column)
-				{
-					$sql[] = $db->quoteName($column) . ' LIKE '
-						. $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
-				}
+                $query->where($db->quoteName('k.email').' = ' . $db->quote($search));
+            }
+            elseif (stripos($search, 'o:') === 0)
+            {
+                $query->where($db->quoteName('k.order').' = ' . $db->quote(substr($search, 2)));
+            }
+            else
+            {
+                $sql     = [];
+                $columns = ['k.key', 'k.note', 'k.email', 'k.domain', 'k.order'];
 
-				$query->where('(' . implode(' OR ', $sql) . ')');
-			}
-		}
+                foreach ($columns as $column)
+                {
+                    $sql[] = $db->quoteName($column) . ' LIKE '
+                        . $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
+                }
+
+                $query->where('(' . implode(' OR ', $sql) . ')');
+            }
+        }
 
 		// Group by
 		$query->group(['k.id']);
