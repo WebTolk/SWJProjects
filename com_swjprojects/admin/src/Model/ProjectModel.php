@@ -53,7 +53,7 @@ class ProjectModel extends AdminModel
 	public function getForm($data = [], $loadData = true)
 	{
 		$app  = Factory::getApplication();
-		$form = $this->loadForm('com_swjprojects.project', 'project', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_swjprojects.project', 'project', ['control' => 'jform', 'load_data' => $loadData]);
 		if (empty($form))
 		{
 			return false;
@@ -87,7 +87,7 @@ class ProjectModel extends AdminModel
 	 */
 	public function validate($form, $data, $group = null)
 	{
-		$translates = (!empty($data['translates'])) ? $data['translates'] : array();
+		$translates = (!empty($data['translates'])) ? $data['translates'] : [];
 
 		// Main validate
 		if (!$data = parent::validate($form, $data, $group))
@@ -101,7 +101,7 @@ class ProjectModel extends AdminModel
 		$data['translates'] = [];
 		foreach ($forms as $code => $form)
 		{
-			$translate = (!empty($translates[$code])) ? $translates[$code] : array();
+			$translate = (!empty($translates[$code])) ? $translates[$code] : [];
 
 			if (!$validate = parent::validate($form, $translate, $group))
 			{
@@ -327,6 +327,14 @@ class ProjectModel extends AdminModel
 
 		// Check element is already exist
 		$element      = $data['element'];
+        if (Factory::getContainer()->get('config')->get('unicodeslugs') == 1)
+        {
+            $element = OutputFilter::stringURLUnicodeSlug($element);
+        }
+        else
+        {
+            $element = OutputFilter::stringURLSafe($element);
+        }
 		$checkElement = $this->getTable();
 		$checkElement->load(array('element' => $element));
 		if (!empty($checkElement->id) && ($checkElement->id != $pk || $isNew))
@@ -350,7 +358,7 @@ class ProjectModel extends AdminModel
 
 		// Check alias is already exist
 		$checkAlias = $this->getTable();
-		$checkAlias->load(array('alias' => $alias));
+		$checkAlias->load(['alias' => $alias]);
 		if (!empty($checkAlias->id) && ($checkAlias->id != $pk || $isNew))
 		{
 			$alias = $this->generateNewAlias($alias);
@@ -381,7 +389,7 @@ class ProjectModel extends AdminModel
 				}
 
 				$registry       = new Registry($data['joomla']);
-				$data['joomla'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+				$data['joomla'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 			}
 			else
 			{
@@ -396,7 +404,7 @@ class ProjectModel extends AdminModel
 				return !empty($element);
 			});
 			$registry     = new Registry($data['urls']);
-			$data['urls'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+			$data['urls'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 		}
 
 		// Prepare relations field data
@@ -411,14 +419,14 @@ class ProjectModel extends AdminModel
 			}
 
 			$registry          = new Registry($data['relations']);
-			$data['relations'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+			$data['relations'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 		}
 
 		// Prepare params field data
 		if (isset($data['params']))
 		{
 			$registry       = new Registry($data['params']);
-			$data['params'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+			$data['params'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 		}
 
 		if (parent::save($data))
@@ -444,21 +452,21 @@ class ProjectModel extends AdminModel
 				if (isset($translate['gallery']))
 				{
 					$registry             = new Registry($translate['gallery']);
-					$translate['gallery'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+					$translate['gallery'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 				}
 
 				// Prepare payment field data
 				if (isset($translate['payment']))
 				{
 					$registry             = new Registry($translate['payment']);
-					$translate['payment'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+					$translate['payment'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 				}
 
 				// Prepare metadata field data
 				if (isset($translate['metadata']))
 				{
 					$registry              = new Registry($translate['metadata']);
-					$translate['metadata'] = $registry->toString('json', array('bitmask' => JSON_UNESCAPED_UNICODE));
+					$translate['metadata'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
 				}
 
 				$translate = (object) $translate;
@@ -522,7 +530,7 @@ class ProjectModel extends AdminModel
 	protected function generateNewElement($element)
 	{
 		$table = $this->getTable();
-		while ($table->load(array('element' => $element)))
+		while ($table->load(['element' => $element]))
 		{
 			$element = StringHelper::increment($element, 'dash');
 		}
@@ -544,7 +552,7 @@ class ProjectModel extends AdminModel
 	protected function generateNewAlias($alias)
 	{
 		$table = $this->getTable();
-		while ($table->load(array('alias' => $alias)))
+		while ($table->load(['alias' => $alias]))
 		{
 			$alias = StringHelper::increment($alias, 'dash');
 		}

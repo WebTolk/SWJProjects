@@ -2,7 +2,7 @@
 <extension version="4.0" type="component" method="upgrade">
 	<name>COM_SWJPROJECTS</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>18.11.2025</creationDate>
+	<creationDate>19.11.2025</creationDate>
 	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
