@@ -19,9 +19,11 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 
-HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
+$app = Factory::getApplication();
+$wa = $this->document->getWebAssetManager();
+$wa->registerAndUseStyle('com_swjprojects.admin.css','com_swjprojects/admin-j4.min.css', ['key' => 'auto', 'relative' => true]);
 
-$user      = Factory::getApplication()->getIdentity();
+$user      = $app->getIdentity();
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 $saveOrder = ($listOrder == 'c.lft' && strtolower($listDirn) == 'asc');
@@ -39,7 +41,7 @@ $columns = 6;
 	<div class="row">
 		<div class="col-md-12">
 			<div id="j-main-container" class="j-main-container">
-				<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+				<?php echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]); ?>
 				<?php if (empty($this->items)) : ?>
 					<div class="alert alert-info">
 						<span class="icon-info-circle" aria-hidden="true"></span><span

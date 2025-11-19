@@ -22,7 +22,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
 
-HTMLHelper::stylesheet('com_swjprojects/admin_j4.min.css', array('version' => 'auto', 'relative' => true));
+$wa = $this->document->getWebAssetManager();
+$wa->registerAndUseStyle('com_swjprojects.admin.css','com_swjprojects/admin-j4.min.css', ['key' => 'auto', 'relative' => true]);
 
 $user      = Factory::getApplication()->getIdentity();
 $listOrder = $this->escape($this->state->get('list.ordering'));

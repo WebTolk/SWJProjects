@@ -20,8 +20,8 @@ use Joomla\CMS\Router\Route;
 $user      = Factory::getApplication()->getIdentity();
 $this->document->getWebAssetManager()
 	->useScript('keepalive')
-	->useScript('form.validate');
-HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
+	->useScript('form.validate')
+    ->registerAndUseStyle('com_swjprojects.admin.css','com_swjprojects/admin-j4.min.css', ['key' => 'auto', 'relative' => true]);
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=category&id=' . $this->item->id); ?>"
