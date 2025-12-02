@@ -3,12 +3,12 @@
 	<name>PKG_SWJPROJECTS</name>
 	<packagename>swjprojects</packagename>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>19.11.2025</creationDate>
+	<creationDate>02.12.2025</creationDate>
 	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorUrl>https://web-tolk.ru</authorUrl>
 	<authorEmail>info@web-tolk.ru</authorEmail>
-	<version>2.6.0</version>
+	<version>2.6.1-dev</version>
 	<description>PKG_SWJPROJECTS_DESC</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
@@ -23,6 +23,7 @@
 		<folder type="plugin" group="editors-xtd" method="upgrade" id="swjprojectseditorxtd">plg_editors-xtd_swjprojectseditorxtd</folder>
 		<folder type="plugin" group="content" method="upgrade" id="swjprojects">plg_content_swjprojects</folder>
 		<folder type="plugin" group="finder" method="upgrade" id="swjprojects">plg_finder_swjprojects_projects</folder>
+		<folder type="plugin" group="finder" method="upgrade" id="swjprojectsdocumentation">plg_finder_swjprojects_documentation</folder>
 		<folder type="plugin" group="actionlog" method="upgrade" id="swjprojects">plg_actionlog_swjprojects</folder>
 		<folder type="plugin" group="swjprojects" method="upgrade" id="joomlaserverscheme">plg_swjprojects_joomlaserverscheme</folder>
 		<folder type="plugin" group="schemaorg" method="upgrade" id="softwareapplicationswjprojects">plg_schemaorg_softwareapplicationswjprojects</folder>

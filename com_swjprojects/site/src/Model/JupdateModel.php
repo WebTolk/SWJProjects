@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.6.0
+ * @version       2.6.1-dev
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,6 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\ServerschemeHelper;
@@ -239,7 +240,7 @@ class JUpdateModel extends BaseDatabaseModel
 
                 if (empty($data))
                 {
-                    throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
                 }
 
                 $this->_projectID[$pk] = $data;
@@ -275,7 +276,7 @@ class JUpdateModel extends BaseDatabaseModel
 
         if (!$this->checkUpdateServer($pk))
         {
-            throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+            throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
         }
 
         $hash = ($download_key = $this->getState('download.key')) ? md5($download_key . '_' . $pk) : md5($pk);
@@ -486,7 +487,7 @@ class JUpdateModel extends BaseDatabaseModel
 
         if (empty($pk))
         {
-            throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+            throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
         }
 
         if ($pk < 0)
@@ -526,7 +527,7 @@ class JUpdateModel extends BaseDatabaseModel
 
                 if (empty($data))
                 {
-                    throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
                 }
 
                 $this->_updateServer[$pk] = true;

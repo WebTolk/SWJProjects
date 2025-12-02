@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.6.0
+ * @version       2.6.1-dev
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,6 +16,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
@@ -498,7 +499,7 @@ class VersionsModel extends ListModel
 
 				if (!$data->id)
 				{
-					throw new \Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -598,7 +599,7 @@ class VersionsModel extends ListModel
 			{
 				if ($e->getCode() == 404)
 				{
-					throw new \Exception(Text::_($e->getMessage()), 404);
+                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				}
 				else
 				{
@@ -677,7 +678,7 @@ class VersionsModel extends ListModel
 
 				if (empty($data))
 				{
-					throw new \Exception(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -698,7 +699,7 @@ class VersionsModel extends ListModel
 			{
 				if ($e->getCode() == 404)
 				{
-					throw new \Exception(Text::_($e->getMessage()), 404);
+                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				}
 				else
 				{
