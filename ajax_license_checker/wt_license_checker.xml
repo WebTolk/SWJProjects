@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="ajax" method="upgrade" version="4.0">
+    <name>WT License Checker</name>
+    <author>Nick Giannelis</author>
+    <version>1.0.0</version>
+    <creationDate>March 2025</creationDate>
+    <description>AJAX plugin for checking license keys in SW JProjects</description>
+    <files>
+        <filename plugin="wt_license_checker">wt_license_checker.php</filename>
+    </files>
+</extension>
