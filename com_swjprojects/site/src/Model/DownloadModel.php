@@ -152,7 +152,7 @@ class DownloadModel extends BaseDatabaseModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('v.*', 'p.id as project_id', 'p.element', 'p.download_type'))
+					->select(['v.*', 'p.id as project_id', 'p.element', 'p.download_type'])
 					->from($db->quoteName('#__swjprojects_versions', 'v'))
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id')
 					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')

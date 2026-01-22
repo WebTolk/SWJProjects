@@ -20,12 +20,11 @@ use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\ServerschemeHelper;
-use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Component\SWJProjects\Administrator\Traits\CacheAwareTrait;
+use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
-use SimpleXMLElement;
 
 use function defined;
 use function implode;
@@ -43,7 +42,7 @@ class JUpdateModel extends BaseDatabaseModel
     /**
      * Update server data.
      *
-     * @var  string
+     * @var  array
      *
      * @since  1.0.0
      */
@@ -52,7 +51,7 @@ class JUpdateModel extends BaseDatabaseModel
     /**
      * Extension xml.
      *
-     * @var  SimpleXMLElement
+     * @var  array<string, array{data:string, mimetype:string, charset:string}>
      *
      * @since  1.0.0
      */
@@ -61,7 +60,7 @@ class JUpdateModel extends BaseDatabaseModel
     /**
      * Collection xml.
      *
-     * @var  SimpleXMLElement
+     * @var  array<string, array{data:string, mimetype:string, charset:string}>
      *
      * @since  1.0.0
      */
@@ -70,7 +69,7 @@ class JUpdateModel extends BaseDatabaseModel
     /**
      * Enabled Joomla update server in project.
      *
-     * @var  bool
+     * @var  array
      *
      * @since  1.0.0
      */
@@ -79,7 +78,7 @@ class JUpdateModel extends BaseDatabaseModel
     /**
      * Project id by element.
      *
-     * @var  int
+     * @var  array
      *
      * @since  1.0.0
      */
@@ -110,7 +109,7 @@ class JUpdateModel extends BaseDatabaseModel
      *
      * @since  1.0.0
      */
-    protected ?int $cacheTimeout = 0;
+    protected int $cacheTimeout = 0;
 
 
     /**
@@ -140,23 +139,23 @@ class JUpdateModel extends BaseDatabaseModel
         ];
 
         // Set cache timeout
-        $this->cacheTimeout            = (int)$params->get('jupdate_cachetimeout', 0);
+        $this->cacheTimeout = (int)$params->get('jupdate_cachetimeout', 0);
 
         parent::__construct($config);
     }
 
     /**
-     * Method to get joomla update server xml.
+     * Method to get update server data.
      *
-     * @param   integer  $pk  The id of the project.
+     * @param   ?int  $pk  The id of the project.
      *
-     * @return  string|Exception  Update servers xml string on success, \Exception on failure.
+     * @return array{data:string, mimetype:string, charset:string}
      *
      * @throws  Exception
      *
      * @since  1.0.0
      */
-    public function getData($pk = null)
+    public function getData(?int $pk = null):array
     {
         $pk = (!empty($pk)) ? $pk : (int)$this->getState('project.id');
 
@@ -190,7 +189,7 @@ class JUpdateModel extends BaseDatabaseModel
      *
      * @param   string  $pk  The id of the project.
      *
-     * @return  integer|Exception  Project id on success, \Exception on failure.
+     * @return  int|Exception  Project id on success, \Exception on failure.
      *
      * @throws  Exception
      *
@@ -225,15 +224,15 @@ class JUpdateModel extends BaseDatabaseModel
                 $published = $this->getState('filter.published');
                 if (is_numeric($published))
                 {
-                    $query->where('p.state = ' . (int)$published)
-                          ->where('c.state = ' . (int)$published);
+                    $query->where($db->quoteName('p.state'). ' = ' . $db->quote((int)$published))
+                          ->where($db->quoteName('c.state'). ' = ' . $db->quote((int)$published));
                 } elseif (is_array($published))
                 {
                     $published = ArrayHelper::toInteger($published);
                     $published = implode(',', $published);
 
-                    $query->where('p.state IN (' . $published . ')')
-                          ->where('c.state IN (' . $published . ')');
+                    $query->where($db->quoteName('p.state').' IN (' . $published . ')')
+                          ->where($db->quoteName('c.state').' IN (' . $published . ')');
                 }
 
                 $data = $db->setQuery($query)->loadResult();
@@ -255,17 +254,17 @@ class JUpdateModel extends BaseDatabaseModel
     }
 
     /**
-     * Method to get extension xml.
+     * Method to get extension data.
      *
-     * @param   integer  $pk  The id of the project.
+     * @param   ?int  $pk  The id of the project.
      *
-     * @return  SimpleXMLElement|Exception  Project updates \SimpleXMLElement on success, \Exception on failure.
+     * @return array{data:string, mimetype:string, charset:string}
      *
      * @throws  Exception
      *
      * @since  1.0.0
      */
-    public function getProjectData($pk = null)
+    public function getProjectData(?int $pk = null):array
     {
         $pk = (!empty($pk)) ? $pk : (int)$this->getState('project.id');
 
@@ -447,7 +446,7 @@ class JUpdateModel extends BaseDatabaseModel
                     'cacheTimeout'            => $this->cacheTimeout,
                 ];
 
-                $scheme = ServerschemeHelper::getServerScheme(ServerschemeHelper::getServerSchemaNameForProject($item->id), $scheme_config);
+                $scheme = ServerschemeHelper::getServerScheme(ServerschemeHelper::getServerSchemaNameForProject($pk), $scheme_config);
                 $updates_data = [
                     'data'     => $scheme->setScheme('updates')->renderOutput($items),
                     'mimetype' => $scheme->getMimeType(),
@@ -466,17 +465,17 @@ class JUpdateModel extends BaseDatabaseModel
     }
 
     /**
-     * Method to get extension xml.
+     * Check if project enable update server.
      *
-     * @param   integer  $pk  The id of the project.
+     * @param   ?int  $pk  The id of the project.
      *
-     * @return  boolean|Exception  True if project enable joomla update server, \Exception on failure.
+     * @return  bool  True if project enable update server, \Exception on failure.
      *
      * @throws  Exception
      *
      * @since  1.0.0
      */
-    public function checkUpdateServer($pk = null)
+    public function checkUpdateServer(?int $pk = null):bool
     {
         $pk = (!empty($pk)) ? $pk : (int)$this->getState('project.id');
 
@@ -485,16 +484,10 @@ class JUpdateModel extends BaseDatabaseModel
             $pk = $this->getProjectID();
         }
 
-        if (empty($pk))
+        if (empty($pk) || $pk < 0)
         {
             throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
         }
-
-        if ($pk < 0)
-        {
-            return $this->getCollectionData();
-        }
-
 
         if (!isset($this->_updateServer[$pk]))
         {
@@ -504,23 +497,24 @@ class JUpdateModel extends BaseDatabaseModel
                 $query = $db->getQuery(true)
                             ->select('p.id')
                             ->from($db->quoteName('#__swjprojects_projects', 'p'))
-                            ->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
-                            ->where('p.id =' . (int)$pk)
-                            ->where($db->quoteName('p.joomla') . ' LIKE' . $db->quote('%"update_server":"1"%'));
+                            ->leftJoin($db->quoteName('#__swjprojects_categories', 'c'),$db->quoteName('c.id').' = '.$db->quoteName('p.catid'))
+                            ->where($db->quoteName('p.id').' = ' . $db->quote((int) $pk))
+                            ->where($db->quoteName('p.update_server') . ' = ' . $db->quote(1));
+//                            ->where($db->quoteName('p.joomla') . ' LIKE' . $db->quote('%"update_server":"1"%'));
 
                 // Filter by published state
                 $published = $this->getState('filter.published');
                 if (is_numeric($published))
                 {
-                    $query->where('p.state = ' . (int)$published)
-                          ->where('c.state = ' . (int)$published);
+                    $query->where($db->quoteName('p.state').' = ' . (int)$published)
+                          ->where($db->quoteName('c.state').' = ' . (int)$published);
                 } elseif (is_array($published))
                 {
                     $published = ArrayHelper::toInteger($published);
                     $published = implode(',', $published);
 
-                    $query->where('p.state IN (' . $published . ')')
-                          ->where('c.state IN (' . $published . ')');
+                    $query->where($db->quoteName('p.state').' IN (' . $published . ')')
+                          ->where($db->quoteName('c.state').' IN (' . $published . ')');
                 }
 
                 $data = $db->setQuery($query)->loadResult();
@@ -534,17 +528,21 @@ class JUpdateModel extends BaseDatabaseModel
             }
             catch (Exception $e)
             {
-                throw new Exception(Text::_($e->getMessage()), $e->getCode());
+                if ($e->getCode() == 404) {
+                    throw new ResourceNotFound(Text::_($e->getMessage()), $e->getCode());
+                } else {
+                    throw new Exception(Text::_($e->getMessage()), $e->getCode());
+                }
             }
         }
 
-        return $this->_updateServer[$pk];
+        return (bool) ($this->_updateServer[$pk] ?? false);
     }
 
     /**
-     * Method to get collection xml.
+     * Method to get collection data.
      *
-     * @return  SimpleXMLElement|Exception  Projects collection \SimpleXMLElement on success, \Exception on failure.
+     * @return  array  Array of projects collection \SimpleXMLElement on success, \Exception on failure.
      *
      * @throws  Exception
      *
@@ -552,22 +550,18 @@ class JUpdateModel extends BaseDatabaseModel
      */
     public function getCollectionData()
     {
-        if ($this->_extensionData === null)
-        {
-            $this->_extensionData = [];
-        }
-
         $hash = ($download_key = $this->getState('download.key')) ? md5($download_key) : md5('0');
         if (!isset($this->_collectionData[$hash]))
         {
             try
             {
                 $db    = $this->getDatabase();
-                $query = $db->getQuery(true)
+                $query = $db->createQuery()
                             ->select('p.*')
                             ->from($db->quoteName('#__swjprojects_projects', 'p'))
                             ->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
-                            ->where($db->quoteName('p.joomla') . ' LIKE' . $db->quote('%"update_server":"1"%'));
+                            ->where($db->quoteName('p.update_server') . ' = ' . $db->quote(1));
+//                            ->where($db->quoteName('p.joomla') . ' LIKE' . $db->quote('%"update_server":"1"%'));
 
                 // Join over current translates
                 $current = $this->translates['current'];
@@ -591,7 +585,7 @@ class JUpdateModel extends BaseDatabaseModel
                 }
 
                 // Join over versions for last version
-                $subQuery = $db->getQuery(true)
+                $subQuery = $db->createQuery()
                                ->select(
                                    ['CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END']
                                )
@@ -624,51 +618,52 @@ class JUpdateModel extends BaseDatabaseModel
                 // Add the list ordering clause
                 $query->order($db->escape('p.ordering') . ' ' . $db->escape('asc'));
 
-                $items = $db->setQuery($query)->loadObjectList();
-
-                foreach ($items as &$item)
-                {
-                    // Set default translates data
-                    if ($this->translates['current'] != $this->translates['default'])
+                $items = $db->setQuery($query)->loadObjectList() ?? [];
+                if(!empty($items)) {
+                    foreach ($items as &$item)
                     {
-                        $item->title = (empty($item->title)) ? $item->default_title : $item->title;
+                        // Set default translates data
+                        if ($this->translates['current'] != $this->translates['default'])
+                        {
+                            $item->title = (empty($item->title)) ? $item->default_title : $item->title;
+                        }
+
+                        // Set joomla
+                        $item->joomla = new Registry($item->joomla);
+
+                        // Set type
+                        $item->type = $item->joomla->get('type', 'file');
+
+                        // Set folder only for plugins
+                        if ($item->type == 'plugin')
+                        {
+                            $item->folder = $item->joomla->get('folder', '');
+                        }
+
+                        // Set element
+                        $item->element = $item->joomla->get('element', $item->element);
+                        if ($item->type == 'plugin')
+                        {
+                            $item->element = str_replace([$item->folder . '_', 'plg_'], '', $item->element);
+                        }
+                        if ($item->type == 'template')
+                        {
+                            $item->element = str_replace(['tmpl_', 'tpl_', 'tmp_'], '', $item->element);
+                        }
+
+                        // Set client
+                        $client = (int)$item->joomla->get('client_id', 0);
+                        if ($client === 0)
+                        {
+                            $item->client = 'site';
+                        } elseif ($client === 1)
+                        {
+                            $item->client = 'administrator';
+                        }
+
+                        // Set link
+                        $item->link = Route::_(RouteHelper::getJUpdateRoute($item->id, null, $download_key));
                     }
-
-                    // Set joomla
-                    $item->joomla = new Registry($item->joomla);
-
-                    // Set type
-                    $item->type = $item->joomla->get('type', 'file');
-
-                    // Set folder only for plugins
-                    if ($item->type == 'plugin')
-                    {
-                        $item->folder = $item->joomla->get('folder', '');
-                    }
-
-                    // Set element
-                    $item->element = $item->joomla->get('element', $item->element);
-                    if ($item->type == 'plugin')
-                    {
-                        $item->element = str_replace([$item->folder . '_', 'plg_'], '', $item->element);
-                    }
-                    if ($item->type == 'template')
-                    {
-                        $item->element = str_replace(['tmpl_', 'tpl_', 'tmp_'], '', $item->element);
-                    }
-
-                    // Set client
-                    $client = (int)$item->joomla->get('client_id', 0);
-                    if ($client === 0)
-                    {
-                        $item->client = 'site';
-                    } elseif ($client === 1)
-                    {
-                        $item->client = 'administrator';
-                    }
-
-                    // Set link
-                    $item->link = Route::_(RouteHelper::getJUpdateRoute($item->id, null, $download_key));
                 }
 
                 $scheme_config = [
@@ -697,7 +692,7 @@ class JUpdateModel extends BaseDatabaseModel
     }
 
     /**
-     * Method to auto-populate the model state.
+     * Method to autopopulate the model state.
      *
      * @throws  Exception
      *

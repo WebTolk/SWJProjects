@@ -325,17 +325,10 @@ class ProjectModel extends AdminModel
 		}
 
 		// Check element is already exist
-		$element      = $data['element'];
-        if (Factory::getContainer()->get('config')->get('unicodeslugs') == 1)
-        {
-            $element = OutputFilter::stringURLUnicodeSlug($element);
-        }
-        else
-        {
-            $element = OutputFilter::stringURLSafe($element);
-        }
+		$element      = str_replace(' ','', $data['element']);
+
 		$checkElement = $this->getTable();
-		$checkElement->load(array('element' => $element));
+		$checkElement->load(['element' => $element]);
 		if (!empty($checkElement->id) && ($checkElement->id != $pk || $isNew))
 		{
 			$element = $this->generateNewElement($element);

@@ -72,6 +72,11 @@ $this->document->getWebAssetManager()
 					<?php echo $this->form->renderFieldset('joomla'); ?>
 				</fieldset>
 				<?php echo HTMLHelper::_('uitab.endTab'); ?>
+                <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'server', Text::_('COM_SWJPROJECTS_PROJECT_SERVER')); ?>
+				<fieldset>
+					<?php echo $this->form->renderFieldset('server'); ?>
+				</fieldset>
+				<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
 				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'urls', Text::_('COM_SWJPROJECTS_URLS')); ?>
 				<fieldset>
