@@ -53,11 +53,12 @@ class ProjectupdateserverurlField extends FormField
 			{
 				$lang = $app->getLanguage()->getTag();
 			}
-			$project_name = $project->translates[$lang]->title;
-			if (empty($project_name))
-			{
-				$project_name = 'Your extension name';
-			}
+            if(isset($project->translates[$lang])){
+                $project_name = $project->translates[$lang]->title;
+            } else {
+                $first_translate = reset($project->translates);
+                $project_name = $first_translate?->title ?? 'Your extension name';
+            }
 
 			if (!empty($url->getVar('Itemid')))
 			{

@@ -47,8 +47,8 @@ class ServerschemelistField extends ListField
     protected function getOptions(): array
     {
         $app = Factory::getApplication();
-	    $lang = $app->getLanguage();
-	    $lang->load('com_swjprojects', JPATH_ADMINISTRATOR);
+        $lang = $app->getLanguage();
+        $lang->load('com_swjprojects', JPATH_ADMINISTRATOR);
         $usegolobal  = $this->element['useglobal'] ? boolval((string)$this->element['useglobal']) : false;
         $usecategory = $this->element['usecategory'] ? boolval((string)$this->element['usecategory']) : false;
 
@@ -92,8 +92,8 @@ class ServerschemelistField extends ListField
 
                 $query = $db->createQuery();
                 $query->select($db->quoteName('catid'))
-                      ->from($db->quoteName('#__swjprojects_projects'))
-                      ->where($db->quoteName('id') . ' = ' . $db->quote($app->getInput()->getInt('id')));
+                    ->from($db->quoteName('#__swjprojects_projects'))
+                    ->where($db->quoteName('id') . ' = ' . $db->quote($app->getInput()->getInt('id')));
                 $catid = $db->setQuery($query)->loadResult();
             }
 
@@ -101,8 +101,8 @@ class ServerschemelistField extends ListField
             if (!empty($catid)) {
                 $query = $db->createQuery();
                 $query->select($db->quoteName('params'))
-                      ->from($db->quoteName('#__swjprojects_categories'))
-                      ->where($db->quoteName('id') . ' = ' . $db->quote($catid));
+                    ->from($db->quoteName('#__swjprojects_categories'))
+                    ->where($db->quoteName('id') . ' = ' . $db->quote($catid));
                 $params = $db->setQuery($query)->loadResult();
                 if ($params) {
                     $categoryParams->loadString($params);
@@ -116,7 +116,7 @@ class ServerschemelistField extends ListField
             $options[] = HTMLHelper::_(
                 'select.option',
                 'category_default',
-	            Text::sprintf('COM_SWJPROJECTS_FIELD_SERVERSCHEMELIST_CATEGORY_DEFAULT', $category_value)
+                Text::sprintf('COM_SWJPROJECTS_FIELD_SERVERSCHEMELIST_CATEGORY_DEFAULT', $category_value)
             );
         }
         $ServerSchemesList = ServerschemeHelper::getServerSchemesList();
@@ -149,7 +149,8 @@ class ServerschemelistField extends ListField
             $options[] = HTMLHelper::_(
                 'select.option',
                 '',
-                '-----'
+                '-----',
+                ['disable' => true]
             );
         }
 

@@ -176,7 +176,7 @@
                    name="server_scheme"
                    label="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME"
                    description="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME_DESC"
-                   default="component_default"
+                   default="category_default"
                    class="form-select"
                    useglobal="true"
                    usecategory="true"
