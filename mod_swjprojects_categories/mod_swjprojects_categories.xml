@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade">
 	<name>mod_swjprojects_categories</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>02.12.2025</creationDate>
-	<copyright>Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.</copyright>
+	<creationDate>23.01.2026</creationDate>
+	<copyright>Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
 	<authorUrl>https://web-tolk.ru</authorUrl>
-	<version>2.6.1-dev</version>
+	<version>2.6.1</version>
 	<description>MOD_SWJPROJECTS_CATEGORIES_DESCRIPTION</description>
 	<namespace path="src">Joomla\Module\Swjprojectscategories</namespace>
 	<languages folder="language">
