@@ -76,13 +76,14 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state          = $this->get('State');
-		$this->form           = $this->get('Form');
-		$this->translateForms = $this->get('TranslateForms');
-		$this->item           = $this->get('Item');
+        $model = $this->getModel();
+		$this->state          = $model->getState();
+		$this->form           = $model->getForm();
+		$this->translateForms = $model->getTranslateForms();
+		$this->item           = $model->getItem();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -104,7 +105,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$isNew   = ($this->item->id == 0);
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'category', $this->item->id);
-		$toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);

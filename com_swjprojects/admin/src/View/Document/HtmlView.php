@@ -85,11 +85,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state          = $this->get('State');
-		$this->form           = $this->get('Form');
-		$this->translateForms = $this->get('TranslateForms');
-		$this->item           = $this->get('Item');
-		$this->project        = $this->getModel()->getProject($this->form->getValue('project_id', '', 0));
+        $model = $this->getModel();
+		$this->state          = $model->getState();
+		$this->form           = $model->getForm();
+		$this->translateForms = $model->getTranslateForms();
+		$this->item           = $model->getItem();
+		$this->project        = $model->getProject($this->form->getValue('project_id', '', 0));
 
 		Factory::getApplication()->getDocument()->getWebAssetManager()->addInlineScript("function projectHasChanged(element) {
 			document.body.appendChild(document.createElement('joomla-core-loader'));
@@ -98,7 +99,7 @@ class HtmlView extends BaseHtmlView
 		}");
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -120,7 +121,7 @@ class HtmlView extends BaseHtmlView
 	{
 		$isNew   = ($this->item->id == 0);
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'document', $this->item->id);
-		$toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
 		// Disable menu
 		Factory::getApplication()->input->set('hidemainmenu', true);

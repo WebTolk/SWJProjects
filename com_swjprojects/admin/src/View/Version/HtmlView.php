@@ -87,20 +87,22 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state          = $this->get('State');
-		$this->form           = $this->get('Form');
-		$this->translateForms = $this->get('TranslateForms');
-		$this->item           = $this->get('Item');
-		$this->project        = $this->getModel()->getProject($this->form->getValue('project_id', '', 0));
+        $model = $this->getModel();
+		$this->state          = $model->getState();
+		$this->form           = $model->getForm();
+		$this->translateForms = $model->getTranslateForms();
+		$this->item           = $model->getItem();
+		$this->project        = $model->getProject($this->form->getValue('project_id', '', 0));
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
 
 		// Prepare form
-        // @todo Change field name to `project_version` due project  may be not only Joomla extension since SW JProjects 2.5.0
+        // @todo Change field name to another due project  may be not only Joomla extension since SW JProjects 2.5.0.
+        // There are plans to create an environment entity for projects where Joomla will be considered an environment.
         //
 		if (!$this->project || empty($this->project->joomla['type']))
 		{
@@ -108,12 +110,11 @@ class HtmlView extends BaseHtmlView
 		}
 
 
-		Factory::getApplication()->getDocument()->getWebAssetManager()->addInlineScript("function projectHasChanged(element) {
+		$this->getDocument()->getWebAssetManager()->addInlineScript("function projectHasChanged(element) {
 				document.body.appendChild(document.createElement('joomla-core-loader'));
 				document.querySelector('input[name=task]').value = 'version.reload';
 				element.form.submit();
 			}");
-
 
 		// Add title and toolbar
 		$this->addToolbar();
@@ -132,10 +133,10 @@ class HtmlView extends BaseHtmlView
 	{
 		$isNew   = ($this->item->id == 0);
 		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
-		$toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
 		// Disable menu
-		Factory::getApplication()->input->set('hidemainmenu', true);
+		Factory::getApplication()->getInput()->set('hidemainmenu', true);
 
 		// Set page title
 		$title = ($isNew) ? Text::_('COM_SWJPROJECTS_VERSION_ADD') : Text::_('COM_SWJPROJECTS_VERSION_EDIT');
@@ -170,7 +171,7 @@ class HtmlView extends BaseHtmlView
 					$link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
 				}
 				$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-					array('link' => $link, 'text' => 'COM_SWJPROJECTS_FILE_DOWNLOAD', 'icon' => 'download', 'new' => false));
+					['link' => $link, 'text' => 'COM_SWJPROJECTS_FILE_DOWNLOAD', 'icon' => 'download', 'new' => false]);
 				$toolbar->appendButton('Custom', $download, 'download');
 			}
 		}
@@ -182,7 +183,7 @@ class HtmlView extends BaseHtmlView
 		// Add GitHub button
 		$link   = 'https://github.com/WebTolk/SWJProjects';
 		$github = LayoutHelper::render('components.swjprojects.toolbar.link',
-			array('link' => $link, 'text' => 'GitHub', 'icon' => ' fab fa-github', 'new' => true));
+			['link' => $link, 'text' => 'GitHub', 'icon' => ' fab fa-github', 'new' => true]);
 		$toolbar->appendButton('Custom', $github, 'github');
 
 		// Add preview button
@@ -192,7 +193,7 @@ class HtmlView extends BaseHtmlView
 			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
 				. '&project_id=' . $this->project->id . '&catid=' . $this->project->catid;
 			$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
-				array('link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye'));
+				['link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye']);
 			$toolbar->appendButton('Custom', $preview, 'preview');
 		}
 	}

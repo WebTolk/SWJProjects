@@ -182,6 +182,7 @@ final class Joomlaserverscheme extends ServerschemePlugin implements SubscriberI
     protected function buildChangelogsXml(array $data):string
     {
         $changelogs    = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><changelogs/>');
+
         foreach ($data as $item) {
             // Add to changelogs
             $changelog = $changelogs->addChild('changelog');

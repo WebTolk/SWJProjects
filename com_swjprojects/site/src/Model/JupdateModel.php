@@ -434,7 +434,10 @@ class JUpdateModel extends BaseDatabaseModel
                         $item->client = 'administrator';
                     }
                     // Set files format
-                    $item->files = Folder::files($files_root . '/' . $item->id, 'download', false);
+                    $item->files = Folder::files(
+                        path:$files_root . DIRECTORY_SEPARATOR . $item->id,
+                        filter:'download',
+                        recurse: false);
                     // Set file
                     $item->file = (!empty($item->files)) ? $item->files[0] : false;
 
@@ -590,9 +593,8 @@ class JUpdateModel extends BaseDatabaseModel
                                    ['CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END']
                                )
                                ->from($db->quoteName('#__swjprojects_versions', 'lv'))
-                               ->where('lv.project_id = p.id')
-                               ->where('lv.state = 1')
-                               ->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
+                               ->where($db->quoteName('lv.project_id').' = '.$db->quoteName('p.id'))
+                               ->where($db->quoteName('lv.state').' = '.$db->quote(1))
                                ->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
                                ->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
                                ->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
