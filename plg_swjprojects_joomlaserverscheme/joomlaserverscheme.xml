@@ -2,7 +2,7 @@
 <extension type="plugin" group="swjprojects" method="upgrade">
 	<name>PLG_SWJPROJECTS_JOOMLASERVERSCHEME</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>23.01.2026</creationDate>
+	<creationDate>30.01.2026</creationDate>
 	<copyright>Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>

@@ -2,7 +2,7 @@
 <extension type="plugin" group="editors-xtd" method="upgrade">
 	<name>PLG_SWJPROJECTSEDITORXTD</name>
 	<author>Sergey Tolkachyov</author>
-	<creationDate>23.01.2026</creationDate>
+	<creationDate>30.01.2026</creationDate>
 	<copyright>Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.</copyright>
 	<license>GNU General Public License version 3</license>
 	<authorEmail>info@web-tolk.ru</authorEmail>
