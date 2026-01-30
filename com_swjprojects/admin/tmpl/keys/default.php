@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -19,9 +19,10 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\Utilities\ArrayHelper;
 
-HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('key' => 'auto', 'relative' => true));
-
-$user      = Factory::getApplication()->getIdentity();
+$app = Factory::getApplication();
+$wa = $this->document->getWebAssetManager();
+$wa->registerAndUseStyle('com_swjprojects.admin.css','com_swjprojects/admin-j4.min.css', ['key' => 'auto', 'relative' => true]);
+$user      = $app->getIdentity();
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 
@@ -32,11 +33,10 @@ $columns = 9;
 	<div class="row">
 		<div class="col-md-12">
 			<div id="j-main-container" class="j-main-container">
-				<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+				<?php echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]); ?>
 				<?php if (empty($this->items)) : ?>
 					<div class="alert alert-info">
-						<span class="icon-info-circle" aria-hidden="true"></span><span
-								class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+						<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
 						<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
 					</div>
 				<?php else : ?>
@@ -106,6 +106,12 @@ $columns = 9;
 									<a <?php echo ($link) ? 'href="' . $link . '"' : 'disable'; ?>>
 										<strong><?php echo $this->escape($item->key); ?></strong>
 									</a>
+                                    <?php if(!empty($item->domain)):?>
+                                        <p><code><?php echo $this->escape($item->domain); ?></code></p>
+                                    <?php endif; ?>
+                                    <?php if(!empty($item->note)):?>
+                                        <p class="m-0 border p-1"><small><?php echo $this->escape($item->note); ?></small></p>
+                                    <?php endif; ?>
 								</td>
 								<td class="d-none d-md-table-cell">
 									<?php echo $item->order; ?>

@@ -59,15 +59,6 @@
 				   extension="com_swjprojects"
 				   view="project"
 				   class="form-select"/>
-			<field type="serverschemelist"
-				   name="server_scheme"
-				   label="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME"
-				   description="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME_DESC"
-				   default="component_default"
-				   class="form-select"
-				   useglobal="true"
-				   usecategory="true"
-			/>
 		</fields>
 		<field name="ordering" type="hidden" filter="unset"/>
 	</fieldset>
@@ -125,19 +116,6 @@
 				<option value="plugin">COM_SWJPROJECTS_JOOMLA_TYPE_PLUGIN</option>
 				<option value="template">COM_SWJPROJECTS_JOOMLA_TYPE_TEMPLATE</option>
 			</field>
-			<field name="update_server" type="radio"
-				   label="COM_SWJPROJECTS_PROJECT_UPDATE_SERVER"
-				   class="btn-group btn-group-yesno"
-				   default="0"
-				   showon="type!:">
-				<option value="1">COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_ENABLE</option>
-				<option value="0">COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_DISABLE</option>
-			</field>
-			<field type="projectupdateserverurl" 
-			label="COM_SWJPROJECTS_PROJECT_UPDATE_SERVER"
-			showon="update_server:1"/>
-			<field type="projectchangelogurl" 
-			label="COM_SWJPROJECTS_SERVER_PARAMS_CHANGELOGURL"/>
 		</fields>
 	</fieldset>
 	<fieldset name="urls" label="COM_SWJPROJECTS_URLS">
@@ -184,4 +162,34 @@
 			<option value="paid">COM_SWJPROJECTS_DOWNLOAD_TYPE_PAID</option>
 		</field>
 	</fieldset>
+    <fieldset name="server" label="COM_SWJPROJECTS_PROJECT_SERVER">
+        <field name="update_server" type="radio"
+               label="COM_SWJPROJECTS_PROJECT_UPDATE_SERVER"
+               layout="joomla.form.field.radio.switcher"
+			   filter="integer"
+               default="0">
+            <option value="0">COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_DISABLE</option>
+            <option value="1">COM_SWJPROJECTS_PROJECT_UPDATE_SERVER_ENABLE</option>
+        </field>
+        <fields name="params">
+            <field type="serverschemelist"
+                   name="server_scheme"
+                   label="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME"
+                   description="COM_SWJPROJECTS_SERVER_PARAMS_SERVER_SCHEME_DESC"
+                   default="category_default"
+                   class="form-select"
+                   useglobal="true"
+                   usecategory="true"
+                   showon="update_server:1"
+            />
+        </fields>
+        <field type="projectupdateserverurl"
+               label="COM_SWJPROJECTS_PROJECT_UPDATE_SERVER"
+               showon="update_server:1"/>
+        <field type="projectchangelogurl"
+               label="COM_SWJPROJECTS_SERVER_PARAMS_CHANGELOGURL"
+			   showon="update_server:1"/>
+
+	</fieldset>
+
 </form>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,6 +16,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
@@ -245,7 +246,7 @@ class DocumentModel extends ItemModel
 				$data = $db->setQuery($query)->loadObject();
 
 				if (empty($data)) {
-					throw new \Exception(Text::_('COM_SWJPROJECTS_ERROR_DOCUMENT_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_DOCUMENT_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -338,7 +339,7 @@ class DocumentModel extends ItemModel
 				$this->_item[$pk] = $data;
 			} catch (\Exception $e) {
 				if ($e->getCode() == 404) {
-					throw new \Exception(Text::_($e->getMessage()), 404);
+                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				} else {
 					$this->setError($e);
 					$this->_item[$pk] = false;
@@ -407,7 +408,7 @@ class DocumentModel extends ItemModel
 				$data = $db->setQuery($query)->loadObject();
 
 				if (empty($data)) {
-					throw new \Exception(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -424,7 +425,7 @@ class DocumentModel extends ItemModel
 				$this->_categoryParent[$pk] = $data;
 			} catch (\Exception $e) {
 				if ($e->getCode() == 404) {
-					throw new \Exception(Text::_($e->getMessage()), 404);
+                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				} else {
 					$this->setError($e);
 					$this->_categoryParent[$pk] = false;

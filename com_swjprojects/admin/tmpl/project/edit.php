@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,8 +21,8 @@ $user      = Factory::getApplication()->getIdentity();
 
 $this->document->getWebAssetManager()
 	->useScript('keepalive')
-	->useScript('form.validate');
-HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'auto', 'relative' => true));
+	->useScript('form.validate')
+    ->registerAndUseStyle('com_swjprojects.admin.css','com_swjprojects/admin-j4.min.css', ['key' => 'auto', 'relative' => true]);
 ?>
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=project&id=' . $this->item->id); ?>"
 	  method="post" name="adminForm" id="item-form" class="form-validate translate-tabs" enctype="multipart/form-data">
@@ -70,6 +70,11 @@ HTMLHelper::stylesheet('com_swjprojects/admin-j4.min.css', array('version' => 'a
 				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'joomla', Text::_('COM_SWJPROJECTS_JOOMLA')); ?>
 				<fieldset>
 					<?php echo $this->form->renderFieldset('joomla'); ?>
+				</fieldset>
+				<?php echo HTMLHelper::_('uitab.endTab'); ?>
+                <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'server', Text::_('COM_SWJPROJECTS_PROJECT_SERVER')); ?>
+				<fieldset>
+					<?php echo $this->form->renderFieldset('server'); ?>
 				</fieldset>
 				<?php echo HTMLHelper::_('uitab.endTab'); ?>
 

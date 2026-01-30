@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,6 +16,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
@@ -208,7 +209,7 @@ class VersionsModel extends ListModel
 			->from($db->quoteName('#__swjprojects_versions', 'v'));
 
 		// Join over the projects
-		$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element', 'p.download_type'))
+		$query->select(array('p.id as project_id', 'p.alias as project_alias', 'p.element as project_element', 'p.download_type','p.joomla'))
 			->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 		// Join over the categories
@@ -384,6 +385,17 @@ class VersionsModel extends ListModel
 				$item->category->alias = $item->category_alias;
 				$item->category->slug  = $item->cslug;
 				$item->category->link  = Route::_(RouteHelper::getProjectsRoute($item->cslug));
+
+                // Set joomla
+                $item->joomla = new Registry($item->joomla);
+                if (!$item->joomla->get('type'))
+                {
+                    $item->joomla = false;
+                }
+                else
+                {
+                    $item->joomla->set('version', $item->joomla_version);
+                }
 			}
 		}
 
@@ -487,7 +499,7 @@ class VersionsModel extends ListModel
 
 				if (!$data->id)
 				{
-					throw new \Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -587,7 +599,7 @@ class VersionsModel extends ListModel
 			{
 				if ($e->getCode() == 404)
 				{
-					throw new \Exception(Text::_($e->getMessage()), 404);
+                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				}
 				else
 				{
@@ -666,7 +678,7 @@ class VersionsModel extends ListModel
 
 				if (empty($data))
 				{
-					throw new \Exception(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -687,7 +699,7 @@ class VersionsModel extends ListModel
 			{
 				if ($e->getCode() == 404)
 				{
-					throw new \Exception(Text::_($e->getMessage()), 404);
+                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				}
 				else
 				{

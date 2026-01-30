@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -62,18 +62,13 @@ $unique = 'mod_swjprojects_projects_'.$module->id;
 						<div class="card rounded-0 shadow-hover h-100">
 							<div class="card-body">
 								<div class="row g-0 mb-2">
-									<?php 
-									
-									$icon = $item->images->get('icon');
-
-									?>
+									<?php $icon = $item->images->get('icon'); ?>
 									<header class="<?php echo ($icon ? 'col-9 col-md-8' : 'col-12');?>">
 											<a href="<?php echo $item->link; ?>" class="text-decoration-none text-dark">
 												<h2 class="h6 fw-bold">
 													<?php echo $item->title; ?>
 												</h2>
 											</a>
-
 									</header>
 									<?php if ($icon): ?>
 										<div class="col-3 col-md-4">
@@ -83,9 +78,11 @@ $unique = 'mod_swjprojects_projects_'.$module->id;
 												'class' => 'w-100 h-auto',
 												'width' => $size[0],
 												'height' => $size[1],
+                                                 $img_attribs['fetchpriority'] = 'high',
 											];
-											if($i > 0){
+											if($i > 1){
 												$img_attribs['loading'] = 'lazy';
+                                                $img_attribs['fetchpriority'] = 'low';
 											}
 											echo HTMLHelper::image($icon, $item->title, $img_attribs); ?>
 										</div>
@@ -155,7 +152,7 @@ $unique = 'mod_swjprojects_projects_'.$module->id;
 											<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
 										</a>
 									<?php endif; ?>
-									<a href="<?php echo $item->link; ?>" class="btn btn-info text-white">
+									<a href="<?php echo $item->link; ?>" class="btn btn-primary text-white">
 										<?php echo Text::_('COM_SWJPROJECTS_MORE'); ?>
 									</a>
 							</footer>

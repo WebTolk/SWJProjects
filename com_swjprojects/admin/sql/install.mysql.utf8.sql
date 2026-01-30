@@ -1,6 +1,6 @@
 /*
  * @package       SW JProjects
- * @version    2.5.0
+ * @version    2.6.1
  * @author     Sergey Tolkachyov
  * @copyright  Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_projects`
     `ordering`              int(11)                                                NOT NULL DEFAULT 0,
     `hits`                  int(10)                                                NOT NULL DEFAULT 0,
     `visible`               INT(1)                                                 NOT NULL DEFAULT 1 COMMENT 'Is project visible or not in frontend',
+    `update_server`         INT(1)                                                 NOT NULL DEFAULT 0 COMMENT 'Enable update server flag',
     PRIMARY KEY `id` (`id`),
     KEY `idx_element` (`element`(100)),
     KEY `idx_download` (`download_type`(100)),

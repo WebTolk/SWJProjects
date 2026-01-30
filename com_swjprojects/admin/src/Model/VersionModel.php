@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -126,8 +126,8 @@ class VersionModel extends AdminModel
 				}
 				// Check file
 				$path       = ComponentHelper::getParams('com_swjprojects')->get('files_folder') .
-					'/versions/' . $item->id;
-				$item->file = (!empty(Folder::files($path, 'download', false)));
+					DIRECTORY_SEPARATOR.'versions'.DIRECTORY_SEPARATOR. $item->id;
+				$item->file = (!empty(Folder::files(path: $path, filter:'download', recurse: false)));
 			}
 		}
 
@@ -138,9 +138,9 @@ class VersionModel extends AdminModel
 	 * Abstract method for getting the form from the model.
 	 *
 	 * @param   array    $data      Data for the form.
-	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   bool  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
-	 * @return  Form|boolean  A Form object on success, false on failure.
+	 * @return  Form|bool  A Form object on success, false on failure.
 	 *
 	 * @throws  \Exception
 	 *
@@ -177,7 +177,7 @@ class VersionModel extends AdminModel
 	 * @param   array   $data   The data to validate.
 	 * @param   string  $group  The name of the field group to validate.
 	 *
-	 * @return  array|boolean  Array of filtered data if valid, false otherwise.
+	 * @return  array|bool  Array of filtered data if valid, false otherwise.
 	 *
 	 * @throws  \Exception
 	 *
@@ -214,8 +214,8 @@ class VersionModel extends AdminModel
 	/**
 	 * Method for getting the translate forms from the model.
 	 *
-	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
-	 * @param   boolean  $clear     Optional argument to force load a new forms.
+	 * @param   bool  $loadData  True if the form is to load its own data (default case), false if not.
+	 * @param   bool  $clear     Optional argument to force load a new forms.
 	 *
 	 * @return  array  Translates forms array on success, false on failure.
 	 *
@@ -325,7 +325,7 @@ class VersionModel extends AdminModel
 	 *
 	 * @param   array  $data  The form data.
 	 *
-	 * @return  boolean  True on success.
+	 * @return  bool  True on success.
 	 *
 	 * @throws  \Exception
 	 *
@@ -500,7 +500,7 @@ class VersionModel extends AdminModel
 	 *
 	 * @param   array &$pks  An array of record primary keys.
 	 *
-	 * @return  boolean  True if successful, false if an error occurs.
+	 * @return  bool  True if successful, false if an error occurs.
 	 *
 	 * @throws  \Exception
 	 *

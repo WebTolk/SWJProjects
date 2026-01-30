@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -117,7 +117,7 @@ final class Joomlaserverscheme extends ServerschemePlugin implements SubscriberI
      *
      * @param   array  $data
      *
-     * @return bool|string
+     * @return string
      *
      * @since 2.5.0
      */
@@ -150,10 +150,11 @@ final class Joomlaserverscheme extends ServerschemePlugin implements SubscriberI
                 $downloadurl->addAttribute('format', File::getExt($item->file));
 
                 $file_path_from_root = $files_root . '/' . $item->id . '/' . $item->file;
-                $update->addChild('sha256', hash_file('sha256', $file_path_from_root));
-                $update->addChild('sha384', hash_file('sha384', $file_path_from_root));
-                $update->addChild('sha512', hash_file('sha512', $file_path_from_root));
-
+                if (is_file($file_path_from_root)) {
+                    $update->addChild('sha256', hash_file('sha256', $file_path_from_root));
+                    $update->addChild('sha384', hash_file('sha384', $file_path_from_root));
+                    $update->addChild('sha512', hash_file('sha512', $file_path_from_root));
+                }
                 $update->addChild(
                     'changelogurl',
                     $site_root . Route::_(RouteHelper::getJChangelogRoute(null, $item->element))
@@ -175,11 +176,13 @@ final class Joomlaserverscheme extends ServerschemePlugin implements SubscriberI
      * @param   array  $data
      *
      *
+     * @return string
      * @since 2.5.0
      */
     protected function buildChangelogsXml(array $data):string
     {
         $changelogs    = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><changelogs/>');
+
         foreach ($data as $item) {
             // Add to changelogs
             $changelog = $changelogs->addChild('changelog');
@@ -210,13 +213,13 @@ final class Joomlaserverscheme extends ServerschemePlugin implements SubscriberI
     /**
      * @param   array  $data
      *
-     * @return mixed
+     * @return string
      *
-     * @since version
+     * @since 2.5.0
      */
-    protected function buildCollectionXml(array $data): mixed
+    protected function buildCollectionXml(array $data): string
     {
-        $extensionset = new SimpleXMLElement('<extensionset/>');
+        $extensionset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><extensionset/>');
         $site_root    = Uri::getInstance()->toString(['scheme', 'host', 'port']);
         foreach ($data as $item) {
             $extension = $extensionset->addChild('extension');

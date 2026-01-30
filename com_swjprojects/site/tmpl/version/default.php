@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -18,7 +18,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 ?>
 <div id="SWJProjects" class="version">
     <div class="version info mb-3">
-        <h1><?php echo $this->project->title . ' - ' . Text::_('COM_SWJPROJECTS_VERSIONS'); ?></h1>
+        <h1><?php echo $this->project->title . ' - ' . Text::_('COM_SWJPROJECTS_VERSION').' '.$this->version->version->version; ?></h1>
         <div>
 			<?php if (!empty($this->project->categories)): ?>
                 <strong><?php echo Text::_('COM_SWJPROJECTS_CATEGORIES'); ?>: </strong>

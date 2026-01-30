@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -15,6 +15,7 @@ use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\SWJProjects\Administrator\Helper\ServerschemeHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
@@ -22,6 +23,7 @@ use Joomla\Component\SWJProjects\Administrator\Traits\CacheAwareTrait;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use SimpleXMLElement;
+
 use function defined;
 use function implode;
 use function is_array;
@@ -43,12 +45,12 @@ class JchangelogModel extends BaseDatabaseModel
 	 *
 	 * @since  1.0.0
 	 */
-	protected $_data = null;
+	protected ?array $_data = [];
 
 	/**
 	 * Extension xml.
 	 *
-	 * @var  SimpleXMLElement
+	 * @var  array
 	 *
 	 * @since  1.0.0
 	 */
@@ -107,8 +109,8 @@ class JchangelogModel extends BaseDatabaseModel
 		$root            = $params->get('files_folder');
 		$this->filesPath = [
 			'root'     => $root,
-			'versions' => $root . '/versions',
-			'cache'    => JPATH_CACHE . '/com_swjprojects'
+			'versions' => $root . DIRECTORY_SEPARATOR. 'versions',
+			'cache'    => JPATH_CACHE . DIRECTORY_SEPARATOR. 'com_swjprojects'
 		];
 
 		// Set cache timeout
@@ -194,7 +196,7 @@ class JchangelogModel extends BaseDatabaseModel
 				$query = $db->createQuery()
 					->select('p.id')
 					->from($db->quoteName('#__swjprojects_projects', 'p'))
-					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
+					->leftJoin($db->quoteName('#__swjprojects_categories', 'c'), $db->quoteName('c.id') . ' = ' . $db->quoteName('p.catid'))
 					->where($db->quoteName('p.element') . ' = ' . $db->quote($pk));
 
 				// Filter by published state
@@ -217,7 +219,7 @@ class JchangelogModel extends BaseDatabaseModel
 
 				if (empty($data))
 				{
-					throw new Exception(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}
 
 				$this->_projectID[$pk] = $data;
@@ -234,10 +236,10 @@ class JchangelogModel extends BaseDatabaseModel
 	/**
 	 * Method to get extension xml.
 	 *
-	 * @param   int  $pk  The id of the project.
+	 * @param   ?int  $pk  The id of the project.
 	 *
-	 * @return  SimpleXMLElement|Exception  Project updates \SimpleXMLElement on success, \Exception on failure.
-	 *
+     * @return array{data:string, mimetype:string, charset:string}
+     *
 	 * @throws  Exception
 	 *
 	 * @since  1.0.0
@@ -245,7 +247,7 @@ class JchangelogModel extends BaseDatabaseModel
 	 * @see    https://docs.joomla.org/Deploying_an_Update_Server
 	 * @see    https://manual.joomla.org/docs/building-extensions/modules/module-development-tutorial/step11_update_server/#update-server-files
 	 */
-	public function getExtensionData($pk = null)
+	public function getExtensionData(?int $pk = null):array
 	{
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
@@ -260,30 +262,34 @@ class JchangelogModel extends BaseDatabaseModel
 		{
 			try
 			{
-
 				$component_params = ComponentHelper::getParams('com_swjprojects');
 				// Join over current translates
 				$request_lang = $component_params->get('changelogurl_language');
                 if(empty($request_lang)) {
                     $request_lang = TranslationHelper::getDefault();
                 }
+
 				$db    = $this->getDatabase();
-				$query = $db->getQuery(true)
+				$query = $db->createQuery()
 					->select([
 						'v.id',
 						'v.major',
 						'v.minor',
 						'v.patch',
 						'v.hotfix',
+						'v.tag',
+						'v.stage',
 						'v_t.changelog',
 						'v_t.language',
 						'p.joomla as project_joomla',
+                        'p.update_server',
 					])
 					->from($db->quoteName('#__swjprojects_versions', 'v'))
-					->where('v.project_id = ' . (int) $pk)
-					->where('v_t.language = ' . $db->quote($request_lang))
-					->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'v_t'), 'v.id = v_t.id')
-					->leftJoin($db->quoteName('#__swjprojects_projects', 'p'), 'p.id = ' . $db->quote((int) $pk));
+					->where($db->quoteName('v.project_id').' = ' . $db->quote((int) $pk))
+					->where($db->quoteName('p.update_server').' = ' . $db->quote(1))
+					->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'v_t'), $db->quoteName('v.id').' ='.$db->quoteName('v_t.id'))
+					->leftJoin($db->quoteName('#__swjprojects_translate_versions'), $db->quoteName('v_t.language').' = '.$db->quote($request_lang))
+					->leftJoin($db->quoteName('#__swjprojects_projects', 'p'), $db->quoteName('p.id').' = ' . $db->quoteName('v.project_id'));
 
 				// Filter by published state
 				$published = $this->getState('filter.published');
@@ -306,8 +312,11 @@ class JchangelogModel extends BaseDatabaseModel
 					->order($db->escape('hotfix') . ' ' . $db->escape('desc'));
 
 				$db->setQuery($query);
-
 				$items = $db->loadObjectList();
+
+                if (empty($items)) {
+                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+                }
 
 				foreach ($items as $item)
 				{
@@ -317,7 +326,14 @@ class JchangelogModel extends BaseDatabaseModel
 					{
 						$item->version .= '.' . $item->hotfix;
 					}
-
+                    if ($item->tag !== 'stable')
+                    {
+                        $item->version .= '-' . $item->tag;
+                        if ($item->tag !== 'dev' && !empty($item->stage))
+                        {
+                            $item->version .= $item->stage;
+                        }
+                    }
 					// Set joomla
 					$item->project_joomla = new Registry($item->project_joomla);
 
@@ -398,7 +414,7 @@ class JchangelogModel extends BaseDatabaseModel
 		// Set published && debug state
 		if ($app->getInput()->getInt('debug', 0))
 		{
-			$this->setState('filter.published', array(0, 1));
+			$this->setState('filter.published', [0, 1]);
 			$this->setState('debug', 1);
 		}
 		else

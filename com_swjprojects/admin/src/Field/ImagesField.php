@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -11,15 +11,16 @@
 
 namespace Joomla\Component\SWJProjects\Administrator\Field;
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Form\FormField;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+
 use function defined;
 use function is_array;
 use function is_object;
 use function is_string;
+
+defined('_JEXEC') or die;
 
 class ImagesField extends FormField
 {

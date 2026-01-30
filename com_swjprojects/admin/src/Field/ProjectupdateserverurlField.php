@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -11,17 +11,17 @@
 
 namespace Joomla\Component\SWJProjects\Administrator\Field;
 
-defined('_JEXEC') or die;
-
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
+
 use function defined;
 
+defined('_JEXEC') or die;
 
 class ProjectupdateserverurlField extends FormField
 {
@@ -53,11 +53,12 @@ class ProjectupdateserverurlField extends FormField
 			{
 				$lang = $app->getLanguage()->getTag();
 			}
-			$project_name = $project->translates[$lang]->title;
-			if (empty($project_name))
-			{
-				$project_name = 'Your extension name';
-			}
+            if(isset($project->translates[$lang])){
+                $project_name = $project->translates[$lang]->title;
+            } else {
+                $first_translate = reset($project->translates);
+                $project_name = $first_translate?->title ?? 'Your extension name';
+            }
 
 			if (!empty($url->getVar('Itemid')))
 			{

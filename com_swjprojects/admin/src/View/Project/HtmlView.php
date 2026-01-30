@@ -1,7 +1,7 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.5.0
+ * @version       2.6.1
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -77,13 +77,14 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->state          = $this->get('State');
-		$this->form           = $this->get('Form');
-		$this->translateForms = $this->get('TranslateForms');
-		$this->item           = $this->get('Item');
+        $model = $this->getModel();
+		$this->state          = $model->getState();
+		$this->form           = $model->getForm();
+		$this->translateForms = $model->getTranslateForms();
+		$this->item           = $model->getItem();
 
 		// Check for errors
-		if (count($errors = $this->get('Errors')))
+		if (count($errors = $model->getErrors()))
 		{
 			throw new \Exception(implode('\n', $errors), 500);
 		}
@@ -103,12 +104,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
-		$isNew     = ($this->item->id == 0);
-		$canDo     = SWJProjectsHelper::getActions('com_swjprojects', 'project', $this->item->id);
-		$toolbar   = Toolbar::getInstance();
+		$isNew   = ($this->item->id == 0);
+		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'project', $this->item->id);
+        $toolbar = $this->getDocument()->getToolbar();
 
 		// Disable menu
-		Factory::getApplication()->input->set('hidemainmenu', true);
+		Factory::getApplication()->getInput()->set('hidemainmenu', true);
 
 		// Set page title
 		$title = ($isNew) ? Text::_('COM_SWJPROJECTS_PROJECT_ADD') : Text::_('COM_SWJPROJECTS_PROJECT_EDIT');
@@ -131,7 +132,8 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::cancel('project.cancel', 'JTOOLBAR_CLOSE');
 
 		// Add joomla update server buttons
-		if ($this->item->id)
+        $has_update_server = ((int) ($this->item->update_server ?? 0) === 1);
+		if ($this->item->id && $has_update_server)
 		{
 			// Joomla update server button
 			$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=jupdate&debug=1&element=' . $this->item->element;

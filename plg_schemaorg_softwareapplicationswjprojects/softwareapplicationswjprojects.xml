@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="schemaorg" method="upgrade">
+	<name>PLG_SCHEMAORG_SOFTWAREAPPLICATIONSWJPROJECTS</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>30.01.2026</creationDate>
+	<copyright>Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.6.1</version>
+	<description>PLG_SCHEMAORG_SOFTWAREAPPLICATIONSWJPROJECTS_DESC</description>
+	<namespace path="src">Joomla\Plugin\Schemaorg\Softwareapplicationswjprojects</namespace>
+	<scriptfile>script.php</scriptfile>
+	<files>
+		<folder plugin="softwareapplicationswjprojects">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_schemaorg_softwareapplicationswjprojects.ini</language>
+		<language tag="en-GB">en-GB/plg_schemaorg_softwareapplicationswjprojects.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_schemaorg_softwareapplicationswjprojects.ini</language>
+		<language tag="ru-RU">ru-RU/plg_schemaorg_softwareapplicationswjprojects.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="allowedlist"
+					type="SchemaorgComponentSections"
+					label="JSCHEMAORG_EXTENSION_ALLOWED_LABEL"
+					description="JSCHEMAORG_EXTENSION_ALLOWED_DESCRIPTION"
+					multiple="multiple"
+					layout="joomla.form.field.list-fancy-select"
+					default='{"0":"com_swjprojects.projects","1":"com_swjprojects.project","2":"com_swjprojects.versions","3":"com_swjprojects.version","4":"com_swjprojects.documentation","5":"com_swjprojects.document"}'
+				/>
+				<field
+					name="forbiddenlist"
+					type="SchemaorgComponentSections"
+					label="JSCHEMAORG_EXTENSION_FORBIDDEN_LABEL"
+					description="JSCHEMAORG_EXTENSION_FORBIDDEN_DESCRIPTION"
+					multiple="multiple"
+					layout="joomla.form.field.list-fancy-select"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
