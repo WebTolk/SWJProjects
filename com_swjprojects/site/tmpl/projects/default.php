@@ -26,7 +26,7 @@ $title = ($this->category->id > 1) ? $this->category->title
 	    // Get content from plugins
 	    echo $this->category->event->beforeDisplayProjectsContent;
 	?>
-	<div class="category info my-5 ms-4">
+	<div class="category info my-5">
 		<h1><?php echo $title; ?></h1>
 		<?php
 		    // Get content from plugins
