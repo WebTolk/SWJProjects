@@ -130,7 +130,7 @@ $title = ($this->category->id > 1) ? $this->category->title
 									<?php endif; ?>
 								</div>
 								<?php if(!empty($item->introtext)) : ?>
-									<p class="text-muted d-none d-lg-block"><?php echo $short_text = mb_strimwidth($item->introtext, 0, 250, "...");?> </p>
+									<p class="d-none d-lg-block"><?php echo $short_text = mb_strimwidth($item->introtext, 0, 250, "...");?> </p>
 								<?php endif; ?>
 								<?php if ($item->download_type === 'paid' && $item->payment->get('price')): ?>
 									<p class="fs-4 mb-0">
