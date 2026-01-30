@@ -20,8 +20,8 @@ Component includes statistical functionality with ability to track the count of 
 ### File storage
 File storage structure allows you to store files outside the root directory, which provides a high degree of protection and excludes downloading by direct link to the file, bypassing the component.
 
-### For Joomla! developers
-Developers who create extensions for Joomla! CMS are provided with additional functionality for creating and running their own update server, as part of the component.
+### Web based Update server for your applications
+You can create an update server for your application: a WordPress plugin, a Joomla extension, or any other application that receives updates over the network. Create an update server schema plugin to provide your application with information about new versions.
 
 ## Differences
 * Convenient multilingual
