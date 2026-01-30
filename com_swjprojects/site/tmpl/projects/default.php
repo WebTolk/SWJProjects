@@ -179,7 +179,7 @@ $title = ($this->category->id > 1) ? $this->category->title
                                 <?php
                                 endif; ?>
                                 <a href="<?php
-                                echo $item->link; ?>" class="btn btn-info text-white">
+                                echo $item->link; ?>" class="btn btn-primary text-white">
                                     <?php
                                     echo Text::_('COM_SWJPROJECTS_MORE'); ?>
                                 </a>

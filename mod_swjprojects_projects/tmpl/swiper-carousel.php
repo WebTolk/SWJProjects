@@ -152,7 +152,7 @@ $unique = 'mod_swjprojects_projects_'.$module->id;
 											<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
 										</a>
 									<?php endif; ?>
-									<a href="<?php echo $item->link; ?>" class="btn btn-info text-white">
+									<a href="<?php echo $item->link; ?>" class="btn btn-primary text-white">
 										<?php echo Text::_('COM_SWJPROJECTS_MORE'); ?>
 									</a>
 							</footer>
