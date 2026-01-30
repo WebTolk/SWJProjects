@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
-HTMLHelper::stylesheet('com_swjprojects/site.css', array('version' => 'auto', 'relative' => true));
+
 ?>
 <div id="SWJProjects" class="versions">
     <div class="project info mb-3">

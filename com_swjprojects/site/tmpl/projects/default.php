@@ -16,8 +16,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
-HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto', 'relative' => true));
-
 $title = ($this->category->id > 1) ? $this->category->title
 	: Factory::getApplication()->getMenu()->getActive()->title;
 ?>
