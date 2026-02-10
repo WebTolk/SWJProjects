@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" method="upgrade" version="4.0">
+    <name>System - Save Domain</name>
+    <author>Nick Giannelis</author>
+    <version>1.0.0</version>
+    <description>Plugin to save domain for user keys</description>
+    <files>
+        <filename plugin="save_domain">save_domain.php</filename>
+    </files>
+    <config>
+    </config>
+</extension>
