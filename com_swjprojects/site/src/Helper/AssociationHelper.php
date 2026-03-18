@@ -1,16 +1,17 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.6.2-dev
+ * @version       2.6.2
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
- * @link       https://web-tolk.ru
+ * @link          https://web-tolk.ru
  * @since         1.0.0
  */
 
 namespace Joomla\Component\SWJProjects\Site\Helper;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use function defined;
@@ -30,21 +31,21 @@ abstract class AssociationHelper
 	 */
 	protected static $_associations = [];
 
-	/**
-	 * Method to get the associations for a given item.
-	 *
-	 * @param   integer  $id          Id of the item.
-	 * @param   string   $view        Name of the view.
-	 * @param   integer  $catid       Id of the category.
-	 * @param   integer  $project_id  Id of the project.
-	 * @param   integer  $debug       Enable debug.
-	 *
-	 * @throws  \Exception
-	 *
-	 * @return  array  Array of associations for the item.
-	 *
-	 * @since  1.0.0
-	 */
+    /**
+     * Method to get the associations for a given item.
+     *
+     * @param   int      $id          Id of the item.
+     * @param   ?string  $view        Name of the view.
+     * @param   int      $catid       Id of the category.
+     * @param   int      $project_id  Id of the project.
+     * @param   int      $debug       Enable debug.
+     *
+     * @return  array  Array of associations for the item.
+     *
+     * @throws  Exception
+     *
+     * @since  1.0.0
+     */
 	public static function getAssociations(int $id = 0, string $view = null, int $catid = 0, int $project_id = 0, int $debug = 0)
 	{
 		$app        = Factory::getApplication();

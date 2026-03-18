@@ -8,7 +8,7 @@
 	<license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
 	<authorUrl>https://web-tolk.ru</authorUrl>
 	<authorEmail>info@web-tolk.ru</authorEmail>
-	<version>2.6.2-dev</version>
+	<version>2.6.2</version>
 	<description>PKG_SWJPROJECTS_DESC</description>
 	<scriptfile>script.php</scriptfile>
 	<languages folder="language">
