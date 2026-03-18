@@ -1,16 +1,18 @@
 <?php
 /**
  * @package       SW JProjects
- * @version       2.6.1
+ * @version       2.6.2
  * @Author        Sergey Tolkachyov
  * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
- * @link       https://web-tolk.ru
+ * @link          https://web-tolk.ru
  * @since         1.0.0
  */
 
 namespace Joomla\Component\SWJProjects\Administrator\Extension;
 
+use Joomla\CMS\Association\AssociationServiceInterface;
+use Joomla\CMS\Association\AssociationServiceTrait;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
@@ -33,10 +35,12 @@ defined('_JEXEC') or die;
  * @since  4.0.0
  */
 class SWJProjectsComponent extends MVCComponent implements
-	BootableExtensionInterface,
-    SchemaorgServiceInterface,
-	RouterServiceInterface
+    AssociationServiceInterface,
+    BootableExtensionInterface,
+	RouterServiceInterface,
+    SchemaorgServiceInterface
 {
+    use AssociationServiceTrait;
 	use RouterServiceTrait;
 	use HTMLRegistryAwareTrait;
 
