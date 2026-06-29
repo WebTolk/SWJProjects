@@ -287,8 +287,11 @@ class JchangelogModel extends BaseDatabaseModel
 					->from($db->quoteName('#__swjprojects_versions', 'v'))
 					->where($db->quoteName('v.project_id').' = ' . $db->quote((int) $pk))
 					->where($db->quoteName('p.update_server').' = ' . $db->quote(1))
-					->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'v_t'), $db->quoteName('v.id').' ='.$db->quoteName('v_t.id'))
-					->leftJoin($db->quoteName('#__swjprojects_translate_versions'), $db->quoteName('v_t.language').' = '.$db->quote($request_lang))
+					->leftJoin(
+						$db->quoteName('#__swjprojects_translate_versions', 'v_t'),
+						$db->quoteName('v.id') . ' = ' . $db->quoteName('v_t.id')
+						. ' AND ' . $db->quoteName('v_t.language') . ' = ' . $db->quote($request_lang)
+					)
 					->leftJoin($db->quoteName('#__swjprojects_projects', 'p'), $db->quoteName('p.id').' = ' . $db->quoteName('v.project_id'));
 
 				// Filter by published state
