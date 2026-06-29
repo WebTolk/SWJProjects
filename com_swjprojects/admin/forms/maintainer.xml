@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Joomla\Component\SWJProjects\Administrator\Field">
+	<fieldset>
+		<field name="alias" type="text"
+			   label="JFIELD_ALIAS_LABEL"
+			   description="JFIELD_ALIAS_DESC"
+			   hint="JFIELD_ALIAS_PLACEHOLDER"
+			   size="40"/>
+	</fieldset>
+	<fieldset name="global">
+		<field name="id" type="text"
+			   label="JGLOBAL_FIELD_ID_LABEL"
+			   description="JGLOBAL_FIELD_ID_DESC"
+			   class="readonly"
+			   size="10"
+			   default="0"
+			   readonly="true"/>
+		<field name="state" type="list"
+			   label="JSTATUS"
+			   description="JFIELD_PUBLISHED_DESC"
+			   class="chzn-color-state"
+			   filter="intval"
+			   size="1"
+			   default="1">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+		<field name="image" type="media"
+			   label="COM_SWJPROJECTS_MAINTAINER_IMAGE"/>
+		<field name="website" type="url"
+			   label="COM_SWJPROJECTS_MAINTAINER_WEBSITE"
+			   filter="url"
+			   class="input-xxlarge"/>
+		<field name="links" type="subform"
+			   label="COM_SWJPROJECTS_MAINTAINER_LINKS"
+			   multiple="true">
+			<form>
+				<field name="type" type="maintainerlinktypes"
+					   label="COM_SWJPROJECTS_MAINTAINER_LINK_TYPE"
+					   required="true"
+					   class="form-select"/>
+				<field name="title" type="text"
+					   label="COM_SWJPROJECTS_MAINTAINER_LINK_TITLE"
+					   class="input-xxlarge input-large-text"/>
+				<field name="value" type="text"
+					   label="COM_SWJPROJECTS_MAINTAINER_LINK_VALUE"
+					   required="true"
+					   class="input-xxlarge"/>
+			</form>
+		</field>
+		<field name="ordering" type="hidden" filter="unset"/>
+	</fieldset>
+</form>

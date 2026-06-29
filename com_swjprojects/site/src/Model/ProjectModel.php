@@ -22,6 +22,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
+use Joomla\Component\SWJProjects\Site\Helper\MaintainerHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
@@ -217,6 +218,30 @@ class ProjectModel extends ItemModel
 							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
 				}
 
+				// Join over maintainer base data
+				$query->select(array(
+					'm.id as maintainer_id',
+					'm.alias as maintainer_alias',
+					'm.website as maintainer_website',
+					'm.image as maintainer_image',
+					'm.links as maintainer_links',
+				))
+					->leftJoin($db->quoteName('#__swjprojects_maintainers', 'm')
+						. ' ON m.id = p.maintainer_id AND m.state = 1');
+
+				// Join over current maintainer translate
+				$query->select(array('t_m.title as maintainer_title'))
+					->leftJoin($db->quoteName('#__swjprojects_translate_maintainers', 't_m')
+						. ' ON t_m.id = m.id AND ' . $db->quoteName('t_m.language') . ' = ' . $db->quote($current));
+
+				// Join over default maintainer translate
+				if ($current != $default)
+				{
+					$query->select(array('td_m.title as default_maintainer_title'))
+						->leftJoin($db->quoteName('#__swjprojects_translate_maintainers', 'td_m')
+							. ' ON td_m.id = m.id AND ' . $db->quoteName('td_m.language') . ' = ' . $db->quote($default));
+				}
+
 				// Count over versions for download counter
 				$subQuerySumDownloads = $db->getQuery(true);
 				$subQuerySumDownloads
@@ -271,6 +296,17 @@ class ProjectModel extends ItemModel
 
 				// Set title
 				$data->title = (empty($data->title)) ? $data->element : $data->title;
+
+				// Set maintainer
+				$data->maintainer = MaintainerHelper::buildProjection(
+					(int) ($data->maintainer_id ?? 0),
+					(string) ($data->maintainer_alias ?? ''),
+					(string) ($data->maintainer_title ?? ''),
+					(string) ($data->maintainer_website ?? ''),
+					(string) ($data->maintainer_image ?? ''),
+					$data->maintainer_links ?? null,
+					(string) ($data->default_maintainer_title ?? '')
+				) ?: false;
 
 				// Set categories
 				$categories     = !empty($data->additional_categories) ?

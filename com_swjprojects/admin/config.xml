@@ -109,6 +109,34 @@
 			   length="128"
 			   class="input-xxlarge"/>
 	</fieldset>
+	<fieldset name="maintainer_link_types" label="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES">
+		<field name="maintainer_link_types" type="subform"
+			   label="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES"
+			   description="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES_DESC"
+			   multiple="true">
+			<form>
+				<field name="code" type="text"
+					   label="COM_SWJPROJECTS_PARAMS_LINK_TYPE_CODE"
+					   description="COM_SWJPROJECTS_PARAMS_LINK_TYPE_CODE_DESC"
+					   filter="cmd"
+					   required="true"/>
+				<field name="title" type="text"
+					   label="COM_SWJPROJECTS_PARAMS_LINK_TYPE_TITLE"
+					   required="true"/>
+				<field name="value_type" type="list"
+					   label="COM_SWJPROJECTS_PARAMS_LINK_TYPE_VALUE_TYPE"
+					   default="url"
+					   class="form-select">
+					<option value="url">COM_SWJPROJECTS_LINK_VALUE_TYPE_URL</option>
+					<option value="email">COM_SWJPROJECTS_LINK_VALUE_TYPE_EMAIL</option>
+				</field>
+				<field name="icon_class" type="text"
+					   label="COM_SWJPROJECTS_PARAMS_LINK_TYPE_ICON_CLASS"
+					   description="COM_SWJPROJECTS_PARAMS_LINK_TYPE_ICON_CLASS_DESC"
+					   filter="string"/>
+			</form>
+		</field>
+	</fieldset>
 	<fieldset name="server_params" label="COM_SWJPROJECTS_SERVER_PARAMS_FIELDSET_LABEL">
 		<field type="serverschemelist"
 			   name="server_scheme"

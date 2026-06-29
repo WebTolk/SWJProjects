@@ -31,6 +31,11 @@
 			   label="COM_SWJPROJECTS_PROJECT_ADDITIONAL_CATEGORIES"
 			   multiple="true"
 			   layout="joomla.form.field.list-fancy-select"/>
+		<field name="maintainer_id" type="maintainers"
+			   label="COM_SWJPROJECTS_MAINTAINER"
+			   layout="joomla.form.field.list-fancy-select">
+			<option value="">COM_SWJPROJECTS_MAINTAINER_SELECT</option>
+		</field>
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"

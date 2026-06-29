@@ -366,6 +366,27 @@ class ProjectModel extends AdminModel
 			$data['additional_categories'] = implode(',', $additional_categories);
 		}
 
+		// Prepare maintainer relation
+		if (isset($data['maintainer_id']))
+		{
+			$data['maintainer_id'] = (int) $data['maintainer_id'];
+
+			if ($data['maintainer_id'] > 0)
+			{
+				$db = $this->getDatabase();
+				$query = $db->getQuery(true)
+					->select('COUNT(*)')
+					->from($db->quoteName('#__swjprojects_maintainers'))
+					->where($db->quoteName('id') . ' = ' . (int) $data['maintainer_id']);
+				$db->setQuery($query);
+
+				if (!(int) $db->loadResult())
+				{
+					$data['maintainer_id'] = 0;
+				}
+			}
+		}
+
 		// Prepare joomla field data
 		if (isset($data['joomla']))
 		{

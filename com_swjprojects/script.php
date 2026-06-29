@@ -175,6 +175,9 @@ return new class () implements ServiceProviderInterface {
 
 					// Check images folder
 					$this->checkImagesFolder();
+
+					// Check maintainer link types
+					$this->checkMaintainerLinkTypes();
 				}
 
 				return true;
@@ -394,6 +397,42 @@ return new class () implements ServiceProviderInterface {
 
 					$this->db->updateObject('#__extensions', $component, array('element'));
 				}
+			}
+
+			/**
+			 * Method to seed default maintainer link types if component params don't contain them yet.
+			 *
+			 * @since  2.6.2
+			 */
+			protected function checkMaintainerLinkTypes()
+			{
+				$params = $this->getComponentParams();
+
+				if ($params->get('maintainer_link_types'))
+				{
+					return;
+				}
+
+				$params->set('maintainer_link_types', [
+					[
+						'code'       => 'jed',
+						'title'      => 'Joomla Extensions Directory',
+						'value_type' => 'url',
+						'icon_class' => 'fab fa-joomla',
+					],
+					[
+						'code'       => 'github',
+						'title'      => 'GitHub',
+						'value_type' => 'url',
+						'icon_class' => 'fab fa-github',
+					],
+				]);
+
+				$component          = new \stdClass();
+				$component->element = 'com_swjprojects';
+				$component->params  = $params->toString();
+
+				$this->db->updateObject('#__extensions', $component, array('element'));
 			}
 
 

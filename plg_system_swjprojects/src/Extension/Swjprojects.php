@@ -253,6 +253,13 @@ final class Swjprojects extends CMSPlugin implements SubscriberInterface
 					'quicktask' => 'index.php?option=com_swjprojects&task=category.add',
 					'quicktask_title' => 'COM_SWJPROJECTS_MENUS_NEW_CATEGORY',
 				],
+				[
+					'title'   => 'COM_SWJPROJECTS_MAINTAINERS',
+					'link'    => 'index.php?option=com_swjprojects&view=maintainers',
+					'element' => 'com_swjprojects',
+					'quicktask' => 'index.php?option=com_swjprojects&task=maintainer.add',
+					'quicktask_title' => 'COM_SWJPROJECTS_MENUS_NEW_MAINTAINER',
+				],
 			];
 
 			foreach ($items as $item)
