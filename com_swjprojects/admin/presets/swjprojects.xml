@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<menu
+		author="Sergey Tolkachyov"
+		class="folder-open swjprojects-menu-root"
+		description="COM_SWJPROJECTS"
+		name="COM_SWJPROJECTS"
+	>
+		<menuitem
+			title="COM_SWJPROJECTS_VERSIONS"
+			type="component"
+			element="com_swjprojects"
+			link="index.php?option=com_swjprojects&amp;view=versions"
+			scope="com_swjprojects"
+			quicktask="index.php?option=com_swjprojects&amp;task=version.add"
+			quicktask-title="COM_SWJPROJECTS_MENUS_NEW_VERSION"
+			quicktask-permission="core.create"
+		/>
+		<menuitem
+			title="COM_SWJPROJECTS_PROJECTS"
+			type="component"
+			element="com_swjprojects"
+			link="index.php?option=com_swjprojects&amp;view=projects"
+			scope="com_swjprojects"
+			quicktask="index.php?option=com_swjprojects&amp;task=project.add"
+			quicktask-title="COM_SWJPROJECTS_MENUS_NEW_PROJECT"
+			quicktask-permission="core.create"
+		/>
+		<menuitem
+			title="COM_SWJPROJECTS_KEYS"
+			type="component"
+			element="com_swjprojects"
+			link="index.php?option=com_swjprojects&amp;view=keys"
+			scope="com_swjprojects"
+			quicktask="index.php?option=com_swjprojects&amp;task=key.add"
+			quicktask-title="COM_SWJPROJECTS_MENUS_NEW_KEY"
+			quicktask-permission="core.create"
+		/>
+		<menuitem
+			title="COM_SWJPROJECTS_DOCUMENTATION"
+			type="component"
+			element="com_swjprojects"
+			link="index.php?option=com_swjprojects&amp;view=documentation"
+			scope="com_swjprojects"
+			quicktask="index.php?option=com_swjprojects&amp;task=document.add"
+			quicktask-title="COM_SWJPROJECTS_MENUS_NEW_DOCUMENT"
+			quicktask-permission="core.create"
+		/>
+		<menuitem
+			title="COM_SWJPROJECTS_CATEGORIES"
+			type="component"
+			element="com_swjprojects"
+			link="index.php?option=com_swjprojects&amp;view=categories"
+			scope="com_swjprojects"
+			quicktask="index.php?option=com_swjprojects&amp;task=category.add"
+			quicktask-title="COM_SWJPROJECTS_MENUS_NEW_CATEGORY"
+			quicktask-permission="core.create"
+		/>
+		<menuitem
+			title="COM_SWJPROJECTS_CONFIG"
+			type="component"
+			element="com_config"
+			link="index.php?option=com_config&amp;view=component&amp;component=com_swjprojects"
+			scope="default"
+		/>
+	</menu>
+</metadata>
