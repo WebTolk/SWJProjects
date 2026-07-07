@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -17,10 +17,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Helper\LibraryHelper;
 use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
+use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -32,7 +34,7 @@ use Joomla\Registry\Registry;
 return new class () implements ServiceProviderInterface {
 	public function register(Container $container)
 	{
-		$container->set(InstallerScriptInterface::class, new class ($container->get(AdministratorApplication::class)) implements InstallerScriptInterface {
+		$container->set(InstallerScriptInterface::class, new class ($container->get(AdministratorApplication::class)) extends InstallerScript implements InstallerScriptInterface {
 
 			/**
 			 * The application object
@@ -53,13 +55,23 @@ return new class () implements ServiceProviderInterface {
 			protected DatabaseDriver $db;
 
 			/**
+			 * Installed component version captured before Joomla overwrites manifest metadata on update.
+			 *
+			 * @var  string|null
+			 *
+			 * @since  2.7.0
+			 */
+			protected ?string $installedComponentVersionBeforeUpdate = null;
+
+
+			/**
 			 * Minimum Joomla version required to install the extension.
 			 *
 			 * @var  string
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumJoomla = '4.2.7';
+			protected $minimumJoomla = '4.2.7';
 
 			/**
 			 * Minimum PHP version required to install the extension.
@@ -68,7 +80,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumPhp = '7.4';
+			protected $minimumPhp = '7.4';
 
 			/**
 			 * Constructor.
@@ -79,8 +91,9 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function __construct(AdministratorApplication $app)
 			{
-				$this->app = $app;
-				$this->db  = Factory::getContainer()->get('DatabaseDriver');
+				$this->app       = $app;
+				$this->db        = Factory::getContainer()->get('DatabaseDriver');
+				$this->extension = 'swjprojects';
 			}
 
 			/**
@@ -124,11 +137,16 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function update(InstallerAdapter $adapter): bool
 			{
+				$installedVersion = $this->getInstalledComponentVersion();
 
+				if (!$installedVersion || version_compare($installedVersion, '2.7.0', '<'))
+				{
+					// Fill defaults and migrate legacy project links on 2.6.2 -> 2.7.0 upgrade path.
+					$this->checkProjectLinkTypes();
+					$this->migrateProjectLinks();
+				}
 				return true;
-
 			}
-
 			/**
 			 * Function called before extension installation/update/removal procedure commences.
 			 *
@@ -139,14 +157,15 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since   1.0.0
 			 */
-			public function preflight(string $type, InstallerAdapter $adapter): bool
+			public function preflight($type, $adapter): bool
 			{
+				if ($type === 'update')
+				{
+					$this->installedComponentVersionBeforeUpdate = $this->readInstalledComponentVersionFromFilesystem();
+				}
 
 				return true;
-
 			}
-
-
 			/**
 			 * Function called after extension installation/update/removal procedure commences.
 			 *
@@ -163,18 +182,21 @@ return new class () implements ServiceProviderInterface {
 				{
 					// Parse layouts
 					$this->parseLayouts($adapter->getParent()->getManifest()->layouts, $adapter->getParent());
-
 					// Check databases
 					$this->checkTables($adapter);
-
 					// Check root category
 					$this->checkRootCategory('#__swjprojects_categories');
-
 					// Check files folder
 					$this->checkFilesFolder();
-
 					// Check images folder
 					$this->checkImagesFolder();
+					// Check maintainer link types
+					$this->checkMaintainerLinkTypes();
+					// Check dashboard menu module
+					$this->checkDashboardMenu();
+
+					// Check dashboard link metadata on the component administrator menu item
+					$this->checkDashboardMenuLink();
 				}
 
 				return true;
@@ -396,6 +418,160 @@ return new class () implements ServiceProviderInterface {
 				}
 			}
 
+			/**
+			 * Method to seed default maintainer link types if component params don't contain them yet.
+			 *
+			 * @since  2.6.2
+			 */
+			protected function checkMaintainerLinkTypes()
+			{
+				$params = $this->getComponentParams();
+
+				if ($params->get('maintainer_link_types'))
+				{
+					return;
+				}
+
+				$params->set('maintainer_link_types', [
+					[
+						'code'       => 'jed',
+						'title'      => 'Joomla Extensions Directory',
+						'value_type' => 'url',
+						'icon_class' => 'fab fa-joomla',
+					],
+					[
+						'code'       => 'github',
+						'title'      => 'GitHub',
+						'value_type' => 'url',
+						'icon_class' => 'fab fa-github',
+					],
+				]);
+
+				$component          = new \stdClass();
+				$component->element = 'com_swjprojects';
+				$component->params  = $params->toString();
+
+				$this->db->updateObject('#__extensions', $component, array('element'));
+			}
+
+			/**
+			 * Method to seed default project link types if component params don't contain them yet.
+			 *
+			 * @since  2.7.0
+			 */
+			protected function checkProjectLinkTypes(): void
+			{
+				$params = $this->getComponentParams();
+
+				if ($params->get(ProjectLinksHelper::PARAM_LINK_TYPES))
+				{
+					return;
+				}
+
+				$params->set(ProjectLinksHelper::PARAM_LINK_TYPES, array_values(ProjectLinksHelper::getDefaultTypes()));
+
+				$component          = new \stdClass();
+				$component->element = 'com_swjprojects';
+				$component->params  = $params->toString();
+
+				$this->db->updateObject('#__extensions', $component, array('element'));
+			}
+
+			/**
+			 * Method to migrate legacy project URL maps to typed project-link lists.
+			 *
+			 * @since  2.7.0
+			 */
+			protected function migrateProjectLinks(): void
+			{
+				$db = $this->db;
+				$query = $db->getQuery(true)
+					->select($db->quoteName(['id', 'urls']))
+					->from($db->quoteName('#__swjprojects_projects'))
+					->where($db->quoteName('urls') . ' IS NOT NULL')
+					->where($db->quoteName('urls') . ' != ' . $db->quote(''));
+
+				foreach ($db->setQuery($query)->loadObjectList() as $project)
+				{
+					$normalized = ProjectLinksHelper::toJson((string) $project->urls);
+
+					if ($normalized === (string) $project->urls)
+					{
+						continue;
+					}
+
+					$row       = new \stdClass();
+					$row->id   = (int) $project->id;
+					$row->urls = $normalized;
+
+					$db->updateObject('#__swjprojects_projects', $row, 'id');
+				}
+			}
+
+			/**
+			 * Method to create the SW JProjects dashboard submenu module if it does not exist.
+			 *
+			 * @since  2.7.0
+			 */
+			protected function checkDashboardMenu(): void
+			{
+				$dashboard = 'swjprojects';
+				$position  = 'cpanel-' . $dashboard;
+
+				$db    = $this->db;
+				$query = $db->getQuery(true)
+					->select('COUNT(*)')
+					->from($db->quoteName('#__modules'))
+					->where([
+						$db->quoteName('module') . ' = ' . $db->quote('mod_submenu'),
+						$db->quoteName('client_id') . ' = 1',
+						$db->quoteName('position') . ' = :position',
+					])
+					->bind(':position', $position);
+
+				if ((int) $db->setQuery($query)->loadResult() > 0)
+				{
+					return;
+				}
+
+				$this->addDashboardMenu($dashboard, 'swjprojects');
+			}
+
+			/**
+			 * Method to add dashboard metadata to the component administrator menu item.
+			 *
+			 * @since  2.7.0
+			 */
+			protected function checkDashboardMenuLink(): void
+			{
+				$db    = $this->db;
+				$query = $db->getQuery(true)
+					->select($db->quoteName(['id', 'params']))
+					->from($db->quoteName('#__menu'))
+					->where([
+						$db->quoteName('client_id') . ' = 1',
+						$db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_swjprojects'),
+					]);
+
+				foreach ($db->setQuery($query)->loadObjectList() as $item)
+				{
+					$params = new Registry((string) $item->params);
+
+					if ($params->get('dashboard') === 'swjprojects')
+					{
+						continue;
+					}
+
+					$params->set('dashboard', 'swjprojects');
+
+					$menu         = new \stdClass();
+					$menu->id     = (int) $item->id;
+					$menu->params = $params->toString();
+
+					$db->updateObject('#__menu', $menu, 'id');
+				}
+			}
+
 
 
 
@@ -471,7 +647,75 @@ return new class () implements ServiceProviderInterface {
 				return new Registry($db->setQuery($query)->loadResult());
 			}
 
+			/**
+			 * Get installed component version from manifest cache.
+			 *
+			 * @return  string|null  Installed version or null if unavailable.
+			 *
+			 * @since  2.7.0
+			 */
+			protected function getInstalledComponentVersion(): ?string
+			{
+				if ($this->installedComponentVersionBeforeUpdate !== null)
+				{
+					return $this->installedComponentVersionBeforeUpdate;
+				}
 
+				$db    = $this->db;
+				$query = $db->getQuery(true)
+					->select('manifest_cache')
+					->from($db->quoteName('#__extensions'))
+					->where($db->quoteName('type') . ' = ' . $db->quote('component'))
+					->where($db->quoteName('element') . ' = ' . $db->quote('com_swjprojects'));
+
+				$manifestCache = (string) $db->setQuery($query)->loadResult();
+
+				if ($manifestCache === '')
+				{
+					return null;
+				}
+
+				$manifest = json_decode($manifestCache, true);
+
+				if (json_last_error() !== JSON_ERROR_NONE || !is_array($manifest) || empty($manifest['version']))
+				{
+					return null;
+				}
+
+				return trim((string) $manifest['version']) ?: null;
+			}
+
+			/**
+			 * Read the currently installed component version from the live administrator manifest file.
+			 *
+			 * On Joomla update routes this is the reliable old-version source during preflight, before
+			 * storeExtension() rewrites `#__extensions.manifest_cache` with the incoming package version.
+			 *
+			 * @return  string|null  Installed version or null if unavailable.
+			 *
+			 * @since  2.7.0
+			 */
+			protected function readInstalledComponentVersionFromFilesystem(): ?string
+			{
+				$manifestPath = JPATH_ADMINISTRATOR . '/components/com_swjprojects/swjprojects.xml';
+
+				if (!is_file($manifestPath))
+				{
+					return null;
+				}
+
+				$manifest = simplexml_load_file($manifestPath);
+
+				if ($manifest === false || empty($manifest->version))
+				{
+					return null;
+				}
+
+				return trim((string) $manifest->version) ?: null;
+			}
 		});
 	}
 };
+
+
+
