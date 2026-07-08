@@ -22,7 +22,6 @@ use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
-use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -62,6 +61,17 @@ return new class () implements ServiceProviderInterface {
 			 * @since  2.7.0
 			 */
 			protected ?string $installedComponentVersionBeforeUpdate = null;
+
+			/**
+			 * Component param names used to store shared and legacy link type descriptors.
+			 *
+			 * @var  string
+			 *
+			 * @since  2.7.0
+			 */
+			protected const LINK_TYPES_PARAM = 'link_types';
+			protected const LEGACY_MAINTAINER_LINK_TYPES_PARAM = 'maintainer_link_types';
+			protected const LEGACY_PROJECT_LINK_TYPES_PARAM = 'project_link_types';
 
 
 			/**
@@ -142,7 +152,7 @@ return new class () implements ServiceProviderInterface {
 				if (!$installedVersion || version_compare($installedVersion, '2.7.0', '<'))
 				{
 					// Fill defaults and migrate legacy project links on 2.6.2 -> 2.7.0 upgrade path.
-					$this->checkProjectLinkTypes();
+					$this->checkLinkTypes();
 					$this->migrateProjectLinks();
 				}
 				return true;
@@ -190,8 +200,8 @@ return new class () implements ServiceProviderInterface {
 					$this->checkFilesFolder();
 					// Check images folder
 					$this->checkImagesFolder();
-					// Check maintainer link types
-					$this->checkMaintainerLinkTypes();
+					// Check shared link types
+					$this->checkLinkTypes();
 					// Check dashboard menu module
 					$this->checkDashboardMenu();
 
@@ -419,64 +429,59 @@ return new class () implements ServiceProviderInterface {
 			}
 
 			/**
-			 * Method to seed default maintainer link types if component params don't contain them yet.
-			 *
-			 * @since  2.6.2
-			 */
-			protected function checkMaintainerLinkTypes()
-			{
-				$params = $this->getComponentParams();
-
-				if ($params->get('maintainer_link_types'))
-				{
-					return;
-				}
-
-				$params->set('maintainer_link_types', [
-					[
-						'code'       => 'jed',
-						'title'      => 'Joomla Extensions Directory',
-						'value_type' => 'url',
-						'icon_class' => 'fab fa-joomla',
-					],
-					[
-						'code'       => 'github',
-						'title'      => 'GitHub',
-						'value_type' => 'url',
-						'icon_class' => 'fab fa-github',
-					],
-				]);
-
-				$component          = new \stdClass();
-				$component->element = 'com_swjprojects';
-				$component->params  = $params->toString();
-
-				$this->db->updateObject('#__extensions', $component, array('element'));
-			}
-
-			/**
-			 * Method to seed default project link types if component params don't contain them yet.
+			 * Method to seed and unify shared link types in component params.
 			 *
 			 * @since  2.7.0
 			 */
-			protected function checkProjectLinkTypes(): void
+			protected function checkLinkTypes(): void
 			{
 				$params = $this->getComponentParams();
+				$data = $params->toArray();
+				$linkTypes = $this->normalizeLinkTypes($data[self::LINK_TYPES_PARAM] ?? []);
+				$legacyMaintainerTypes = $this->normalizeLinkTypes($data[self::LEGACY_MAINTAINER_LINK_TYPES_PARAM] ?? []);
+				$legacyProjectTypes = $this->normalizeLinkTypes($data[self::LEGACY_PROJECT_LINK_TYPES_PARAM] ?? []);
+				$needsSave = false;
+                if ($linkTypes === [])
+                {
+                    $linkTypes = $this->mergeLinkTypes($legacyMaintainerTypes, $legacyProjectTypes);
 
-				if ($params->get(ProjectLinksHelper::PARAM_LINK_TYPES))
+                    if ($linkTypes === [])
+                    {
+                        $linkTypes = $this->normalizeLinkTypes($this->getDefaultLinkTypes());
+                    }
+
+                    $data[self::LINK_TYPES_PARAM] = array_values($linkTypes);
+                    $needsSave = true;
+                }
+                elseif (($this->projectLinksToArray($data[self::LINK_TYPES_PARAM] ?? []) ?: []) !== array_values($linkTypes))
+                {
+                    $data[self::LINK_TYPES_PARAM] = array_values($linkTypes);
+                    $needsSave = true;
+                }
+
+				if (array_key_exists(self::LEGACY_MAINTAINER_LINK_TYPES_PARAM, $data))
+				{
+					unset($data[self::LEGACY_MAINTAINER_LINK_TYPES_PARAM]);
+					$needsSave = true;
+				}
+
+				if (array_key_exists(self::LEGACY_PROJECT_LINK_TYPES_PARAM, $data))
+				{
+					unset($data[self::LEGACY_PROJECT_LINK_TYPES_PARAM]);
+					$needsSave = true;
+				}
+
+				if (!$needsSave)
 				{
 					return;
 				}
 
-				$params->set(ProjectLinksHelper::PARAM_LINK_TYPES, array_values(ProjectLinksHelper::getDefaultTypes()));
-
 				$component          = new \stdClass();
 				$component->element = 'com_swjprojects';
-				$component->params  = $params->toString();
+				$component->params  = (new Registry($data))->toString();
 
 				$this->db->updateObject('#__extensions', $component, array('element'));
 			}
-
 			/**
 			 * Method to migrate legacy project URL maps to typed project-link lists.
 			 *
@@ -493,7 +498,7 @@ return new class () implements ServiceProviderInterface {
 
 				foreach ($db->setQuery($query)->loadObjectList() as $project)
 				{
-					$normalized = ProjectLinksHelper::toJson((string) $project->urls);
+					$normalized = $this->normalizeProjectLinksToJson((string) $project->urls);
 
 					if ($normalized === (string) $project->urls)
 					{
@@ -508,6 +513,392 @@ return new class () implements ServiceProviderInterface {
 				}
 			}
 
+
+			/**
+			 * Get default shared link types matching the legacy fixed URL fields.
+			 *
+			 * @return  array
+			 *
+			 * @since  2.7.0
+			 */
+			protected function getDefaultLinkTypes(): array
+			{
+				return [
+					[
+						'code'       => 'demo',
+						'title'      => 'COM_SWJPROJECTS_URLS_DEMO',
+						'value_type' => 'url',
+						'icon_class' => 'fas fa-external-link-alt',
+					],
+					[
+						'code'       => 'support',
+						'title'      => 'COM_SWJPROJECTS_URLS_SUPPORT',
+						'value_type' => 'url',
+						'icon_class' => 'fas fa-info-circle',
+					],
+					[
+						'code'       => 'github',
+						'title'      => 'COM_SWJPROJECTS_URLS_GITHUB',
+						'value_type' => 'url',
+						'icon_class' => 'fab fa-github-square',
+					],
+					[
+						'code'       => 'jed',
+						'title'      => 'COM_SWJPROJECTS_URLS_JED',
+						'value_type' => 'url',
+						'icon_class' => 'fab fa-joomla',
+					],
+					[
+						'code'       => 'donate',
+						'title'      => 'COM_SWJPROJECTS_URLS_DONATE',
+						'value_type' => 'url',
+						'icon_class' => 'fas fa-donate',
+					],
+					[
+						'code'       => 'documentation',
+						'title'      => 'COM_SWJPROJECTS_URLS_DOCUMENTATION',
+						'value_type' => 'url',
+						'icon_class' => 'fas fa-file-alt',
+					],
+				];
+			}
+
+			/**
+			 * Normalize raw link type subform data into code-keyed descriptors.
+			 *
+			 * @param   mixed  $types  Raw link types.
+			 *
+			 * @return  array
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeLinkTypes($types): array
+			{
+				$types = $this->projectLinksToArray($types);
+
+				if (!is_array($types))
+				{
+					return [];
+				}
+
+				$normalized = [];
+
+				foreach ($types as $type)
+				{
+					if (is_object($type))
+					{
+						$type = (array) $type;
+					}
+
+					if (!is_array($type))
+					{
+						continue;
+					}
+
+					$code = $this->normalizeProjectLinkCode($type['code'] ?? '');
+
+					if ($code === '')
+					{
+						continue;
+					}
+
+					$valueType = trim((string) ($type['value_type'] ?? 'url'));
+
+					if (!in_array($valueType, ['url', 'email'], true))
+					{
+						$valueType = 'url';
+					}
+
+                    $normalized[$code] = [
+                        'code'       => $code,
+                        'title'      => $this->normalizeLinkTypeTitle($code, $type['title'] ?? ''),
+                        'value_type' => $valueType,
+                        'icon_class' => trim((string) ($type['icon_class'] ?? '')),
+                    ];
+				}
+
+				return $normalized;
+			}
+
+			/**
+			 * Normalize built-in link-type titles to language constants while keeping custom titles intact.
+			 *
+			 * @param   string  $code   Link type code.
+			 * @param   mixed   $title  Raw title.
+			 *
+			 * @return  string
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeLinkTypeTitle(string $code, $title): string
+			{
+				$title = trim((string) $title);
+				$defaultTitle = $this->getDefaultLinkTypeTitleConstant($code);
+
+				if ($defaultTitle === '')
+				{
+					return $title !== '' ? $title : $code;
+				}
+
+				if ($title === '' || $this->isLegacyDefaultLinkTypeTitle($code, $title))
+				{
+					return $defaultTitle;
+				}
+
+				return $title;
+			}
+
+			/**
+			 * Get the default language key for a built-in link type.
+			 *
+			 * @param   string  $code  Link type code.
+			 *
+			 * @return  string
+			 *
+			 * @since  2.7.0
+			 */
+			protected function getDefaultLinkTypeTitleConstant(string $code): string
+			{
+				return match ($code)
+				{
+					'demo' => 'COM_SWJPROJECTS_URLS_DEMO',
+					'support' => 'COM_SWJPROJECTS_URLS_SUPPORT',
+					'github' => 'COM_SWJPROJECTS_URLS_GITHUB',
+					'jed' => 'COM_SWJPROJECTS_URLS_JED',
+					'donate' => 'COM_SWJPROJECTS_URLS_DONATE',
+					'documentation' => 'COM_SWJPROJECTS_URLS_DOCUMENTATION',
+					default => '',
+				};
+			}
+
+			/**
+			 * Detect legacy built-in titles that should be migrated to language constants.
+			 *
+			 * @param   string  $code   Link type code.
+			 * @param   string  $title  Raw title.
+			 *
+			 * @return  bool
+			 *
+			 * @since  2.7.0
+			 */
+			protected function isLegacyDefaultLinkTypeTitle(string $code, string $title): bool
+			{
+				$legacy = match ($code)
+				{
+					'demo' => ['Demo', 'Демо'],
+					'support' => ['Support', 'Поддержка'],
+					'github' => ['GitHub'],
+					'jed' => ['JED', 'Joomla Extensions Directory'],
+					'donate' => ['Donate', 'Поддержать'],
+					'documentation' => ['Documentation', 'Документация'],
+					default => [],
+				};
+
+				return in_array($title, $legacy, true) || $title === $this->getDefaultLinkTypeTitleConstant($code);
+			}
+			/**
+			 * Merge code-keyed link type arrays, letting later groups override earlier ones.
+			 *
+			 * @param   array  ...$groups  Link type groups.
+			 *
+			 * @return  array
+			 *
+			 * @since  2.7.0
+			 */
+			protected function mergeLinkTypes(array ...$groups): array
+			{
+				$merged = [];
+
+				foreach ($groups as $group)
+				{
+					foreach ($group as $code => $type)
+					{
+						$merged[$code] = $type;
+					}
+				}
+
+				return $merged;
+			}
+			/**
+			 * Convert legacy project URLs and typed project-link rows into typed-list JSON.
+			 *
+			 * @param   mixed  $links  Raw project links.
+			 *
+			 * @return  string
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeProjectLinksToJson($links): string
+			{
+				$json = json_encode($this->normalizeProjectLinks($links), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+				return is_string($json) ? $json : '[]';
+			}
+
+			/**
+			 * Normalize legacy fixed-key URL maps and typed project-link rows into one list shape.
+			 *
+			 * @param   mixed  $links  Raw project links.
+			 *
+			 * @return  array
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeProjectLinks($links): array
+			{
+				$links = $this->projectLinksToArray($links);
+
+				if (!is_array($links))
+				{
+					return [];
+				}
+
+				if (array_is_list($links))
+				{
+					$normalized = [];
+
+					foreach ($links as $link)
+					{
+						$link = $this->normalizeProjectLink($link);
+
+						if ($link !== null)
+						{
+							$normalized[] = $link;
+						}
+					}
+
+					return $normalized;
+				}
+
+				$normalized = [];
+
+				foreach ($links as $link)
+				{
+					$link = $this->normalizeProjectLink($link);
+
+					if ($link === null)
+					{
+						$normalized = [];
+						break;
+					}
+
+					$normalized[] = $link;
+				}
+
+				if ($normalized !== [])
+				{
+					return $normalized;
+				}
+
+				foreach ($links as $type => $value)
+				{
+					$link = $this->normalizeProjectLink([
+						'type'  => $type,
+						'value' => $value,
+					]);
+
+					if ($link !== null)
+					{
+						$normalized[] = $link;
+					}
+				}
+
+				return $normalized;
+			}
+
+			/**
+			 * Normalize one project link row.
+			 *
+			 * @param   mixed  $link  Raw project link row.
+			 *
+			 * @return  array|null
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeProjectLink($link): ?array
+			{
+				if (is_object($link))
+				{
+					$link = (array) $link;
+				}
+
+				if (!is_array($link))
+				{
+					return null;
+				}
+
+				$type  = $this->normalizeProjectLinkCode($link['type'] ?? '');
+				$title = trim((string) ($link['title'] ?? ''));
+				$value = trim((string) ($link['value'] ?? ''));
+
+				if ($type === '' || $value === '')
+				{
+					return null;
+				}
+
+				return [
+					'type'  => $type,
+					'title' => $title,
+					'value' => $value,
+				];
+			}
+
+			/**
+			 * Convert raw project links to an array when possible.
+			 *
+			 * @param   mixed  $links  Raw project links.
+			 *
+			 * @return  mixed
+			 *
+			 * @since  2.7.0
+			 */
+			protected function projectLinksToArray($links)
+			{
+				if ($links instanceof Registry)
+				{
+					return $links->toArray();
+				}
+
+				if (is_string($links))
+				{
+					$links = trim($links);
+
+					if ($links === '')
+					{
+						return [];
+					}
+
+					$decoded = json_decode($links, true);
+
+					if (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
+					{
+						return $decoded;
+					}
+
+					return (new Registry($links))->toArray();
+				}
+
+				if (is_object($links))
+				{
+					return (array) $links;
+				}
+
+				return $links;
+			}
+
+			/**
+			 * Normalize project link type codes.
+			 *
+			 * @param   mixed  $code  Raw project link code.
+			 *
+			 * @return  string
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeProjectLinkCode($code): string
+			{
+				return preg_replace('/[^a-z0-9_-]/', '', strtolower(trim((string) $code)));
+			}
 			/**
 			 * Method to create the SW JProjects dashboard submenu module if it does not exist.
 			 *

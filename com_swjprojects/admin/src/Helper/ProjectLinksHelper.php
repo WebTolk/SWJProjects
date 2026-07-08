@@ -14,12 +14,10 @@ namespace Joomla\Component\SWJProjects\Administrator\Helper;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Registry\Registry;
 
 use function array_is_list;
 use function array_values;
-use function in_array;
 use function is_array;
 use function is_object;
 use function is_string;
@@ -36,10 +34,10 @@ use const JSON_UNESCAPED_UNICODE;
 
 class ProjectLinksHelper
 {
-	public const PARAM_LINK_TYPES = 'project_link_types';
+	public const PARAM_LINK_TYPES = MaintainerLinksHelper::PARAM_LINK_TYPES;
 
 	/**
-	 * Default project link types matching the legacy fixed URL fields.
+	 * Default shared link types.
 	 *
 	 * @return  array
 	 *
@@ -47,48 +45,11 @@ class ProjectLinksHelper
 	 */
 	public static function getDefaultTypes(): array
 	{
-		return [
-			[
-				'code'       => 'demo',
-				'title'      => 'Demo',
-				'value_type' => 'url',
-				'icon_class' => 'fas fa-external-link-alt',
-			],
-			[
-				'code'       => 'support',
-				'title'      => 'Support',
-				'value_type' => 'url',
-				'icon_class' => 'fas fa-info-circle',
-			],
-			[
-				'code'       => 'github',
-				'title'      => 'GitHub',
-				'value_type' => 'url',
-				'icon_class' => 'fab fa-github-square',
-			],
-			[
-				'code'       => 'jed',
-				'title'      => 'Joomla Extensions Directory',
-				'value_type' => 'url',
-				'icon_class' => 'fab fa-joomla',
-			],
-			[
-				'code'       => 'donate',
-				'title'      => 'Donate',
-				'value_type' => 'url',
-				'icon_class' => 'fas fa-donate',
-			],
-			[
-				'code'       => 'documentation',
-				'title'      => 'Documentation',
-				'value_type' => 'url',
-				'icon_class' => 'fas fa-file-alt',
-			],
-		];
+		return MaintainerLinksHelper::getDefaultTypes();
 	}
 
 	/**
-	 * Get normalized component-level project link types.
+	 * Get normalized component-level shared link types.
 	 *
 	 * @param   Registry|null  $params  Component params.
 	 *
@@ -98,10 +59,7 @@ class ProjectLinksHelper
 	 */
 	public static function getTypes(?Registry $params = null): array
 	{
-		$params = $params ?: ComponentHelper::getParams('com_swjprojects');
-		$types  = self::normalizeTypes($params->get(self::PARAM_LINK_TYPES, []));
-
-		return $types ?: self::normalizeTypes(self::getDefaultTypes());
+		return MaintainerLinksHelper::getTypes($params);
 	}
 
 	/**
@@ -115,44 +73,7 @@ class ProjectLinksHelper
 	 */
 	public static function normalizeTypes($types): array
 	{
-		$types = self::toArray($types);
-
-		if (!is_array($types)) {
-			return [];
-		}
-
-		$normalized = [];
-
-		foreach ($types as $type) {
-			if (is_object($type)) {
-				$type = (array) $type;
-			}
-
-			if (!is_array($type)) {
-				continue;
-			}
-
-			$code = self::normalizeCode($type['code'] ?? '');
-
-			if ($code === '') {
-				continue;
-			}
-
-			$valueType = trim((string) ($type['value_type'] ?? 'url'));
-
-			if (!in_array($valueType, ['url', 'email'], true)) {
-				$valueType = 'url';
-			}
-
-			$normalized[$code] = [
-				'code'       => $code,
-				'title'      => trim((string) ($type['title'] ?? $code)),
-				'value_type' => $valueType,
-				'icon_class' => trim((string) ($type['icon_class'] ?? '')),
-			];
-		}
-
-		return $normalized;
+		return MaintainerLinksHelper::normalizeTypes($types);
 	}
 
 	/**
@@ -336,4 +257,3 @@ class ProjectLinksHelper
 		return preg_replace('/[^a-z0-9_-]/', '', strtolower(trim((string) $code)));
 	}
 }
-

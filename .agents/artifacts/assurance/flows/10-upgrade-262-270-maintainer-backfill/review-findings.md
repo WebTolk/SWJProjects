@@ -41,3 +41,16 @@
 - The earlier guarded migration variant was still incorrect on the real Joomla update path: by the time installer `update()` executed, Joomla had already rewritten `#__extensions.manifest_cache` to the incoming `2.7.0` version, so the `< 2.7.0` gate never opened on a clean restored `2.6.2` stand.
 - This was corrected by capturing the installed version during `preflight('update', ...)` from the live installed administrator manifest file and using that captured value in `update()`.
 - After rebuilding and rerunning on a freshly restored archived `2.6.2` local stand, the update path passed with seeded `project_link_types` and migrated typed project links.
+
+## 2026-07-08 Live Config Follow-up
+
+- User-reported live defect confirmed: the component config exposed two separate global lists for link-type descriptors (maintainer_link_types and project_link_types) even though the intended behavior is one shared list.
+- The fix is implemented in the component config, helper layer, and installer migration path.
+- Static verification passed for the changed PHP surfaces in both main and release worktrees.
+- Runtime verification of the rebuilt package on a Joomla stand is still pending for this hotfix slice.
+
+## 2026-07-08 Language-Key Titles Follow-up
+
+- No new static or package-level blocker was found after moving built-in shared link-type titles to language keys.
+- The installer normalization path now also covers already-saved shared `link_types` rows, so a `2.7.0 -> 2.7.0` reinstall/update can repair built-in titles that were persisted as plain text.
+- Remaining open evidence gap for this slice: runtime Joomla install/update plus component-config verification on a stand is still pending.

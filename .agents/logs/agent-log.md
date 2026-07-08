@@ -2,6 +2,15 @@
 
 ## Entry
 
+- timestamp: 2026-07-08T16:01:44.3845180+04:00
+- agent: Codex
+- task: Recover project flow state from live .agents, reload Joomla platform knowledge including the conditional extension/API sources, and resolve whether Flow 09 or Flow 10 is the true latest stop point.
+- files analyzed: E:\.agents\AGENTS.md; E:\.agents\platforms\joomla\platform.json; E:\.agents\docs\joomla-toolkit\README.md; E:\.agents\docs\joomla-toolkit\joomla-architecture-rules.md; E:\.agents\docs\joomla-toolkit\joomla-extension-structures.md; E:\.agents\docs\joomla-toolkit\joomla6-rest-api-core-full.md; .agents/AGENTS.md; .agents/config/config.yaml; .agents/context/project-context.yaml; .agents/evolutions/cursor.json; .agents/artifacts/investigation/project-flow-status-report-2026-07-07.md; .agents/artifacts/intake/flows/10-upgrade-262-270-maintainer-backfill/next-session-handoff.md; .agents/artifacts/release/swjprojects-2.7.0-package-build-2026-07-05.md; .agents/artifacts/assurance/flows/09-jchangelog-translation-join-fix/browser-verification-report.md; .agents/logs/task-log.md; .agents/logs/agent-log.md; .agents/logs/verification-log.md; git status --short.
+- files changed: .agents/artifacts/investigation/project-flow-status-report-2026-07-08.md; .agents/logs/task-log.md; .agents/logs/agent-log.md; .agents/logs/verification-log.md; .agents/logs/tool-telemetry.ndjson.
+- status: completed
+- follow-up: The latest saved handoff is Flow 10 paused in local restore/assurance, while Flow 09 remains an older still-open assurance stream and should be treated separately.
+## Entry
+
 - timestamp: 2026-07-07T14:13:00+04:00
 - agent: Codex
 - task: Execute the pending Flow 09 runtime feed checks and determine whether the live duplication bug is fixed or still present.
@@ -70,3 +79,34 @@
 - files changed: `com_swjprojects/script.php`; `E:\dev\SWJProjects-release-2.7.0\com_swjprojects\script.php`; `E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip`; `.agents/artifacts/implementation/flows/10-upgrade-262-270-maintainer-backfill/change-summary.md`; `.agents/artifacts/assurance/flows/10-upgrade-262-270-maintainer-backfill/test-cases.md`; `.agents/artifacts/assurance/flows/10-upgrade-262-270-maintainer-backfill/review-findings.md`; `.agents/artifacts/release/swjprojects-2.7.0-package-build-2026-07-05.md`; `.agents/logs/task-log.md`; `.agents/logs/agent-log.md`; `.agents/logs/verification-log.md`.
 - status: completed
 - follow-up: The local archived update path is now re-proven end-to-end with the fixed installer timing logic; reopen only if a browser-level UI rerun is explicitly required again.
+
+## Entry
+
+- timestamp: 2026-07-07T21:24:43+04:00
+- agent: Codex
+- task: Save a restartable handoff after the installer-helper refactor and interrupted `web-tolk.local` rerestore.
+- files analyzed: `com_swjprojects/script.php`; `E:\dev\SWJProjects-release-2.7.0\com_swjprojects\script.php`; `E:\OSPanel\home\web-tolk.local\public`; `E:\OSPanel\home\web-tolk.local\restore-work-2026-07-07-restore-1535\web-tolk.ru_2026-07-06_09-53.tar.gz`; `E:\OSPanel\home\web-tolk.local\restore-work-2026-07-07-restore-1535\web-tolk.ru_2026-07-06_09-53.sql`; Flow 10 handoff/release/log artifacts.
+- files changed: `com_swjprojects/script.php`; `E:\dev\SWJProjects-release-2.7.0\com_swjprojects\script.php`; `E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip`; `.agents/artifacts/intake/flows/10-upgrade-262-270-maintainer-backfill/next-session-handoff.md`; `.agents/artifacts/release/swjprojects-2.7.0-package-build-2026-07-05.md`; `.agents/logs/task-log.md`; `.agents/logs/agent-log.md`; `.agents/logs/verification-log.md`.
+- status: paused
+- follow-up: Resume from the saved handoff, flatten the nested restored site root under `public\\web-tolk.ru`, then finish the local update verification with the rebuilt ZIP (`SHA256 E08ECC324E6CA7FFBC77E16D27F7FDA0F41BD273F4019ABE29CB30FF0EC81F2C`).
+
+
+## Entry
+
+- timestamp: 2026-07-08T20:04:53.2626670+04:00
+- agent: Codex
+- task: Implement the live follow-up hotfix that unifies duplicated component-config link-type lists into one shared registry and rebuild the 2.7.0 package.
+- files analyzed: com_swjprojects/admin/config.xml; com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php; com_swjprojects/admin/src/Helper/ProjectLinksHelper.php; com_swjprojects/admin/forms/maintainer.xml; com_swjprojects/admin/forms/project.xml; com_swjprojects/script.php; Flow 10 implementation/assurance/release artifacts.
+- files changed: com_swjprojects/admin/config.xml; com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php; com_swjprojects/admin/src/Helper/ProjectLinksHelper.php; com_swjprojects/script.php; com_swjprojects/admin/language/en-GB/com_swjprojects.ini; com_swjprojects/admin/language/ru-RU/com_swjprojects.ini; mirrored release-worktree copies; rebuilt ZIP; Flow 10 artifacts; .agents/evolutions/cursor.json; .agents/logs/*.md.
+- status: completed
+- follow-up: Runtime confirmation of the rebuilt package is still needed on a Joomla stand to prove the UI/config state matches the intended one-list model.
+
+## Entry
+
+- timestamp: 2026-07-08T20:38:48.3233048+04:00
+- agent: Codex
+- task: Convert built-in shared link-type titles to language-key storage, rebuild the release package, and persist the Flow 10 hotfix follow-up artifacts.
+- files analyzed: com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php; com_swjprojects/admin/src/Helper/ProjectLinksHelper.php; com_swjprojects/admin/src/Field/MaintainerlinktypesField.php; com_swjprojects/admin/src/Field/ProjectlinktypesField.php; com_swjprojects/script.php; .agents/artifacts/implementation/flows/10-upgrade-262-270-maintainer-backfill/*; .agents/artifacts/release/swjprojects-2.7.0-package-build-2026-07-05.md; .agents/logs/*.md.
+- files changed: com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php; com_swjprojects/admin/src/Helper/ProjectLinksHelper.php; com_swjprojects/admin/src/Field/MaintainerlinktypesField.php; com_swjprojects/admin/src/Field/ProjectlinktypesField.php; com_swjprojects/script.php; mirrored release-worktree copies; E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip; Flow 10 artifacts; .agents/evolutions/cursor.json; .agents/logs/*.md.
+- status: completed
+- follow-up: Runtime confirmation is still needed on a Joomla stand to prove the rebuilt package persists language-key titles in config while keeping localized selector labels in admin forms.

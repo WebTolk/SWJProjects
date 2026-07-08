@@ -159,3 +159,56 @@ Updated package data:
 - SHA256: `EFC5CB075F0789A41196D2932B06315B79187BE2EAC46599E2A8C06075861372`
 - Local clean rerun result on restored `web-tolk.local`: Joomla CLI returned `[OK] Extension installed successfully.`
 - Local clean rerun verification: `project_link_types` seeded, `typed_rows=101`, `legacy_rows=0`, and project `id=5` migrated to typed rows.
+
+## Rebuild Note - Installer Helper Decoupling (Pending local rerun)
+
+The package was rebuilt again at `2026-07-07T21:24:43+04:00` after removing the installer-script dependency on the separate `ProjectLinksHelper` class for the project-link migration/default-type path.
+
+Changes:
+
+- `com_swjprojects/script.php` no longer imports `Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper`.
+- The installer now owns its local project-link default/migration helpers (`getDefaultProjectLinkTypes()`, `normalizeProjectLinksToJson()`, `normalizeProjectLinks()`, `normalizeProjectLink()`, `projectLinksToArray()`, `normalizeProjectLinkCode()`).
+- `E:\dev\SWJProjects-release-2.7.0\com_swjprojects\script.php` was resynchronized from the current repo before rebuilding.
+
+Updated package data:
+
+- SHA256: `E08ECC324E6CA7FFBC77E16D27F7FDA0F41BD273F4019ABE29CB30FF0EC81F2C`
+- Verification status: package rebuild completed, but the fresh local rerun is still pending because `web-tolk.local` restore is paused with the restored site nested under `public\web-tolk.ru`.
+- Exact resume point: flatten the restored folder back into `public`, keep the local `configuration.php`, then rerun Joomla CLI update from this rebuilt ZIP.
+
+## Rebuild Note - Shared Link Types Hotfix
+
+The package was rebuilt again at 2026-07-08T20:04:53.2626670+04:00 after collapsing the duplicate component-config link-type lists into one shared link_types registry.
+
+Changes:
+
+- com_swjprojects/admin/config.xml now exposes one shared link_types subform instead of separate maintainer_link_types and project_link_types fieldsets.
+- MaintainerLinksHelper is now the canonical source for shared link-type descriptors, with legacy fallback from the older param names.
+- ProjectLinksHelper now reads its type descriptors from the same shared registry.
+- com_swjprojects/script.php now merges legacy param values into link_types during install/update and removes the old keys.
+
+Updated package data:
+
+- Size: 449604 bytes
+- SHA256: 705DF9CB03386E532CCF11E3EDEB28A5D4E39C73BCBFAE47D4499545C1223175
+- Package: E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip
+- Runtime verification: pending stand install/config smoke for this hotfix slice.
+
+
+## Rebuild Note - Shared Link-Type Title Language Keys
+
+The package was rebuilt again at 2026-07-08T20:38:48.3233048+04:00 after normalizing built-in shared link-type titles to language constants.
+
+Changes:
+
+- `com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php` now defines the built-in shared titles as `COM_SWJPROJECTS_URLS_*` keys and normalizes legacy built-in labels to those constants.
+- `com_swjprojects/admin/src/Field/MaintainerlinktypesField.php` and `ProjectlinktypesField.php` now translate stored title keys with `Text::_()` when rendering selector options.
+- `com_swjprojects/script.php` now rewrites already-saved built-in shared `link_types` titles to language-key form during install/update while keeping custom titles unchanged.
+- `E:\dev\SWJProjects-release-2.7.0\com_swjprojects\...` was resynchronized from the current repo before rebuilding.
+
+Updated package data:
+
+- Size: `450773` bytes
+- SHA256: `47363106F942E3F1DBF29FDF741CD75C77453DDDBD7EA92F88D9F2CE57583F3D`
+- Package: `E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip`
+- Runtime verification: pending stand install/config smoke for this title-normalization slice.

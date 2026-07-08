@@ -126,3 +126,49 @@
   - `typed_rows=101`;
   - `legacy_rows=0`;
   - installed local `administrator/components/com_swjprojects/script.php` contains the `installedComponentVersionBeforeUpdate` / `readInstalledComponentVersionFromFilesystem()` capture path.
+
+## 2026-07-08 One-List Hotfix
+
+### Executed Cases
+
+- php -l passed for main-worktree changed PHP files:
+  - com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php
+  - com_swjprojects/admin/src/Helper/ProjectLinksHelper.php
+  - com_swjprojects/script.php
+- php -l passed for the mirrored release-worktree copies of the same files.
+- Mirrored the config, helper, installer, and language files into E:\dev\SWJProjects-release-2.7.0.
+- Rebuilt SW JProjects_2.7.0.zip successfully.
+- Rebuilt ZIP metadata:
+  - size 449604 bytes
+  - SHA256 705DF9CB03386E532CCF11E3EDEB28A5D4E39C73BCBFAE47D4499545C1223175
+
+### Pending Cases
+
+- Install the rebuilt package on a Joomla stand and verify the component config shows one shared link-types fieldset instead of two separate lists.
+- Verify legacy stored params are collapsed into link_types after install/update and both maintainer/project subforms still resolve their options.
+
+
+## 2026-07-08 Language-Key Titles Hotfix
+
+### Executed Cases
+
+- php -l passed for main-worktree files:
+  - com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php
+  - com_swjprojects/admin/src/Helper/ProjectLinksHelper.php
+  - com_swjprojects/admin/src/Field/MaintainerlinktypesField.php
+  - com_swjprojects/admin/src/Field/ProjectlinktypesField.php
+  - com_swjprojects/script.php
+- Confirmed helper defaults now use `COM_SWJPROJECTS_URLS_*` values directly in shared link-type descriptors.
+- Confirmed both link-type field classes render option labels through `Text::_($type['title'])`.
+- Confirmed installer `checkLinkTypes()` rewrites existing shared `link_types` rows when normalization changes built-in titles.
+- Mirrored the changed files into E:\dev\SWJProjects-release-2.7.0.
+- php -l passed for the mirrored release-worktree copies of the same five files.
+- Rebuilt `SW JProjects_2.7.0.zip` successfully.
+- Rebuilt ZIP metadata:
+  - size 450773 bytes
+  - SHA256 47363106F942E3F1DBF29FDF741CD75C77453DDDBD7EA92F88D9F2CE57583F3D
+
+### Pending Cases
+
+- Install the rebuilt package on a Joomla stand and verify the component config `title` inputs now contain the `COM_SWJPROJECTS_URLS_*` constants for built-in rows.
+- Verify maintainer and project edit forms still show localized option labels while reading the shared stored constants.

@@ -55,3 +55,28 @@ Implemented typed project links for the `2.6.2 -> 2.7.0` upgrade path without cr
 - The component installer script now captures the currently installed version during `preflight('update', ...)` from the live administrator manifest file `administrator/components/com_swjprojects/swjprojects.xml`, stores it on the installer instance, and then uses that captured version inside `update()`.
 - The fixed installer script was mirrored into `E:\dev\SWJProjects-release-2.7.0\com_swjprojects\script.php`, the package was rebuilt, and the rebuilt local test ZIP is `E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip` with SHA256 `EFC5CB075F0789A41196D2932B06315B79187BE2EAC46599E2A8C06075861372`.
 - A full local rerun from the archived `2.6.2` files+DB on `web-tolk.local` now passes: update to `2.7.0` seeds `project_link_types`, migrates project `id=5` to typed rows, yields `typed_rows=101`, `legacy_rows=0`, and installs the corrected script variant on the stand.
+
+## 2026-07-08 One-List Hotfix
+
+- Component params no longer model project and maintainer link types as two independent config lists.
+- The canonical component param is now link_types, shared by both maintainer and project link subforms.
+- Legacy params maintainer_link_types and project_link_types are still readable as migration/fallback inputs, but installer checkLinkTypes() now collapses them into link_types and removes both legacy keys on install/update.
+- ProjectLinksHelper now delegates link-type sourcing to MaintainerLinksHelper, so both surfaces read the same normalized type registry.
+- Rebuilt release package: E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip
+- Rebuilt package SHA256: 705DF9CB03386E532CCF11E3EDEB28A5D4E39C73BCBFAE47D4499545C1223175
+
+## Pending Runtime Check
+
+- Install the rebuilt package on the target stand and confirm the component config shows one shared link_types fieldset.
+- Confirm existing stored values survive migration into link_types and both project/maintainer subforms still render their options.
+
+
+## 2026-07-08 Language-Key Titles Hotfix
+
+- Built-in shared link-type rows now store language keys directly in the shared `link_types` param (`COM_SWJPROJECTS_URLS_DEMO`, `..._SUPPORT`, `..._GITHUB`, `..._JED`, `..._DONATE`, `..._DOCUMENTATION`).
+- Maintainer and project link-type fields now translate those stored keys at render time, so the config rows keep stable locale-neutral values while the edit forms still show localized labels.
+- Installer `checkLinkTypes()` now rewrites already-saved built-in titles like `Demo`, `Support`, `JED`, `Donate`, and `Documentation` into the corresponding language keys during install/update, while custom user-defined titles remain unchanged.
+- Rebuilt release package: E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip
+- Rebuilt package SHA256: 47363106F942E3F1DBF29FDF741CD75C77453DDDBD7EA92F88D9F2CE57583F3D
+- Rebuilt package size: 450773 bytes
+- Runtime install/config smoke for this title-normalization slice is still pending.
