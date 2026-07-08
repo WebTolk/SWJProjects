@@ -212,3 +212,20 @@ Updated package data:
 - SHA256: `47363106F942E3F1DBF29FDF741CD75C77453DDDBD7EA92F88D9F2CE57583F3D`
 - Package: `E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip`
 - Runtime verification: pending stand install/config smoke for this title-normalization slice.
+
+## Rebuild Note - Package Whats-New Maintainer Text
+
+The package was rebuilt again at 2026-07-08T21:34:17.9731894+04:00 after updating the package whats-new language constants.
+
+Changes:
+
+- `language/en-GB/pkg_swjprojects.sys.ini` now carries the current `v.2.7.0` whats-new text and explicitly mentions the maintainer entity.
+- `language/ru-RU/pkg_swjprojects.sys.ini` now carries the matching Russian `v.2.7.0` whats-new text with the maintainer entity.
+- `E:\dev\SWJProjects-release-2.7.0\language\...` was resynchronized from the current repo before rebuilding.
+
+Updated package data:
+
+- Size: `450937` bytes
+- SHA256: `5132C65DA4E5926CB212D21728ADC92E04925958E20BC418B439AA9C2B5D976B`
+- Package: `E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip`
+- ZIP verification: packaged English and Russian `PKG_SWJPROJECTS_WHATS_NEW` constants contain the maintainer-entity addendum.

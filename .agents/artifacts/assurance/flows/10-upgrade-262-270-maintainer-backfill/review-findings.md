@@ -54,3 +54,8 @@
 - No new static or package-level blocker was found after moving built-in shared link-type titles to language keys.
 - The installer normalization path now also covers already-saved shared `link_types` rows, so a `2.7.0 -> 2.7.0` reinstall/update can repair built-in titles that were persisted as plain text.
 - Remaining open evidence gap for this slice: runtime Joomla install/update plus component-config verification on a stand is still pending.
+
+## 2026-07-08 Package Whats-New Maintainer Follow-up
+
+- No blocker was found in the package whats-new language update.
+- The rebuilt ZIP was inspected directly and contains the maintainer-entity text in both packaged `pkg_swjprojects.sys.ini` files.

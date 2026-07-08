@@ -110,3 +110,13 @@
 - files changed: com_swjprojects/admin/src/Helper/MaintainerLinksHelper.php; com_swjprojects/admin/src/Helper/ProjectLinksHelper.php; com_swjprojects/admin/src/Field/MaintainerlinktypesField.php; com_swjprojects/admin/src/Field/ProjectlinktypesField.php; com_swjprojects/script.php; mirrored release-worktree copies; E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip; Flow 10 artifacts; .agents/evolutions/cursor.json; .agents/logs/*.md.
 - status: completed
 - follow-up: Runtime confirmation is still needed on a Joomla stand to prove the rebuilt package persists language-key titles in config while keeping localized selector labels in admin forms.
+
+## Entry
+
+- timestamp: 2026-07-08T21:34:17.9731894+04:00
+- agent: Codex
+- task: Refresh package whats-new text for `v.2.7.0`, add the maintainer entity there, rebuild the ZIP, and persist the artifact/log follow-up.
+- files analyzed: language/en-GB/pkg_swjprojects.sys.ini; language/ru-RU/pkg_swjprojects.sys.ini; .agents/artifacts/release/swjprojects-2.7.0-package-build-2026-07-05.md; .agents/logs/*.md.
+- files changed: language/en-GB/pkg_swjprojects.sys.ini; language/ru-RU/pkg_swjprojects.sys.ini; mirrored release-worktree copies; E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip; Flow 10 artifacts; .agents/evolutions/cursor.json; .agents/logs/*.md.
+- status: completed
+- follow-up: Runtime install is optional for this slice; ZIP content verification already confirms the new package whats-new text.

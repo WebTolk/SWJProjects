@@ -1,0 +1,28 @@
+{
+  "last_patch_id": "10-package-whats-new-maintainer-addendum",
+  "last_evolution_id": "10-package-whats-new-maintainer-2026-07-08",
+  "updated_at": "2026-07-08T21:34:17.9731894+04:00",
+  "applied_updates": [
+    "project-context-initialized",
+    "intake-and-investigation-artifacts-created",
+    "multi-flow-roadmap-task-packets-created",
+    "maintainer-entity-flow-registered",
+    "maintainer-requirements-investigated",
+    "maintainer-plan-drafted",
+    "maintainer-approval-questions-saved",
+    "maintainer-implementation-release-cycle-recorded",
+    "maintainer-keys-boundary-explicitly-fixed",
+    "phpstorm-project-file-preference-tightened",
+    "maintainer-package-surface-cleaned",
+    "maintainer-dev-version-policy-recorded",
+    "maintainer-flow-evolved",
+    "admin-menu-plugin-migration-evolved",
+    "admin-menu-preset-surface-evolved",
+    "flow10-browser-closeout-recovered",
+    "flow10-release-and-evolve-artifacts-recorded",
+    "flow10-link-types-single-list-hotfix",
+    "flow10-link-type-title-language-keys-hotfix",
+    "flow10-package-whats-new-maintainer-addendum"
+  ],
+  "pending_patches": []
+}

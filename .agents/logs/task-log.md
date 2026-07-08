@@ -108,3 +108,14 @@
 - risks: medium
 - stage: assurance
 - next-step: Install the rebuilt ZIP on a Joomla stand and verify the shared link-type title inputs now persist `COM_SWJPROJECTS_URLS_*` while edit-form selectors still show localized labels.
+
+## Entry
+
+- timestamp: 2026-07-08T21:34:17.9731894+04:00
+- task: Update the package whats-new language constants to mention the maintainer entity, rebuild the 2.7.0 ZIP, and persist the follow-up Flow 10 artifacts.
+- files: language/en-GB/pkg_swjprojects.sys.ini; language/ru-RU/pkg_swjprojects.sys.ini; E:\dev\SWJProjects-release-2.7.0\language\...; E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip; Flow 10 implementation/assurance/release artifacts; .agents/evolutions/cursor.json; .agents/logs/task-log.md; .agents/logs/agent-log.md; .agents/logs/verification-log.md
+- tools: shell fallback for package language edits, release-worktree mirroring, rebuild, ZIP inspection, and artifact synchronization.
+- status: completed
+- risks: low
+- stage: release
+- next-step: If needed, install the rebuilt ZIP on a Joomla stand and visually confirm the after-update screen shows the maintainer whats-new entry.

@@ -172,3 +172,16 @@
 
 - Install the rebuilt package on a Joomla stand and verify the component config `title` inputs now contain the `COM_SWJPROJECTS_URLS_*` constants for built-in rows.
 - Verify maintainer and project edit forms still show localized option labels while reading the shared stored constants.
+
+## 2026-07-08 Package Whats-New Maintainer Addendum
+
+### Executed Cases
+
+- Updated `PKG_SWJPROJECTS_WHATS_NEW` in both package locales to the `v.2.7.0` text.
+- Mirrored both package language files into E:\dev\SWJProjects-release-2.7.0.
+- Rebuilt `SW JProjects_2.7.0.zip` successfully.
+- Extracted `language/en-GB/pkg_swjprojects.sys.ini` from the rebuilt ZIP and confirmed the maintainer-entity whats-new text is present.
+- Extracted `language/ru-RU/pkg_swjprojects.sys.ini` from the rebuilt ZIP and confirmed the maintainer-entity whats-new text is present.
+- Rebuilt ZIP metadata:
+  - size 450937 bytes
+  - SHA256 5132C65DA4E5926CB212D21728ADC92E04925958E20BC418B439AA9C2B5D976B

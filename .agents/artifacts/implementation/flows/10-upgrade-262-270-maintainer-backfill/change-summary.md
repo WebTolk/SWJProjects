@@ -80,3 +80,11 @@ Implemented typed project links for the `2.6.2 -> 2.7.0` upgrade path without cr
 - Rebuilt package SHA256: 47363106F942E3F1DBF29FDF741CD75C77453DDDBD7EA92F88D9F2CE57583F3D
 - Rebuilt package size: 450773 bytes
 - Runtime install/config smoke for this title-normalization slice is still pending.
+
+## 2026-07-08 Package Whats-New Maintainer Addendum
+
+- `PKG_SWJPROJECTS_WHATS_NEW` was updated in both package locales from the stale `v.2.6.2` text to the current `v.2.7.0` summary.
+- The package after-update screen now explicitly mentions the new maintainer entity alongside the administrator-menu plugin and changelog-feed fixes.
+- Rebuilt release package: E:\dev\SWJProjects-release-2.7.0\.packages\SW JProjects_2.7.0.zip
+- Rebuilt package SHA256: 5132C65DA4E5926CB212D21728ADC92E04925958E20BC418B439AA9C2B5D976B
+- Rebuilt package size: 450937 bytes
