@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\ServerschemeHelper;
 use Joomla\Component\SWJProjects\Administrator\Traits\CacheAwareTrait;
+use Joomla\Component\SWJProjects\Site\Helper\MaintainerHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
@@ -326,6 +327,35 @@ class JUpdateModel extends BaseDatabaseModel
                           );
                 }
 
+                // Join over maintainer base data
+                $query->select([
+                    'm.id as maintainer_id',
+                    'm.alias as maintainer_alias',
+                    'm.website as maintainer_website',
+                    'm.image as maintainer_image',
+                    'm.links as maintainer_links',
+                    't_m.title as maintainer_title',
+                ])
+                      ->leftJoin(
+                          $db->quoteName('#__swjprojects_maintainers', 'm')
+                          . ' ON m.id = p.maintainer_id AND m.state = 1'
+                      )
+                      ->leftJoin(
+                          $db->quoteName('#__swjprojects_translate_maintainers', 't_m')
+                          . ' ON t_m.id = m.id AND ' . $db->quoteName('t_m.language') . ' = ' . $db->quote($current)
+                      );
+
+                if ($current != $default)
+                {
+                    $query->select(['td_m.title as default_maintainer_title'])
+                          ->leftJoin(
+                              $db->quoteName('#__swjprojects_translate_maintainers', 'td_m')
+                              . ' ON td_m.id = m.id AND ' . $db->quoteName('td_m.language') . ' = ' . $db->quote(
+                                  $default
+                              )
+                          );
+                }
+
                 // Filter by published state
                 $published = $this->getState('filter.published');
                 if (is_numeric($published))
@@ -403,6 +433,16 @@ class JUpdateModel extends BaseDatabaseModel
 
                     // Set description
                     $item->description = StringHelper::truncate($item->project_introtext, 150, false, false);
+
+                    $item->maintainer = MaintainerHelper::buildProjection(
+                        (int) ($item->maintainer_id ?? 0),
+                        (string) ($item->maintainer_alias ?? ''),
+                        (string) ($item->maintainer_title ?? ''),
+                        (string) ($item->maintainer_website ?? ''),
+                        (string) ($item->maintainer_image ?? ''),
+                        $item->maintainer_links ?? null,
+                        (string) ($item->default_maintainer_title ?? '')
+                    ) ?: false;
 
                     // Set joomla
                     $item->project_joomla = new Registry($item->project_joomla);
@@ -587,6 +627,35 @@ class JUpdateModel extends BaseDatabaseModel
                           );
                 }
 
+                // Join over maintainer base data
+                $query->select([
+                    'm.id as maintainer_id',
+                    'm.alias as maintainer_alias',
+                    'm.website as maintainer_website',
+                    'm.image as maintainer_image',
+                    'm.links as maintainer_links',
+                    't_m.title as maintainer_title',
+                ])
+                      ->leftJoin(
+                          $db->quoteName('#__swjprojects_maintainers', 'm')
+                          . ' ON m.id = p.maintainer_id AND m.state = 1'
+                      )
+                      ->leftJoin(
+                          $db->quoteName('#__swjprojects_translate_maintainers', 't_m')
+                          . ' ON t_m.id = m.id AND ' . $db->quoteName('t_m.language') . ' = ' . $db->quote($current)
+                      );
+
+                if ($current != $default)
+                {
+                    $query->select(['td_m.title as default_maintainer_title'])
+                          ->leftJoin(
+                              $db->quoteName('#__swjprojects_translate_maintainers', 'td_m')
+                              . ' ON td_m.id = m.id AND ' . $db->quoteName('td_m.language') . ' = ' . $db->quote(
+                                  $default
+                              )
+                          );
+                }
+
                 // Join over versions for last version
                 $subQuery = $db->createQuery()
                                ->select(
@@ -652,6 +721,16 @@ class JUpdateModel extends BaseDatabaseModel
                         {
                             $item->element = str_replace(['tmpl_', 'tpl_', 'tmp_'], '', $item->element);
                         }
+
+                        $item->maintainer = MaintainerHelper::buildProjection(
+                            (int) ($item->maintainer_id ?? 0),
+                            (string) ($item->maintainer_alias ?? ''),
+                            (string) ($item->maintainer_title ?? ''),
+                            (string) ($item->maintainer_website ?? ''),
+                            (string) ($item->maintainer_image ?? ''),
+                            $item->maintainer_links ?? null,
+                            (string) ($item->default_maintainer_title ?? '')
+                        ) ?: false;
 
                         // Set client
                         $client = (int)$item->joomla->get('client_id', 0);

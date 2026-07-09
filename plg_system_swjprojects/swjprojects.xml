@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="system" method="upgrade">
+	<name>PLG_SYSTEM_SWJPROJECTS</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>29.06.2026</creationDate>
+	<copyright>Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru</authorUrl>
+	<version>2.7.0</version>
+	<description>PLG_SYSTEM_SWJPROJECTS_DESC</description>
+	<namespace path="src">Joomla\Plugin\System\Swjprojects</namespace>
+	<scriptfile>script.php</scriptfile>
+	<files>
+		<folder>services</folder>
+		<folder plugin="swjprojects">src</folder>
+	</files>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_system_swjprojects.ini</language>
+		<language tag="en-GB">en-GB/plg_system_swjprojects.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_system_swjprojects.ini</language>
+		<language tag="ru-RU">ru-RU/plg_system_swjprojects.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="administrator_menu_placement"
+					type="list"
+					label="PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_LABEL"
+					description="PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_DESC"
+					default="components"
+					validate="options"
+				>
+					<option value="components">PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_COMPONENTS</option>
+					<option value="top">PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_TOP</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

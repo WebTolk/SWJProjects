@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package       SW JProjects
  * @version       2.6.2
@@ -15,17 +16,15 @@ use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Cache\Cache;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Helper\LibraryHelper;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
-use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
+use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
-use Joomla\CMS\Version;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
@@ -34,7 +33,6 @@ return new class () implements ServiceProviderInterface {
 	public function register(Container $container)
 	{
 		$container->set(InstallerScriptInterface::class, new class ($container->get(AdministratorApplication::class)) extends InstallerScript implements InstallerScriptInterface {
-
 			/**
 			 * The application object
 			 *
@@ -63,15 +61,13 @@ return new class () implements ServiceProviderInterface {
 			protected ?string $installedComponentVersionBeforeUpdate = null;
 
 			/**
-			 * Component param names used to store shared and legacy link type descriptors.
+			 * Component param name used to store shared link type descriptors.
 			 *
 			 * @var  string
 			 *
 			 * @since  2.7.0
 			 */
 			protected const LINK_TYPES_PARAM = 'link_types';
-			protected const LEGACY_MAINTAINER_LINK_TYPES_PARAM = 'maintainer_link_types';
-			protected const LEGACY_PROJECT_LINK_TYPES_PARAM = 'project_link_types';
 
 
 			/**
@@ -101,8 +97,8 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function __construct(AdministratorApplication $app)
 			{
-				$this->app       = $app;
-				$this->db        = Factory::getContainer()->get('DatabaseDriver');
+				$this->app = $app;
+				$this->db = Factory::getContainer()->get('DatabaseDriver');
 				$this->extension = 'swjprojects';
 			}
 
@@ -149,8 +145,7 @@ return new class () implements ServiceProviderInterface {
 			{
 				$installedVersion = $this->getInstalledComponentVersion();
 
-				if (!$installedVersion || version_compare($installedVersion, '2.7.0', '<'))
-				{
+				if (!$installedVersion || version_compare($installedVersion, '2.7.0', '<')) {
 					// Fill defaults and migrate legacy project links on 2.6.2 -> 2.7.0 upgrade path.
 					$this->checkLinkTypes();
 					$this->migrateProjectLinks();
@@ -169,8 +164,7 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function preflight($type, $adapter): bool
 			{
-				if ($type === 'update')
-				{
+				if ($type === 'update') {
 					$this->installedComponentVersionBeforeUpdate = $this->readInstalledComponentVersionFromFilesystem();
 				}
 
@@ -188,8 +182,7 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function postflight(string $type, InstallerAdapter $adapter): bool
 			{
-				if ($type != 'uninstall')
-				{
+				if ($type != 'uninstall') {
 					// Parse layouts
 					$this->parseLayouts($adapter->getParent()->getManifest()->layouts, $adapter->getParent());
 					// Check databases
@@ -225,13 +218,12 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function parseLayouts(SimpleXMLElement $element, $installer)
 			{
-				if (!$element || !count($element->children()))
-				{
+				if (!$element || !count($element->children())) {
 					return false;
 				}
 
 				// Get destination
-				$folder      = ((string) $element->attributes()->destination) ? '/' . $element->attributes()->destination : null;
+				$folder = ((string) $element->attributes()->destination) ? '/' . $element->attributes()->destination : null;
 				$destination = Path::clean(JPATH_ROOT . '/layouts' . $folder);
 
 				// Get source
@@ -241,18 +233,15 @@ return new class () implements ServiceProviderInterface {
 
 				// Prepare files
 				$copyFiles = [];
-				foreach ($element->children() as $file)
-				{
-					$path['src']  = Path::clean($source . '/' . $file);
+				foreach ($element->children() as $file) {
+					$path['src'] = Path::clean($source . '/' . $file);
 					$path['dest'] = Path::clean($destination . '/' . $file);
 
 					// Is this path a file or folder?
 					$path['type'] = $file->getName() === 'folder' ? 'folder' : 'file';
-					if (basename($path['dest']) !== $path['dest'])
-					{
+					if (basename($path['dest']) !== $path['dest']) {
 						$newdir = dirname($path['dest']);
-						if (!Folder::create($newdir))
-						{
+						if (!Folder::create($newdir)) {
 							Log::add(Text::sprintf('JLIB_INSTALLER_ERROR_CREATE_DIRECTORY', $newdir), Log::WARNING, 'jerror');
 
 							return false;
@@ -284,18 +273,17 @@ return new class () implements ServiceProviderInterface {
 				$db->setQuery($query);
 
 				// Add root in not found
-				if (empty($db->loadResult()))
-				{
-					$root            = new \stdClass();
-					$root->id        = 1;
+				if (empty($db->loadResult())) {
+					$root = new \stdClass();
+					$root->id = 1;
 					$root->parent_id = 0;
-					$root->lft       = 0;
-					$root->rgt       = 1;
-					$root->level     = 0;
-					$root->path      = '';
-					$root->alias     = 'root';
-					$root->state     = 1;
-					$root->params    = '';
+					$root->lft = 0;
+					$root->rgt = 1;
+					$root->level = 0;
+					$root->path = '';
+					$root->alias = 'root';
+					$root->state = 1;
+					$root->params = '';
 
 					$db->insertObject($table, $root);
 				}
@@ -311,19 +299,14 @@ return new class () implements ServiceProviderInterface {
 			protected function checkTables($adapter)
 			{
 				if ($sql = file_get_contents($adapter->getParent()->getPath('extension_administrator')
-					. '/sql/install.mysql.utf8.sql'))
-				{
+					. '/sql/install.mysql.utf8.sql')) {
 					$db = $this->db;
 
-					foreach ($db->splitSql($sql) as $query)
-					{
+					foreach ($db->splitSql($sql) as $query) {
 						$db->setQuery($db->convertUtf8mb4QueryToUtf8($query));
-						try
-						{
+						try {
 							$db->execute();
-						}
-						catch (\Exception $e)
-						{
+						} catch (\Exception $e) {
 							Log::add(Text::sprintf('JLIB_INSTALLER_ERROR_SQL_ERROR', $e->getMessage()), Log::WARNING, 'jerror');
 						}
 					}
@@ -339,42 +322,39 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function checkFilesFolder()
 			{
-				$params         = $this->getComponentParams();
+				$params = $this->getComponentParams();
 				$standardFolder = Path::clean(JPATH_ROOT . '/' . 'swjprojects');
-				$paramsFolder   = $params->get('files_folder');
-				$folder         = ($paramsFolder) ? Path::clean(rtrim($paramsFolder, '/')) : $standardFolder;
-				$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
+				$paramsFolder = $params->get('files_folder');
+				$folder = ($paramsFolder) ? Path::clean(rtrim($paramsFolder, '/')) : $standardFolder;
+				$setParams = (empty($paramsFolder) || $folder !== $paramsFolder);
 
 				// Check folder exist
-				if (!\is_dir($folder))
-				{
+				if (!\is_dir($folder)) {
 					// Set standard folder
-					if (!Folder::create($folder) && $folder !== $standardFolder)
-					{
-						$folder    = $standardFolder;
+					if (!Folder::create($folder) && $folder !== $standardFolder) {
+						$folder = $standardFolder;
 						$setParams = true;
 
 						Factory::getApplication()->enqueueMessage(
-							Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_FILES_FOLDER', $folder), 'warning'
+							Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_FILES_FOLDER', $folder),
+							'warning'
 						);
 
-						if (!\is_dir($folder))
-						{
+						if (!\is_dir($folder)) {
 							Folder::create($folder);
 						}
 					}
 				}
 
 				// Set files_folder param
-				if ($setParams)
-				{
+				if ($setParams) {
 					$params->set('files_folder', $folder);
 
-					$component          = new \stdClass();
+					$component = new \stdClass();
 					$component->element = 'com_swjprojects';
-					$component->params  = $params->toString();
+					$component->params = $params->toString();
 
-					$this->db->updateObject('#__extensions', $component, array('element'));
+					$this->db->updateObject('#__extensions', $component, ['element']);
 				}
 			}
 
@@ -387,44 +367,41 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function checkImagesFolder()
 			{
-				$params         = $this->getComponentParams();
+				$params = $this->getComponentParams();
 				$standardFolder = 'images/swjprojects';
-				$paramsFolder   = $params->get('images_folder');
-				$folder         = ($paramsFolder) ? trim($paramsFolder, '/') : $standardFolder;
-				$setParams      = (empty($paramsFolder) || $folder !== $paramsFolder);
-				$path           = Path::clean(JPATH_ROOT . '/' . $folder);
+				$paramsFolder = $params->get('images_folder');
+				$folder = ($paramsFolder) ? trim($paramsFolder, '/') : $standardFolder;
+				$setParams = (empty($paramsFolder) || $folder !== $paramsFolder);
+				$path = Path::clean(JPATH_ROOT . '/' . $folder);
 
 				// Check folder exist
-				if (!\is_dir($path))
-				{
+				if (!\is_dir($path)) {
 					// Set standard folder
-					if (!Folder::create($path) && $folder !== $standardFolder)
-					{
-						$folder    = $standardFolder;
-						$path      = Path::clean(JPATH_ROOT . '/' . $folder);
+					if (!Folder::create($path) && $folder !== $standardFolder) {
+						$folder = $standardFolder;
+						$path = Path::clean(JPATH_ROOT . '/' . $folder);
 						$setParams = true;
 
 						Factory::getApplication()->enqueueMessage(
-							Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_IMAGES_FOLDER', $folder), 'warning'
+							Text::sprintf('COM_SWJPROJECTS_SET_STANDARD_IMAGES_FOLDER', $folder),
+							'warning'
 						);
 
-						if (!\is_dir($path))
-						{
+						if (!\is_dir($path)) {
 							Folder::create($path);
 						}
 					}
 				}
 
 				// Set images_folder param
-				if ($setParams)
-				{
+				if ($setParams) {
 					$params->set('images_folder', $folder);
 
-					$component          = new \stdClass();
+					$component = new \stdClass();
 					$component->element = 'com_swjprojects';
-					$component->params  = $params->toString();
+					$component->params = $params->toString();
 
-					$this->db->updateObject('#__extensions', $component, array('element'));
+					$this->db->updateObject('#__extensions', $component, ['element']);
 				}
 			}
 
@@ -438,49 +415,26 @@ return new class () implements ServiceProviderInterface {
 				$params = $this->getComponentParams();
 				$data = $params->toArray();
 				$linkTypes = $this->normalizeLinkTypes($data[self::LINK_TYPES_PARAM] ?? []);
-				$legacyMaintainerTypes = $this->normalizeLinkTypes($data[self::LEGACY_MAINTAINER_LINK_TYPES_PARAM] ?? []);
-				$legacyProjectTypes = $this->normalizeLinkTypes($data[self::LEGACY_PROJECT_LINK_TYPES_PARAM] ?? []);
 				$needsSave = false;
-                if ($linkTypes === [])
-                {
-                    $linkTypes = $this->mergeLinkTypes($legacyMaintainerTypes, $legacyProjectTypes);
 
-                    if ($linkTypes === [])
-                    {
-                        $linkTypes = $this->normalizeLinkTypes($this->getDefaultLinkTypes());
-                    }
-
-                    $data[self::LINK_TYPES_PARAM] = array_values($linkTypes);
-                    $needsSave = true;
-                }
-                elseif (($this->projectLinksToArray($data[self::LINK_TYPES_PARAM] ?? []) ?: []) !== array_values($linkTypes))
-                {
-                    $data[self::LINK_TYPES_PARAM] = array_values($linkTypes);
-                    $needsSave = true;
-                }
-
-				if (array_key_exists(self::LEGACY_MAINTAINER_LINK_TYPES_PARAM, $data))
-				{
-					unset($data[self::LEGACY_MAINTAINER_LINK_TYPES_PARAM]);
+				if ($linkTypes === []) {
+					$linkTypes = $this->normalizeLinkTypes($this->getDefaultLinkTypes());
+					$data[self::LINK_TYPES_PARAM] = array_values($linkTypes);
+					$needsSave = true;
+				} elseif (($this->projectLinksToArray($data[self::LINK_TYPES_PARAM] ?? []) ?: []) !== array_values($linkTypes)) {
+					$data[self::LINK_TYPES_PARAM] = array_values($linkTypes);
 					$needsSave = true;
 				}
 
-				if (array_key_exists(self::LEGACY_PROJECT_LINK_TYPES_PARAM, $data))
-				{
-					unset($data[self::LEGACY_PROJECT_LINK_TYPES_PARAM]);
-					$needsSave = true;
-				}
-
-				if (!$needsSave)
-				{
+				if (!$needsSave) {
 					return;
 				}
 
-				$component          = new \stdClass();
+				$component = new \stdClass();
 				$component->element = 'com_swjprojects';
-				$component->params  = (new Registry($data))->toString();
+				$component->params = (new Registry($data))->toString();
 
-				$this->db->updateObject('#__extensions', $component, array('element'));
+				$this->db->updateObject('#__extensions', $component, ['element']);
 			}
 			/**
 			 * Method to migrate legacy project URL maps to typed project-link lists.
@@ -496,17 +450,15 @@ return new class () implements ServiceProviderInterface {
 					->where($db->quoteName('urls') . ' IS NOT NULL')
 					->where($db->quoteName('urls') . ' != ' . $db->quote(''));
 
-				foreach ($db->setQuery($query)->loadObjectList() as $project)
-				{
+				foreach ($db->setQuery($query)->loadObjectList() as $project) {
 					$normalized = $this->normalizeProjectLinksToJson((string) $project->urls);
 
-					if ($normalized === (string) $project->urls)
-					{
+					if ($normalized === (string) $project->urls) {
 						continue;
 					}
 
-					$row       = new \stdClass();
-					$row->id   = (int) $project->id;
+					$row = new \stdClass();
+					$row->id = (int) $project->id;
 					$row->urls = $normalized;
 
 					$db->updateObject('#__swjprojects_projects', $row, 'id');
@@ -576,45 +528,39 @@ return new class () implements ServiceProviderInterface {
 			{
 				$types = $this->projectLinksToArray($types);
 
-				if (!is_array($types))
-				{
+				if (!is_array($types)) {
 					return [];
 				}
 
 				$normalized = [];
 
-				foreach ($types as $type)
-				{
-					if (is_object($type))
-					{
+				foreach ($types as $type) {
+					if (is_object($type)) {
 						$type = (array) $type;
 					}
 
-					if (!is_array($type))
-					{
+					if (!is_array($type)) {
 						continue;
 					}
 
 					$code = $this->normalizeProjectLinkCode($type['code'] ?? '');
 
-					if ($code === '')
-					{
+					if ($code === '') {
 						continue;
 					}
 
 					$valueType = trim((string) ($type['value_type'] ?? 'url'));
 
-					if (!in_array($valueType, ['url', 'email'], true))
-					{
+					if (!in_array($valueType, ['url', 'email'], true)) {
 						$valueType = 'url';
 					}
 
-                    $normalized[$code] = [
-                        'code'       => $code,
-                        'title'      => $this->normalizeLinkTypeTitle($code, $type['title'] ?? ''),
-                        'value_type' => $valueType,
-                        'icon_class' => trim((string) ($type['icon_class'] ?? '')),
-                    ];
+					$normalized[$code] = [
+						'code'       => $code,
+						'title'      => $this->normalizeLinkTypeTitle($code, $type['title'] ?? ''),
+						'value_type' => $valueType,
+						'icon_class' => trim((string) ($type['icon_class'] ?? '')),
+					];
 				}
 
 				return $normalized;
@@ -635,13 +581,11 @@ return new class () implements ServiceProviderInterface {
 				$title = trim((string) $title);
 				$defaultTitle = $this->getDefaultLinkTypeTitleConstant($code);
 
-				if ($defaultTitle === '')
-				{
+				if ($defaultTitle === '') {
 					return $title !== '' ? $title : $code;
 				}
 
-				if ($title === '' || $this->isLegacyDefaultLinkTypeTitle($code, $title))
-				{
+				if ($title === '') {
 					return $defaultTitle;
 				}
 
@@ -659,66 +603,17 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function getDefaultLinkTypeTitleConstant(string $code): string
 			{
-				return match ($code)
-				{
-					'demo' => 'COM_SWJPROJECTS_URLS_DEMO',
-					'support' => 'COM_SWJPROJECTS_URLS_SUPPORT',
-					'github' => 'COM_SWJPROJECTS_URLS_GITHUB',
-					'jed' => 'COM_SWJPROJECTS_URLS_JED',
-					'donate' => 'COM_SWJPROJECTS_URLS_DONATE',
+				return match ($code) {
+					'demo'          => 'COM_SWJPROJECTS_URLS_DEMO',
+					'support'       => 'COM_SWJPROJECTS_URLS_SUPPORT',
+					'github'        => 'COM_SWJPROJECTS_URLS_GITHUB',
+					'jed'           => 'COM_SWJPROJECTS_URLS_JED',
+					'donate'        => 'COM_SWJPROJECTS_URLS_DONATE',
 					'documentation' => 'COM_SWJPROJECTS_URLS_DOCUMENTATION',
-					default => '',
+					default         => '',
 				};
 			}
 
-			/**
-			 * Detect legacy built-in titles that should be migrated to language constants.
-			 *
-			 * @param   string  $code   Link type code.
-			 * @param   string  $title  Raw title.
-			 *
-			 * @return  bool
-			 *
-			 * @since  2.7.0
-			 */
-			protected function isLegacyDefaultLinkTypeTitle(string $code, string $title): bool
-			{
-				$legacy = match ($code)
-				{
-					'demo' => ['Demo', 'Демо'],
-					'support' => ['Support', 'Поддержка'],
-					'github' => ['GitHub'],
-					'jed' => ['JED', 'Joomla Extensions Directory'],
-					'donate' => ['Donate', 'Поддержать'],
-					'documentation' => ['Documentation', 'Документация'],
-					default => [],
-				};
-
-				return in_array($title, $legacy, true) || $title === $this->getDefaultLinkTypeTitleConstant($code);
-			}
-			/**
-			 * Merge code-keyed link type arrays, letting later groups override earlier ones.
-			 *
-			 * @param   array  ...$groups  Link type groups.
-			 *
-			 * @return  array
-			 *
-			 * @since  2.7.0
-			 */
-			protected function mergeLinkTypes(array ...$groups): array
-			{
-				$merged = [];
-
-				foreach ($groups as $group)
-				{
-					foreach ($group as $code => $type)
-					{
-						$merged[$code] = $type;
-					}
-				}
-
-				return $merged;
-			}
 			/**
 			 * Convert legacy project URLs and typed project-link rows into typed-list JSON.
 			 *
@@ -748,57 +643,27 @@ return new class () implements ServiceProviderInterface {
 			{
 				$links = $this->projectLinksToArray($links);
 
-				if (!is_array($links))
-				{
+				if (!is_array($links)) {
 					return [];
 				}
 
-				if (array_is_list($links))
-				{
-					$normalized = [];
-
-					foreach ($links as $link)
-					{
-						$link = $this->normalizeProjectLink($link);
-
-						if ($link !== null)
-						{
-							$normalized[] = $link;
-						}
-					}
-
-					return $normalized;
+				if ($this->containsTypedProjectLinkRows($links)) {
+					return $this->normalizeProjectLinkRows($links);
 				}
 
 				$normalized = [];
 
-				foreach ($links as $link)
-				{
-					$link = $this->normalizeProjectLink($link);
-
-					if ($link === null)
-					{
-						$normalized = [];
-						break;
+				foreach ($links as $type => $value) {
+					if (is_array($value) || is_object($value)) {
+						continue;
 					}
 
-					$normalized[] = $link;
-				}
-
-				if ($normalized !== [])
-				{
-					return $normalized;
-				}
-
-				foreach ($links as $type => $value)
-				{
 					$link = $this->normalizeProjectLink([
 						'type'  => $type,
 						'value' => $value,
 					]);
 
-					if ($link !== null)
-					{
+					if ($link !== null) {
 						$normalized[] = $link;
 					}
 				}
@@ -806,6 +671,56 @@ return new class () implements ServiceProviderInterface {
 				return $normalized;
 			}
 
+			/**
+			 * Check whether the URL payload already contains typed project-link rows.
+			 *
+			 * @param   array  $links  Raw project links.
+			 *
+			 * @return  bool
+			 *
+			 * @since  2.7.0
+			 */
+			protected function containsTypedProjectLinkRows(array $links): bool
+			{
+				foreach ($links as $link) {
+					if (is_object($link)) {
+						return true;
+					}
+
+					if (is_array($link)
+						&& (array_key_exists('type', $link)
+							|| array_key_exists('title', $link)
+							|| array_key_exists('value', $link))) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			/**
+			 * Normalize typed project-link rows.
+			 *
+			 * @param   array  $links  Raw typed project links.
+			 *
+			 * @return  array
+			 *
+			 * @since  2.7.0
+			 */
+			protected function normalizeProjectLinkRows(array $links): array
+			{
+				$normalized = [];
+
+				foreach ($links as $link) {
+					$link = $this->normalizeProjectLink($link);
+
+					if ($link !== null) {
+						$normalized[] = $link;
+					}
+				}
+
+				return $normalized;
+			}
 			/**
 			 * Normalize one project link row.
 			 *
@@ -817,22 +732,19 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function normalizeProjectLink($link): ?array
 			{
-				if (is_object($link))
-				{
+				if (is_object($link)) {
 					$link = (array) $link;
 				}
 
-				if (!is_array($link))
-				{
+				if (!is_array($link)) {
 					return null;
 				}
 
-				$type  = $this->normalizeProjectLinkCode($link['type'] ?? '');
+				$type = $this->normalizeProjectLinkCode($link['type'] ?? '');
 				$title = trim((string) ($link['title'] ?? ''));
 				$value = trim((string) ($link['value'] ?? ''));
 
-				if ($type === '' || $value === '')
-				{
+				if ($type === '' || $value === '') {
 					return null;
 				}
 
@@ -854,32 +766,27 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function projectLinksToArray($links)
 			{
-				if ($links instanceof Registry)
-				{
+				if ($links instanceof Registry) {
 					return $links->toArray();
 				}
 
-				if (is_string($links))
-				{
+				if (is_string($links)) {
 					$links = trim($links);
 
-					if ($links === '')
-					{
+					if ($links === '') {
 						return [];
 					}
 
 					$decoded = json_decode($links, true);
 
-					if (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
-					{
+					if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
 						return $decoded;
 					}
 
 					return (new Registry($links))->toArray();
 				}
 
-				if (is_object($links))
-				{
+				if (is_object($links)) {
 					return (array) $links;
 				}
 
@@ -907,9 +814,9 @@ return new class () implements ServiceProviderInterface {
 			protected function checkDashboardMenu(): void
 			{
 				$dashboard = 'swjprojects';
-				$position  = 'cpanel-' . $dashboard;
+				$position = 'cpanel-' . $dashboard;
 
-				$db    = $this->db;
+				$db = $this->db;
 				$query = $db->getQuery(true)
 					->select('COUNT(*)')
 					->from($db->quoteName('#__modules'))
@@ -920,8 +827,7 @@ return new class () implements ServiceProviderInterface {
 					])
 					->bind(':position', $position);
 
-				if ((int) $db->setQuery($query)->loadResult() > 0)
-				{
+				if ((int) $db->setQuery($query)->loadResult() > 0) {
 					return;
 				}
 
@@ -935,7 +841,7 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function checkDashboardMenuLink(): void
 			{
-				$db    = $this->db;
+				$db = $this->db;
 				$query = $db->getQuery(true)
 					->select($db->quoteName(['id', 'params']))
 					->from($db->quoteName('#__menu'))
@@ -944,19 +850,17 @@ return new class () implements ServiceProviderInterface {
 						$db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_swjprojects'),
 					]);
 
-				foreach ($db->setQuery($query)->loadObjectList() as $item)
-				{
+				foreach ($db->setQuery($query)->loadObjectList() as $item) {
 					$params = new Registry((string) $item->params);
 
-					if ($params->get('dashboard') === 'swjprojects')
-					{
+					if ($params->get('dashboard') === 'swjprojects') {
 						continue;
 					}
 
 					$params->set('dashboard', 'swjprojects');
 
-					$menu         = new \stdClass();
-					$menu->id     = (int) $item->id;
+					$menu = new \stdClass();
+					$menu->id = (int) $item->id;
 					$menu->params = $params->toString();
 
 					$db->updateObject('#__menu', $menu, 'id');
@@ -977,8 +881,7 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function removeLayouts(SimpleXMLElement $element)
 			{
-				if (!$element || !count($element->children()))
-				{
+				if (!$element || !count($element->children())) {
 					return false;
 				}
 
@@ -990,30 +893,24 @@ return new class () implements ServiceProviderInterface {
 				$source = Path::clean(JPATH_ROOT . '/layouts' . $folder);
 
 				// Process each file in the $files array (children of $tagName).
-				foreach ($files as $file)
-				{
+				foreach ($files as $file) {
 					$path = Path::clean($source . '/' . $file);
 
 					// Actually delete the files/folders
-					if (is_dir($path))
-					{
+					if (is_dir($path)) {
 						$val = Folder::delete($path);
-					}
-					else
-					{
+					} else {
 						$val = File::delete($path);
 					}
 
-					if ($val === false)
-					{
+					if ($val === false) {
 						Log::add('Failed to delete ' . $path, Log::WARNING, 'jerror');
 
 						return false;
 					}
 				}
 
-				if (!empty($folder))
-				{
+				if (!empty($folder)) {
 					Folder::delete($source);
 				}
 
@@ -1029,7 +926,7 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function getComponentParams()
 			{
-				$db    = $this->db;
+				$db = $this->db;
 				$query = $db->getQuery(true)
 					->select('params')
 					->from('#__extensions')
@@ -1047,12 +944,11 @@ return new class () implements ServiceProviderInterface {
 			 */
 			protected function getInstalledComponentVersion(): ?string
 			{
-				if ($this->installedComponentVersionBeforeUpdate !== null)
-				{
+				if ($this->installedComponentVersionBeforeUpdate !== null) {
 					return $this->installedComponentVersionBeforeUpdate;
 				}
 
-				$db    = $this->db;
+				$db = $this->db;
 				$query = $db->getQuery(true)
 					->select('manifest_cache')
 					->from($db->quoteName('#__extensions'))
@@ -1061,15 +957,13 @@ return new class () implements ServiceProviderInterface {
 
 				$manifestCache = (string) $db->setQuery($query)->loadResult();
 
-				if ($manifestCache === '')
-				{
+				if ($manifestCache === '') {
 					return null;
 				}
 
 				$manifest = json_decode($manifestCache, true);
 
-				if (json_last_error() !== JSON_ERROR_NONE || !is_array($manifest) || empty($manifest['version']))
-				{
+				if (json_last_error() !== JSON_ERROR_NONE || !is_array($manifest) || empty($manifest['version'])) {
 					return null;
 				}
 
@@ -1090,15 +984,13 @@ return new class () implements ServiceProviderInterface {
 			{
 				$manifestPath = JPATH_ADMINISTRATOR . '/components/com_swjprojects/swjprojects.xml';
 
-				if (!is_file($manifestPath))
-				{
+				if (!is_file($manifestPath)) {
 					return null;
 				}
 
 				$manifest = simplexml_load_file($manifestPath);
 
-				if ($manifest === false || empty($manifest->version))
-				{
+				if ($manifest === false || empty($manifest->version)) {
 					return null;
 				}
 
@@ -1107,6 +999,3 @@ return new class () implements ServiceProviderInterface {
 		});
 	}
 };
-
-
-

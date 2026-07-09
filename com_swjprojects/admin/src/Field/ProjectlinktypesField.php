@@ -21,30 +21,30 @@ use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 
 class ProjectlinktypesField extends ListField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var  string
-	 *
-	 * @since  2.7.0
-	 */
-	protected $type = 'projectlinktypes';
+    /**
+     * The form field type.
+     *
+     * @var  string
+     *
+     * @since  2.7.0
+     */
+    protected $type = 'projectlinktypes';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array
-	 *
-	 * @since  2.7.0
-	 */
-	protected function getOptions(): array
-	{
-		$options = parent::getOptions();
+    /**
+     * Method to get the field options.
+     *
+     * @return  array
+     *
+     * @since  2.7.0
+     */
+    protected function getOptions(): array
+    {
+        $options = parent::getOptions();
 
-		foreach (ProjectLinksHelper::getTypes() as $type) {
-			$options[] = HTMLHelper::_('select.option', $type['code'], Text::_($type['title']));
-		}
+        foreach (ProjectLinksHelper::getTypes() as $type) {
+            $options[] = HTMLHelper::_('select.option', $type['code'], Text::_($type['title']));
+        }
 
-		return $options;
-	}
+        return $options;
+    }
 }

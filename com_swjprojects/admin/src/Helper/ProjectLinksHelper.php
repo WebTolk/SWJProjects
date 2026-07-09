@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 use Joomla\Registry\Registry;
 
-use function array_is_list;
+use function array_key_exists;
 use function array_values;
 use function is_array;
 use function is_object;
@@ -34,6 +34,11 @@ use const JSON_UNESCAPED_UNICODE;
 
 class ProjectLinksHelper
 {
+	/**
+	 * Component parameter name for shared link type descriptors.
+	 *
+	 * @since  2.7.0
+	 */
 	public const PARAM_LINK_TYPES = MaintainerLinksHelper::PARAM_LINK_TYPES;
 
 	/**
@@ -77,7 +82,7 @@ class ProjectLinksHelper
 	}
 
 	/**
-	 * Normalize legacy fixed-key URL maps and typed-list project links into one list shape.
+	 * Normalize legacy fixed-key URL maps and typed project link rows into one list shape.
 	 *
 	 * @param   mixed  $links  Raw project links.
 	 *
@@ -93,66 +98,11 @@ class ProjectLinksHelper
 			return [];
 		}
 
-		$normalized = [];
-
-		if (array_is_list($links)) {
-			foreach ($links as $link) {
-				$link = self::normalizeLink($link);
-
-				if ($link !== null) {
-					$normalized[] = $link;
-				}
-			}
-
-			return $normalized;
+		if (self::containsTypedRows($links)) {
+			return self::normalizeTypedRows($links);
 		}
 
-		foreach ($links as $link) {
-			$link = self::normalizeLink($link);
-
-			if ($link === null) {
-				$normalized = [];
-				break;
-			}
-
-			$normalized[] = $link;
-		}
-
-		if ($normalized !== []) {
-			return $normalized;
-		}
-
-		foreach ($links as $type => $value) {
-			$link = self::normalizeLink(['type' => $type, 'value' => $value]);
-
-			if ($link !== null) {
-				$normalized[] = $link;
-			}
-		}
-
-		return $normalized;
-	}
-
-	/**
-	 * Convert links to the legacy code => value map expected by older rendering code.
-	 *
-	 * @param   mixed  $links  Raw project links.
-	 *
-	 * @return  array
-	 *
-	 * @since  2.7.0
-	 */
-	public static function toMap($links): array
-	{
-		$map = [];
-
-		foreach (self::normalizeLinks($links) as $link) {
-			if (!isset($map[$link['type']])) {
-				$map[$link['type']] = $link['value'];
-			}
-		}
-
-		return $map;
+		return self::normalizeLegacyMap($links);
 	}
 
 	/**
@@ -166,9 +116,92 @@ class ProjectLinksHelper
 	 */
 	public static function toJson($links): string
 	{
-		$json = json_encode(array_values(self::normalizeLinks($links)), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+		$json = json_encode(
+			array_values(self::normalizeLinks($links)),
+			JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+		);
 
 		return is_string($json) ? $json : '[]';
+	}
+
+	/**
+	 * Detect typed rows from stored JSON lists or Joomla subform POST arrays.
+	 *
+	 * @param   array  $links  Raw project links.
+	 *
+	 * @return  bool
+	 *
+	 * @since  2.7.0
+	 */
+	protected static function containsTypedRows(array $links): bool
+	{
+		foreach ($links as $link) {
+			if (is_object($link)) {
+				return true;
+			}
+
+			if (!is_array($link)) {
+				continue;
+			}
+
+			if (array_key_exists('type', $link) || array_key_exists('title', $link) || array_key_exists('value', $link)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Normalize typed project link rows.
+	 *
+	 * @param   array  $links  Raw typed rows.
+	 *
+	 * @return  array
+	 *
+	 * @since  2.7.0
+	 */
+	protected static function normalizeTypedRows(array $links): array
+	{
+		$normalized = [];
+
+		foreach ($links as $link) {
+			$link = self::normalizeLink($link);
+
+			if ($link !== null) {
+				$normalized[] = $link;
+			}
+		}
+
+		return $normalized;
+	}
+
+	/**
+	 * Normalize the public 2.6.2 fixed-key URL map into typed project link rows.
+	 *
+	 * @param   array  $links  Legacy fixed-key URL map.
+	 *
+	 * @return  array
+	 *
+	 * @since  2.7.0
+	 */
+	protected static function normalizeLegacyMap(array $links): array
+	{
+		$normalized = [];
+
+		foreach ($links as $type => $value) {
+			if (is_array($value) || is_object($value)) {
+				continue;
+			}
+
+			$link = self::normalizeLink(['type' => $type, 'value' => $value]);
+
+			if ($link !== null) {
+				$normalized[] = $link;
+			}
+		}
+
+		return $normalized;
 	}
 
 	/**
@@ -190,7 +223,7 @@ class ProjectLinksHelper
 			return null;
 		}
 
-		$type  = self::normalizeCode($link['type'] ?? '');
+		$type = self::normalizeCode($link['type'] ?? '');
 		$title = trim((string) ($link['title'] ?? ''));
 		$value = trim((string) ($link['value'] ?? ''));
 

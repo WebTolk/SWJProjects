@@ -180,6 +180,7 @@ class HtmlView extends BaseHtmlView
 			'p.id'            => Text::_('JGRID_HEADING_ID'),
 			'p.title'         => Text::_('JGLOBAL_TITLE'),
 			'category_title'  => Text::_('COM_SWJPROJECTS_CATEGORY'),
+			'maintainer_title' => Text::_('COM_SWJPROJECTS_MAINTAINER'),
 			'p.download_type' => Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE'),
 			'downloads'       => Text::_('COM_SWJPROJECTS_STATISTICS_DOWNLOADS'),
 			'p.hits'          => Text::_('COM_SWJPROJECTS_STATISTICS_HITS'),

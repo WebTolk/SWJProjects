@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
+use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
@@ -383,7 +384,7 @@ class ProjectsModel extends ListModel
 				}
 
 				// Set urls
-				$item->urls = new Registry($item->urls);
+				$item->urls = ProjectLinksHelper::normalizeLinks($item->urls);
 
 				// Set images
 				$item->images = new Registry();
@@ -400,6 +401,14 @@ class ProjectsModel extends ListModel
 				$item->download      = Route::_(RouteHelper::getDownloadRoute(null, null, $item->element));
 				$item->documentation = (!$item->documentation) ? false :
 					Route::_(RouteHelper::getDocumentationRoute($item->slug, $item->cslug));
+				foreach ($item->urls as $link)
+				{
+					if ($link['type'] === 'documentation')
+					{
+						$item->documentation = false;
+						break;
+					}
+				}
 
 				// Set version
 				$item->version = false;

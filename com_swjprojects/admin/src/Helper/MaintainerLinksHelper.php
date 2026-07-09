@@ -31,8 +31,12 @@ use const JSON_ERROR_NONE;
 
 class MaintainerLinksHelper
 {
+	/**
+	 * Component parameter name for shared link type descriptors.
+	 *
+	 * @since  2.7.0
+	 */
 	public const PARAM_LINK_TYPES = 'link_types';
-	private const LEGACY_PARAM_LINK_TYPES = ['maintainer_link_types', 'project_link_types'];
 
 	/**
 	 * Default shared link types.
@@ -95,15 +99,7 @@ class MaintainerLinksHelper
 	public static function getTypes(?Registry $params = null): array
 	{
 		$params = $params ?: ComponentHelper::getParams('com_swjprojects');
-		$types  = self::normalizeTypes($params->get(self::PARAM_LINK_TYPES, []));
-
-		if ($types !== []) {
-			return $types;
-		}
-
-		foreach (self::LEGACY_PARAM_LINK_TYPES as $legacyParam) {
-			$types = self::mergeTypes($types, self::normalizeTypes($params->get($legacyParam, [])));
-		}
+		$types = self::normalizeTypes($params->get(self::PARAM_LINK_TYPES, []));
 
 		return $types ?: self::normalizeTypes(self::getDefaultTypes());
 	}
@@ -211,17 +207,14 @@ class MaintainerLinksHelper
 	private static function normalizeTitle(string $code, $title): string
 	{
 		$title = trim((string) $title);
+
+		if ($title !== '') {
+			return $title;
+		}
+
 		$defaultTitle = self::getDefaultTitleConstant($code);
 
-		if ($defaultTitle === '') {
-			return $title !== '' ? $title : $code;
-		}
-
-		if ($title === '' || self::isLegacyDefaultTitle($code, $title)) {
-			return $defaultTitle;
-		}
-
-		return $title;
+		return $defaultTitle !== '' ? $defaultTitle : $code;
 	}
 
 	/**
@@ -236,60 +229,13 @@ class MaintainerLinksHelper
 	private static function getDefaultTitleConstant(string $code): string
 	{
 		return match ($code) {
-			'demo' => 'COM_SWJPROJECTS_URLS_DEMO',
-			'support' => 'COM_SWJPROJECTS_URLS_SUPPORT',
-			'github' => 'COM_SWJPROJECTS_URLS_GITHUB',
-			'jed' => 'COM_SWJPROJECTS_URLS_JED',
-			'donate' => 'COM_SWJPROJECTS_URLS_DONATE',
+			'demo'          => 'COM_SWJPROJECTS_URLS_DEMO',
+			'support'       => 'COM_SWJPROJECTS_URLS_SUPPORT',
+			'github'        => 'COM_SWJPROJECTS_URLS_GITHUB',
+			'jed'           => 'COM_SWJPROJECTS_URLS_JED',
+			'donate'        => 'COM_SWJPROJECTS_URLS_DONATE',
 			'documentation' => 'COM_SWJPROJECTS_URLS_DOCUMENTATION',
-			default => '',
+			default         => '',
 		};
-	}
-
-	/**
-	 * Detect legacy built-in titles that should be migrated to language constants.
-	 *
-	 * @param   string  $code   Link type code.
-	 * @param   string  $title  Raw title.
-	 *
-	 * @return  bool
-	 *
-	 * @since  2.7.0
-	 */
-	private static function isLegacyDefaultTitle(string $code, string $title): bool
-	{
-		$legacy = match ($code) {
-			'demo' => ['Demo', 'Демо'],
-			'support' => ['Support', 'Поддержка'],
-			'github' => ['GitHub'],
-			'jed' => ['JED', 'Joomla Extensions Directory'],
-			'donate' => ['Donate', 'Поддержать'],
-			'documentation' => ['Documentation', 'Документация'],
-			default => [],
-		};
-
-		return in_array($title, $legacy, true) || $title === self::getDefaultTitleConstant($code);
-	}
-
-	/**
-	 * Merge code-keyed link type arrays, letting later groups override earlier ones.
-	 *
-	 * @param   array  ...$groups  Link type groups.
-	 *
-	 * @return  array
-	 *
-	 * @since  2.7.0
-	 */
-	private static function mergeTypes(array ...$groups): array
-	{
-		$merged = [];
-
-		foreach ($groups as $group) {
-			foreach ($group as $code => $type) {
-				$merged[$code] = $type;
-			}
-		}
-
-		return $merged;
 	}
 }

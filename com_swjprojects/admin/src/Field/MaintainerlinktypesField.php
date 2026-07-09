@@ -21,30 +21,30 @@ use Joomla\Component\SWJProjects\Administrator\Helper\MaintainerLinksHelper;
 
 class MaintainerlinktypesField extends ListField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var  string
-	 *
-	 * @since  2.6.2
-	 */
-	protected $type = 'maintainerlinktypes';
+    /**
+     * The form field type.
+     *
+     * @var  string
+     *
+     * @since  2.6.2
+     */
+    protected $type = 'maintainerlinktypes';
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array
-	 *
-	 * @since  2.6.2
-	 */
-	protected function getOptions(): array
-	{
-		$options = parent::getOptions();
+    /**
+     * Method to get the field options.
+     *
+     * @return  array
+     *
+     * @since  2.6.2
+     */
+    protected function getOptions(): array
+    {
+        $options = parent::getOptions();
 
-		foreach (MaintainerLinksHelper::getTypes() as $type) {
-			$options[] = HTMLHelper::_('select.option', $type['code'], Text::_($type['title']));
-		}
+        foreach (MaintainerLinksHelper::getTypes() as $type) {
+            $options[] = HTMLHelper::_('select.option', $type['code'], Text::_($type['title']));
+        }
 
-		return $options;
-	}
+        return $options;
+    }
 }
