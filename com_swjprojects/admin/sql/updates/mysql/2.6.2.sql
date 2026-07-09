@@ -48,9 +48,6 @@ CREATE TABLE IF NOT EXISTS `#__swjprojects_translate_maintainers`
     DEFAULT CHARSET = utf8mb4
     DEFAULT COLLATE = utf8mb4_unicode_ci;
 
-ALTER TABLE `#__swjprojects_maintainers`
-    DROP COLUMN IF EXISTS `github`;
-
 ALTER TABLE `#__swjprojects_projects`
     ADD `maintainer_id` int(11) NOT NULL DEFAULT 0 AFTER `additional_categories`;
 
