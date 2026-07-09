@@ -41,6 +41,7 @@ class ProjectsModel extends ListModel
 				'title',
 				'published', 'state', 'p.state','p.visible',
 				'category', 'category_id', 'c.id', 'p.catid', 'catid', 'category_title', 'cl.title',
+				'maintainer', 'maintainer_id', 'm.id', 'p.maintainer_id', 'maintainer_title', 't_m.title',
 				'download_type', 'p.download_type',
 				'downloads', 'p.downloads',
 				'hits', 'p.hits',
@@ -76,6 +77,10 @@ class ProjectsModel extends ListModel
 		$category = $this->getUserStateFromRequest($this->context . '.filter.category  ', 'filter_category', '');
 		$this->setState('filter.category  ', $category);
 
+		// Set maintainer filter state
+		$maintainer = $this->getUserStateFromRequest($this->context . '.filter.maintainer', 'filter_maintainer', '');
+		$this->setState('filter.maintainer', $maintainer);
+
 		// Set download_type filter state
 		$download_type = $this->getUserStateFromRequest($this->context . '.filter.download_type  ', 'filter_download_type', '');
 		$this->setState('filter.download_type  ', $download_type);
@@ -101,6 +106,7 @@ class ProjectsModel extends ListModel
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.category');
+		$id .= ':' . $this->getState('filter.maintainer');
 		$id .= ':' . $this->getState('filter.download_type');
 
 		return parent::getStoreId($id);
@@ -133,6 +139,11 @@ class ProjectsModel extends ListModel
 		$query->select(array('t_c.title as category_title'))
 			->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
 				. ' ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($translate));
+
+		$query->select(array('m.id as maintainer_id', 'm.alias as maintainer_alias', 't_m.title as maintainer_title'))
+			->leftJoin($db->quoteName('#__swjprojects_maintainers', 'm') . ' ON m.id = p.maintainer_id')
+			->leftJoin($db->quoteName('#__swjprojects_translate_maintainers', 't_m')
+				. ' ON t_m.id = m.id AND ' . $db->quoteName('t_m.language') . ' = ' . $db->quote($translate));
 
 		// Count over versions for download counter
 		$subQuerySumDownloads = $db->getQuery(true);
@@ -171,6 +182,13 @@ class ProjectsModel extends ListModel
 			$query->where('p.catid = ' . (int) $category);
 		}
 
+		// Filter by maintainer state
+		$maintainer = $this->getState('filter.maintainer');
+		if (is_numeric($maintainer))
+		{
+			$query->where('p.maintainer_id = ' . (int) $maintainer);
+		}
+
 		// Filter by download_type state
 		$download_type = $this->getState('filter.download_type');
 		if (!empty($download_type) && !empty($download_type = trim($download_type)))
@@ -189,7 +207,7 @@ class ProjectsModel extends ListModel
 			else
 			{
 				$sql     = [];
-				$columns = ['p.element', 'c.alias', 't_c.title', 'ta_p.title'];
+				$columns = ['p.element', 'c.alias', 't_c.title', 'ta_p.title', 'm.alias', 'ta_m.title'];
 
 				foreach ($columns as $column)
 				{
@@ -198,6 +216,7 @@ class ProjectsModel extends ListModel
 				}
 
 				$query->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'ta_p') . ' ON ta_p.id = p.id')
+					->leftJoin($db->quoteName('#__swjprojects_translate_maintainers', 'ta_m') . ' ON ta_m.id = m.id')
 					->where('(' . implode(' OR ', $sql) . ')');
 			}
 		}
@@ -231,6 +250,9 @@ class ProjectsModel extends ListModel
 
 				// Set category title
 				$item->category_title = (empty($item->category_title)) ? $item->category_alias : $item->category_title;
+
+				// Set maintainer title
+				$item->maintainer_title = (empty($item->maintainer_title)) ? $item->maintainer_alias : $item->maintainer_title;
 			}
 		}
 

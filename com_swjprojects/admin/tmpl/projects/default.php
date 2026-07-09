@@ -36,7 +36,7 @@ if ($saveOrder)
 	HTMLHelper::_('draggablelist.draggable');
 }
 
-$columns = 9;
+$columns = 10;
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_swjprojects&view=projects'); ?>" method="post"
@@ -74,6 +74,10 @@ $columns = 9;
 							<th scope="col" class="d-none d-md-table-cell">
 								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_CATEGORY',
 									'category_title', $listDirn, $listOrder); ?>
+							</th>
+							<th scope="col" class="d-none d-lg-table-cell">
+								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_MAINTAINER',
+									'maintainer_title', $listDirn, $listOrder); ?>
 							</th>
 							<th scope="col" class="w-10 d-none d-md-table-cell">
 								<?php echo HTMLHelper::_('searchtools.sort', 'COM_SWJPROJECTS_DOWNLOAD_TYPE',
@@ -150,9 +154,17 @@ $columns = 9;
 											<?php echo Text::_($this->escape($item->category_title)); ?>
                                         </div>
 									<?php endif; ?>
+									<?php if (!empty($item->maintainer_title) && $item->state != 2): ?>
+                                        <div class="d-lg-none muted">
+											<?php echo $this->escape($item->maintainer_title); ?>
+                                        </div>
+									<?php endif; ?>
 								</td>
 								<td class="d-none d-md-table-cell">
 									<?php echo Text::_($this->escape($item->category_title)); ?>
+								</td>
+								<td class="d-none d-lg-table-cell">
+									<?php echo $this->escape($item->maintainer_title); ?>
 								</td>
 								<td class="d-none d-md-table-cell">
 									<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD_TYPE_' . $item->download_type); ?>

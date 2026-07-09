@@ -31,6 +31,11 @@
 			   label="COM_SWJPROJECTS_PROJECT_ADDITIONAL_CATEGORIES"
 			   multiple="true"
 			   layout="joomla.form.field.list-fancy-select"/>
+		<field name="maintainer_id" type="maintainers"
+			   label="COM_SWJPROJECTS_MAINTAINER"
+			   layout="joomla.form.field.list-fancy-select">
+			<option value="">COM_SWJPROJECTS_MAINTAINER_SELECT</option>
+		</field>
 		<field name="state" type="list"
 			   label="JSTATUS"
 			   description="JFIELD_PUBLISHED_DESC"
@@ -119,14 +124,23 @@
 		</fields>
 	</fieldset>
 	<fieldset name="urls" label="COM_SWJPROJECTS_URLS">
-		<fields name="urls">
-			<field name="demo" type="text" label="COM_SWJPROJECTS_URLS_DEMO" class="input-xxlarge"/>
-			<field name="support" type="text" label="COM_SWJPROJECTS_URLS_SUPPORT" class="input-xxlarge"/>
-			<field name="github" type="text" label="COM_SWJPROJECTS_URLS_GITHUB" class="input-xxlarge"/>
-			<field name="jed" type="text" label="COM_SWJPROJECTS_URLS_JED" class="input-xxlarge"/>
-			<field name="donate" type="text" label="COM_SWJPROJECTS_URLS_DONATE" class="input-xxlarge"/>
-			<field name="documentation" type="text" label="COM_SWJPROJECTS_URLS_DOCUMENTATION" class="input-xxlarge"/>
-		</fields>
+		<field name="urls" type="subform"
+			   label="COM_SWJPROJECTS_URLS"
+			   multiple="true">
+			<form>
+				<field name="type" type="projectlinktypes"
+					   label="COM_SWJPROJECTS_PROJECT_LINK_TYPE"
+					   required="true"
+					   class="form-select"/>
+				<field name="title" type="text"
+					   label="COM_SWJPROJECTS_PROJECT_LINK_TITLE"
+					   class="input-xxlarge input-large-text"/>
+				<field name="value" type="text"
+					   label="COM_SWJPROJECTS_PROJECT_LINK_VALUE"
+					   required="true"
+					   class="input-xxlarge"/>
+			</form>
+		</field>
 	</fieldset>
 	<fieldset name="relations" label="COM_SWJPROJECTS_RELATIONS">
 		<field name="relations" type="subform"
