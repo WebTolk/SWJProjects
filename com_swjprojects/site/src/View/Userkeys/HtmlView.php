@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -17,6 +17,8 @@ use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\SWJProjects\Administrator\Service\AccessService;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use function count;
 use function defined;
@@ -103,7 +105,15 @@ class HtmlView extends BaseHtmlView
 			parent::display($tpl);
 			return $this;
 		}
-        $model = $this->getModel();
+
+		$model = $this->getModel();
+		$accessService = new AccessService(Factory::getContainer()->get(DatabaseInterface::class));
+
+		if (!$accessService->canViewOwnUserKeys($user))
+		{
+			throw new \RuntimeException(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+		}
+
 		$this->state      = $model->getState();
 		$this->params     = $this->state->get('params');
 		$this->items      = $model->getItems();

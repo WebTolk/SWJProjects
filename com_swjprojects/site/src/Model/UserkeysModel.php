@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\SWJProjects\Administrator\Helper\KeysHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
+use Joomla\Component\SWJProjects\Administrator\Service\AccessService;
 use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Database\QueryInterface;
@@ -89,9 +90,12 @@ class UserkeysModel extends ListModel
 	protected function populateState($ordering = null, $direction = null)
 	{
 		$app = Factory::getApplication('site');
+		$identity = $app->getIdentity();
+		$accessService = new AccessService($this->getDatabase());
 
 		// Set request states
-		$this->setState('user.id', $app->getIdentity()->id);
+		$this->setState('user.id', $identity->id);
+		$this->setState('user.can_view_all', $accessService->canViewAllUserKeys($identity));
 
 		// Merge global and menu item params into new object
 		$params     = $app->getParams();
@@ -134,6 +138,7 @@ class UserkeysModel extends ListModel
 	protected function getStoreId($id = '')
 	{
 		$id .= ':' . $this->getState('user.id');
+		$id .= ':' . (int) $this->getState('user.can_view_all');
 		$id .= ':' . serialize($this->getState('filter.published'));
 
 		return parent::getStoreId($id);
@@ -154,7 +159,11 @@ class UserkeysModel extends ListModel
 			->from($db->quoteName('#__swjprojects_keys', 'uk'));
 
 		$query->where($db->quoteName('uk.state').' = '.$db->quote(1));
-		$query->where($db->quoteName('uk.user').' = '.$db->quote($this->getState('user.id')));
+
+		if (!(bool) $this->getState('user.can_view_all'))
+		{
+			$query->where($db->quoteName('uk.user').' = '.$db->quote($this->getState('user.id')));
+		}
 
 		// Filter by search
 		$search = $this->getState('filter.search');

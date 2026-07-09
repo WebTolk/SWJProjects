@@ -1,0 +1,17 @@
+{
+  "ignoreFiles": [
+    ".idea/**",
+    ".webtolk/**",
+    ".packages/**",
+    ".phing/**",
+    "logs/**",
+    "**/*.min.css"
+  ],
+  "rules": {
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "function-url-quotes": "always",
+    "property-no-unknown": true
+  }
+}

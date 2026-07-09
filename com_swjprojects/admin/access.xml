@@ -7,5 +7,7 @@
 		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC"/>
 		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC"/>
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC"/>
+		<action name="swjprojects.userkeys.view.own" title="COM_SWJPROJECTS_ACL_USERKEYS_VIEW_OWN" description="COM_SWJPROJECTS_ACL_USERKEYS_VIEW_OWN_DESC"/>
+		<action name="swjprojects.userkeys.view.all" title="COM_SWJPROJECTS_ACL_USERKEYS_VIEW_ALL" description="COM_SWJPROJECTS_ACL_USERKEYS_VIEW_ALL_DESC"/>
 	</section>
 </access>

@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -398,6 +398,16 @@ class JUpdateModel extends BaseDatabaseModel
                             : $item->project_introtext;
                     }
 
+                    $item->maintainer = MaintainerHelper::buildProjection(
+                        (int) ($item->maintainer_id ?? 0),
+                        (string) ($item->maintainer_alias ?? ''),
+                        (string) ($item->maintainer_title ?? ''),
+                        (string) ($item->maintainer_website ?? ''),
+                        (string) ($item->maintainer_image ?? ''),
+                        $item->maintainer_links ?? null,
+                        (string) ($item->default_maintainer_title ?? '')
+                    ) ?: false;
+
                     // Set link
                     $item->slug     = $item->id . ':' . $item->alias;
                     $item->pslug    = $item->project_id . ':' . $item->project_alias;
@@ -698,6 +708,16 @@ class JUpdateModel extends BaseDatabaseModel
                         {
                             $item->title = (empty($item->title)) ? $item->default_title : $item->title;
                         }
+
+                        $item->maintainer = MaintainerHelper::buildProjection(
+                            (int) ($item->maintainer_id ?? 0),
+                            (string) ($item->maintainer_alias ?? ''),
+                            (string) ($item->maintainer_title ?? ''),
+                            (string) ($item->maintainer_website ?? ''),
+                            (string) ($item->maintainer_image ?? ''),
+                            $item->maintainer_links ?? null,
+                            (string) ($item->default_maintainer_title ?? '')
+                        ) ?: false;
 
                         // Set joomla
                         $item->joomla = new Registry($item->joomla);

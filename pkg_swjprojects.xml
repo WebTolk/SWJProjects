@@ -28,6 +28,7 @@
 		<folder type="plugin" group="actionlog" method="upgrade" id="swjprojects">plg_actionlog_swjprojects</folder>
 		<folder type="plugin" group="swjprojects" method="upgrade" id="joomlaserverscheme">plg_swjprojects_joomlaserverscheme</folder>
 		<folder type="plugin" group="schemaorg" method="upgrade" id="softwareapplicationswjprojects">plg_schemaorg_softwareapplicationswjprojects</folder>
+		<folder type="plugin" group="webservices" method="upgrade" id="swjprojects">plg_webservices_swjprojects</folder>
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="WebTolk - SW JProjects">

@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -47,8 +47,6 @@ class DisplayController extends BaseController
 	 */
 	public function display($cachable = false, $urlparams = [])
 	{
-		$cachable = true;
-
 		$view         = $this->input->get('view', $this->default_view);
 		// Duplicates protection
 		if ($this->app->getParams()->get('duplicates_protection', 1))
@@ -142,6 +140,7 @@ class DisplayController extends BaseController
 		if ($view !== 'jchangelog'
 			&& $view !== 'jupdate'
 			&& $view !== 'download'
+			&& $view !== 'userkeys'
 			&& $this->input->get('task') !== 'download')
 		{
 			$cachable  = true;
@@ -159,6 +158,10 @@ class DisplayController extends BaseController
 				'lang'          => 'CMD',
 				'Itemid'        => 'INT'
 			];
+		}
+		else
+		{
+			$cachable = false;
 		}
 
 		parent::display($cachable, $urlparams);

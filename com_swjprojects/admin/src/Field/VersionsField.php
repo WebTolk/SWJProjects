@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -23,95 +23,89 @@ defined('_JEXEC') or die;
 
 class VersionsField extends ListField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var  string
-	 *
-	 * @since  1.0.0
-	 */
-	protected $type = 'versions';
+    /**
+     * The form field type.
+     *
+     * @var  string
+     *
+     * @since  1.0.0
+     */
+    protected $type = 'versions';
 
-	/**
-	 * Field options.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $_options = null;
+    /**
+     * Field options.
+     *
+     * @var  array
+     *
+     * @since  1.0.0
+     */
+    protected $_options = null;
 
-	/**
-	 * Method to get the field options.
-	 *
-	 * @return  array  The field option objects.
-	 *
-	 * @since  1.0.0
-	 */
-	protected function getOptions()
-	{
-		if ($this->_options === null)
-		{
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true)
-				->select(['v.id', 'v.major', 'v.minor', ' v.patch', 'v.tag', 'v.stage'])
-				->from($db->quoteName('#__swjprojects_versions', 'v'));
+    /**
+     * Method to get the field options.
+     *
+     * @return  array  The field option objects.
+     *
+     * @since  1.0.0
+     */
+    protected function getOptions()
+    {
+        if ($this->_options === null) {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true)
+                ->select(['v.id', 'v.major', 'v.minor', ' v.patch', 'v.tag', 'v.stage'])
+                ->from($db->quoteName('#__swjprojects_versions', 'v'));
 
-			// Join over the projects
-			$query->select(['p.element as project_element'])
-				->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
+            // Join over the projects
+            $query->select(['p.element as project_element'])
+                ->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
-			// Join over translates
-			$translate = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
-			$query->select(['t_p.title as project_title'])
-				->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
-					. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));
+            // Join over translates
+            $translate = TranslationHelper::getCurrent() ?? TranslationHelper::getDefault();
+            $query->select(['t_p.title as project_title'])
+                ->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
+                    . ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($translate));
 
-			// Group by
-			$query->group(array('v.id'));
+            // Group by
+            $query->group(array('v.id'));
 
-			// Add the list ordering clause
-			$query->order($db->escape('v.date') . ' ' . $db->escape('desc'));
+            // Add the list ordering clause
+            $query->order($db->escape('v.date') . ' ' . $db->escape('desc'));
 
-			$items = $db->setQuery($query)->loadObjectList('id');
+            $items = $db->setQuery($query)->loadObjectList('id');
 
-			// Prepare options
-			$options = parent::getOptions();
-			foreach ($items as $i => $item)
-			{
-				// Set project title
-				$item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
+            // Prepare options
+            $options = parent::getOptions();
+            foreach ($items as $i => $item) {
+                // Set project title
+                $item->project_title = (empty($item->project_title)) ? $item->project_element : $item->project_title;
 
-				// Set version & name
-				$item->title = $item->project_title . ' ' . $item->major;
-				if (!empty($item->minor) || !empty($item->patch))
-				{
-					$item->title .= '.' . $item->minor;
-				}
-				if (!empty($item->patch))
-				{
-					$item->title .= '.' . $item->patch;
-				}
-				if ($item->tag !== 'stable')
-				{
-					$item->title .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $item->tag);
-					if ($item->tag !== 'dev' && !empty($item->stage))
-					{
-						$item->title .= ' ' . $item->stage;
-					}
-				}
+                // Set version & name
+                $item->title = $item->project_title . ' ' . $item->major;
+                if (!empty($item->minor) || !empty($item->patch)) {
+                    $item->title .= '.' . $item->minor;
+                }
+                if (!empty($item->patch)) {
+                    $item->title .= '.' . $item->patch;
+                }
+                if ($item->tag !== 'stable') {
+                    $item->title .= ' ' . Text::_('COM_SWJPROJECTS_VERSION_TAG_' . $item->tag);
+                    if ($item->tag !== 'dev' && !empty($item->stage)) {
+                        $item->title .= ' ' . $item->stage;
+                    }
+                }
 
-				// Add option
-				$option        = new \stdClass();
-				$option->value = $item->id;
-				$option->text  = $item->title;
+                // Add option
+                $option        = new \stdClass();
+                $option->value = $item->id;
+                $option->text  = $item->title;
 
-				$options[] = $option;
-			}
+                $options[] = $option;
+            }
 
-			$this->_options = $options;
-		}
+            $this->_options = $options;
+        }
 
-		return $this->_options;
-	}
+        return $this->_options;
+    }
 }

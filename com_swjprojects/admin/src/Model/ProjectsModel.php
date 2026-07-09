@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -74,16 +74,20 @@ class ProjectsModel extends ListModel
 		$this->setState('filter.visible', $project_visible);
 
 		// Set category filter state
-		$category = $this->getUserStateFromRequest($this->context . '.filter.category  ', 'filter_category', '');
-		$this->setState('filter.category  ', $category);
+		$category = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '');
+		$this->setState('filter.category', $category);
+
+		// Set maintainer filter state
+		$maintainer = $this->getUserStateFromRequest($this->context . '.filter.maintainer', 'filter_maintainer', '');
+		$this->setState('filter.maintainer', $maintainer);
 
 		// Set maintainer filter state
 		$maintainer = $this->getUserStateFromRequest($this->context . '.filter.maintainer', 'filter_maintainer', '');
 		$this->setState('filter.maintainer', $maintainer);
 
 		// Set download_type filter state
-		$download_type = $this->getUserStateFromRequest($this->context . '.filter.download_type  ', 'filter_download_type', '');
-		$this->setState('filter.download_type  ', $download_type);
+		$download_type = $this->getUserStateFromRequest($this->context . '.filter.download_type', 'filter_download_type', '');
+		$this->setState('filter.download_type', $download_type);
 
 		// List state information
 		$ordering  = empty($ordering) ? 'p.ordering' : $ordering;
@@ -105,6 +109,7 @@ class ProjectsModel extends ListModel
 	{
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.visible');
 		$id .= ':' . $this->getState('filter.category');
 		$id .= ':' . $this->getState('filter.maintainer');
 		$id .= ':' . $this->getState('filter.download_type');

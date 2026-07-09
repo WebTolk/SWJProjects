@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="SWJProjects">
+    <description>Project-local PHPCS ruleset for SWJProjects.</description>
+
+    <exclude-pattern type="relative">^.idea/*</exclude-pattern>
+    <exclude-pattern type="relative">^.webtolk/*</exclude-pattern>
+    <exclude-pattern type="relative">^.packages/*</exclude-pattern>
+    <exclude-pattern type="relative">^.phing/*</exclude-pattern>
+    <exclude-pattern type="relative">^logs/*</exclude-pattern>
+    <exclude-pattern type="relative">^language/*</exclude-pattern>
+
+    <rule ref="PSR12">
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent.TabsUsed" />
+        <exclude name="Generic.Files.LineEndings.InvalidEOLChar" />
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols" />
+        <exclude name="PSR2.Classes.PropertyDeclaration.Underscore" />
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore" />
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="220"/>
+            <property name="absoluteLineLimit" value="260"/>
+        </properties>
+    </rule>
+</ruleset>

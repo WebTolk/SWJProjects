@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -29,172 +29,170 @@ use function implode;
 
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * Model state variables.
-	 *
-	 * @var  Joomla\CMS\Object\CMSObject
-	 *
-	 * @since  1.0.0
-	 */
-	protected $state;
+    /**
+     * Model state variables.
+     *
+     * @var  Joomla\CMS\Object\CMSObject
+     *
+     * @since  1.0.0
+     */
+    protected $state;
 
-	/**
-	 * Form object.
-	 *
-	 * @var  Form
-	 *
-	 * @since  1.0.0
-	 */
-	protected $form;
+    /**
+     * Form object.
+     *
+     * @var  Form
+     *
+     * @since  1.0.0
+     */
+    protected $form;
 
-	/**
-	 * Translates forms array.
-	 *
-	 * @var  array
-	 *
-	 * @since  1.0.0
-	 */
-	protected $translateForms;
+    /**
+     * Translates forms array.
+     *
+     * @var  array
+     *
+     * @since  1.0.0
+     */
+    protected $translateForms;
 
-	/**
-	 * Version object.
-	 *
-	 * @var  object
-	 *
-	 * @since  1.0.0
-	 */
-	protected $item;
+    /**
+     * Version object.
+     *
+     * @var  object
+     *
+     * @since  1.0.0
+     */
+    protected $item;
 
-	/**
-	 * Project object.
-	 *
-	 * @var  object
-	 *
-	 * @since  1.0.0
-	 */
-	protected $project;
+    /**
+     * Project object.
+     *
+     * @var  object
+     *
+     * @since  1.0.0
+     */
+    protected $project;
 
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 *
-	 * @throws  \Exception
-	 *
-	 * @since  1.0.0
-	 */
-	public function display($tpl = null)
-	{
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     *
+     * @throws  \Exception
+     *
+     * @since  1.0.0
+     */
+    public function display($tpl = null)
+    {
         $model = $this->getModel();
-		$this->state          = $model->getState();
-		$this->form           = $model->getForm();
-		$this->translateForms = $model->getTranslateForms();
-		$this->item           = $model->getItem();
-		$this->project        = $model->getProject($this->form->getValue('project_id', '', 0));
+        $this->state          = $model->getState();
+        $this->form           = $model->getForm();
+        $this->translateForms = $model->getTranslateForms();
+        $this->item           = $model->getItem();
+        $this->project        = $model->getProject($this->form->getValue('project_id', '', 0));
 
-		// Check for errors
-		if (count($errors = $model->getErrors()))
-		{
-			throw new \Exception(implode('\n', $errors), 500);
-		}
+        // Check for errors
+        if (count($errors = $model->getErrors())) {
+            throw new \Exception(implode('\n', $errors), 500);
+        }
 
-		// Prepare form
+        // Prepare form
         // @todo Change field name to another due project  may be not only Joomla extension since SW JProjects 2.5.0.
         // There are plans to create an environment entity for projects where Joomla will be considered an environment.
         //
-		if (!$this->project || empty($this->project->joomla['type']))
-		{
-			$this->form->removeField('joomla_version', '');
-		}
+        if (!$this->project || empty($this->project->joomla['type'])) {
+            $this->form->removeField('joomla_version', '');
+        }
 
 
-		$this->getDocument()->getWebAssetManager()->addInlineScript("function projectHasChanged(element) {
+        $this->getDocument()->getWebAssetManager()->addInlineScript("function projectHasChanged(element) {
 				document.body.appendChild(document.createElement('joomla-core-loader'));
 				document.querySelector('input[name=task]').value = 'version.reload';
 				element.form.submit();
 			}");
 
-		// Add title and toolbar
-		$this->addToolbar();
+        // Add title and toolbar
+        $this->addToolbar();
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	/**
-	 * Add title and toolbar.
-	 *
-	 * @throws  Exception
-	 *
-	 * @since  1.0.0
-	 */
-	protected function addToolbar()
-	{
-		$isNew   = ($this->item->id == 0);
-		$canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
+    /**
+     * Add title and toolbar.
+     *
+     * @throws  Exception
+     *
+     * @since  1.0.0
+     */
+    protected function addToolbar()
+    {
+        $isNew   = ($this->item->id == 0);
+        $canDo   = SWJProjectsHelper::getActions('com_swjprojects', 'version', $this->item->id);
         $toolbar = $this->getDocument()->getToolbar();
 
-		// Disable menu
-		Factory::getApplication()->getInput()->set('hidemainmenu', true);
+        // Disable menu
+        Factory::getApplication()->getInput()->set('hidemainmenu', true);
 
-		// Set page title
-		$title = ($isNew) ? Text::_('COM_SWJPROJECTS_VERSION_ADD') : Text::_('COM_SWJPROJECTS_VERSION_EDIT');
-		ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . $title, 'cube');
+        // Set page title
+        $title = ($isNew) ? Text::_('COM_SWJPROJECTS_VERSION_ADD') : Text::_('COM_SWJPROJECTS_VERSION_EDIT');
+        ToolbarHelper::title(Text::_('COM_SWJPROJECTS') . ': ' . $title, 'cube');
 
-		// Add apply & save buttons
-		if ($canDo->get('core.edit'))
-		{
-			ToolbarHelper::apply('version.apply');
-			ToolbarHelper::save('version.save');
-		}
+        // Add apply & save buttons
+        if ($canDo->get('core.edit')) {
+            ToolbarHelper::apply('version.apply');
+            ToolbarHelper::save('version.save');
+        }
 
-		// Add save new button
-		if ($canDo->get('core.create'))
-		{
-			ToolbarHelper::save2new('version.save2new');
-		}
+        // Add save new button
+        if ($canDo->get('core.create')) {
+            ToolbarHelper::save2new('version.save2new');
+        }
 
-		// Add cancel button
-		ToolbarHelper::cancel('version.cancel', 'JTOOLBAR_CLOSE');
+        // Add cancel button
+        ToolbarHelper::cancel('version.cancel', 'JTOOLBAR_CLOSE');
 
-		// Add preview & download buttons
-		if ($this->item->id)
-		{
-			// Download button
-			if ($this->item->file)
-			{
-				$link = 'index.php?option=com_swjprojects&task=siteRedirect&page=download&debug=1&version_id='
-					. $this->item->id;
-				if ($this->project->download_type === 'paid')
-				{
-					$link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
-				}
-				$download = LayoutHelper::render('components.swjprojects.toolbar.link',
-					['link' => $link, 'text' => 'COM_SWJPROJECTS_FILE_DOWNLOAD', 'icon' => 'download', 'new' => false]);
-				$toolbar->appendButton('Custom', $download, 'download');
-			}
-		}
+        // Add preview & download buttons
+        if ($this->item->id) {
+            // Download button
+            if ($this->item->file) {
+                $link = 'index.php?option=com_swjprojects&task=siteRedirect&page=download&debug=1&version_id='
+                    . $this->item->id;
+                if ($this->project->download_type === 'paid') {
+                    $link .= '&download_key=' . ComponentHelper::getParams('com_swjprojects')->get('key_master');
+                }
+                $download = LayoutHelper::render(
+                    'components.swjprojects.toolbar.link',
+                    ['link' => $link, 'text' => 'COM_SWJPROJECTS_FILE_DOWNLOAD', 'icon' => 'download', 'new' => false]
+                );
+                $toolbar->appendButton('Custom', $download, 'download');
+            }
+        }
 
-		// Add translate switcher
-		$switcher = LayoutHelper::render('components.swjprojects.translate.switcher');
-		$toolbar->appendButton('Custom', $switcher, 'translate-switcher');
+        // Add translate switcher
+        $switcher = LayoutHelper::render('components.swjprojects.translate.switcher');
+        $toolbar->appendButton('Custom', $switcher, 'translate-switcher');
 
-		// Add GitHub button
-		$link   = 'https://github.com/WebTolk/SWJProjects';
-		$github = LayoutHelper::render('components.swjprojects.toolbar.link',
-			['link' => $link, 'text' => 'GitHub', 'icon' => ' fab fa-github', 'new' => true]);
-		$toolbar->appendButton('Custom', $github, 'github');
+        // Add GitHub button
+        $link   = 'https://github.com/WebTolk/SWJProjects';
+        $github = LayoutHelper::render(
+            'components.swjprojects.toolbar.link',
+            ['link' => $link, 'text' => 'GitHub', 'icon' => ' fab fa-github', 'new' => true]
+        );
+        $toolbar->appendButton('Custom', $github, 'github');
 
-		// Add preview button
-		if ($this->item->id)
-		{
-			// Preview button
-			$link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
-				. '&project_id=' . $this->project->id . '&catid=' . $this->project->catid;
-			$preview = LayoutHelper::render('components.swjprojects.toolbar.link',
-				['link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye']);
-			$toolbar->appendButton('Custom', $preview, 'preview');
-		}
-	}
+        // Add preview button
+        if ($this->item->id) {
+            // Preview button
+            $link    = 'index.php?option=com_swjprojects&task=siteRedirect&page=version&debug=1&id=' . $this->item->id
+                . '&project_id=' . $this->project->id . '&catid=' . $this->project->catid;
+            $preview = LayoutHelper::render(
+                'components.swjprojects.toolbar.link',
+                ['link' => $link, 'text' => 'JGLOBAL_PREVIEW', 'icon' => 'eye']
+            );
+            $toolbar->appendButton('Custom', $preview, 'preview');
+        }
+    }
 }

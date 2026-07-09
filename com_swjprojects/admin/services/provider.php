@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -20,6 +20,8 @@ use Joomla\CMS\HTML\Registry;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Component\SWJProjects\Administrator\Extension\SWJProjectsComponent;
 use Joomla\Component\SWJProjects\Administrator\Helper\AssociationsHelper;
+use Joomla\Component\SWJProjects\Administrator\Service\AccessService;
+use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
@@ -46,6 +48,12 @@ return new class () implements ServiceProviderInterface {
 		$container->registerServiceProvider(new MVCFactory('\\Joomla\\Component\\SWJProjects'));
 		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Joomla\\Component\\SWJProjects'));
 		$container->registerServiceProvider(new RouterFactory('\\Joomla\\Component\\SWJProjects'));
+		$container->set(
+			AccessService::class,
+			static function (Container $container): AccessService {
+				return new AccessService($container->get(DatabaseInterface::class));
+			}
+		);
 
 		$container->set(
 			ComponentInterface::class,

@@ -4,7 +4,7 @@
  * @package       SW JProjects
  * @subpackage      Schemaorg.article
  *
- * @copyright   (C) 2024 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 

@@ -1,5 +1,9 @@
 .idea
 .phing
 .packages
+.agents
+.agents.backup-*/
+.webtolk
+phing.xml
 node_modules
 package-lock.json
