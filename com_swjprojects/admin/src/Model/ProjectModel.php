@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -19,6 +19,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
+use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
@@ -240,9 +241,8 @@ class ProjectModel extends AdminModel
 			$registry     = new Registry($item->joomla);
 			$item->joomla = $registry->toArray();
 
-			// Convert the urls field value to array
-			$registry   = new Registry($item->urls);
-			$item->urls = $registry->toArray();
+			// Convert the urls field value to typed project links.
+			$item->urls = ProjectLinksHelper::normalizeLinks($item->urls);
 
 			// Convert the relations field value to array
 			$registry        = new Registry($item->relations);
@@ -413,11 +413,7 @@ class ProjectModel extends AdminModel
 		// Prepare urls field data
 		if (isset($data['urls']))
 		{
-			$data['urls'] = array_filter($data['urls'], function ($element) {
-				return !empty($element);
-			});
-			$registry     = new Registry($data['urls']);
-			$data['urls'] = $registry->toString('json', ['bitmask' => JSON_UNESCAPED_UNICODE]);
+			$data['urls'] = ProjectLinksHelper::toJson($data['urls']);
 		}
 
 		// Prepare relations field data

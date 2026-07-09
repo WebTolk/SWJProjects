@@ -21,4 +21,21 @@
 		<language tag="ru-RU">ru-RU/plg_system_swjprojects.ini</language>
 		<language tag="ru-RU">ru-RU/plg_system_swjprojects.sys.ini</language>
 	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="administrator_menu_placement"
+					type="list"
+					label="PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_LABEL"
+					description="PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_DESC"
+					default="components"
+					validate="options"
+				>
+					<option value="components">PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_COMPONENTS</option>
+					<option value="top">PLG_SYSTEM_SWJPROJECTS_FIELD_ADMINISTRATOR_MENU_PLACEMENT_TOP</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

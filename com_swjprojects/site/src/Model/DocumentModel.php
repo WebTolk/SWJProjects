@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright     Copyright (c) 2018 - 2025 Sergey Tolkachyov. All rights reserved.
+ * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Router\Route;
+use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
@@ -289,11 +290,19 @@ class DocumentModel extends ItemModel
 				$data->project->elemet = $data->project_element;
 				$data->project->introtext = nl2br($data->project_introtext);
 				$data->project->downloads = $data->downloads;
-				$data->project->urls = new Registry($data->project_urls);
+				$data->project->urls = ProjectLinksHelper::normalizeLinks($data->project_urls);
 				$data->project->slug = $data->pslug;
 				$data->project->link = Route::_(RouteHelper::getProjectRoute($data->pslug, $data->cslug));
 				$data->project->versions = Route::_(RouteHelper::getVersionsRoute($data->pslug, $data->cslug));
 				$data->project->documentation = Route::_(RouteHelper::getDocumentationRoute($data->pslug, $data->cslug));
+				foreach ($data->project->urls as $link)
+				{
+					if ($link['type'] === 'documentation')
+					{
+						$data->project->documentation = false;
+						break;
+					}
+				}
 				$data->project->download = Route::_(RouteHelper::getDownloadRoute(null, $data->project_id));
 				$data->project->images = new Registry();
 				$data->project->images->set('icon',

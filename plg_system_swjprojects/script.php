@@ -11,12 +11,9 @@
 
 declare(strict_types=1);
 
-use Joomla\CMS\Application\AdministratorApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -26,15 +23,11 @@ use Joomla\DI\ServiceProviderInterface;
 return new class () implements ServiceProviderInterface {
 	public function register(Container $container)
 	{
-		$container->set(InstallerScriptInterface::class, new class ($container->get(AdministratorApplication::class)) implements InstallerScriptInterface {
-			protected AdministratorApplication $app;
+		$container->set(InstallerScriptInterface::class, new class () implements InstallerScriptInterface {
 			protected DatabaseDriver $db;
-			protected string $minimumJoomla = '5.0.0';
-			protected string $minimumPhp = '8.1';
 
-			public function __construct(AdministratorApplication $app)
+			public function __construct()
 			{
-				$this->app = $app;
 				$this->db  = Factory::getContainer()->get('DatabaseDriver');
 			}
 
@@ -59,38 +52,11 @@ return new class () implements ServiceProviderInterface {
 
 			public function preflight(string $type, InstallerAdapter $adapter): bool
 			{
-				return $this->checkCompatible($adapter->getElement());
+				return true;
 			}
 
 			public function postflight(string $type, InstallerAdapter $adapter): bool
 			{
-				return true;
-			}
-
-			protected function checkCompatible(string $element): bool
-			{
-				$element = strtoupper($element);
-
-				if (!(new Version())->isCompatible($this->minimumJoomla))
-				{
-					$this->app->enqueueMessage(
-						Text::sprintf($element . '_ERROR_COMPATIBLE_JOOMLA', $this->minimumJoomla),
-						'error'
-					);
-
-					return false;
-				}
-
-				if (!(version_compare(PHP_VERSION, $this->minimumPhp) >= 0))
-				{
-					$this->app->enqueueMessage(
-						Text::sprintf($element . '_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
-						'error'
-					);
-
-					return false;
-				}
-
 				return true;
 			}
 

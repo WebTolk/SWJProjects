@@ -109,8 +109,8 @@
 			   length="128"
 			   class="input-xxlarge"/>
 	</fieldset>
-	<fieldset name="maintainer_link_types" label="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES">
-		<field name="maintainer_link_types" type="subform"
+	<fieldset name="link_types" label="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES">
+		<field name="link_types" type="subform"
 			   label="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES"
 			   description="COM_SWJPROJECTS_PARAMS_MAINTAINER_LINK_TYPES_DESC"
 			   multiple="true">
@@ -137,6 +137,7 @@
 			</form>
 		</field>
 	</fieldset>
+
 	<fieldset name="server_params" label="COM_SWJPROJECTS_SERVER_PARAMS_FIELDSET_LABEL">
 		<field type="serverschemelist"
 			   name="server_scheme"

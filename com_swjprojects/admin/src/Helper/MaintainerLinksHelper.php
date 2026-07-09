@@ -20,53 +20,86 @@ use Joomla\Registry\Registry;
 use function in_array;
 use function is_array;
 use function is_object;
+use function is_string;
+use function json_decode;
+use function json_last_error;
 use function preg_replace;
 use function strtolower;
 use function trim;
 
+use const JSON_ERROR_NONE;
+
 class MaintainerLinksHelper
 {
-	public const PARAM_LINK_TYPES = 'maintainer_link_types';
+	/**
+	 * Component parameter name for shared link type descriptors.
+	 *
+	 * @since  2.7.0
+	 */
+	public const PARAM_LINK_TYPES = 'link_types';
 
 	/**
-	 * Default maintainer link types.
+	 * Default shared link types.
 	 *
 	 * @return  array
 	 *
-	 * @since  2.6.2
+	 * @since  2.7.0
 	 */
 	public static function getDefaultTypes(): array
 	{
 		return [
 			[
+				'code'       => 'demo',
+				'title'      => 'COM_SWJPROJECTS_URLS_DEMO',
+				'value_type' => 'url',
+				'icon_class' => 'fas fa-external-link-alt',
+			],
+			[
+				'code'       => 'support',
+				'title'      => 'COM_SWJPROJECTS_URLS_SUPPORT',
+				'value_type' => 'url',
+				'icon_class' => 'fas fa-info-circle',
+			],
+			[
+				'code'       => 'github',
+				'title'      => 'COM_SWJPROJECTS_URLS_GITHUB',
+				'value_type' => 'url',
+				'icon_class' => 'fab fa-github-square',
+			],
+			[
 				'code'       => 'jed',
-				'title'      => 'Joomla Extensions Directory',
+				'title'      => 'COM_SWJPROJECTS_URLS_JED',
 				'value_type' => 'url',
 				'icon_class' => 'fab fa-joomla',
 			],
 			[
-				'code'       => 'github',
-				'title'      => 'GitHub',
+				'code'       => 'donate',
+				'title'      => 'COM_SWJPROJECTS_URLS_DONATE',
 				'value_type' => 'url',
-				'icon_class' => 'fab fa-github',
+				'icon_class' => 'fas fa-donate',
+			],
+			[
+				'code'       => 'documentation',
+				'title'      => 'COM_SWJPROJECTS_URLS_DOCUMENTATION',
+				'value_type' => 'url',
+				'icon_class' => 'fas fa-file-alt',
 			],
 		];
 	}
 
 	/**
-	 * Get normalized component-level maintainer link types.
+	 * Get normalized component-level shared link types.
 	 *
 	 * @param   Registry|null  $params  Component params.
 	 *
 	 * @return  array
 	 *
-	 * @since  2.6.2
+	 * @since  2.7.0
 	 */
 	public static function getTypes(?Registry $params = null): array
 	{
 		$params = $params ?: ComponentHelper::getParams('com_swjprojects');
-		$types = $params->get(self::PARAM_LINK_TYPES, []);
-		$types = self::normalizeTypes($types);
+		$types = self::normalizeTypes($params->get(self::PARAM_LINK_TYPES, []));
 
 		return $types ?: self::normalizeTypes(self::getDefaultTypes());
 	}
@@ -82,13 +115,7 @@ class MaintainerLinksHelper
 	 */
 	public static function normalizeTypes($types): array
 	{
-		if ($types instanceof Registry) {
-			$types = $types->toArray();
-		}
-
-		if (is_object($types)) {
-			$types = (array) $types;
-		}
+		$types = self::toArray($types);
 
 		if (!is_array($types)) {
 			return [];
@@ -120,12 +147,95 @@ class MaintainerLinksHelper
 
 			$normalized[$code] = [
 				'code'       => $code,
-				'title'      => trim((string) ($type['title'] ?? $code)),
+				'title'      => self::normalizeTitle($code, $type['title'] ?? ''),
 				'value_type' => $valueType,
 				'icon_class' => trim((string) ($type['icon_class'] ?? '')),
 			];
 		}
 
 		return $normalized;
+	}
+
+	/**
+	 * Convert raw input to an array when possible.
+	 *
+	 * @param   mixed  $value  Raw value.
+	 *
+	 * @return  mixed
+	 *
+	 * @since  2.7.0
+	 */
+	private static function toArray($value)
+	{
+		if ($value instanceof Registry) {
+			return $value->toArray();
+		}
+
+		if (is_string($value)) {
+			$value = trim($value);
+
+			if ($value === '') {
+				return [];
+			}
+
+			$decoded = json_decode($value, true);
+
+			if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+				return $decoded;
+			}
+
+			return (new Registry($value))->toArray();
+		}
+
+		if (is_object($value)) {
+			return (array) $value;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Normalize built-in titles to language constants while keeping custom titles intact.
+	 *
+	 * @param   string  $code   Link type code.
+	 * @param   mixed   $title  Raw title.
+	 *
+	 * @return  string
+	 *
+	 * @since  2.7.0
+	 */
+	private static function normalizeTitle(string $code, $title): string
+	{
+		$title = trim((string) $title);
+
+		if ($title !== '') {
+			return $title;
+		}
+
+		$defaultTitle = self::getDefaultTitleConstant($code);
+
+		return $defaultTitle !== '' ? $defaultTitle : $code;
+	}
+
+	/**
+	 * Get the default language key for a built-in link type.
+	 *
+	 * @param   string  $code  Link type code.
+	 *
+	 * @return  string
+	 *
+	 * @since  2.7.0
+	 */
+	private static function getDefaultTitleConstant(string $code): string
+	{
+		return match ($code) {
+			'demo'          => 'COM_SWJPROJECTS_URLS_DEMO',
+			'support'       => 'COM_SWJPROJECTS_URLS_SUPPORT',
+			'github'        => 'COM_SWJPROJECTS_URLS_GITHUB',
+			'jed'           => 'COM_SWJPROJECTS_URLS_JED',
+			'donate'        => 'COM_SWJPROJECTS_URLS_DONATE',
+			'documentation' => 'COM_SWJPROJECTS_URLS_DOCUMENTATION',
+			default         => '',
+		};
 	}
 }

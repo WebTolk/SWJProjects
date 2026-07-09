@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<metadata>
-	<menu
-		author="Sergey Tolkachyov"
-		class="folder-open swjprojects-menu-root"
-		description="COM_SWJPROJECTS"
-		name="COM_SWJPROJECTS"
+<?xml version="1.0"?>
+<menu
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:joomla.org"
+	xsi:schemaLocation="urn:joomla.org menu.xsd"
+>
+	<menuitem
+		title="COM_SWJPROJECTS"
+		type="heading"
+		element="com_swjprojects"
+		icon="folder-open"
+		class="class:folder-open swjprojects-preset-root"
+		dashboard="swjprojects"
 	>
 		<menuitem
 			title="COM_SWJPROJECTS_VERSIONS"
@@ -71,7 +77,7 @@
 			type="component"
 			element="com_config"
 			link="index.php?option=com_config&amp;view=component&amp;component=com_swjprojects"
-			scope="default"
+			permission="core.admin"
 		/>
-	</menu>
-</metadata>
+	</menuitem>
+</menu>

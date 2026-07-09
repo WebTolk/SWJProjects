@@ -37,6 +37,12 @@
 		<language tag="ru-RU">language/ru-RU/com_swjprojects.sys.ini</language>
 	</languages>
 	<administration>
+		<menu>
+			<params>
+				<dashboard>swjprojects</dashboard>
+			</params>
+			COM_SWJPROJECTS
+		</menu>
 		<files folder="admin">
 			<folder>forms</folder>
 			<folder>presets</folder>
@@ -66,4 +72,7 @@
 		<folder>toolbar</folder>
 		<folder>translate</folder>
 	</layouts>
+	<dashboards>
+		<dashboard title="COM_SWJPROJECTS" icon="icon-folder-open">swjprojects</dashboard>
+	</dashboards>
 </extension>
