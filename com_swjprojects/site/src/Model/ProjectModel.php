@@ -3,7 +3,7 @@
  * @package       SW JProjects
  * @version       2.6.2
  * @Author        Sergey Tolkachyov
- * @copyright  Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
+ * @copyright     Copyright (c) 2018 - 2026 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link          https://web-tolk.ru
  * @since         1.0.0
@@ -23,10 +23,12 @@ use Joomla\CMS\Table\Table;
 use Joomla\Component\SWJProjects\Administrator\Helper\ProjectLinksHelper;
 use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
+use Joomla\Component\SWJProjects\Site\Helper\KeysHelper;
 use Joomla\Component\SWJProjects\Site\Helper\MaintainerHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+
 use function array_unique;
 use function defined;
 use function explode;
@@ -118,7 +120,7 @@ class ProjectModel extends ItemModel
 		$root            = $params->get('files_folder');
 		$this->filesPath = [
 			'root'     => $root,
-			'versions' => $root . '/versions'
+			'versions' => $root . '/versions',
 		];
 
 		// Set translates
@@ -162,7 +164,7 @@ class ProjectModel extends ItemModel
 		// Set published && debug state
 		if ($app->getInput()->getInt('debug', 0))
 		{
-			$this->setState('filter.published', array(0, 1));
+			$this->setState('filter.published', [0, 1]);
 			$this->setState('debug', 1);
 		}
 		else
@@ -176,9 +178,9 @@ class ProjectModel extends ItemModel
 	 *
 	 * @param   integer  $pk  The id of the project.
 	 *
-	 * @return  object|boolean|\Exception  Project object on success, false or \Exception on failure.
-	 *
 	 * @throws  \Exception
+	 *
+	 * @return  object|boolean|\Exception  Project object on success, false or \Exception on failure.
 	 *
 	 * @since  1.0.0
 	 */
@@ -197,50 +199,64 @@ class ProjectModel extends ItemModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('p.*'))
-					->from($db->quoteName('#__swjprojects_projects', 'p'))
-					->where('p.id = ' . (int) $pk);
+				            ->select(['p.*'])
+				            ->from($db->quoteName('#__swjprojects_projects', 'p'))
+				            ->where('p.id = ' . (int) $pk);
 
 				// Join over the categories
 				$query->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_p.*', 'p.id as id'))
-					->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
-						. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
+				$query->select(['t_p.*', 'p.id as id'])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_translate_projects', 't_p')
+					      . ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current)
+				      );
 
 				// Join over default translates
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_p.title as default_title', 'td_p.payment as default_payment'))
-						->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
-							. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
+					$query->select(['td_p.title as default_title', 'td_p.payment as default_payment'])
+					      ->leftJoin(
+						      $db->quoteName('#__swjprojects_translate_projects', 'td_p')
+						      . ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote(
+							      $default
+						      )
+					      );
 				}
 
 				// Join over maintainer base data
-				$query->select(array(
+				$query->select([
 					'm.id as maintainer_id',
 					'm.alias as maintainer_alias',
 					'm.website as maintainer_website',
 					'm.image as maintainer_image',
 					'm.links as maintainer_links',
-				))
-					->leftJoin($db->quoteName('#__swjprojects_maintainers', 'm')
-						. ' ON m.id = p.maintainer_id AND m.state = 1');
+				])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_maintainers', 'm')
+					      . ' ON m.id = p.maintainer_id AND m.state = 1'
+				      );
 
 				// Join over current maintainer translate
-				$query->select(array('t_m.title as maintainer_title'))
-					->leftJoin($db->quoteName('#__swjprojects_translate_maintainers', 't_m')
-						. ' ON t_m.id = m.id AND ' . $db->quoteName('t_m.language') . ' = ' . $db->quote($current));
+				$query->select(['t_m.title as maintainer_title'])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_translate_maintainers', 't_m')
+					      . ' ON t_m.id = m.id AND ' . $db->quoteName('t_m.language') . ' = ' . $db->quote($current)
+				      );
 
 				// Join over default maintainer translate
 				if ($current != $default)
 				{
-					$query->select(array('td_m.title as default_maintainer_title'))
-						->leftJoin($db->quoteName('#__swjprojects_translate_maintainers', 'td_m')
-							. ' ON td_m.id = m.id AND ' . $db->quoteName('td_m.language') . ' = ' . $db->quote($default));
+					$query->select(['td_m.title as default_maintainer_title'])
+					      ->leftJoin(
+						      $db->quoteName('#__swjprojects_translate_maintainers', 'td_m')
+						      . ' ON td_m.id = m.id AND ' . $db->quoteName('td_m.language') . ' = ' . $db->quote(
+							      $default
+						      )
+					      );
 				}
 
 				// Count over versions for download counter
@@ -254,22 +270,24 @@ class ProjectModel extends ItemModel
 
 				// Join over versions for joomla versions
 				$subQuery = $db->getQuery(true)
-					->select(array('GROUP_CONCAT(joomla_version SEPARATOR ",")'))
-					->from($db->quoteName('#__swjprojects_versions', 'jv'))
-					->where('jv.project_id = p.id');
+				               ->select(['GROUP_CONCAT(joomla_version SEPARATOR ",")'])
+				               ->from($db->quoteName('#__swjprojects_versions', 'jv'))
+				               ->where('jv.project_id = p.id');
 				$query->select('(' . $subQuery->__toString() . ') as joomla_versions');
 
 				// Join over documentation for documentation link
-				$query->select(array('d.id as documentation'))
-					->leftJoin($db->quoteName('#__swjprojects_documentation', 'd') .
-						' ON d.project_id = p.id AND d.state = 1');
+				$query->select(['d.id as documentation'])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_documentation', 'd') .
+					      ' ON d.project_id = p.id AND d.state = 1'
+				      );
 
 				// Filter by published state
 				$published = $this->getState('filter.published');
 				if (is_numeric($published))
 				{
 					$query->where($db->quoteName('p.state') . ' = ' . $db->quote((int) $published))
-						->where($db->quoteName('c.state') . ' = ' . $db->quote((int) $published));
+					      ->where($db->quoteName('c.state') . ' = ' . $db->quote((int) $published));
 				}
 				elseif (is_array($published))
 				{
@@ -277,7 +295,7 @@ class ProjectModel extends ItemModel
 					$published = implode(',', $published);
 
 					$query->where('p.state IN (' . $published . ')')
-						->where('c.state IN (' . $published . ')');
+					      ->where('c.state IN (' . $published . ')');
 				}
 				// Project visibility param
 				$query->where($db->quoteName('p.visible') . ' = ' . $db->quote(1));
@@ -286,7 +304,7 @@ class ProjectModel extends ItemModel
 
 				if (!$data?->id)
 				{
-                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
+					throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_PROJECT_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -311,7 +329,7 @@ class ProjectModel extends ItemModel
 
 				// Set categories
 				$categories     = !empty($data->additional_categories) ?
-					explode(',', $data->additional_categories) : array();
+					explode(',', $data->additional_categories) : [];
 				$categories[]   = $data->catid;
 				$categories     = $this->getCategories(implode(',', $categories));
 				$data->category = (!empty($categories[$data->catid])) ? $categories[$data->catid] : false;
@@ -366,21 +384,36 @@ class ProjectModel extends ItemModel
 
 				// Set images
 				$data->images = new Registry();
-				$data->images->set('icon',
-					ImagesHelper::getImage('projects', $data->id, 'icon', $data->language));
-				$data->images->set('cover',
-					ImagesHelper::getImage('projects', $data->id, 'cover', $data->language));
+				$data->images->set(
+					'icon',
+					ImagesHelper::getImage('projects', $data->id, 'icon', $data->language)
+				);
+				$data->images->set(
+					'cover',
+					ImagesHelper::getImage('projects', $data->id, 'cover', $data->language)
+				);
 
 				// Set gallery
-				$data->gallery = ImagesHelper::getImages('projects', $data->id, 'gallery',
-					new Registry($data->gallery), $data->language);
+				$data->gallery = ImagesHelper::getImages(
+					'projects',
+					$data->id,
+					'gallery',
+					new Registry($data->gallery),
+					$data->language
+				);
 
 				// Set link
+				$downloadKey         = $data->download_type === 'paid' ? KeysHelper::getUserProjectKey(
+					(int) $data->id
+				) : null;
+				$data->can_download  = $downloadKey !== null;
 				$data->slug          = $data->id . ':' . $data->alias;
 				$data->cslug         = ($data->category) ? $data->category->slug : $data->catid;
 				$data->link          = Route::_(RouteHelper::getProjectRoute($data->slug, $data->cslug));
 				$data->versions      = Route::_(RouteHelper::getVersionsRoute($data->slug, $data->cslug));
-				$data->download      = Route::_(RouteHelper::getDownloadRoute(null, null, $data->element));
+				$data->download      = Route::_(
+					RouteHelper::getDownloadRoute(null, null, $data->element, $downloadKey)
+				);
 				$data->documentation = (!$data->documentation) ? false :
 					Route::_(RouteHelper::getDocumentationRoute($data->slug, $data->cslug));
 				foreach ($data->urls as $link)
@@ -403,8 +436,10 @@ class ProjectModel extends ItemModel
 
 				// Set metadata
 				$data->metadata = new Registry($data->metadata);
-				$data->metadata->set('image',
-					ImagesHelper::getImage('projects', $data->id, 'meta', $data->language));
+				$data->metadata->set(
+					'image',
+					ImagesHelper::getImage('projects', $data->id, 'meta', $data->language)
+				);
 
 				$this->_item[$pk] = $data;
 			}
@@ -412,7 +447,7 @@ class ProjectModel extends ItemModel
 			{
 				if ($e->getCode() == 404)
 				{
-                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
+					throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				}
 				else
 				{
@@ -430,15 +465,18 @@ class ProjectModel extends ItemModel
 	 *
 	 * @param   integer  $pk  The id of the category.
 	 *
-	 * @return  object|boolean|\Exception  Category object on success, false or \Exception on failure.
-	 *
 	 * @throws  \Exception
+	 *
+	 * @return  object|boolean|\Exception  Category object on success, false or \Exception on failure.
 	 *
 	 * @since  1.0.0
 	 */
 	public function getCategoryParent($pk = null)
 	{
-		if (empty($pk)) return false;
+		if (empty($pk))
+		{
+			return false;
+		}
 
 		if ($this->_categoryParent === null)
 		{
@@ -451,24 +489,30 @@ class ProjectModel extends ItemModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('c.id', 'c.alias'))
-					->from($db->quoteName('#__swjprojects_categories', 'child'))
-					->innerJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = child.parent_id')
-					->where('child.id = ' . (int) $pk);
+				            ->select(['c.id', 'c.alias'])
+				            ->from($db->quoteName('#__swjprojects_categories', 'child'))
+				            ->innerJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = child.parent_id')
+				            ->where('child.id = ' . (int) $pk);
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_c.title as title'))
-					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
-						. '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current));
+				$query->select(['t_c.title as title'])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_translate_categories', 't_c')
+					      . '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current)
+				      );
 
 				// Join over default translates
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_c.title as default_title'))
-						->leftJoin($db->quoteName('#__swjprojects_translate_categories', 'td_c')
-							. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
+					$query->select(['td_c.title as default_title'])
+					      ->leftJoin(
+						      $db->quoteName('#__swjprojects_translate_categories', 'td_c')
+						      . ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote(
+							      $default
+						      )
+					      );
 				}
 
 				// Filter by published state
@@ -476,7 +520,7 @@ class ProjectModel extends ItemModel
 				if (is_numeric($published))
 				{
 					$query->where('c.state = ' . (int) $published)
-						->where('child.state = ' . (int) $published);
+					      ->where('child.state = ' . (int) $published);
 				}
 				elseif (is_array($published))
 				{
@@ -484,14 +528,14 @@ class ProjectModel extends ItemModel
 					$published = implode(',', $published);
 
 					$query->where('c.state IN (' . $published . ')')
-						->where('child.state IN (' . $published . ')');
+					      ->where('child.state IN (' . $published . ')');
 				}
 
 				$data = $db->setQuery($query)->loadObject();
 
 				if (empty($data))
 				{
-                    throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
+					throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_CATEGORY_NOT_FOUND'), 404);
 				}
 
 				// Set default translates data
@@ -512,7 +556,7 @@ class ProjectModel extends ItemModel
 			{
 				if ($e->getCode() == 404)
 				{
-                    throw new ResourceNotFound(Text::_($e->getMessage()), 404);
+					throw new ResourceNotFound(Text::_($e->getMessage()), 404);
 				}
 				else
 				{
@@ -530,17 +574,17 @@ class ProjectModel extends ItemModel
 	 *
 	 * @param   integer  $pk  Optional primary key of the article to increment.
 	 *
-	 * @return  boolean  True if successful; false otherwise and internal error set.
-	 *
 	 * @throws \Exception
+	 *
+	 * @return  boolean  True if successful; false otherwise and internal error set.
 	 *
 	 * @since  1.1.0
 	 */
 	public function hit($pk = 0)
 	{
-		$pk    = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 //		$table = Table::getInstance('Projects', 'SWJProjectsTable');
-		$table = parent::getTable('Projects', 'Site',[]);
+		$table = parent::getTable('Projects', 'Site', []);
 		$table->load($pk);
 		$table->hit($pk);
 
@@ -552,9 +596,9 @@ class ProjectModel extends ItemModel
 	 *
 	 * @param   integer  $pk  The ids of the project.
 	 *
-	 * @return  array|boolean|\Exception  Relations array on success, false or \Exception on failure.
-	 *
 	 * @throws  \Exception
+	 *
+	 * @return  array|boolean|\Exception  Relations array on success, false or \Exception on failure.
 	 *
 	 * @since  1.1.0
 	 */
@@ -562,7 +606,10 @@ class ProjectModel extends ItemModel
 	{
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
-		if (empty($pk)) return false;
+		if (empty($pk))
+		{
+			return false;
+		}
 
 		if ($this->_relations === null)
 		{
@@ -583,17 +630,17 @@ class ProjectModel extends ItemModel
 				else
 				{
 					$query = $db->getQuery('true')
-						->select(array('p.relations'))
-						->from($db->quoteName('#__swjprojects_projects', 'p'))
-						->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
-						->where('p.id = ' . (int) $pk);
+					            ->select(['p.relations'])
+					            ->from($db->quoteName('#__swjprojects_projects', 'p'))
+					            ->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
+					            ->where('p.id = ' . (int) $pk);
 
 					// Filter by published state
 					$published = $this->getState('filter.published');
 					if (is_numeric($published))
 					{
 						$query->where('p.state = ' . (int) $published)
-							->where('c.state = ' . (int) $published);
+						      ->where('c.state = ' . (int) $published);
 					}
 					elseif (is_array($published))
 					{
@@ -601,7 +648,7 @@ class ProjectModel extends ItemModel
 						$published = implode(',', $published);
 
 						$query->where('p.state IN (' . $published . ')')
-							->where('c.state IN (' . $published . ')');
+						      ->where('c.state IN (' . $published . ')');
 					}
 
 					$data = $db->setQuery($query)->loadResult();
@@ -631,27 +678,35 @@ class ProjectModel extends ItemModel
 						$inners = implode(',', $inners);
 
 						$query = $db->getQuery(true)
-							->select(array('p.id', 'p.alias'))
-							->from($db->quoteName('#__swjprojects_projects', 'p'))
-							->where('p.id IN (' . $inners . ')');
+						            ->select(['p.id', 'p.alias'])
+						            ->from($db->quoteName('#__swjprojects_projects', 'p'))
+						            ->where('p.id IN (' . $inners . ')');
 
 						// Join over the categories
-						$query->select(array('c.id as category_id', 'c.alias as category_alias'))
-							->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
+						$query->select(['c.id as category_id', 'c.alias as category_alias'])
+						      ->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
 						// Join over current translates
 						$current = $this->translates['current'];
-						$query->select(array('t_p.title', 't_p.language'))
-							->leftJoin($db->quoteName('#__swjprojects_translate_projects', 't_p')
-								. ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote($current));
+						$query->select(['t_p.title', 't_p.language'])
+						      ->leftJoin(
+							      $db->quoteName('#__swjprojects_translate_projects', 't_p')
+							      . ' ON t_p.id = p.id AND ' . $db->quoteName('t_p.language') . ' = ' . $db->quote(
+								      $current
+							      )
+						      );
 
 						// Join over default translates
 						$default = $this->translates['default'];
 						if ($current != $default)
 						{
-							$query->select(array('td_p.title as default_title'))
-								->leftJoin($db->quoteName('#__swjprojects_translate_projects', 'td_p')
-									. ' ON td_p.id = p.id AND ' . $db->quoteName('td_p.language') . ' = ' . $db->quote($default));
+							$query->select(['td_p.title as default_title'])
+							      ->leftJoin(
+								      $db->quoteName('#__swjprojects_translate_projects', 'td_p')
+								      . ' ON td_p.id = p.id AND ' . $db->quoteName(
+									      'td_p.language'
+								      ) . ' = ' . $db->quote($default)
+							      );
 						}
 
 						// Filter by published state
@@ -659,7 +714,7 @@ class ProjectModel extends ItemModel
 						if (is_numeric($published))
 						{
 							$query->where('p.state = ' . (int) $published)
-								->where('c.state = ' . (int) $published);
+							      ->where('c.state = ' . (int) $published);
 						}
 						elseif (is_array($published))
 						{
@@ -667,7 +722,7 @@ class ProjectModel extends ItemModel
 							$published = implode(',', $published);
 
 							$query->where('p.state IN (' . $published . ')')
-								->where('c.state IN (' . $published . ')');
+							      ->where('c.state IN (' . $published . ')');
 						}
 
 						$items = $db->setQuery($query)->loadObjectList();
@@ -681,10 +736,14 @@ class ProjectModel extends ItemModel
 
 							// Set images
 							$item->images = new Registry();
-							$item->images->set('icon',
-								ImagesHelper::getImage('projects', $item->id, 'icon', $item->language));
-							$item->images->set('cover',
-								ImagesHelper::getImage('projects', $item->id, 'cover', $item->language));
+							$item->images->set(
+								'icon',
+								ImagesHelper::getImage('projects', $item->id, 'icon', $item->language)
+							);
+							$item->images->set(
+								'cover',
+								ImagesHelper::getImage('projects', $item->id, 'cover', $item->language)
+							);
 
 							// Set link
 							$item->slug  = $item->id . ':' . $item->alias;
@@ -696,7 +755,7 @@ class ProjectModel extends ItemModel
 								'project' => $item->id,
 								'title'   => $item->title,
 								'link'    => $item->link,
-								'icon'    => $item->images->get('icon')
+								'icon'    => $item->images->get('icon'),
 							];
 						}
 					}
@@ -728,7 +787,10 @@ class ProjectModel extends ItemModel
 	{
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
-		if (empty($pk)) return false;
+		if (empty($pk))
+		{
+			return false;
+		}
 
 		if ($this->_version === null)
 		{
@@ -741,31 +803,37 @@ class ProjectModel extends ItemModel
 			{
 				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
-					->select(array('v.*', 'v.tag as tag_key'))
-					->from($db->quoteName('#__swjprojects_versions', 'v'))
-					->where('v.project_id = ' . (int) $pk);
+				            ->select(['v.*', 'v.tag as tag_key'])
+				            ->from($db->quoteName('#__swjprojects_versions', 'v'))
+				            ->where('v.project_id = ' . (int) $pk);
 
 				// Join over the projects
-				$query->select(array('p.id as project_id', 'p.alias as project_alias'))
-					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
+				$query->select(['p.id as project_id', 'p.alias as project_alias'])
+				      ->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id');
 
 				// Join over the categories
-				$query->select(array('c.id as category_id', 'c.alias as category_alias'))
-					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
+				$query->select(['c.id as category_id', 'c.alias as category_alias'])
+				      ->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid');
 
 				// Join over current translates
 				$current = $this->translates['current'];
-				$query->select(array('t_v.*', 'v.id as id'))
-					->leftJoin($db->quoteName('#__swjprojects_translate_versions', 't_v')
-						. ' ON t_v.id = v.id AND ' . $db->quoteName('t_v.language') . ' = ' . $db->quote($current));
+				$query->select(['t_v.*', 'v.id as id'])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_translate_versions', 't_v')
+					      . ' ON t_v.id = v.id AND ' . $db->quoteName('t_v.language') . ' = ' . $db->quote($current)
+				      );
 
 				// Join over default translates
 				$default = $this->translates['default'];
 				if ($current != $default)
 				{
-					$query->select(array('td_v.changelog as default_changelog'))
-						->leftJoin($db->quoteName('#__swjprojects_translate_versions', 'td_v')
-							. ' ON td_v.id = v.id AND ' . $db->quoteName('td_v.language') . ' = ' . $db->quote($default));
+					$query->select(['td_v.changelog as default_changelog'])
+					      ->leftJoin(
+						      $db->quoteName('#__swjprojects_translate_versions', 'td_v')
+						      . ' ON td_v.id = v.id AND ' . $db->quoteName('td_v.language') . ' = ' . $db->quote(
+							      $default
+						      )
+					      );
 				}
 
 				// Filter by published state
@@ -773,8 +841,8 @@ class ProjectModel extends ItemModel
 				if (is_numeric($published))
 				{
 					$query->where('v.state = ' . (int) $published)
-						->where('p.state = ' . (int) $published)
-						->where('c.state = ' . (int) $published);
+					      ->where('p.state = ' . (int) $published)
+					      ->where('c.state = ' . (int) $published);
 				}
 				elseif (is_array($published))
 				{
@@ -782,8 +850,8 @@ class ProjectModel extends ItemModel
 					$published = implode(',', $published);
 
 					$query->where('v.state IN (' . $published . ')')
-						->where('p.state IN (' . $published . ')')
-						->where('c.state IN (' . $published . ')');
+					      ->where('p.state IN (' . $published . ')')
+					      ->where('c.state IN (' . $published . ')');
 				}
 
 				// Filter by tag
@@ -794,9 +862,9 @@ class ProjectModel extends ItemModel
 
 				// Set ordering
 				$query->order($db->escape('v.major') . ' ' . $db->escape('desc'))
-					->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
-					->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
-					->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
+				      ->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
+				      ->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
+				      ->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
 
 				$data = $db->setQuery($query)->loadObject();
 				if ((empty($data) || empty($data->id)) && $stable)
@@ -825,8 +893,9 @@ class ProjectModel extends ItemModel
 
 					// Set version
 					$data->version = $data->major . '.' . $data->minor . '.' . $data->patch;
-					if(property_exists($data, 'hotfix') && !empty($data->hotfix)){
-						$data->version .= '.'.$data->hotfix;
+					if (property_exists($data, 'hotfix') && !empty($data->hotfix))
+					{
+						$data->version .= '.' . $data->hotfix;
 					}
 					if ($data->tag_key !== 'stable')
 					{
@@ -880,7 +949,10 @@ class ProjectModel extends ItemModel
 		{
 			$pks = array_unique(ArrayHelper::toInteger(explode(',', $pks)));
 		}
-		if (empty($pks)) return $categories;
+		if (empty($pks))
+		{
+			return $categories;
+		}
 
 		// Check loaded categories
 		$get = [];
@@ -901,23 +973,27 @@ class ProjectModel extends ItemModel
 		{
 			$db    = $this->getDatabase();
 			$query = $db->getQuery(true)
-				->select(array('c.id', 'c.alias', 'c.lft'))
-				->from($db->quoteName('#__swjprojects_categories', 'c'))
-				->where('c.id  IN (' . implode(',', $get) . ')');
+			            ->select(['c.id', 'c.alias', 'c.lft'])
+			            ->from($db->quoteName('#__swjprojects_categories', 'c'))
+			            ->where('c.id  IN (' . implode(',', $get) . ')');
 
 			// Join over current translates
 			$current = $this->translates['current'];
-			$query->select(array('t_c.title'))
-				->leftJoin($db->quoteName('#__swjprojects_translate_categories', 't_c')
-					. '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current));
+			$query->select(['t_c.title'])
+			      ->leftJoin(
+				      $db->quoteName('#__swjprojects_translate_categories', 't_c')
+				      . '  ON t_c.id = c.id AND ' . $db->quoteName('t_c.language') . ' = ' . $db->quote($current)
+			      );
 
 			// Join over default translates
 			$default = $this->translates['default'];
 			if ($current != $default)
 			{
-				$query->select(array('td_c.title as default_title'))
-					->leftJoin($db->quoteName('#__swjprojects_translate_categories', 'td_c')
-						. ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default));
+				$query->select(['td_c.title as default_title'])
+				      ->leftJoin(
+					      $db->quoteName('#__swjprojects_translate_categories', 'td_c')
+					      . ' ON td_c.id = c.id AND ' . $db->quoteName('td_c.language') . ' = ' . $db->quote($default)
+				      );
 			}
 
 			// Filter by published state
@@ -935,7 +1011,7 @@ class ProjectModel extends ItemModel
 			}
 
 			// Group by
-			$query->group(array('c.id'));
+			$query->group(['c.id']);
 
 			if ($rows = $db->setQuery($query)->loadObjectList())
 			{

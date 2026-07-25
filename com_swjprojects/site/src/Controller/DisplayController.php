@@ -178,7 +178,8 @@ class DisplayController extends BaseController
 			RouteHelper::getDownloadRoute(
 				$this->input->get('version_id', null, 'int'),
 				$this->input->get('project_id', null, 'int'),
-				$this->input->get('element', null, 'raw')
+				$this->input->get('element', null, 'raw'),
+				$this->input->get('download_key', null, 'cmd')
 			)
 		);
 	}
