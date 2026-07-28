@@ -161,7 +161,14 @@ $title = ($this->category->id > 1) ? $this->category->title
                                 echo $item->event->beforeProjectButtons;
                                 ?>
                                 <?php
-                                if (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
+                                if (!empty($item->can_download)): ?>
+                                    <a href="<?php
+                                    echo $item->download; ?>" class="btn btn-dark" data-btn-download target="_blank">
+                                        <?php
+                                        echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+                                    </a>
+                                <?php
+                                elseif (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
                                     <a href="<?php
                                     echo $item->payment->get('link'); ?>"
                                        class="btn btn-success" data-btn-download>

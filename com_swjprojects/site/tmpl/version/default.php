@@ -76,7 +76,12 @@ use Joomla\CMS\Layout\LayoutHelper;
 						<?php endif; ?>
 					</ul>
 					<div class="text-center">
-						<?php if (($this->version->download_type === 'paid' && $this->version->payment->get('link'))): ?>
+						<?php if (!empty($this->version->can_download)): ?>
+							<a href="<?php echo $this->version->download; ?>" class="btn btn-primary col-12"
+							   target="_blank">
+								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+							</a>
+						<?php elseif (($this->version->download_type === 'paid' && $this->version->payment->get('link'))): ?>
 							<a href="<?php echo $this->version->payment->get('link'); ?>"
 							   class="btn btn-success col-12">
 								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
