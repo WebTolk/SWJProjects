@@ -7,3 +7,5 @@
 phing.xml
 node_modules
 package-lock.json
+.serena
+.playwright-mcp

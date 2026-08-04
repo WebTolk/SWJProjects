@@ -22,9 +22,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Component\SWJProjects\Site\Helper\KeysHelper;
+use Joomla\Component\SWJProjects\Site\Service\VersionResolver;
 use function defined;
 use function implode;
-use function in_array;
 use function is_array;
 use function is_numeric;
 use function mime_content_type;
@@ -233,62 +233,48 @@ class DownloadModel extends BaseDatabaseModel
 			$this->_versionID = [];
 		}
 
-		if (!isset($this->_versionID[$pk]))
+		$cacheKey = $pk . ':' . (int) VersionResolver::allowUnstableLatestDownloads();
+
+		if (!isset($this->_versionID[$cacheKey]))
 		{
 			try
 			{
-				$db   = $this->getDatabase();
-				$data = false;
-				foreach (array('stable', 'rc', 'beta', 'alpha', 'dev') as $tag)
+				$db    = $this->getDatabase();
+				$query = $db->getQuery(true)
+					->select('v.id')
+					->from($db->quoteName('#__swjprojects_versions', 'v'))
+					->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id')
+					->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
+					->where('p.id =' . (int) $pk);
+
+				// Filter by published state
+				$published = $this->getState('filter.published');
+				if (is_numeric($published))
 				{
-					$query = $db->getQuery(true)
-						->select('v.id')
-						->from($db->quoteName('#__swjprojects_versions', 'v'))
-						->leftJoin($db->quoteName('#__swjprojects_projects', 'p') . ' ON p.id = v.project_id')
-						->leftJoin($db->quoteName('#__swjprojects_categories', 'c') . ' ON c.id = p.catid')
-						->where('p.id =' . (int) $pk)
-						->where($db->quoteName('v.tag') . ' = ' . $db->quote($tag))
-						->order($db->escape('v.major') . ' ' . $db->escape('desc'))
-						->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
-						->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
-						->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
-
-					// Set stage ordering
-					if (in_array($tag, array('rc', 'beta', 'alpha')))
-					{
-						$query->order($db->escape('v.stage') . ' ' . $db->escape('desc'));
-					}
-
-					// Filter by published state
-					$published = $this->getState('filter.published');
-					if (is_numeric($published))
-					{
-						$query->where('v.state = ' . (int) $published)
-							->where('p.state = ' . (int) $published)
-							->where('c.state = ' . (int) $published);
-					}
-					elseif (is_array($published))
-					{
-						$published = ArrayHelper::toInteger($published);
-						$published = implode(',', $published);
-
-						$query->where('v.state IN (' . $published . ')')
-							->where('p.state IN (' . $published . ')')
-							->where('c.state IN (' . $published . ')');
-					}
-
-					if ($data = $db->setQuery($query)->loadResult())
-					{
-						break;
-					}
+					$query->where('v.state = ' . (int) $published)
+						->where('p.state = ' . (int) $published)
+						->where('c.state = ' . (int) $published);
 				}
+				elseif (is_array($published))
+				{
+					$published = ArrayHelper::toInteger($published);
+					$published = implode(',', $published);
+
+					$query->where('v.state IN (' . $published . ')')
+						->where('p.state IN (' . $published . ')')
+						->where('c.state IN (' . $published . ')');
+				}
+
+				VersionResolver::applyLatestVersionSelection($query, $db, 'v');
+
+				$data = $db->setQuery($query)->loadResult();
 
 				if (!$data)
 				{
                     throw new ResourceNotFound(Text::_('COM_SWJPROJECTS_ERROR_VERSION_NOT_FOUND'), 404);
 				}
 
-				$this->_versionID[$pk] = $data;
+				$this->_versionID[$cacheKey] = $data;
 			}
 			catch (\Exception $e)
 			{
@@ -296,7 +282,7 @@ class DownloadModel extends BaseDatabaseModel
 			}
 		}
 
-		return $this->_versionID[$pk];
+		return $this->_versionID[$cacheKey];
 	}
 
 	/**

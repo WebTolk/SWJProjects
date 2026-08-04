@@ -26,6 +26,7 @@ use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\KeysHelper;
 use Joomla\Component\SWJProjects\Site\Helper\MaintainerHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
+use Joomla\Component\SWJProjects\Site\Service\VersionResolver;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -777,13 +778,13 @@ class ProjectModel extends ItemModel
 	 * Method to get project last version data.
 	 *
 	 * @param   integer  $pk      The ids of the project.
-	 * @param   boolean  $stable  Get only stable version.
+	 * @param   boolean|null  $stable  Get only stable version; null follows the component setting.
 	 *
 	 * @return  array|boolean|\Exception  Last version object on success, false or \Exception on failure.
 	 *
 	 * @since  1.3.0
 	 */
-	public function getVersion($pk = null, $stable = true)
+	public function getVersion($pk = null, $stable = null)
 	{
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
@@ -797,7 +798,10 @@ class ProjectModel extends ItemModel
 			$this->_version = [];
 		}
 
-		if (!isset($this->_version[$pk]))
+		$includeUnstable = $stable === null ? VersionResolver::allowUnstableLatestDownloads() : !$stable;
+		$cacheKey        = $pk . ':' . (int) $includeUnstable;
+
+		if (!isset($this->_version[$cacheKey]))
 		{
 			try
 			{
@@ -854,24 +858,14 @@ class ProjectModel extends ItemModel
 					      ->where('c.state IN (' . $published . ')');
 				}
 
-				// Filter by tag
-				if ($stable)
-				{
-					$query->where($db->quoteName('v.tag') . ' = ' . $db->quote('stable'));
-				}
+				// Filter by public latest version policy
+				VersionResolver::applyLatestVersionFilter($query, $db, 'v', $includeUnstable);
 
 				// Set ordering
-				$query->order($db->escape('v.major') . ' ' . $db->escape('desc'))
-				      ->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
-				      ->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
-				      ->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
+				VersionResolver::applyLatestVersionOrdering($query, $db, 'v', $includeUnstable);
 
 				$data = $db->setQuery($query)->loadObject();
-				if ((empty($data) || empty($data->id)) && $stable)
-				{
-					return $this->getVersion($pk, false);
-				}
-				elseif (empty($data) || empty($data->id))
+				if (empty($data) || empty($data->id))
 				{
 					$data = false;
 				}
@@ -915,16 +909,16 @@ class ProjectModel extends ItemModel
 					}
 				}
 
-				$this->_version[$pk] = $data;
+				$this->_version[$cacheKey] = $data;
 			}
 			catch (\Exception $e)
 			{
 				$this->setError($e);
-				$this->_version[$pk] = false;
+				$this->_version[$cacheKey] = false;
 			}
 		}
 
-		return $this->_version[$pk];
+		return $this->_version[$cacheKey];
 	}
 
 	/**

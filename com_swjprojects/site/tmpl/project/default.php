@@ -81,7 +81,7 @@ $wa = Factory::getApplication()
 								<?php if ($this->version): ?>
                                     <li>
                                         <strong><?php echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
-                                        <span class="<?php echo ($this->version->tag_key !== 'stable') ? 'badge badge-danger' : ''; ?>">
+                                        <span class="<?php echo ($this->version->tag_key !== 'stable') ? 'badge text-bg-danger' : ''; ?>">
 													<?php echo $this->version->version; ?></span>
                                     </li>
                                     <li>

@@ -105,7 +105,8 @@ $title = ($this->category->id > 1) ? $this->category->title
                                                     <strong><?php
                                                         echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
                                                     <a href="<?php
-                                                    echo $item->version->link; ?>">
+                                                    echo $item->version->link; ?>"
+                                                       class="<?php echo ($item->version->tag_key !== 'stable') ? 'badge text-bg-danger' : ''; ?>">
                                                         <?php
                                                         echo $item->version->version; ?>
                                                     </a>
