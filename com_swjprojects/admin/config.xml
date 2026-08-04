@@ -22,6 +22,14 @@
 			   extension="com_swjprojects"
 			   view="projects"
 			   class="form-select"/>
+		<field name="allow_unstable_latest_downloads" type="radio"
+			   label="COM_SWJPROJECTS_PARAMS_ALLOW_UNSTABLE_LATEST_DOWNLOADS"
+			   description="COM_SWJPROJECTS_PARAMS_ALLOW_UNSTABLE_LATEST_DOWNLOADS_DESC"
+			   default="0"
+			   class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 		<field name="project_layout" type="componentlayout"
 			   label="COM_SWJPROJECTS_PARAMS_PROJECT_LAYOUT"
 			   extension="com_swjprojects"

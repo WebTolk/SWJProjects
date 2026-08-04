@@ -25,6 +25,7 @@ use Joomla\Component\SWJProjects\Administrator\Helper\TranslationHelper;
 use Joomla\Component\SWJProjects\Site\Helper\ImagesHelper;
 use Joomla\Component\SWJProjects\Site\Helper\KeysHelper;
 use Joomla\Component\SWJProjects\Site\Helper\RouteHelper;
+use Joomla\Component\SWJProjects\Site\Service\VersionResolver;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -254,14 +255,9 @@ class ProjectsModel extends ListModel
 //	        ->select('SUM(' . $db->quoteName('lv.downloads') . ') AS ' . $db->quoteName('downloads'))
                        ->from($db->quoteName('#__swjprojects_versions', 'lv'))
 		               ->where('lv.project_id = p.id')
-		               ->where($db->quoteName('lv.state') . ' = ' . $db->quote(1))
-		               ->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
-		               ->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
-		               ->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
-		               ->order($db->escape('lv.hotfix') . ' ' . $db->escape('desc'))
-		               ->order($db->escape('lv.stability') . ' ' . $db->escape('desc'))
-		               ->order($db->escape('lv.stage') . ' ' . $db->escape('desc'))
-		               ->setLimit(1);
+		               ->where($db->quoteName('lv.state') . ' = ' . $db->quote(1));
+		VersionResolver::applyLatestVersionSelection($subQuery, $db, 'lv');
+		$subQuery->setLimit(1);
 		$query->select('(' . $subQuery->__toString() . ') as last_version');
 
 		// Count over versions for download counter
