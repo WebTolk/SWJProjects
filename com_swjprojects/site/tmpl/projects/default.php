@@ -105,7 +105,8 @@ $title = ($this->category->id > 1) ? $this->category->title
                                                     <strong><?php
                                                         echo Text::_('COM_SWJPROJECTS_VERSION'); ?>: </strong>
                                                     <a href="<?php
-                                                    echo $item->version->link; ?>">
+                                                    echo $item->version->link; ?>"
+                                                       class="<?php echo ($item->version->tag_key !== 'stable') ? 'badge text-bg-danger' : ''; ?>">
                                                         <?php
                                                         echo $item->version->version; ?>
                                                     </a>
@@ -161,7 +162,14 @@ $title = ($this->category->id > 1) ? $this->category->title
                                 echo $item->event->beforeProjectButtons;
                                 ?>
                                 <?php
-                                if (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
+                                if (!empty($item->can_download)): ?>
+                                    <a href="<?php
+                                    echo $item->download; ?>" class="btn btn-dark" data-btn-download target="_blank">
+                                        <?php
+                                        echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
+                                    </a>
+                                <?php
+                                elseif (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
                                     <a href="<?php
                                     echo $item->payment->get('link'); ?>"
                                        class="btn btn-success" data-btn-download>

@@ -27,7 +27,17 @@ $link         = '';
 $title        = '';
 $link_attribs = [];
 
-if (($item->download_type === 'paid' && $item->payment->get('link')))
+if (!empty($item->can_download))
+{
+	$link         = $item->download;
+	$title        = '<i class="fas fa-download"></i> ' . Text::_('COM_SWJPROJECTS_DOWNLOAD');
+	$link_attribs = [
+		'class'             => 'btn btn-success me-2 mb-2',
+		'data-btn-download' => true,
+		'target'            => '_blank'
+	];
+}
+elseif (($item->download_type === 'paid' && $item->payment->get('link')))
 {
 	$link         = $item->payment->get('link');
 	$title        = '<i class="fas fa-shopping-basket"></i>' . Text::_('COM_SWJPROJECTS_BUY');
@@ -49,4 +59,7 @@ elseif ($item->download_type === 'free')
 	];
 }
 
-echo HTMLHelper::link($link, $title, $link_attribs);
+if ($link !== '')
+{
+	echo HTMLHelper::link($link, $title, $link_attribs);
+}

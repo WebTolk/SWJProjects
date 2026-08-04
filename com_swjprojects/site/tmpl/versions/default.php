@@ -100,7 +100,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 								<?php endif; ?>
                             </ul>
                         </div>
-	                    <?php if ($item->download_type === 'free'): ?>
+	                    <?php if (!empty($item->can_download) || $item->download_type === 'free'): ?>
                             <div class="card-footer bg-transparent border-0">
                                 <a href="<?php echo $item->download; ?>" target="_blank"
                                    class="btn col-12 btn-<?php echo ($item->tag->key == 'stable') ? 'success' : 'secondary'; ?> float-end">
