@@ -29,6 +29,7 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
 use function array_merge;
+use function array_pad;
 use function array_unique;
 use function explode;
 use function implode;
@@ -241,13 +242,20 @@ class ProjectsModel extends ListModel
 		// Join over versions for last version
 		$subQuery = $db->getQuery(true)
 		               ->select(
-			               ['CONCAT(lv.id, ":", lv.alias, "|", CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch,".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END)']
+			               [
+				               'CONCAT('
+				               . 'lv.id, ":", lv.alias, "|", '
+				               . 'CASE WHEN lv.hotfix != 0 THEN CONCAT(lv.major, ".", lv.minor, ".", lv.patch, ".", lv.hotfix) ELSE CONCAT(lv.major, ".", lv.minor, ".", lv.patch) END, '
+				               . 'CASE WHEN lv.tag != "stable" THEN CONCAT(" ", lv.tag, CASE WHEN lv.tag != "dev" AND lv.stage != 0 THEN lv.stage ELSE "" END) ELSE "" END, '
+				               . '"|", lv.tag, "|", lv.stage'
+				               . ')'
+			               ]
 		               )
 //	        ->select('SUM(' . $db->quoteName('lv.downloads') . ') AS ' . $db->quoteName('downloads'))
                        ->from($db->quoteName('#__swjprojects_versions', 'lv'))
 		               ->where('lv.project_id = p.id')
-		               ->where($db->quoteName('state') . ' = ' . $db->quote(1))
-		               ->where($db->quoteName('lv.tag') . ' = ' . $db->quote('stable'))
+		               ->where($db->quoteName('lv.state') . ' = ' . $db->quote(1))
+		               ->order('CASE WHEN ' . $db->quoteName('lv.tag') . ' = ' . $db->quote('stable') . ' THEN 0 ELSE 1 END')
 		               ->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
 		               ->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
 		               ->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
@@ -445,7 +453,11 @@ class ProjectsModel extends ListModel
 				if (!empty($item->last_version))
 				{
 					$item->version = new \stdClass();
-					[$item->version->slug, $item->version->version] = explode('|', $item->last_version, 2);
+					[$item->version->slug, $item->version->version, $item->version->tag_key, $item->version->stage] = array_pad(
+						explode('|', $item->last_version, 4),
+						4,
+						''
+					);
 					[$item->version->id, $item->version->alias] = explode(':', $item->version->slug, 2);
 					$item->version->link = Route::_(
 						RouteHelper::getVersionRoute(
