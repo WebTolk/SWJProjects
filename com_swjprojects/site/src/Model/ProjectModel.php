@@ -783,7 +783,7 @@ class ProjectModel extends ItemModel
 	 *
 	 * @since  1.3.0
 	 */
-	public function getVersion($pk = null, $stable = true)
+	public function getVersion($pk = null, $stable = false)
 	{
 		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
 
@@ -797,7 +797,9 @@ class ProjectModel extends ItemModel
 			$this->_version = [];
 		}
 
-		if (!isset($this->_version[$pk]))
+		$cacheKey = $pk . ':' . (int) $stable;
+
+		if (!isset($this->_version[$cacheKey]))
 		{
 			try
 			{
@@ -864,7 +866,9 @@ class ProjectModel extends ItemModel
 				$query->order($db->escape('v.major') . ' ' . $db->escape('desc'))
 				      ->order($db->escape('v.minor') . ' ' . $db->escape('desc'))
 				      ->order($db->escape('v.patch') . ' ' . $db->escape('desc'))
-				      ->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'));
+				      ->order($db->escape('v.hotfix') . ' ' . $db->escape('desc'))
+				      ->order($db->escape('v.stability') . ' ' . $db->escape('desc'))
+				      ->order($db->escape('v.stage') . ' ' . $db->escape('desc'));
 
 				$data = $db->setQuery($query)->loadObject();
 				if ((empty($data) || empty($data->id)) && $stable)
@@ -915,16 +919,16 @@ class ProjectModel extends ItemModel
 					}
 				}
 
-				$this->_version[$pk] = $data;
+				$this->_version[$cacheKey] = $data;
 			}
 			catch (\Exception $e)
 			{
 				$this->setError($e);
-				$this->_version[$pk] = false;
+				$this->_version[$cacheKey] = false;
 			}
 		}
 
-		return $this->_version[$pk];
+		return $this->_version[$cacheKey];
 	}
 
 	/**

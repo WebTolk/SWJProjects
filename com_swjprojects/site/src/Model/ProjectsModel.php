@@ -255,11 +255,12 @@ class ProjectsModel extends ListModel
                        ->from($db->quoteName('#__swjprojects_versions', 'lv'))
 		               ->where('lv.project_id = p.id')
 		               ->where($db->quoteName('lv.state') . ' = ' . $db->quote(1))
-		               ->order('CASE WHEN ' . $db->quoteName('lv.tag') . ' = ' . $db->quote('stable') . ' THEN 0 ELSE 1 END')
 		               ->order($db->escape('lv.major') . ' ' . $db->escape('desc'))
 		               ->order($db->escape('lv.minor') . ' ' . $db->escape('desc'))
 		               ->order($db->escape('lv.patch') . ' ' . $db->escape('desc'))
 		               ->order($db->escape('lv.hotfix') . ' ' . $db->escape('desc'))
+		               ->order($db->escape('lv.stability') . ' ' . $db->escape('desc'))
+		               ->order($db->escape('lv.stage') . ' ' . $db->escape('desc'))
 		               ->setLimit(1);
 		$query->select('(' . $subQuery->__toString() . ') as last_version');
 
